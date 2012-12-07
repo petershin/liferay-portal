@@ -19,32 +19,25 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.trash.BaseTrashHandler;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.CompanyConstants;
-import com.liferay.portal.model.Group;
+import com.liferay.portal.model.ContainerModel;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.PortletURLFactoryUtil;
-import com.liferay.portlet.documentlibrary.NoSuchDirectoryException;
-import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 import com.liferay.portlet.trash.DuplicateEntryException;
 import com.liferay.portlet.trash.TrashEntryConstants;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.util.TrashUtil;
 import com.liferay.portlet.wiki.asset.WikiPageAssetRenderer;
+import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
-import com.liferay.portlet.wiki.model.WikiPageConstants;
 import com.liferay.portlet.wiki.model.WikiPageResource;
 import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.portlet.wiki.service.WikiPageResourceLocalServiceUtil;
 import com.liferay.portlet.wiki.service.WikiPageServiceUtil;
 import com.liferay.portlet.wiki.service.permission.WikiPagePermission;
-
-import java.util.Date;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -96,38 +89,6 @@ public class WikiPageTrashHandler extends BaseTrashHandler {
 		}
 	}
 
-	@Override
-	public void deleteTrashAttachments(Group group, Date date)
-		throws PortalException, SystemException {
-
-		long repositoryId = CompanyConstants.SYSTEM;
-
-		String[] fileNames = null;
-
-		try {
-			fileNames = DLStoreUtil.getFileNames(
-				group.getCompanyId(), repositoryId, "wiki");
-		}
-		catch (NoSuchDirectoryException nsde) {
-			return;
-		}
-
-		for (String fileName : fileNames) {
-			String fileTitle = StringUtil.extractLast(
-				fileName, StringPool.FORWARD_SLASH);
-
-			if (fileTitle.startsWith(TrashUtil.TRASH_ATTACHMENTS_DIR)) {
-				String[] attachmentFileNames = DLStoreUtil.getFileNames(
-					group.getCompanyId(), repositoryId,
-					WikiPageConstants.BASE_ATTACHMENTS_DIR + fileTitle);
-
-				TrashUtil.deleteEntriesAttachments(
-					group.getCompanyId(), repositoryId, date,
-					attachmentFileNames);
-			}
-		}
-	}
-
 	public void deleteTrashEntries(long[] classPKs, boolean checkPermission)
 		throws PortalException, SystemException {
 
@@ -150,8 +111,19 @@ public class WikiPageTrashHandler extends BaseTrashHandler {
 	}
 
 	@Override
+	public ContainerModel getParentContainerModel(long classPK)
+		throws PortalException, SystemException {
+
+		WikiPage page = WikiPageLocalServiceUtil.getPage(classPK);
+
+		return page.getNode();
+	}
+
+	@Override
 	public String getRestoreLink(PortletRequest portletRequest, long classPK)
 		throws PortalException, SystemException {
+
+		String portletId = PortletKeys.WIKI;
 
 		WikiPage page = WikiPageLocalServiceUtil.getPage(classPK);
 
@@ -160,14 +132,17 @@ public class WikiPageTrashHandler extends BaseTrashHandler {
 
 		if (plid == LayoutConstants.DEFAULT_PLID) {
 			plid = PortalUtil.getControlPanelPlid(portletRequest);
+
+			portletId = PortletKeys.WIKI_ADMIN;
 		}
 
 		PortletURL portletURL = PortletURLFactoryUtil.create(
-			portletRequest, PortletKeys.WIKI, plid,
-			PortletRequest.RENDER_PHASE);
+			portletRequest, portletId, plid, PortletRequest.RENDER_PHASE);
+
+		WikiNode node = page.getNode();
 
 		portletURL.setParameter("struts_action", "/wiki/view");
-		portletURL.setParameter("nodeName", page.getNode().getName());
+		portletURL.setParameter("nodeName", node.getName());
 		portletURL.setParameter("title", HtmlUtil.unescape(page.getTitle()));
 
 		return portletURL.toString();

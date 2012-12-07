@@ -20,6 +20,7 @@
 page import="com.liferay.portal.kernel.search.Document" %><%@
 page import="com.liferay.portal.kernel.search.FacetedSearcher" %><%@
 page import="com.liferay.portal.kernel.search.Hits" %><%@
+page import="com.liferay.portal.kernel.search.HitsOpenSearchImpl" %><%@
 page import="com.liferay.portal.kernel.search.Indexer" %><%@
 page import="com.liferay.portal.kernel.search.IndexerRegistryUtil" %><%@
 page import="com.liferay.portal.kernel.search.OpenSearch" %><%@
@@ -144,9 +145,13 @@ private String _buildAssetCategoryPath(AssetCategory assetCategory, Locale local
 	return sb.toString();
 }
 
-private String _checkViewURL(ThemeDisplay themeDisplay, String viewURL, String currentURL) {
+private String _checkViewURL(ThemeDisplay themeDisplay, String viewURL, String currentURL, boolean inheritRedirect) {
 	if (Validator.isNotNull(viewURL) && viewURL.startsWith(themeDisplay.getURLPortal())) {
-		viewURL = HttpUtil.setParameter(viewURL, "redirect", currentURL);
+		viewURL = HttpUtil.setParameter(viewURL, "inheritRedirect", inheritRedirect);
+
+		if (!inheritRedirect) {
+			viewURL = HttpUtil.setParameter(viewURL, "redirect", currentURL);
+		}
 	}
 
 	return viewURL;

@@ -200419,6 +200419,10 @@ Groups also have a second, partially conflicting purpose in Liferay. For legacy 
 				<type>java.lang.String</type>
 			</param>
 			<param>
+				<name>stagedModelDataHandlerClasses</name>
+				<type>java.util.List</type>
+			</param>
+			<param>
 				<name>portletDisplayTemplateHandlerClass</name>
 				<type>java.lang.String</type>
 			</param>
@@ -201065,9 +201069,9 @@ Groups also have a second, partially conflicting purpose in Liferay. For legacy 
 		</method>
 		<method>
 			<name>getIndexerClasses</name>
-			<comment><![CDATA[Returns the name of the classes that represent indexers associated with the portlet.]]></comment>
+			<comment><![CDATA[Returns the names of the classes that represent indexers associated with the portlet.]]></comment>
 			<return>
-				<comment><![CDATA[the name of the classes that represent indexers associated with the portlet]]></comment>
+				<comment><![CDATA[the names of the classes that represent indexers associated with the portlet]]></comment>
 			</return>
 		</method>
 		<method>
@@ -201534,6 +201538,20 @@ Groups also have a second, partially conflicting purpose in Liferay. For legacy 
 			<comment><![CDATA[Returns the name of the social request interpreter instance of the portlet.]]></comment>
 			<return>
 				<comment><![CDATA[the name of the social request interpreter instance of the portlet]]></comment>
+			</return>
+		</method>
+		<method>
+			<name>getStagedModelDataHandlerClasses</name>
+			<comment><![CDATA[Returns the names of the classes that represent staged model data handlers associated with the portlet.]]></comment>
+			<return>
+				<comment><![CDATA[the names of the classes that represent staged model data handlers associated with the portlet]]></comment>
+			</return>
+		</method>
+		<method>
+			<name>getStagedModelDataHandlerInstances</name>
+			<comment><![CDATA[Returns the staged model data handler instances of the portlet.]]></comment>
+			<return>
+				<comment><![CDATA[the staged model data handler instances of the portlet]]></comment>
 			</return>
 		</method>
 		<method>
@@ -202007,7 +202025,7 @@ Groups also have a second, partially conflicting purpose in Liferay. For legacy 
 		</method>
 		<method>
 			<name>setAssetRendererFactoryClasses</name>
-			<comment><![CDATA[Sets the name of the classes that represent asset types associated with the portlet.]]></comment>
+			<comment><![CDATA[Sets the names of the classes that represent asset types associated with the portlet.]]></comment>
 			<param>
 				<name>assetRendererFactoryClasses</name>
 				<type>java.util.List</type>
@@ -202016,7 +202034,7 @@ Groups also have a second, partially conflicting purpose in Liferay. For legacy 
 		</method>
 		<method>
 			<name>setAtomCollectionAdapterClasses</name>
-			<comment><![CDATA[Sets the name of the classes that represent atom collection adapters associated with the portlet.]]></comment>
+			<comment><![CDATA[Sets the names of the classes that represent atom collection adapters associated with the portlet.]]></comment>
 			<param>
 				<name>atomCollectionAdapterClasses</name>
 				<type>java.util.List</type>
@@ -202079,7 +202097,7 @@ Groups also have a second, partially conflicting purpose in Liferay. For legacy 
 		</method>
 		<method>
 			<name>setCustomAttributesDisplayClasses</name>
-			<comment><![CDATA[Sets the name of the classes that represent custom attribute displays associated with the portlet.]]></comment>
+			<comment><![CDATA[Sets the names of the classes that represent custom attribute displays associated with the portlet.]]></comment>
 			<param>
 				<name>customAttributesDisplayClasses</name>
 				<type>java.util.List</type>
@@ -202250,11 +202268,11 @@ Groups also have a second, partially conflicting purpose in Liferay. For legacy 
 		</method>
 		<method>
 			<name>setIndexerClasses</name>
-			<comment><![CDATA[Sets the name of the classes that represent indexers associated with the portlet.]]></comment>
+			<comment><![CDATA[Sets the names of the classes that represent indexers associated with the portlet.]]></comment>
 			<param>
 				<name>indexerClasses</name>
 				<type>java.util.List</type>
-				<comment><![CDATA[the name of the classes that represent indexers associated with the portlet]]></comment>
+				<comment><![CDATA[the names of the classes that represent indexers associated with the portlet]]></comment>
 			</param>
 		</method>
 		<method>
@@ -202671,6 +202689,15 @@ Groups also have a second, partially conflicting purpose in Liferay. For legacy 
 			</param>
 		</method>
 		<method>
+			<name>setStagedModelDataHandlerClasses</name>
+			<comment><![CDATA[Sets the names of the classes that represent staged model data handlers associated with the portlet.]]></comment>
+			<param>
+				<name>stagedModelDataHandlerClasses</name>
+				<type>java.util.List</type>
+				<comment><![CDATA[the names of the classes that represent staged model data handlers associated with the portlet]]></comment>
+			</param>
+		</method>
+		<method>
 			<name>setStatic</name>
 			<comment><![CDATA[Set to <code>true</code> if the portlet is a static portlet that is cannot be moved.]]></comment>
 			<param>
@@ -202726,7 +202753,7 @@ Groups also have a second, partially conflicting purpose in Liferay. For legacy 
 		</method>
 		<method>
 			<name>setTrashHandlerClasses</name>
-			<comment><![CDATA[Sets the name of the classes that represent trash handlers associated to the portlet.]]></comment>
+			<comment><![CDATA[Sets the names of the classes that represent trash handlers associated to the portlet.]]></comment>
 			<param>
 				<name>trashHandlerClasses</name>
 				<type>java.util.List</type>
@@ -202816,7 +202843,7 @@ Groups also have a second, partially conflicting purpose in Liferay. For legacy 
 		</method>
 		<method>
 			<name>setWorkflowHandlerClasses</name>
-			<comment><![CDATA[Sets the name of the classes that represent workflow handlers associated to the portlet.]]></comment>
+			<comment><![CDATA[Sets the names of the classes that represent workflow handlers associated to the portlet.]]></comment>
 			<param>
 				<name>workflowHandlerClasses</name>
 				<type>java.util.List</type>
@@ -202966,7 +202993,7 @@ Groups also have a second, partially conflicting purpose in Liferay. For legacy 
 		</field>
 		<field>
 			<name>_indexerClasses</name>
-			<comment><![CDATA[The name of the classes that represent indexers associated with the portlet.]]></comment>
+			<comment><![CDATA[The names of the classes that represent indexers associated with the portlet.]]></comment>
 		</field>
 		<field>
 			<name>_initParams</name>
@@ -203159,6 +203186,10 @@ Groups also have a second, partially conflicting purpose in Liferay. For legacy 
 		<field>
 			<name>_socialRequestInterpreterClass</name>
 			<comment><![CDATA[The name of the social request interpreter class of the portlet.]]></comment>
+		</field>
+		<field>
+			<name>_stagedModelDataHandlerClasses</name>
+			<comment><![CDATA[The names of the classes that represent staged model data handlers associated with the portlet.]]></comment>
 		</field>
 		<field>
 			<name>_staticPortlet</name>
@@ -261607,6 +261638,45 @@ Useful when paginating results. Returns a maximum of <code>end - start</code> in
 		</method>
 		<method>
 			<name>getUserPlaces</name>
+			<param>
+				<name>userId</name>
+				<type>long</type>
+			</param>
+			<param>
+				<name>classNames</name>
+				<type>java.lang.String[]</type>
+			</param>
+			<param>
+				<name>name</name>
+				<type>java.lang.String</type>
+			</param>
+			<param>
+				<name>active</name>
+				<type>boolean</type>
+			</param>
+			<param>
+				<name>includeControlPanel</name>
+				<type>boolean</type>
+			</param>
+			<param>
+				<name>start</name>
+				<type>int</type>
+			</param>
+			<param>
+				<name>end</name>
+				<type>int</type>
+			</param>
+			<throws>
+				<name>PortalException</name>
+				<type>com.liferay.portal.kernel.exception.PortalException</type>
+			</throws>
+			<throws>
+				<name>SystemException</name>
+				<type>com.liferay.portal.kernel.exception.SystemException</type>
+			</throws>
+		</method>
+		<method>
+			<name>getUserPlaces</name>
 			<comment><![CDATA[Returns the guest or current user's group &quot;places&quot; associated with the group entity class names, including the control panel group if the user is permitted to view the control panel.
 
 <p>
@@ -261624,6 +261694,23 @@ Useful when paginating results. Returns a maximum of <code>end - start</code> in
 			</param>
 			<return>
 				<comment><![CDATA[the user's group &quot;places&quot;]]></comment>
+			</return>
+			<throws>
+				<name>PortalException</name>
+				<type>com.liferay.portal.kernel.exception.PortalException</type>
+				<comment><![CDATA[if a portal exception occurred]]></comment>
+			</throws>
+			<throws>
+				<name>SystemException</name>
+				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[if a system exception occurred]]></comment>
+			</throws>
+		</method>
+		<method>
+			<name>getUserPlacesCount</name>
+			<comment><![CDATA[Returns the number of the guest or current user's group &quot;places&quot; associated with the group entity class names, including the control panel group if the user is permitted to view the control panel.]]></comment>
+			<return>
+				<comment><![CDATA[the number of user's group &quot;places&quot;]]></comment>
 			</return>
 			<throws>
 				<name>PortalException</name>

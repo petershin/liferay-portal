@@ -618,7 +618,6 @@ AUI.add(
 					var form = instance.getPrincipalForm();
 
 					var groupId = instance.getByName(form, 'groupId');
-					var structureGroupId = instance.getByName(form, 'structureGroupId');
 					var structureIdInput = instance.getByName(form, 'structureId');
 					var structureNameInput = instance.getByName(form, 'structureName');
 					var structureDescriptionInput = instance.getByName(form, 'structureDescription');
@@ -3165,7 +3164,7 @@ AUI.add(
 									content = imageInputValue;
 								}
 								else {
-									var imageContent = instance.getByName(componentContainer, 'journalImageContent');
+									var imageContent = componentContainer.one('.journal-image-preview input.journal-image-preview-content');
 
 									if (imageContent) {
 										content = imageContent.val();
