@@ -352,6 +352,11 @@ mariadb.executable=${mariadb.executable}]]></echo>
 		<sequential>
 			<var name="app.server.type" value="@{app.server.type}" />
 
+			<if>
+				<equals arg1="@{app.server.type}" arg2="tomcat" />
+				<then>
+
+
 			<echo append="true" file="app.server.${env.HOSTNAME}.properties"><![CDATA[
 app.server.type=@{app.server.type}]]></echo>
 
@@ -443,6 +448,16 @@ app.server.type=@{app.server.type}]]></echo>
 					jar -ftv liferay-portal-bundle-@{app.server.type}.zip
 				]]>
 			</execute>
+				</then>
+				<else>
+					<echo message="##################" />
+					<echo message="@{app.server.type}" />
+					<echo message="##################" />
+				</else>
+			</if>
+
+
+
 		</sequential>
 	</macrodef>
 
