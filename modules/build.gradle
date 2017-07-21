@@ -102,9 +102,18 @@ gradle.beforeProject {
 
 		pluginManager.withPlugin("com.liferay.ant.plugin") {
 			task buildLang(dependsOn: "build-lang")
-			task compileJSP(dependsOn: "compile-jsp")
 
-			println ant.properties['ant.app.server.type']
+			println "###################################################"
+			println "#### " + ant.properties["app.server.type"] + " ####"
+			println "###################################################"
+
+			if (ant.properties["app.server.type"] == "tomcat") {
+				println "###################################################"
+				println "####            RUNNING COMPILE-JSP            ####"
+				println "###################################################"
+
+				task compileJSP(dependsOn: "compile-jsp")
+			}
 
 			if (FileUtil.exists(project, "docroot/WEB-INF/service.xml")) {
 				task buildService(dependsOn: "build-service")
