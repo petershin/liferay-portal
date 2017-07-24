@@ -16,7 +16,9 @@
 
 <%@ include file="/init.jsp" %>
 
-Test CI
+<%
+asdfad
+%>
 
 <liferay-ui:search-container
 	emptyResultsMessage="there-are-no-servers"
