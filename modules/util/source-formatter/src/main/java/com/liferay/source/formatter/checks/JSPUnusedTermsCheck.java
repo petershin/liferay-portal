@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -339,6 +340,16 @@ public class JSPUnusedTermsCheck extends BaseFileCheck {
 
 				return true;
 			}
+		}
+
+		if (type.equals("variable")) {
+			System.out.println("#### fileName:" + fileName + " ####");
+			System.out.println("#### regex:" + regex + " ####");
+			System.out.println("#### type:" + type + " ####");
+			System.out.println("#### checkedForUnusedJSPTerm:" + StringUtil.merge(checkedForUnusedJSPTerm) + " ####");
+			System.out.println("#### checkedForIncludesFileNames:" + StringUtil.merge(checkedForIncludesFileNames) + " ####");
+			System.out.println("#### includeFileNames:" + StringUtil.merge(includeFileNames) + " ####");
+			System.out.println("#### contentsMap:" + StringUtil.merge(contentsMap.keySet()) + " ####");
 		}
 
 		return false;
