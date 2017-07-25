@@ -16,6 +16,10 @@
 
 <%@ include file="/init.jsp" %>
 
+<%
+asdfad
+%>
+
 <liferay-ui:search-container
 	emptyResultsMessage="there-are-no-servers"
 	iteratorURL="<%= portletURL %>"
