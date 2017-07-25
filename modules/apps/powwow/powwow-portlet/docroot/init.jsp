@@ -92,6 +92,10 @@ page import="javax.portlet.PortletURL" %>
 <portlet:defineObjects />
 
 <%
+test
+%>
+
+<%
 PortletURL portletURL = renderResponse.createRenderURL();
 
 String currentURL = PortalUtil.getCurrentURL(request);
