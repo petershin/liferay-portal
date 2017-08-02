@@ -364,6 +364,13 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 				FileUtil.write(file, newContent);
 			}
 			else if (_firstSourceMismatchException == null) {
+				System.out.println("#### OLD " + fileName + " START ####");
+				System.out.println(content);
+				System.out.println("#### OLD " + fileName + " END ####");
+				System.out.println("#### NEW " + fileName + " START ####");
+				System.out.println(newContent);
+				System.out.println("#### NEW " + fileName + " END ####");
+
 				_firstSourceMismatchException = new SourceMismatchException(
 					fileName, content, newContent);
 			}
