@@ -65,8 +65,8 @@ public class FIFOWelder extends BaseWelder {
 		try (FileOutputStream fileOutputStream = new FileOutputStream(
 				inputFIFOFile);
 			FileInputStream fileInputStream = new AutoDeleteFileInputStream(
-				outputFIFOFile);
-		) {
+				outputFIFOFile);) {
+
 			writeFileChannel = fileOutputStream.getChannel();
 
 			readFileChannel = fileInputStream.getChannel();
@@ -84,8 +84,8 @@ public class FIFOWelder extends BaseWelder {
 		try (FileInputStream fileInputStream = new AutoDeleteFileInputStream(
 				inputFIFOFile);
 			FileOutputStream fileOutputStream = new FileOutputStream(
-				outputFIFOFile);
-		) {
+				outputFIFOFile);) {
+
 			readFileChannel = fileInputStream.getChannel();
 
 			writeFileChannel = fileOutputStream.getChannel();

@@ -84,8 +84,8 @@ public class CacheTemplateResource implements TemplateResource {
 
 		try (Reader reader = _templateResource.getReader();
 			UnsyncCharArrayWriter unsyncCharArrayWriter =
-				new UnsyncCharArrayWriter();
-		) {
+				new UnsyncCharArrayWriter();) {
+
 			char[] buffer = new char[1024];
 
 			int result = -1;
