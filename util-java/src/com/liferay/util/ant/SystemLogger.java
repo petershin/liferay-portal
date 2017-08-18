@@ -40,9 +40,10 @@ public class SystemLogger extends DefaultLogger {
 
 		StringBundler sb = new StringBundler();
 
-		try (UnsyncBufferedReader unsyncBufferedReader =
+		try {
+			UnsyncBufferedReader unsyncBufferedReader =
 				new UnsyncBufferedReader(
-					new UnsyncStringReader(event.getMessage()))) {
+					new UnsyncStringReader(event.getMessage()));
 
 			String line = unsyncBufferedReader.readLine();
 

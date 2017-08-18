@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ReflectionUtil;
-import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -55,8 +54,6 @@ public class JasperVersionDetector {
 	}
 
 	private void _initializeJasperVersion() {
-		JarFile jarFile = null;
-
 		try {
 			Class<?> clazz = getClass();
 
@@ -77,7 +74,7 @@ public class JasperVersionDetector {
 
 			URI jarFileURI = new URI(path.substring(0, pos));
 
-			jarFile = new JarFile(new File(jarFileURI));
+			JarFile jarFile = new JarFile(new File(jarFileURI));
 
 			Manifest manifest = jarFile.getManifest();
 
@@ -119,9 +116,6 @@ public class JasperVersionDetector {
 		}
 		catch (Exception e) {
 			_log.error(e, e);
-		}
-		finally {
-			StreamUtil.cleanUp(jarFile);
 		}
 	}
 

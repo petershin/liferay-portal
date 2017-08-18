@@ -35,8 +35,10 @@ public class XLSTextStripper {
 	public XLSTextStripper(InputStream is) {
 		String text = null;
 
-		try (HSSFWorkbook workbook = new HSSFWorkbook(is)) {
+		try {
 			StringBundler sb = new StringBundler();
+
+			HSSFWorkbook workbook = new HSSFWorkbook(is);
 
 			int numOfSheets = workbook.getNumberOfSheets();
 

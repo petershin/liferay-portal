@@ -5230,46 +5230,40 @@ public class StringUtil {
 
 		StringBundler sb = new StringBundler();
 
-		try (UnsyncBufferedReader unsyncBufferedReader =
-				new UnsyncBufferedReader(new UnsyncStringReader(text))) {
+		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
+			new UnsyncStringReader(text));
 
-			String s = StringPool.BLANK;
+		String s = StringPool.BLANK;
 
-			while ((s = unsyncBufferedReader.readLine()) != null) {
-				if (s.length() == 0) {
-					sb.append(lineSeparator);
+		while ((s = unsyncBufferedReader.readLine()) != null) {
+			if (s.length() == 0) {
+				sb.append(lineSeparator);
 
-					continue;
-				}
+				continue;
+			}
 
-				int lineLength = 0;
+			int lineLength = 0;
 
-				String[] tokens = s.split(StringPool.SPACE);
+			String[] tokens = s.split(StringPool.SPACE);
 
-				for (String token : tokens) {
-					if ((lineLength + token.length() + 1) > width) {
-						if (lineLength > 0) {
+			for (String token : tokens) {
+				if ((lineLength + token.length() + 1) > width) {
+					if (lineLength > 0) {
+						sb.append(lineSeparator);
+					}
+
+					if (token.length() > width) {
+						int pos = token.indexOf(CharPool.OPEN_PARENTHESIS);
+
+						if (pos != -1) {
+							sb.append(token.substring(0, pos + 1));
 							sb.append(lineSeparator);
-						}
 
-						if (token.length() > width) {
-							int pos = token.indexOf(CharPool.OPEN_PARENTHESIS);
+							token = token.substring(pos + 1);
 
-							if (pos != -1) {
-								sb.append(token.substring(0, pos + 1));
-								sb.append(lineSeparator);
+							sb.append(token);
 
-								token = token.substring(pos + 1);
-
-								sb.append(token);
-
-								lineLength = token.length();
-							}
-							else {
-								sb.append(token);
-
-								lineLength = token.length();
-							}
+							lineLength = token.length();
 						}
 						else {
 							sb.append(token);
@@ -5278,20 +5272,25 @@ public class StringUtil {
 						}
 					}
 					else {
-						if (lineLength > 0) {
-							sb.append(StringPool.SPACE);
-
-							lineLength++;
-						}
-
 						sb.append(token);
 
-						lineLength += token.length();
+						lineLength = token.length();
 					}
 				}
+				else {
+					if (lineLength > 0) {
+						sb.append(StringPool.SPACE);
 
-				sb.append(lineSeparator);
+						lineLength++;
+					}
+
+					sb.append(token);
+
+					lineLength += token.length();
+				}
 			}
+
+			sb.append(lineSeparator);
 		}
 
 		return sb.toString();

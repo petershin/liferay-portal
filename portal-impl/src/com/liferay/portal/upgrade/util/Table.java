@@ -399,26 +399,22 @@ public class Table {
 					value = StringPool.BLANK;
 				}
 				else {
-					try (UnsyncBufferedReader unsyncBufferedReader =
-							new UnsyncBufferedReader(
-								clob.getCharacterStream())) {
+					UnsyncBufferedReader unsyncBufferedReader =
+						new UnsyncBufferedReader(clob.getCharacterStream());
 
-						StringBundler sb = new StringBundler();
+					StringBundler sb = new StringBundler();
 
-						String line = null;
+					String line = null;
 
-						while ((line =
-									unsyncBufferedReader.readLine()) != null) {
-
-							if (sb.length() != 0) {
-								sb.append(_SAFE_TABLE_NEWLINE_CHARACTER);
-							}
-
-							sb.append(line);
+					while ((line = unsyncBufferedReader.readLine()) != null) {
+						if (sb.length() != 0) {
+							sb.append(_SAFE_TABLE_NEWLINE_CHARACTER);
 						}
 
-						value = sb.toString();
+						sb.append(line);
 					}
+
+					value = sb.toString();
 				}
 			}
 			catch (Exception e) {

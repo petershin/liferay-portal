@@ -228,9 +228,9 @@ public class Base64 {
 		UnsyncByteArrayInputStream ubais = new UnsyncByteArrayInputStream(
 			bytes);
 
-		ObjectInputStream is = null;
-
 		try {
+			ObjectInputStream is = null;
+
 			if (classLoader == null) {
 				is = new ProtectedObjectInputStream(ubais);
 			}
@@ -245,9 +245,6 @@ public class Base64 {
 			if (!silent) {
 				_log.error(e, e);
 			}
-		}
-		finally {
-			StreamUtil.cleanUp(is, ubais);
 		}
 
 		return null;
