@@ -314,10 +314,10 @@ public class ToolsUtil {
 					continue;
 				}
 
-				Pattern pattern3 = Pattern.compile(
-					"\n(.*)(" +
-						StringUtil.replace(importPackageAndClassName, ".", "\\.") +
-							")\\W");
+				String s = StringUtil.replace(
+					importPackageAndClassName, ".", "\\.");
+
+				Pattern pattern3 = Pattern.compile("\n(.*)(" + s + ")\\W");
 
 				outerLoop:
 				while (true) {
