@@ -567,8 +567,9 @@ app.server.type=@{app.server.type}]]></echo>
 				<try>
 					<test-action />
 				</try>
-
 				<finally>
+					<echo message="#### FINALLY ${job.failure.message} ####" />
+
 					<property name="job.failure.message" value="" />
 
 					<echo>${job.failure.message}</echo>

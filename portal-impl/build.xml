@@ -562,6 +562,8 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 			</then>
 		</if>
 
+		<echo message="#### START Format-Source ####" />
+
 		<java
 			classname="com.liferay.source.formatter.SourceFormatter"
 			classpathref="source.formatter.classpath"
@@ -590,6 +592,8 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 			<arg value="source.print.errors=${source.print.errors}" />
 			<arg value="source.throw.exception=${source.throw.exception}" />
 		</java>
+
+		<echo message="#### FINISH Format-Source ####" />
 
 		<delete file="ServiceBuilder.temp" />
 	</target>
