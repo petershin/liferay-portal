@@ -12,17 +12,33 @@
  * details.
  */
 
-package com.liferay.portal.scripting.executor.constants;
+package com.liferay.gradle.plugins.node.internal.util;
+
+import java.io.File;
 
 /**
- * @author Michael C. Han
+ * @author Andrea Di Giorgi
  */
-public class ScriptingExecutorConstants {
+public class NodePluginUtil {
 
-	public static final String LIFERAY_SCRIPTING_EXECUTOR_CLUSTER_MASTER_ONLY =
-		"Liferay-Scripting-Executor-Cluster-Master-Only";
+	public static File getBinDir(File nodeDir) {
+		File binDir = new File(nodeDir, "bin");
 
-	public static final String LIFERAY_SCRIPTING_EXECUTOR_SCRIPTING_LANGUAGE =
-		"Liferay-Scripting-Executor-Scripting-Language";
+		if (!binDir.exists()) {
+			binDir = nodeDir;
+		}
+
+		return binDir;
+	}
+
+	public static File getNpmDir(File nodeDir) {
+		File nodeModulesDir = new File(nodeDir, "node_modules");
+
+		if (!nodeModulesDir.exists()) {
+			nodeModulesDir = new File(nodeDir, "lib/node_modules");
+		}
+
+		return new File(nodeModulesDir, "npm");
+	}
 
 }
