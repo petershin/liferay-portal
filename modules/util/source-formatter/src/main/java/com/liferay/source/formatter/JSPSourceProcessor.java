@@ -31,9 +31,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		List<String> fileNames = getFileNames(excludes, getIncludes());
 
 		if (fileNames.isEmpty() ||
-			(!sourceFormatterArgs.isFormatCurrentBranch() &&
-			 !sourceFormatterArgs.isFormatLatestAuthor() &&
-			 !sourceFormatterArgs.isFormatLocalChanges())) {
+			!sourceFormatterArgs.isFormatLatestAuthor()) {
 
 			return fileNames;
 		}
