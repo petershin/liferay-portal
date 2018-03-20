@@ -16,7 +16,6 @@
 	<classpathentry excluding="**/.svn/**|.svn/" kind="src" path="modules/core/petra/petra-process/src/main/java"/>
 	<classpathentry excluding="**/.svn/**|.svn/" kind="src" path="modules/core/petra/petra-reflect/src/main/java"/>
 	<classpathentry excluding="**/.svn/**|.svn/" kind="src" path="modules/core/petra/petra-string/src/main/java"/>
-	<classpathentry excluding="**/.svn/**|.svn/" kind="src" path="modules/core/registry-api/src/main/java"/>
 	<classpathentry excluding="**/.svn/**|.svn/" kind="src" path="portal-impl/src"/>
 	<classpathentry excluding="**/.svn/**|.svn/" kind="src" path="portal-impl/test/integration"/>
 	<classpathentry excluding="**/.svn/**|.svn/" kind="src" path="portal-impl/test/unit"/>
@@ -307,5 +306,6 @@
 	<classpathentry kind="lib" path="lib/portal/xuggle-xuggler-noarch.jar"/>
 	<classpathentry kind="lib" path="lib/portal/xz.jar"/>
 	<classpathentry kind="lib" path="lib/portal/yui-compressor.jar"/>
+	<classpathentry kind="lib" path="tmp/lib-pre/com.liferay.registry.api.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

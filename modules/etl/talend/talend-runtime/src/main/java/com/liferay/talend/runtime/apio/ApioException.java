@@ -43,21 +43,19 @@ public class ApioException extends Exception {
 
 	@Override
 	public String toString() {
-		StringBuilder sb = new StringBuilder("ApioException{");
+		StringBuilder sb = new StringBuilder("{");
+
+		if (getCause() != null) {
+			sb.append("cause=");
+			sb.append(getCause());
+			sb.append(", ");
+		}
 
 		sb.append("code=");
 		sb.append(_code);
-		sb.append(", message='");
+		sb.append(", message=");
 		sb.append(getMessage());
-		sb.append('\'');
-
-		if (getCause() != null) {
-			sb.append(", cause='");
-			sb.append(getCause());
-			sb.append('\'');
-		}
-
-		sb.append('}');
+		sb.append("}");
 
 		return sb.toString();
 	}
