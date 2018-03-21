@@ -61,8 +61,9 @@ public class GradleExportedPackageDependenciesCheck extends BaseFileCheck {
 	public void setExportPackageBundleSymbolicNamePrefix(
 		String exportPackageBundleSymbolicNamePrefix) {
 
-		_exportPackageBundleSymbolicNamePrefixes.add(
-			exportPackageBundleSymbolicNamePrefix);
+		Collections.addAll(
+			_exportPackageBundleSymbolicNamePrefixes,
+			StringUtil.split(exportPackageBundleSymbolicNamePrefix));
 	}
 
 	@Override
