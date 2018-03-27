@@ -16,7 +16,6 @@ package com.liferay.gradle.plugins.js.transpiler;
 
 import com.liferay.gradle.plugins.js.transpiler.internal.util.JSTranspilerPluginUtil;
 import com.liferay.gradle.plugins.node.NodePlugin;
-import com.liferay.gradle.plugins.node.tasks.DownloadNodeModuleTask;
 import com.liferay.gradle.plugins.node.tasks.ExecuteNpmTask;
 import com.liferay.gradle.plugins.node.tasks.NpmInstallTask;
 import com.liferay.gradle.util.FileUtil;
@@ -51,9 +50,6 @@ import org.gradle.api.tasks.TaskDependency;
  */
 public class JSTranspilerPlugin implements Plugin<Project> {
 
-	public static final String DOWNLOAD_METAL_CLI_TASK_NAME =
-		"downloadMetalCli";
-
 	public static final String SOY_COMPILE_CONFIGURATION_NAME = "soyCompile";
 
 	public static final String TRANSPILE_JS_TASK_NAME = "transpileJS";
@@ -69,9 +65,6 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 			(NpmInstallTask)GradleUtil.getTask(
 				project, NodePlugin.NPM_INSTALL_TASK_NAME);
 
-		final DownloadNodeModuleTask downloadMetalCliTask =
-			_addTaskDownloadMetalCli(project);
-
 		final Configuration soyCompileConfiguration =
 			_addConfigurationSoyCompile(project);
 
@@ -86,8 +79,7 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 					_addTasksExpandSoyCompileDependencies(
 						transpileJSTask, soyCompileConfiguration);
 
-					_configureTasksTranspileJS(
-						project, downloadMetalCliTask, npmInstallTask);
+					_configureTasksTranspileJS(project, npmInstallTask);
 				}
 
 			});
@@ -101,17 +93,6 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 		configuration.setVisible(false);
 
 		return configuration;
-	}
-
-	private DownloadNodeModuleTask _addTaskDownloadMetalCli(Project project) {
-		DownloadNodeModuleTask downloadNodeModuleTask = GradleUtil.addTask(
-			project, DOWNLOAD_METAL_CLI_TASK_NAME,
-			DownloadNodeModuleTask.class);
-
-		downloadNodeModuleTask.setModuleName("metal-cli");
-		downloadNodeModuleTask.setModuleVersion(_METAL_CLI_VERSION);
-
-		return downloadNodeModuleTask;
 	}
 
 	private void _addTasksExpandSoyCompileDependencies(
@@ -171,8 +152,7 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 	}
 
 	private void _configureTasksTranspileJS(
-		Project project, final DownloadNodeModuleTask downloadMetalCliTask,
-		final ExecuteNpmTask npmInstallTask) {
+		Project project, final ExecuteNpmTask npmInstallTask) {
 
 		TaskContainer taskContainer = project.getTasks();
 
@@ -182,17 +162,14 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(TranspileJSTask transpileJSTask) {
-					_configureTaskTranspileJS(
-						transpileJSTask, downloadMetalCliTask, npmInstallTask);
+					_configureTaskTranspileJS(transpileJSTask, npmInstallTask);
 				}
 
 			});
 	}
 
 	private void _configureTaskTranspileJS(
-		TranspileJSTask transpileJSTask,
-		final DownloadNodeModuleTask downloadMetalCliTask,
-		final ExecuteNpmTask npmInstallTask) {
+		TranspileJSTask transpileJSTask, final ExecuteNpmTask npmInstallTask) {
 
 		FileCollection fileCollection = transpileJSTask.getSourceFiles();
 
@@ -205,7 +182,7 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 			return;
 		}
 
-		transpileJSTask.dependsOn(downloadMetalCliTask, npmInstallTask);
+		transpileJSTask.dependsOn(npmInstallTask);
 
 		transpileJSTask.setScriptFile(
 			new Callable<File>() {
@@ -213,7 +190,8 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 				@Override
 				public File call() throws Exception {
 					return new File(
-						downloadMetalCliTask.getModuleDir(), "index.js");
+						npmInstallTask.getWorkingDir(),
+						"node_modules/metal-cli/index.js");
 				}
 
 			});
@@ -288,7 +266,5 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 
 		return iterator.next();
 	}
-
-	private static final String _METAL_CLI_VERSION = "1.3.1";
 
 }
