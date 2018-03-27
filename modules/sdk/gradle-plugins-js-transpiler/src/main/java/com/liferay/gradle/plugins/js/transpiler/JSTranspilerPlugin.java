@@ -54,14 +54,6 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 	public static final String DOWNLOAD_METAL_CLI_TASK_NAME =
 		"downloadMetalCli";
 
-	/**
-	 * @deprecated As of Judson, moved to {@link
-	 *             JSTranspilerBasePlugin.JS_COMPILE_CONFIGURATION_NAME}
-	 */
-	@Deprecated
-	public static final String JS_COMPILE_CONFIGURATION_NAME =
-		JSTranspilerBasePlugin.JS_COMPILE_CONFIGURATION_NAME;
-
 	public static final String SOY_COMPILE_CONFIGURATION_NAME = "soyCompile";
 
 	public static final String TRANSPILE_JS_TASK_NAME = "transpileJS";
