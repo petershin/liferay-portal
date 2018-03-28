@@ -15,6 +15,9 @@
 package com.liferay.gradle.plugins.js.transpiler;
 
 import com.liferay.gradle.plugins.js.transpiler.internal.util.JSTranspilerPluginUtil;
+import com.liferay.gradle.plugins.js.transpiler.tasks.TranspileJSLiferayModuleConfigGeneratorConfiguration;
+import com.liferay.gradle.plugins.js.transpiler.tasks.TranspileJSMetalCliConfiguration;
+import com.liferay.gradle.plugins.js.transpiler.tasks.TranspileJSTask;
 import com.liferay.gradle.plugins.node.NodePlugin;
 import com.liferay.gradle.plugins.node.tasks.ExecuteNpmTask;
 import com.liferay.gradle.plugins.node.tasks.NpmInstallTask;
@@ -44,6 +47,7 @@ import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.SourceSetOutput;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.TaskDependency;
+import org.gradle.api.tasks.TaskInputs;
 
 /**
  * @author Andrea Di Giorgi
@@ -61,6 +65,8 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 		Task expandJSCompileDependenciesTask = GradleUtil.getTask(
 			project,
 			JSTranspilerBasePlugin.EXPAND_JS_COMPILE_DEPENDENCIES_TASK_NAME);
+		Configuration jsCompileConfiguration = GradleUtil.getConfiguration(
+			project, JSTranspilerBasePlugin.JS_COMPILE_CONFIGURATION_NAME);
 		final NpmInstallTask npmInstallTask =
 			(NpmInstallTask)GradleUtil.getTask(
 				project, NodePlugin.NPM_INSTALL_TASK_NAME);
@@ -69,7 +75,7 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 			_addConfigurationSoyCompile(project);
 
 		final TranspileJSTask transpileJSTask = _addTaskTranspileJS(
-			expandJSCompileDependenciesTask);
+			expandJSCompileDependenciesTask, jsCompileConfiguration);
 
 		project.afterEvaluate(
 			new Action<Project>() {
@@ -106,6 +112,9 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 		Iterable<TaskDependency> taskDependencies =
 			JSTranspilerPluginUtil.getTaskDependencies(configuration);
 
+		TranspileJSMetalCliConfiguration transpileJSMetalCliConfiguration =
+			transpileJSTask.getMetalCli();
+
 		for (File file : configuration) {
 			Copy copy = JSTranspilerPluginUtil.addTaskExpandCompileDependency(
 				project, file, project.getBuildDir(),
@@ -119,12 +128,13 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 
 			path += "/META-INF/resources/**/*.soy";
 
-			transpileJSTask.soyDependency(path);
+			transpileJSMetalCliConfiguration.soyDependency(path);
 		}
 	}
 
 	private TranspileJSTask _addTaskTranspileJS(
-		Task expandJSCompileDependenciesTask) {
+		Task expandJSCompileDependenciesTask,
+		Configuration jsCompileConfiguration) {
 
 		Project project = expandJSCompileDependenciesTask.getProject();
 
@@ -134,6 +144,17 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 		transpileJSTask.dependsOn(expandJSCompileDependenciesTask);
 		transpileJSTask.setDescription("Transpiles JS files.");
 		transpileJSTask.setGroup(BasePlugin.BUILD_GROUP);
+
+		TranspileJSMetalCliConfiguration transpileJSMetalCliConfiguration =
+			transpileJSTask.getMetalCli();
+
+		transpileJSMetalCliConfiguration.soyDependency(
+			"node_modules/clay*/src/**/*.soy",
+			"node_modules/metal*/src/**/*.soy");
+
+		TaskInputs taskInputs = transpileJSTask.getInputs();
+
+		taskInputs.files(jsCompileConfiguration);
 
 		PluginContainer pluginContainer = project.getPlugins();
 
@@ -169,12 +190,20 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 	}
 
 	private void _configureTaskTranspileJS(
-		TranspileJSTask transpileJSTask, final ExecuteNpmTask npmInstallTask) {
+		TranspileJSTask transpileJSTask, ExecuteNpmTask npmInstallTask) {
 
 		FileCollection fileCollection = transpileJSTask.getSourceFiles();
 
-		if (!transpileJSTask.isEnabled() ||
-			(transpileJSTask.isSkipWhenEmpty() && fileCollection.isEmpty())) {
+		TranspileJSLiferayModuleConfigGeneratorConfiguration
+			transpileJSLiferayModuleConfigGeneratorConfiguration =
+				transpileJSTask.getLiferayModuleConfigGenerator();
+
+		File moduleConfigFile =
+			transpileJSLiferayModuleConfigGeneratorConfiguration.
+				getModuleConfigFile();
+
+		if (!transpileJSTask.isEnabled() || fileCollection.isEmpty() ||
+			(moduleConfigFile == null) || !moduleConfigFile.exists()) {
 
 			transpileJSTask.setDependsOn(Collections.emptySet());
 			transpileJSTask.setEnabled(false);
@@ -183,38 +212,6 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 		}
 
 		transpileJSTask.dependsOn(npmInstallTask);
-
-		transpileJSTask.setScriptFile(
-			new Callable<File>() {
-
-				@Override
-				public File call() throws Exception {
-					return new File(
-						npmInstallTask.getWorkingDir(),
-						"node_modules/metal-cli/index.js");
-				}
-
-			});
-
-		transpileJSTask.soyDependency(
-			new Callable<String>() {
-
-				@Override
-				public String call() throws Exception {
-					return npmInstallTask.getWorkingDir() +
-						"/node_modules/clay*/src/**/*.soy";
-				}
-
-			},
-			new Callable<String>() {
-
-				@Override
-				public String call() throws Exception {
-					return npmInstallTask.getWorkingDir() +
-						"/node_modules/metal*/src/**/*.soy";
-				}
-
-			});
 	}
 
 	private void _configureTaskTranspileJSForJavaPlugin(
@@ -227,7 +224,21 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 		final SourceSet sourceSet = GradleUtil.getSourceSet(
 			project, SourceSet.MAIN_SOURCE_SET_NAME);
 
-		transpileJSTask.setSourceDir(
+		final SourceSetOutput sourceSetOutput = sourceSet.getOutput();
+
+		transpileJSTask.setDestinationDir(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					return new File(
+						sourceSetOutput.getResourcesDir(),
+						"META-INF/resources");
+				}
+
+			});
+
+		transpileJSTask.setWorkingDir(
 			new Callable<File>() {
 
 				@Override
@@ -239,16 +250,18 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 
 			});
 
-		transpileJSTask.setWorkingDir(
+		TranspileJSLiferayModuleConfigGeneratorConfiguration
+			transpileJSLiferayModuleConfigGeneratorConfiguration =
+				transpileJSTask.getLiferayModuleConfigGenerator();
+
+		transpileJSLiferayModuleConfigGeneratorConfiguration.setOutputFile(
 			new Callable<File>() {
 
 				@Override
 				public File call() throws Exception {
-					SourceSetOutput sourceSetOutput = sourceSet.getOutput();
-
 					return new File(
 						sourceSetOutput.getResourcesDir(),
-						"META-INF/resources");
+						"META-INF/config.json");
 				}
 
 			});
