@@ -2,4 +2,6 @@ Bundle-Description: The JS Transpiler Gradle plugin lets you run metal-cli to bu
 Bundle-Name: Liferay Gradle Plugins JS Transpiler
 Bundle-SymbolicName: com.liferay.gradle.plugins.js.transpiler
 Bundle-Version: 2.4.12
-Export-Package: com.liferay.gradle.plugins.js.transpiler
+Export-Package:\
+	com.liferay.gradle.plugins.js.transpiler,\
+	com.liferay.gradle.plugins.js.transpiler.tasks
