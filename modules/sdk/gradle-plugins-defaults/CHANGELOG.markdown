@@ -3158,6 +3158,11 @@ projects defined in the `testIntegrationCompile` configuration does not have a
 ### Changed
 - [LPS-74544]: Update the [Liferay Gradle Plugins] dependency to version 3.9.22.
 
+## 5.3.56 - 2018-03-30
+
+### Added
+- [LPS-75049]: Add support for `compileOnly` configuration.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
@@ -3419,6 +3424,7 @@ projects defined in the `testIntegrationCompile` configuration does not have a
 [LPS-75010]: https://issues.liferay.com/browse/LPS-75010
 [LPS-75039]: https://issues.liferay.com/browse/LPS-75039
 [LPS-75047]: https://issues.liferay.com/browse/LPS-75047
+[LPS-75049]: https://issues.liferay.com/browse/LPS-75049
 [LPS-75096]: https://issues.liferay.com/browse/LPS-75096
 [LPS-75100]: https://issues.liferay.com/browse/LPS-75100
 [LPS-75175]: https://issues.liferay.com/browse/LPS-75175

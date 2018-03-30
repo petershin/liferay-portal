@@ -123,7 +123,6 @@ import java.util.regex.Pattern;
 import javax.xml.bind.DatatypeConverter;
 import javax.xml.parsers.DocumentBuilder;
 
-import nebula.plugin.extraconfigurations.OptionalBasePlugin;
 import nebula.plugin.extraconfigurations.ProvidedBasePlugin;
 
 import org.gradle.StartParameter;
@@ -1300,15 +1299,20 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 						return content;
 					}
 
-					String configuration =
-						ProvidedBasePlugin.getPROVIDED_CONFIGURATION_NAME() +
-							" ";
+					StringBuilder sb = new StringBuilder();
+
+					sb.append('(');
+					sb.append(JavaPlugin.COMPILE_ONLY_CONFIGURATION_NAME);
+					sb.append('|');
+					sb.append(
+						ProvidedBasePlugin.getPROVIDED_CONFIGURATION_NAME());
+					sb.append(") ");
+					sb.append(Pattern.quote(_getProjectDependency(project)));
 
 					return content.replaceAll(
-						Pattern.quote(
-							configuration + _getProjectDependency(project)),
-						Matcher.quoteReplacement(
-							configuration +
+						sb.toString(),
+						"$1 " +
+							Matcher.quoteReplacement(
 								_getModuleDependency(project, true)));
 				}
 
@@ -1439,7 +1443,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		GradleUtil.applyPlugin(project, IdeaPlugin.class);
 		GradleUtil.applyPlugin(project, JSDocPlugin.class);
 		GradleUtil.applyPlugin(project, MavenPlugin.class);
-		GradleUtil.applyPlugin(project, OptionalBasePlugin.class);
 		GradleUtil.applyPlugin(project, PmdPlugin.class);
 		GradleUtil.applyPlugin(project, ProvidedBasePlugin.class);
 
