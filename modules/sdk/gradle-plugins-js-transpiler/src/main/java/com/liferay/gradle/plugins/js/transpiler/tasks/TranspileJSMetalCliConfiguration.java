@@ -55,9 +55,13 @@ public class TranspileJSMetalCliConfiguration {
 		return GradleUtil.toString(_modules);
 	}
 
-	@Input
 	public SourceMaps getSourceMaps() {
 		return _sourceMaps;
+	}
+
+	@Input
+	public String getSourceMapsValue() {
+		return _sourceMaps.toString();
 	}
 
 	public List<String> getSoyDependencies() {
