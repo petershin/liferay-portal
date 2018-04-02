@@ -822,10 +822,13 @@ information.
 								<isset property="@{outputproperty}" />
 								<then>
 									<local name="outputproperty" />
+									<local name="outputpropertyerror" />
 
 									<propertycopy from="@{outputproperty}" name="outputproperty" />
+									<propertycopy from="@{outputproperty}.error" name="outputpropertyerror" />
 
 									<echo message="${outputproperty}" />
+									<echo message="${outputpropertyerror}" />
 								</then>
 							</if>
 						</finally>
