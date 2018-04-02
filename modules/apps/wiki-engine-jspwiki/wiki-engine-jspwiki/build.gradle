@@ -7,7 +7,6 @@ dependencies {
 	compileInclude group: "org.freshcookies", name: "freshcookies-security", version: "0.60"
 	compileInclude group: "oro", name: "oro", version: "2.0.8"
 
-	provided fileTree(dir: "../../../../lib/portal", includes: ["ecs.jar", "freshcookies-security.jar"])
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.util.taglib", version: "default"
@@ -18,4 +17,6 @@ dependencies {
 	compileOnly project(":apps:collaboration:wiki:wiki-api")
 	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-string")
+
+	provided fileTree(dir: "../../../../lib/portal", includes: ["ecs.jar", "freshcookies-security.jar"])
 }
