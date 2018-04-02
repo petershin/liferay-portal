@@ -168,6 +168,8 @@ message.
 	</target>
 
 	<target name="clean">
+		<delete dir="modules/.gradle" quiet="true" />
+
 		<gradle-execute dir="modules" task="clean">
 			<arg value="--parallel" />
 			<arg value="-Dbuild.profile=portal-pre" />
