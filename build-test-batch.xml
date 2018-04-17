@@ -3449,6 +3449,14 @@ information. Make sure to commit in all build services results.
 
 				<var name="format.current.branch" value="true" />
 
+				<echo>#######################################################</echo>
+				<echo message="source-formatter${file.separator}" />
+				<echo>#######################################################</echo>
+				<echo message="source-formatter/" />
+				<echo>#######################################################</echo>
+				<echo message="${git.diff}" />
+				<echo>#######################################################</echo>
+
 				<if>
 					<contains string="${git.diff}" substring="source-formatter/" />
 					<then>
