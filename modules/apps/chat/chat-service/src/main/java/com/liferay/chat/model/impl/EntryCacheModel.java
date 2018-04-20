@@ -62,7 +62,7 @@ public class EntryCacheModel implements CacheModel<Entry>, Externalizable {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(15);
 
 		sb.append("{entryId=");
 		sb.append(entryId);
@@ -76,6 +76,8 @@ public class EntryCacheModel implements CacheModel<Entry>, Externalizable {
 		sb.append(content);
 		sb.append(", flag=");
 		sb.append(flag);
+		sb.append(", test=");
+		sb.append(test);
 		sb.append("}");
 
 		return sb.toString();
@@ -98,6 +100,7 @@ public class EntryCacheModel implements CacheModel<Entry>, Externalizable {
 		}
 
 		entryImpl.setFlag(flag);
+		entryImpl.setTest(test);
 
 		entryImpl.resetOriginalValues();
 
@@ -116,6 +119,8 @@ public class EntryCacheModel implements CacheModel<Entry>, Externalizable {
 		content = objectInput.readUTF();
 
 		flag = objectInput.readInt();
+
+		test = objectInput.readInt();
 	}
 
 	@Override
@@ -137,6 +142,8 @@ public class EntryCacheModel implements CacheModel<Entry>, Externalizable {
 		}
 
 		objectOutput.writeInt(flag);
+
+		objectOutput.writeInt(test);
 	}
 
 	public long entryId;
@@ -145,4 +152,5 @@ public class EntryCacheModel implements CacheModel<Entry>, Externalizable {
 	public long toUserId;
 	public String content;
 	public int flag;
+	public int test;
 }

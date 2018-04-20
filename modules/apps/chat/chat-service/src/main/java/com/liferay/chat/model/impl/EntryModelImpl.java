@@ -67,7 +67,8 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 			{ "fromUserId", Types.BIGINT },
 			{ "toUserId", Types.BIGINT },
 			{ "content", Types.VARCHAR },
-			{ "flag", Types.INTEGER }
+			{ "flag", Types.INTEGER },
+			{ "test", Types.INTEGER }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -78,9 +79,10 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 		TABLE_COLUMNS_MAP.put("toUserId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("content", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("flag", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("test", Types.INTEGER);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table Chat_Entry (entryId LONG not null primary key,createDate LONG,fromUserId LONG,toUserId LONG,content VARCHAR(1000) null,flag INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table Chat_Entry (entryId LONG not null primary key,createDate LONG,fromUserId LONG,toUserId LONG,content VARCHAR(1000) null,flag INTEGER,test INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table Chat_Entry";
 	public static final String ORDER_BY_JPQL = " ORDER BY entry.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY Chat_Entry.createDate DESC";
@@ -146,6 +148,7 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 		attributes.put("toUserId", getToUserId());
 		attributes.put("content", getContent());
 		attributes.put("flag", getFlag());
+		attributes.put("test", getTest());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -189,6 +192,12 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 
 		if (flag != null) {
 			setFlag(flag);
+		}
+
+		Integer test = (Integer)attributes.get("test");
+
+		if (test != null) {
+			setTest(test);
 		}
 	}
 
@@ -335,6 +344,16 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 		_flag = flag;
 	}
 
+	@Override
+	public int getTest() {
+		return _test;
+	}
+
+	@Override
+	public void setTest(int test) {
+		_test = test;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -372,6 +391,7 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 		entryImpl.setToUserId(getToUserId());
 		entryImpl.setContent(getContent());
 		entryImpl.setFlag(getFlag());
+		entryImpl.setTest(getTest());
 
 		entryImpl.resetOriginalValues();
 
@@ -481,12 +501,14 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 
 		entryCacheModel.flag = getFlag();
 
+		entryCacheModel.test = getTest();
+
 		return entryCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(15);
 
 		sb.append("{entryId=");
 		sb.append(getEntryId());
@@ -500,6 +522,8 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 		sb.append(getContent());
 		sb.append(", flag=");
 		sb.append(getFlag());
+		sb.append(", test=");
+		sb.append(getTest());
 		sb.append("}");
 
 		return sb.toString();
@@ -507,7 +531,7 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(22);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.chat.model.Entry");
@@ -537,6 +561,10 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 			"<column><column-name>flag</column-name><column-value><![CDATA[");
 		sb.append(getFlag());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>test</column-name><column-value><![CDATA[");
+		sb.append(getTest());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -560,6 +588,7 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 	private String _content;
 	private String _originalContent;
 	private int _flag;
+	private int _test;
 	private long _columnBitmask;
 	private Entry _escapedModel;
 }

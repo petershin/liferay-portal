@@ -4,7 +4,8 @@ create table Chat_Entry (
 	fromUserId LONG,
 	toUserId LONG,
 	content VARCHAR(1000) null,
-	flag INTEGER
+	flag INTEGER,
+	test INTEGER
 );
 
 create table Chat_Status (
