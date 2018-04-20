@@ -173,6 +173,20 @@ public interface EntryModel extends BaseModel<Entry> {
 	 */
 	public void setFlag(int flag);
 
+	/**
+	 * Returns the test of this entry.
+	 *
+	 * @return the test of this entry
+	 */
+	public int getTest();
+
+	/**
+	 * Sets the test of this entry.
+	 *
+	 * @param test the test of this entry
+	 */
+	public void setTest(int test);
+
 	@Override
 	public boolean isNew();
 

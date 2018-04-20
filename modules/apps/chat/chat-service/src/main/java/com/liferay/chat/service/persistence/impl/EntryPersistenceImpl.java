@@ -4859,6 +4859,7 @@ public class EntryPersistenceImpl extends BasePersistenceImpl<Entry>
 		entryImpl.setToUserId(entry.getToUserId());
 		entryImpl.setContent(entry.getContent());
 		entryImpl.setFlag(entry.getFlag());
+		entryImpl.setTest(entry.getTest());
 
 		return entryImpl;
 	}

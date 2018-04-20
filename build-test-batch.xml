@@ -3361,7 +3361,7 @@ ${output.content}</echo>
 				<replaceregexp
 					byline="true"
 					file="${project.dir}/build.services.output.txt"
-					match="Writing \/.+\/docroot\/WEB-INF\/src\/service\.properties"
+					match="Writing .+\/docroot\/WEB-INF\/src\/service\.properties"
 					replace=""
 				/>
 				<replace
@@ -3388,6 +3388,8 @@ ${output.content}</echo>
 						<exec executable="git">
 							<arg value="diff" />
 						</exec>
+
+						<echo message="${build.services.output.txt.content}" />
 
 						<fail>
 .
