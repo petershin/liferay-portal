@@ -62,6 +62,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 		attributes.put("toUserId", getToUserId());
 		attributes.put("content", getContent());
 		attributes.put("flag", getFlag());
+		attributes.put("test", getTest());
 
 		return attributes;
 	}
@@ -102,6 +103,12 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 
 		if (flag != null) {
 			setFlag(flag);
+		}
+
+		Integer test = (Integer)attributes.get("test");
+
+		if (test != null) {
+			setTest(test);
 		}
 	}
 
@@ -193,6 +200,16 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	@Override
 	public Serializable getPrimaryKeyObj() {
 		return _entry.getPrimaryKeyObj();
+	}
+
+	/**
+	* Returns the test of this entry.
+	*
+	* @return the test of this entry
+	*/
+	@Override
+	public int getTest() {
+		return _entry.getTest();
 	}
 
 	/**
@@ -339,6 +356,16 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		_entry.setPrimaryKeyObj(primaryKeyObj);
+	}
+
+	/**
+	* Sets the test of this entry.
+	*
+	* @param test the test of this entry
+	*/
+	@Override
+	public void setTest(int test) {
+		_entry.setTest(test);
 	}
 
 	/**

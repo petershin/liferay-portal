@@ -19,6 +19,7 @@
 		<column name="toUserId" type="long" />
 		<column name="content" type="String" />
 		<column name="flag" type="int" />
+		<column name="test" type="int" />
 
 		<!-- Order -->
 
