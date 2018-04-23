@@ -567,6 +567,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	private void _format(String fileName) throws Exception {
+		System.out.println("FORMAT:" + _isMatchPath(fileName) + ":" + fileName);
+
 		if (!_isMatchPath(fileName)) {
 			addProgressStatusUpdate(
 				new ProgressStatusUpdate(ProgressStatus.CHECK_FILE_COMPLETED));
@@ -633,6 +635,32 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 				return true;
 			}
 		}
+
+		for (String pattern : getIncludes()) {
+			System.out.println(
+				"BAD MATCH:" + pattern + ":" + _normalizePattern(pattern) +
+					":" + fileName);
+		}
+
+		System.out.println("DEBUG:separatorChar" + File.separatorChar);
+		System.out.println("DEBUG:separator" + File.separator);
+
+		String s = "**/content/Language*.properties";
+
+		System.out.println("DEBUG:" + s);
+
+		String a = StringUtil.replace(
+			s,
+			new String[] {StringPool.BACK_SLASH, StringPool.SLASH},
+			new String[] {File.separator, File.separator});
+
+		System.out.println("DEBUG:" + a);
+
+		String b = s.replace(CharPool.SLASH, File.separatorChar);
+
+		b = b.replace(CharPool.BACK_SLASH, File.separatorChar);
+
+		System.out.println("DEBUG:" + b);
 
 		return false;
 	}
