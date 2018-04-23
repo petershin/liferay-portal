@@ -23,7 +23,19 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected List<String> doGetFileNames() throws Exception {
-		return getFileNames(new String[] {"**/docroot/dtd/**"}, getIncludes());
+		List<String> l = sourceFormatterArgs.getRecentChangesFileNames();
+
+		for (String s : l) {
+			System.out.println("RECENT:" + s);
+		}
+
+		l = getFileNames(new String[] {"**/docroot/dtd/**"}, getIncludes());
+
+		for (String s : l) {
+			System.out.println("FILTERED:" + s);
+		}
+
+		return l;
 	}
 
 	@Override

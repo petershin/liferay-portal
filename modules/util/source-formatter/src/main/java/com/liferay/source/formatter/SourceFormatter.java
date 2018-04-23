@@ -128,9 +128,14 @@ public class SourceFormatter {
 				sourceFormatterArgs.setGitWorkingBranchName(
 					gitWorkingBranchName);
 
-				sourceFormatterArgs.setRecentChangesFileNames(
-					GitUtil.getCurrentBranchFileNames(
-						baseDirName, gitWorkingBranchName, false));
+				List<String> fileNames = GitUtil.getCurrentBranchFileNames(
+					baseDirName, gitWorkingBranchName, false);
+
+				for (String s : fileNames) {
+					System.out.println("#### " + s);
+				}
+
+				sourceFormatterArgs.setRecentChangesFileNames(fileNames);
 			}
 			else if (formatLatestAuthor) {
 				sourceFormatterArgs.setRecentChangesFileNames(
