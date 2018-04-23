@@ -38,7 +38,9 @@ public class PropertiesLanguageKeysCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
-		if (!fileName.endsWith("/content/Language.properties")) {
+		System.out.println("PropertiesLanguageKeysCheck: " + absolutePath);
+
+		if (!absolutePath.endsWith("/content/Language.properties")) {
 			return content;
 		}
 
