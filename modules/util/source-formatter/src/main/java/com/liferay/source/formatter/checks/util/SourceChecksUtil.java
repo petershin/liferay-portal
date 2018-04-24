@@ -274,6 +274,8 @@ public class SourceChecksUtil {
 					attributeName, CheckType.SOURCE_CHECK,
 					clazz.getSimpleName(), propertiesMap);
 
+				System.out.println("ATTRIBUTE:" + attributeName + ":" + value);
+
 				if (Validator.isNotNull(value)) {
 					BeanUtils.setProperty(sourceCheck, attributeName, value);
 				}
