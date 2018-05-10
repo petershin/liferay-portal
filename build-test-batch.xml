@@ -3435,26 +3435,19 @@ ${output.content}</echo>
 				<if>
 					<contains string="${build.services.output.txt.content}" substring="Writing " />
 					<then>
-						<exec executable="git" output="${project.dir}/build.services.diff.txt">
+						<exec executable="git" outputproperty="build.services.diff">
 							<arg value="diff" />
-							<arg value="&quot;:!*/*-portlet-service.jar&quot;" />
-							<arg value="&quot;:!*/src/main/resources/service.properties&quot;" />
-							<arg value="&quot;:!*/src/service.properties&quot;" />
+							<arg value="&quot;:(exclude)*/*-portlet-service.jar&quot;" />
+							<arg value="&quot;:(exclude)*/src/main/resources/service.properties&quot;" />
+							<arg value="&quot;:(exclude)*/src/service.properties&quot;" />
 						</exec>
-
-						<loadfile
-							property="build.services.diff.txt.content"
-							srcfile="${project.dir}/build.services.diff.txt"
-						/>
-
-						<delete file="${project.dir}/build.services.diff.txt" />
 
 						<if>
 							<not>
-								<equals arg1="${build.services.diff.txt.content}" arg2="" />
+								<equals arg1="${build.services.diff}" arg2="" />
 							</not>
 							<then>
-								<echo message="${build.services.diff.txt.content}" />
+								<echo message="${build.services.diff}" />
 
 								<fail>
 .
