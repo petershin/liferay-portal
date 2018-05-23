@@ -75,7 +75,8 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 			_addConfigurationSoyCompile(project);
 
 		final TranspileJSTask transpileJSTask = _addTaskTranspileJS(
-			expandJSCompileDependenciesTask, jsCompileConfiguration);
+			expandJSCompileDependenciesTask, npmInstallTask,
+			jsCompileConfiguration);
 
 		project.afterEvaluate(
 			new Action<Project>() {
@@ -133,7 +134,7 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 	}
 
 	private TranspileJSTask _addTaskTranspileJS(
-		Task expandJSCompileDependenciesTask,
+		Task expandJSCompileDependenciesTask, NpmInstallTask npmInstallTask,
 		Configuration jsCompileConfiguration) {
 
 		Project project = expandJSCompileDependenciesTask.getProject();
@@ -148,9 +149,11 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 		TranspileJSMetalCliConfiguration transpileJSMetalCliConfiguration =
 			transpileJSTask.getMetalCli();
 
+		File workingDir = npmInstallTask.getWorkingDir();
+
 		transpileJSMetalCliConfiguration.soyDependency(
-			"node_modules/clay*/src/**/*.soy",
-			"node_modules/metal*/src/**/*.soy");
+			new File(workingDir, "node_modules/clay*/src/**/*.soy"),
+			new File(workingDir, "node_modules/metal*/src/**/*.soy"));
 
 		TaskInputs taskInputs = transpileJSTask.getInputs();
 
