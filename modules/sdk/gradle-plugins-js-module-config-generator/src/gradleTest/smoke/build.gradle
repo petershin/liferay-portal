@@ -3,10 +3,6 @@ apply plugin: "java"
 
 task runGradleTest
 
-configJSModules {
-	include "**/*.js"
-}
-
 runGradleTest {
 	dependsOn classes
 
