@@ -1,10 +1,6 @@
 sourceCompatibility = "1.8"
 targetCompatibility = "1.8"
 
-configJSModules {
-	include "**/*.js*"
-}
-
 dependencies {
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
@@ -30,5 +26,5 @@ dependencies {
 }
 
 transpileJS {
-	srcIncludes = "**/*.js"
+	metalCli.srcIncludes = "**/*.js"
 }
