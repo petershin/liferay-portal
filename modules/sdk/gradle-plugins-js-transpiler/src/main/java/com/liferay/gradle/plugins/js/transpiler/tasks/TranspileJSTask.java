@@ -348,7 +348,15 @@ public class TranspileJSTask extends ExecuteNodeTask {
 		}
 
 		args.add("--src");
-		args.addAll(_transpileJSMetalCliConfiguration.getSrcIncludes());
+
+		List<String> srcIncludes =
+			_transpileJSMetalCliConfiguration.getSrcIncludes();
+
+		for (String srcInclude : srcIncludes) {
+			File file = new File(destinationDir, srcInclude);
+
+			args.add(FileUtil.getAbsolutePath(file));
+		}
 
 		return args;
 	}
