@@ -1,11 +1,13 @@
 import aQute.bnd.osgi.Domain
 
+import com.liferay.gradle.plugins.tasks.ExecuteBndTask
 import com.liferay.gradle.util.copy.RenameDependencyClosure
 
 import org.dm.gradle.plugins.bundle.JarBuilder
 
 task copySystemPackagesExtraLibs(type: Copy)
 task copySystemPackagesExtraManifest(type: Copy)
+task executeBnd(type: ExecuteBndTask)
 
 String buildProfile = System.properties["build.profile"]
 
@@ -21,17 +23,13 @@ if (!System.getenv("JENKINS_HOME") || !systemPackagesExtraManifestFile.exists())
 		dependsOn copySystemPackagesExtraLibs
 
 		doLast {
-			Clock clock = new Clock()
-
-			JarBuilder jarBuilder = bundle.jarBuilderFactory.create()
-
-			jarBuilder.withBase projectDir
-
 			Map<String, String> properties = liferayOSGi.bundleDefaultInstructions
 
 			properties["-check"] = "imports"
 			properties["-fixupmessages"] = '"Classpath is empty. Private-Package ...";is:=ignore'
 			properties["-include"] = "system.packages.extra.bnd"
+			properties["Bundle-SymbolicName"] = "system.packages.extra"
+			properties["Bundle-Version"] = project.version
 
 			File portalImplJarFile = configurations.compileOnly.find {
 				it.name.startsWith "com.liferay.portal.impl-"
@@ -41,31 +39,20 @@ if (!System.getenv("JENKINS_HOME") || !systemPackagesExtraManifestFile.exists())
 
 			properties["Provide-Capability"] = portalImplJarDomain.provideCapability.toString()
 
-			jarBuilder.withClasspath new File[0]
-			jarBuilder.withFailOnError true
-			jarBuilder.withName "system.packages.extra"
-			jarBuilder.withProperties properties
-			jarBuilder.withResources new File[0]
+			executeBnd.properties properties
 
-			jarBuilder.withSourcepath sourceSets.main.allSource.srcDirs.findAll {
+			Set<File> sourceSetsSrcDirs = sourceSets.main.allSource.srcDirs.findAll {
 				it.directory
 			}
 
-			jarBuilder.withTrace false
-			jarBuilder.withVersion project.version
+			executeBnd.setSourceDirs files(sourceSetsSrcDirs)
 
 			systemPackagesExtraManifestFile.parentFile.mkdirs()
 
-			systemPackagesExtraManifestFile.withOutputStream {
-				jarBuilder.writeManifestTo it
-			}
-
-			logger.lifecycle "Building the system.packages.extra.mf file took {}.", clock.time
+			executeBnd.outputFile systemPackagesExtraManifestFile
 		}
-	}
 
-	jar {
-		dependsOn buildSystemPackagesExtraManifest
+		finalizedBy executeBnd
 	}
 }
 else {
@@ -112,6 +99,14 @@ dependencies {
 	compileOnly project(":core:portal-app-license-api")
 	compileOnly project(":core:registry-api")
 	compileOnly project(":core:registry-impl")
+}
+
+executeBnd {
+	baseDir = projectDir
+	classpath = files()
+	failOnError = true
+	resourceDirs = files()
+	writeManifest = true
 }
 
 liferay {
