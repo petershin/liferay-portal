@@ -383,35 +383,6 @@ mariadb.executable=${mariadb.executable}]]></echo>
 		</sequential>
 	</macrodef>
 
-	<target name="lib-version-builder">
-		<run-batch-test>
-			<test-action>
-				<antcall target="compile" />
-
-				<antcall target="install-portal-snapshots" />
-
-				<ant dir="portal-impl" target="build-lib-versions" />
-
-				<exec executable="git" failonerror="true" outputproperty="git.diff">
-					<arg value="diff" />
-					<arg value="--name-only" />
-				</exec>
-
-				<if>
-					<contains string="${git.diff}" substring="lib${file.separator}versions" />
-					<then>
-						<fail>
-.
-
-Detected build lib versions changes. Please run 'ant build-lib-versions' from
-'portal-impl' and commit the changes.
-						</fail>
-					</then>
-				</if>
-			</test-action>
-		</run-batch-test>
-	</target>
-
 	<macrodef name="merge-test-results">
 		<sequential>
 			<antcall target="merge-test-results" />
@@ -3008,6 +2979,35 @@ app.server.type=@{app.server.type}]]></echo>
 
 	<target name="legacy-functional-bundle-tomcat-sybase">
 		<run-legacy-database-dump database.type="sybase" />
+	</target>
+
+	<target name="lib-version-builder">
+		<run-batch-test>
+			<test-action>
+				<antcall target="compile" />
+
+				<antcall target="install-portal-snapshots" />
+
+				<ant dir="portal-impl" target="build-lib-versions" />
+
+				<exec executable="git" failonerror="true" outputproperty="git.diff">
+					<arg value="diff" />
+					<arg value="--name-only" />
+				</exec>
+
+				<if>
+					<contains string="${git.diff}" substring="lib${file.separator}versions" />
+					<then>
+						<fail>
+.
+
+Detected build lib versions changes. Please run 'ant build-lib-versions' from
+'portal-impl' and commit the changes.
+						</fail>
+					</then>
+				</if>
+			</test-action>
+		</run-batch-test>
 	</target>
 
 	<target name="lpkg-controller-jdk8">
