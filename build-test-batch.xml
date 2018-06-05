@@ -2981,7 +2981,7 @@ app.server.type=@{app.server.type}]]></echo>
 		<run-legacy-database-dump database.type="sybase" />
 	</target>
 
-	<target name="lib-version-builder">
+	<target name="lib-version-builder-jdk8">
 		<run-batch-test>
 			<test-action>
 				<ant dir="portal-impl" target="build-lib-versions" />
