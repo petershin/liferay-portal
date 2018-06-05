@@ -16,6 +16,9 @@ package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -23,6 +26,10 @@ import java.util.regex.Pattern;
  * @author Peter Shin
  */
 public class CDNCheck extends BaseFileCheck {
+
+	public void setAllowedURLs(String allowedURLs) {
+		Collections.addAll(_allowedURLs, StringUtil.split(allowedURLs));
+	}
 
 	@Override
 	protected String doProcess(
@@ -37,6 +44,10 @@ public class CDNCheck extends BaseFileCheck {
 
 		while (matcher.find()) {
 			String match = matcher.group();
+
+			if (_isAllowedURL(match)) {
+				continue;
+			}
 
 			String s = matcher.group(2);
 
@@ -56,6 +67,17 @@ public class CDNCheck extends BaseFileCheck {
 		return content;
 	}
 
+	private boolean _isAllowedURL(String s) {
+		for (String allowedURL : _allowedURLs) {
+			if (s.contains(allowedURL)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private final List<String> _allowedURLs = new ArrayList<>();
 	private final Pattern _cdnPattern = Pattern.compile(
 		"\\S*(cdn\\.lfrs\\.sl\\/(\\w+)\\.liferay\\.com)\\S*");
 
