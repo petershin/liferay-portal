@@ -910,6 +910,7 @@ public class ModulesStructureTest {
 		}
 
 		boolean privateRepo = _isInPrivateModulesDir(dirPath);
+		boolean readOnlyRepo = _isInGitRepoReadOnly(dirPath);
 
 		Path buildGradlePath = dirPath.resolve("build.gradle");
 		Path gradlePropertiesPath = dirPath.resolve("gradle.properties");
@@ -917,9 +918,12 @@ public class ModulesStructureTest {
 
 		String buildGradle = ModulesStructureTestUtil.read(buildGradlePath);
 
-		Assert.assertEquals(
-			"Incorrect " + buildGradlePath,
-			_getGitRepoBuildGradle(dirPath, buildGradleTemplate), buildGradle);
+		if (!privateRepo && !readOnlyRepo) {
+			Assert.assertEquals(
+				"Incorrect " + buildGradlePath,
+				_getGitRepoBuildGradle(dirPath, buildGradleTemplate),
+				buildGradle);
+		}
 
 		String gradleProperties = ModulesStructureTestUtil.read(
 			gradlePropertiesPath);
@@ -1084,9 +1088,11 @@ public class ModulesStructureTest {
 					"apply from: \"settings-ext.gradle\"");
 		}
 
-		Assert.assertEquals(
-			"Incorrect " + settingsGradlePath, settingsGradleTemplate,
-			settingsGradle);
+		if (!privateRepo && !readOnlyRepo) {
+			Assert.assertEquals(
+				"Incorrect " + settingsGradlePath, settingsGradleTemplate,
+				settingsGradle);
+		}
 	}
 
 	private void _testGitRepoIgnoreFiles(Path dirPath, String gitIgnoreTemplate)
