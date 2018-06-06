@@ -3142,24 +3142,19 @@ app.server.type=@{app.server.type}]]></echo>
 			<test-action>
 				<ant dir="portal-impl" target="build-lib-versions" />
 
-				<exec executable="git" output="${project.dir}/build.lib.versions.diff.txt">
+				<exec executable="git" outputproperty="git.output">
 					<arg value="diff" />
 					<arg value="--" />
 					<arg value="lib${file.separator}versions-complete.xml" />
 					<arg value="lib${file.separator}versions.html" />
 				</exec>
 
-				<loadfile
-					property="build.lib.versions.diff.txt.content"
-					srcfile="${project.dir}/build.lib.versions.diff.txt"
-				/>
-
-				<delete file="${project.dir}/build.lib.versions.diff.txt" />
-
 				<if>
-					<isset property="build.lib.versions.diff.txt.content" />
+					<not>
+						<equals arg1="${git.output}" arg2="" />
+					</not>
 					<then>
-						<echo message="${build.lib.versions.diff.txt.content}" />
+						<echo message="${git.output}" />
 
 						<fail>
 .
