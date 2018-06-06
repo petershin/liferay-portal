@@ -3137,6 +3137,42 @@ app.server.type=@{app.server.type}]]></echo>
 		<run-legacy-database-dump database.type="sybase" />
 	</target>
 
+	<target name="lib-version-builder">
+		<run-batch-test>
+			<test-action>
+				<ant dir="portal-impl" target="build-lib-versions" />
+
+				<exec executable="git" output="${project.dir}/build.lib.versions.diff.txt">
+					<arg value="diff" />
+					<arg value="--" />
+					<arg value="lib${file.separator}versions-complete.xml" />
+					<arg value="lib${file.separator}versions.html" />
+				</exec>
+
+				<loadfile
+					property="build.lib.versions.diff.txt.content"
+					srcfile="${project.dir}/build.lib.versions.diff.txt"
+				/>
+
+				<delete file="${project.dir}/build.lib.versions.diff.txt" />
+
+				<if>
+					<isset property="build.lib.versions.diff.txt.content" />
+					<then>
+						<echo message="${build.lib.versions.diff.txt.content}" />
+
+						<fail>
+.
+
+Detected build lib versions changes. Please run 'ant build-lib-versions' from
+'portal-impl' and commit the changes.
+						</fail>
+					</then>
+				</if>
+			</test-action>
+		</run-batch-test>
+	</target>
+
 	<target name="lpkg-controller-jdk8">
 		<run-lpkg-controller-test />
 	</target>
