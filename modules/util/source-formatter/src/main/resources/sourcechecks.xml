@@ -2,6 +2,9 @@
 
 <source-formatter>
 	<source-processor name="all">
+		<check name="CDNCheck">
+			<property name="allowedURLs" value="cdn.lfrs.sl/releases.liferay.com/portal/" />
+		</check>
 		<check name="IncorrectFileLocationCheck" />
 		<check name="ReturnCharacterCheck" />
 	</source-processor>
