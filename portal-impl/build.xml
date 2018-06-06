@@ -167,6 +167,8 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 
 		<gradle-execute dir="${project.dir}/modules" task="generateLicenseReport">
 			<arg value="-Dbuild.profile=portal" />
+			<arg value="-DgenerateLicenseReport.skipPrivate=${build.lib.versions.skip.private}" />
+			<arg value="-DgenerateLicenseReport.skipReadOnly=${build.lib.versions.skip.read.only}" />
 			<arg value="-Dlicense.report.enabled=true" />
 			<arg value="-Dlicense.report.output.dir=${project.dir}/tmp/license-reports" />
 		</gradle-execute>
@@ -334,6 +336,7 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 		<antcall target="build-service-portlets" />
 
 		<gradle-execute dir="../modules" task="buildService">
+			<arg value="-DbuildService.skipPrivate=${build.services.skip.private}" />
 			<arg value="-DbuildService.skipReadOnly=${build.services.skip.read.only}" />
 			<arg value="-Pcom.liferay.portal.tools.service.builder.ignore.local=false" />
 		</gradle-execute>
