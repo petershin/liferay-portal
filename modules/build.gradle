@@ -250,15 +250,19 @@ if (bndPrintJarFiles != null) {
 gradle.taskGraph.useFilter {
 	Task task ->
 
-	boolean skipReadOnly = Boolean.parseBoolean(GradleUtil.getTaskPrefixedProperty(task, "skipReadOnly"))
+	boolean skipPrivate = Boolean.parseBoolean(GradleUtil.getTaskPrefixedProperty(task, "skipPrivate"))
 
-	if (skipReadOnly) {
+	if (skipPrivate) {
 		boolean publicBranch = GradleUtil.getProperty(task.project, "liferay.releng.public", false)
 
 		if (publicBranch && task.project.path.startsWith(":private:")) {
 			return false
 		}
+	}
 
+	boolean skipReadOnly = Boolean.parseBoolean(GradleUtil.getTaskPrefixedProperty(task, "skipReadOnly"))
+
+	if (skipReadOnly) {
 		File gitRepoDir = _getRootDir(task.project.projectDir, ".gitrepo")
 
 		if (gitRepoDir != null) {
