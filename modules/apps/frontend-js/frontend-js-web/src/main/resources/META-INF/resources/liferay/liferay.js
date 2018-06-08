@@ -407,7 +407,7 @@ Liferay = window.Liferay || {};
 				function(componentId) {
 					return filterFn(components[componentId].__destroyConfig__ || {});
 				}
-			)
+			);
 		}
 
 		componentIds.forEach(Liferay.destroyComponent);
