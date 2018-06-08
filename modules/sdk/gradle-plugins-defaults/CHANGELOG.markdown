@@ -3751,6 +3751,13 @@ of a module includes transitive dependencies.
 ### Fixed
 - [LPS-80332]: Fix `suite.bnd` inclusion when running in sub-repositories.
 
+## 5.4.32 - *(Unreleased)*
+
+### Changed
+- [LPS-77875]: Update the constant `DEFAULT_REPOSITORY_URL` in the
+`GradlePluginsDefaultsUtil` class to
+`https://repository-cdn.liferay.com/nexus/content/groups/public`.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
 [Liferay CDN]: https://repository-cdn.liferay.com/nexus/content/groups/public
@@ -4085,6 +4092,7 @@ of a module includes transitive dependencies.
 [LPS-77797]: https://issues.liferay.com/browse/LPS-77797
 [LPS-77836]: https://issues.liferay.com/browse/LPS-77836
 [LPS-77840]: https://issues.liferay.com/browse/LPS-77840
+[LPS-77875]: https://issues.liferay.com/browse/LPS-77875
 [LPS-77886]: https://issues.liferay.com/browse/LPS-77886
 [LPS-77916]: https://issues.liferay.com/browse/LPS-77916
 [LPS-77968]: https://issues.liferay.com/browse/LPS-77968
