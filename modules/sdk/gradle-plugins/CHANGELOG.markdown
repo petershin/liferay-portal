@@ -4969,6 +4969,11 @@ version 2.1.48.
 - [LPS-82815]: Update the [Liferay Portal Tools Service Builder] dependency to
 version 1.0.231.
 
+## 3.12.55 - * Unreleased *
+
+### Removed
+- [LPS-79222]: Remove the `JSModuleConfigGeneratorDefaultsPlugin` class.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
@@ -5318,6 +5323,7 @@ version 1.0.231.
 [LPS-79131]: https://issues.liferay.com/browse/LPS-79131
 [LPS-79191]: https://issues.liferay.com/browse/LPS-79191
 [LPS-79192]: https://issues.liferay.com/browse/LPS-79192
+[LPS-79222]: https://issues.liferay.com/browse/LPS-79222
 [LPS-79226]: https://issues.liferay.com/browse/LPS-79226
 [LPS-79248]: https://issues.liferay.com/browse/LPS-79248
 [LPS-79262]: https://issues.liferay.com/browse/LPS-79262
