@@ -14,6 +14,8 @@
 
 package com.liferay.gradle.plugins.baseline;
 
+import aQute.bnd.osgi.Constants;
+
 import com.liferay.gradle.plugins.baseline.internal.util.GradleUtil;
 import com.liferay.gradle.util.Validator;
 
@@ -21,6 +23,7 @@ import java.io.File;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
@@ -47,6 +50,7 @@ import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.bundling.AbstractArchiveTask;
 import org.gradle.api.tasks.bundling.Jar;
+import org.gradle.util.GUtil;
 import org.gradle.util.VersionNumber;
 
 /**
@@ -309,7 +313,24 @@ public class BaselinePlugin implements Plugin<Project> {
 				BaselineTask majorVersionBaselineTask = _addTaskBaseline(
 					newJarTask, majorVersion);
 
-				if (majorVersion < maxMajorVersion) {
+				boolean hasCompatJar = false;
+
+				File bndFile = majorVersionBaselineTask.getBndFile();
+
+				if (bndFile.exists()) {
+					Properties bndProperties = GUtil.loadProperties(bndFile);
+
+					if (bndProperties.containsKey(Constants.INCLUDE_RESOURCE)) {
+						String includeResource = bndProperties.getProperty(
+							Constants.INCLUDE_RESOURCE);
+
+						if (includeResource.contains(".compat.jar")) {
+							hasCompatJar = true;
+						}
+					}
+				}
+
+				if ((majorVersion < maxMajorVersion) || hasCompatJar) {
 					majorVersionBaselineTask.setIgnoreExcessiveVersionIncreases(
 						true);
 				}
