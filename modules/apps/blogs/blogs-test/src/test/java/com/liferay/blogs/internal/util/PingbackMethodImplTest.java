@@ -214,6 +214,8 @@ public class PingbackMethodImplTest extends PowerMockito {
 		ServiceContext serviceContext = pingbackMethodImpl.buildServiceContext(
 			_COMPANY_ID, _GROUP_ID, _URL_TITLE);
 
+		Assert.assertEquals("PASSED", "FAILED");
+
 		Assert.assertEquals(
 			_PINGBACK_USER_NAME,
 			serviceContext.getAttribute("pingbackUserName"));

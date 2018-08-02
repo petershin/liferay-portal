@@ -71,6 +71,8 @@ public abstract class BaseBlogsEntryImageTestCase {
 			PortletFileRepositoryUtil.getPortletFileEntry(
 				getImageFileEntryId(blogsEntry));
 
+		Assert.assertEquals("PASSED", "FAILED");
+
 		Assert.assertEquals("image1.jpg", imageFileEntry.getTitle());
 	}
 
