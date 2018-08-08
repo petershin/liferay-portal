@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<archetype-descriptor name="liferay-module-portlet">
+<archetype-descriptor name="liferay-module-war-cdi-bean-portlet">
 	<fileSets>
 		<fileSet filtered="true" packaged="true">
 			<directory>src/main/java</directory>
