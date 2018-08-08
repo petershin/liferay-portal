@@ -19,16 +19,12 @@
 			<directory></directory>
 			<includes>
 				<include>.gitignore</include>
-				<include>bnd.bnd</include>
 				<include>build.gradle</include>
 			</includes>
 		</fileSet>
 	</fileSets>
 	<requiredProperties>
 		<requiredProperty key="author">
-		</requiredProperty>
-		<requiredProperty key="buildType">
-			<defaultValue>maven</defaultValue>
 		</requiredProperty>
 		<requiredProperty key="className">
 		</requiredProperty>
