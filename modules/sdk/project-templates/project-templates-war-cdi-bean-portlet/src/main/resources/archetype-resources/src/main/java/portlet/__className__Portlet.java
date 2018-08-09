@@ -14,9 +14,6 @@ import javax.portlet.annotations.RenderMethod;
 /**
  * @author ${author}
  */
-@PortletConfiguration(
-	portletName = ${className}PortletKeys.${className},
-	title = @LocaleString(value = ${className}PortletKeys.${className}))
 @LiferayPortletConfiguration(
 	portletName = ${className}PortletKeys.${className},
 	properties = {
@@ -24,14 +21,19 @@ import javax.portlet.annotations.RenderMethod;
 		"com.liferay.portlet.instanceable=true"
 	}
 )
+@PortletConfiguration(
+	portletName = ${className}PortletKeys.${className},
+	title = @LocaleString(value = ${className}PortletKeys.${className})
+)
 public class ${className}Portlet {
 
 	@Inject
-	PortletConfig portletConfig;
+	private PortletConfig portletConfig;
 
 	@RenderMethod(
 		include = "/WEB-INF/jsp/view.jsp",
-		portletNames = {${className}PortletKeys.${className}})
+		portletNames = {${className}PortletKeys.${className}}
+	)
 	public String doView() {
 		return "Hello from " + portletConfig.getPortletName();
 	}
