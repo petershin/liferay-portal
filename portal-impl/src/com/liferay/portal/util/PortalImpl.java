@@ -315,7 +315,7 @@ public class PortalImpl implements Portal {
 
 		// Computer name
 
-		String computerName = System.getProperty("env.COMPUTERNAME");
+		 String computerName = System.getProperty("env.COMPUTERNAME");
 
 		if (Validator.isNull(computerName)) {
 			computerName = System.getProperty("env.HOST");
