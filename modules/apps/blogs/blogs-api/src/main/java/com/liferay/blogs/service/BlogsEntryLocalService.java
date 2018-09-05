@@ -58,6 +58,8 @@ import java.util.Map;
  * credentials because this service can only be accessed from within the same
  * VM.
  *
+ * Test.
+ *
  * @author Brian Wing Shun Chan
  * @see BlogsEntryLocalServiceUtil
  * @see com.liferay.blogs.service.base.BlogsEntryLocalServiceBaseImpl
