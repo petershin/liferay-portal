@@ -52,7 +52,6 @@ public class EclipseDefaultsPlugin extends BaseDefaultsPlugin<EclipsePlugin> {
 
 		_configureEclipseClasspathFile(project);
 		_configureEclipseProject(project);
-		_configureTaskEclipse(eclipsePlugin);
 	}
 
 	@Override
@@ -151,12 +150,6 @@ public class EclipseDefaultsPlugin extends BaseDefaultsPlugin<EclipsePlugin> {
 		XmlFileContentMerger xmlFileContentMerger = eclipseProject.getFile();
 
 		xmlFileContentMerger.withXml(action);
-	}
-
-	private void _configureTaskEclipse(EclipsePlugin eclipsePlugin) {
-		Task task = eclipsePlugin.getLifecycleTask();
-
-		task.dependsOn(eclipsePlugin.getCleanTask());
 	}
 
 	private static final String[] _FILTERED_DIR_NAMES =
