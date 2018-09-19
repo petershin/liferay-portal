@@ -55,7 +55,6 @@ public class IdeaDefaultsPlugin extends BaseDefaultsPlugin<IdeaPlugin> {
 		Project project, final IdeaPlugin ideaPlugin) {
 
 		_configureIdeaModuleIml(project, ideaPlugin);
-		_configureTaskIdea(ideaPlugin);
 
 		project.afterEvaluate(
 			new Action<Project>() {
@@ -184,12 +183,6 @@ public class IdeaDefaultsPlugin extends BaseDefaultsPlugin<IdeaPlugin> {
 		};
 
 		ideaModuleIml.withXml(closure);
-	}
-
-	private void _configureTaskIdea(IdeaPlugin ideaPlugin) {
-		Task task = ideaPlugin.getLifecycleTask();
-
-		task.dependsOn(ideaPlugin.getCleanTask());
 	}
 
 	private IdeaModule _getIdeaModule(IdeaPlugin ideaPlugin) {
