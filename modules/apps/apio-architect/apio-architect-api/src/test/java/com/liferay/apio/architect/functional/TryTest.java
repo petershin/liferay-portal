@@ -196,7 +196,6 @@ public class TryTest {
 		assertThat(stringTry, is(aSuccessTry()));
 	}
 
-	@Test
 	public void testInvokingFromOptionalCreatesFailureFromEmptyOptional() {
 		Try<Integer> integerTry = Try.fromOptional(
 			Optional::empty, () -> new IllegalArgumentException("Apio"));
@@ -374,7 +373,6 @@ public class TryTest {
 	}
 
 	@Parameters(method = SUCCESS)
-	@Test
 	public void testInvokingMapOptionalCreatesFailureWithEmptyOptional(
 		Try<String> stringTry) {
 
