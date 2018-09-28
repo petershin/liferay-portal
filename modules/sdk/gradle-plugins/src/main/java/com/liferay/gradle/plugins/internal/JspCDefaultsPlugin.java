@@ -15,6 +15,7 @@
 package com.liferay.gradle.plugins.internal;
 
 import com.liferay.gradle.plugins.BasePortalToolDefaultsPlugin;
+import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.internal.util.FileUtil;
 import com.liferay.gradle.plugins.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.jasper.jspc.CompileJSPTask;
@@ -158,6 +159,22 @@ public class JspCDefaultsPlugin
 					}
 
 					return unzippedJarDir;
+				}
+
+			});
+
+		compileJSPTask.setDestinationDir(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					LiferayExtension liferayExtension = GradleUtil.getExtension(
+						project, LiferayExtension.class);
+
+					return new File(
+						liferayExtension.getLiferayHome() + "/work/" +
+							GradleUtil.getArchivesBaseName(project) + "-" +
+								project.getVersion());
 				}
 
 			});
