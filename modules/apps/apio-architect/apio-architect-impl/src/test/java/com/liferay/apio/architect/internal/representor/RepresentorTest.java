@@ -242,7 +242,6 @@ public class RepresentorTest {
 		assertThat(list0, hasSize(2));
 	}
 
-	@Test
 	public void testRelatedModels() {
 		List<RelatedModel<Dummy, ?>> relatedModels =
 			_representor.getRelatedModels();
