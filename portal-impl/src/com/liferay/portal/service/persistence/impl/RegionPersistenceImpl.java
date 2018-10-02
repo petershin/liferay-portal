@@ -18,7 +18,9 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.petra.string.StringBundler;
 
+import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
+import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
@@ -190,8 +192,8 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 		List<Region> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<Region>)FinderCacheUtil.getResult(finderPath,
-					finderArgs, this);
+			list = (List<Region>)finderCache.getResult(finderPath, finderArgs,
+					this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Region region : list) {
@@ -256,10 +258,10 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -547,8 +549,7 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 
 		Object[] finderArgs = new Object[] { countryId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -572,10 +573,10 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -691,8 +692,8 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 		List<Region> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<Region>)FinderCacheUtil.getResult(finderPath,
-					finderArgs, this);
+			list = (List<Region>)finderCache.getResult(finderPath, finderArgs,
+					this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Region region : list) {
@@ -757,10 +758,10 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1048,8 +1049,7 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 
 		Object[] finderArgs = new Object[] { active };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -1073,10 +1073,10 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1164,7 +1164,7 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_C_R,
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_C_R,
 					finderArgs, this);
 		}
 
@@ -1218,8 +1218,8 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 				List<Region> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_R,
-						finderArgs, list);
+					finderCache.putResult(FINDER_PATH_FETCH_BY_C_R, finderArgs,
+						list);
 				}
 				else {
 					Region region = list.get(0);
@@ -1230,8 +1230,7 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_R,
-					finderArgs);
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_C_R, finderArgs);
 
 				throw processException(e);
 			}
@@ -1276,8 +1275,7 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 
 		Object[] finderArgs = new Object[] { countryId, regionCode };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -1319,10 +1317,10 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1452,8 +1450,8 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 		List<Region> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<Region>)FinderCacheUtil.getResult(finderPath,
-					finderArgs, this);
+			list = (List<Region>)finderCache.getResult(finderPath, finderArgs,
+					this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Region region : list) {
@@ -1523,10 +1521,10 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1831,8 +1829,7 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 
 		Object[] finderArgs = new Object[] { countryId, active };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -1860,10 +1857,10 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1907,10 +1904,10 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 	 */
 	@Override
 	public void cacheResult(Region region) {
-		EntityCacheUtil.putResult(RegionModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(RegionModelImpl.ENTITY_CACHE_ENABLED,
 			RegionImpl.class, region.getPrimaryKey(), region);
 
-		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_R,
+		finderCache.putResult(FINDER_PATH_FETCH_BY_C_R,
 			new Object[] { region.getCountryId(), region.getRegionCode() },
 			region);
 
@@ -1925,9 +1922,8 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 	@Override
 	public void cacheResult(List<Region> regions) {
 		for (Region region : regions) {
-			if (EntityCacheUtil.getResult(
-						RegionModelImpl.ENTITY_CACHE_ENABLED, RegionImpl.class,
-						region.getPrimaryKey()) == null) {
+			if (entityCache.getResult(RegionModelImpl.ENTITY_CACHE_ENABLED,
+						RegionImpl.class, region.getPrimaryKey()) == null) {
 				cacheResult(region);
 			}
 			else {
@@ -1940,43 +1936,43 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 	 * Clears the cache for all regions.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache() {
-		EntityCacheUtil.clearCache(RegionImpl.class);
+		entityCache.clearCache(RegionImpl.class);
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	/**
 	 * Clears the cache for the region.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache(Region region) {
-		EntityCacheUtil.removeResult(RegionModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.removeResult(RegionModelImpl.ENTITY_CACHE_ENABLED,
 			RegionImpl.class, region.getPrimaryKey());
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		clearUniqueFindersCache((RegionModelImpl)region, true);
 	}
 
 	@Override
 	public void clearCache(List<Region> regions) {
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (Region region : regions) {
-			EntityCacheUtil.removeResult(RegionModelImpl.ENTITY_CACHE_ENABLED,
+			entityCache.removeResult(RegionModelImpl.ENTITY_CACHE_ENABLED,
 				RegionImpl.class, region.getPrimaryKey());
 
 			clearUniqueFindersCache((RegionModelImpl)region, true);
@@ -1988,10 +1984,10 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 				regionModelImpl.getCountryId(), regionModelImpl.getRegionCode()
 			};
 
-		FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_R, args,
-			Long.valueOf(1), false);
-		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_R, args,
-			regionModelImpl, false);
+		finderCache.putResult(FINDER_PATH_COUNT_BY_C_R, args, Long.valueOf(1),
+			false);
+		finderCache.putResult(FINDER_PATH_FETCH_BY_C_R, args, regionModelImpl,
+			false);
 	}
 
 	protected void clearUniqueFindersCache(RegionModelImpl regionModelImpl,
@@ -2002,8 +1998,8 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 					regionModelImpl.getRegionCode()
 				};
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_R, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_R, args);
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_C_R, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_C_R, args);
 		}
 
 		if ((regionModelImpl.getColumnBitmask() &
@@ -2013,8 +2009,8 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 					regionModelImpl.getOriginalRegionCode()
 				};
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_R, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_R, args);
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_C_R, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_C_R, args);
 		}
 	}
 
@@ -2157,36 +2153,35 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
 		if (!RegionModelImpl.COLUMN_BITMASK_ENABLED) {
-			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 		else
 		 if (isNew) {
 			Object[] args = new Object[] { regionModelImpl.getCountryId() };
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COUNTRYID, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COUNTRYID,
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_COUNTRYID, args);
+			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COUNTRYID,
 				args);
 
 			args = new Object[] { regionModelImpl.isActive() };
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_ACTIVE, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ACTIVE,
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_ACTIVE, args);
+			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ACTIVE,
 				args);
 
 			args = new Object[] {
 					regionModelImpl.getCountryId(), regionModelImpl.isActive()
 				};
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_A, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_A,
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_C_A, args);
+			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_A,
 				args);
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_ALL,
-				FINDER_ARGS_EMPTY);
-			FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL,
+			finderCache.removeResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY);
+			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL,
 				FINDER_ARGS_EMPTY);
 		}
 
@@ -2197,16 +2192,14 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 						regionModelImpl.getOriginalCountryId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COUNTRYID,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COUNTRYID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_COUNTRYID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COUNTRYID,
 					args);
 
 				args = new Object[] { regionModelImpl.getCountryId() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COUNTRYID,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COUNTRYID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_COUNTRYID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COUNTRYID,
 					args);
 			}
 
@@ -2214,14 +2207,14 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ACTIVE.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] { regionModelImpl.getOriginalActive() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_ACTIVE, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ACTIVE,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_ACTIVE, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ACTIVE,
 					args);
 
 				args = new Object[] { regionModelImpl.isActive() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_ACTIVE, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ACTIVE,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_ACTIVE, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ACTIVE,
 					args);
 			}
 
@@ -2232,8 +2225,8 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 						regionModelImpl.getOriginalActive()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_A, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_A,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_C_A, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_A,
 					args);
 
 				args = new Object[] {
@@ -2241,13 +2234,13 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 						regionModelImpl.isActive()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_A, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_A,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_C_A, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_A,
 					args);
 			}
 		}
 
-		EntityCacheUtil.putResult(RegionModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(RegionModelImpl.ENTITY_CACHE_ENABLED,
 			RegionImpl.class, region.getPrimaryKey(), region, false);
 
 		clearUniqueFindersCache(regionModelImpl, false);
@@ -2302,7 +2295,7 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 	 */
 	@Override
 	public Region fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = EntityCacheUtil.getResult(RegionModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(RegionModelImpl.ENTITY_CACHE_ENABLED,
 				RegionImpl.class, primaryKey);
 
 		if (serializable == nullModel) {
@@ -2323,12 +2316,12 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 					cacheResult(region);
 				}
 				else {
-					EntityCacheUtil.putResult(RegionModelImpl.ENTITY_CACHE_ENABLED,
+					entityCache.putResult(RegionModelImpl.ENTITY_CACHE_ENABLED,
 						RegionImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
-				EntityCacheUtil.removeResult(RegionModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.removeResult(RegionModelImpl.ENTITY_CACHE_ENABLED,
 					RegionImpl.class, primaryKey);
 
 				throw processException(e);
@@ -2378,7 +2371,7 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = EntityCacheUtil.getResult(RegionModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(RegionModelImpl.ENTITY_CACHE_ENABLED,
 					RegionImpl.class, primaryKey);
 
 			if (serializable != nullModel) {
@@ -2432,7 +2425,7 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 			}
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(RegionModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.putResult(RegionModelImpl.ENTITY_CACHE_ENABLED,
 					RegionImpl.class, primaryKey, nullModel);
 			}
 		}
@@ -2524,8 +2517,8 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 		List<Region> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<Region>)FinderCacheUtil.getResult(finderPath,
-					finderArgs, this);
+			list = (List<Region>)finderCache.getResult(finderPath, finderArgs,
+					this);
 		}
 
 		if (list == null) {
@@ -2573,10 +2566,10 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2606,7 +2599,7 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
+		Long count = (Long)finderCache.getResult(FINDER_PATH_COUNT_ALL,
 				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
@@ -2619,11 +2612,11 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
-					FINDER_ARGS_EMPTY, count);
+				finderCache.putResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY,
+					count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_ALL,
+				finderCache.removeResult(FINDER_PATH_COUNT_ALL,
 					FINDER_ARGS_EMPTY);
 
 				throw processException(e);
@@ -2653,12 +2646,14 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 	}
 
 	public void destroy() {
-		EntityCacheUtil.removeCache(RegionImpl.class.getName());
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		entityCache.removeCache(RegionImpl.class.getName());
+		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	protected EntityCache entityCache = EntityCacheUtil.getEntityCache();
+	protected FinderCache finderCache = FinderCacheUtil.getFinderCache();
 	private static final String _SQL_SELECT_REGION = "SELECT region FROM Region region";
 	private static final String _SQL_SELECT_REGION_WHERE_PKS_IN = "SELECT region FROM Region region WHERE regionId IN (";
 	private static final String _SQL_SELECT_REGION_WHERE = "SELECT region FROM Region region WHERE ";
