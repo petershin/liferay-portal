@@ -19,7 +19,9 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.petra.string.StringBundler;
 
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
+import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
@@ -200,7 +202,7 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 		List<TasksEntry> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<TasksEntry>)FinderCacheUtil.getResult(finderPath,
+			list = (List<TasksEntry>)finderCache.getResult(finderPath,
 					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
@@ -266,10 +268,10 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -866,8 +868,7 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 
 		Object[] finderArgs = new Object[] { groupId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -891,10 +892,10 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1061,7 +1062,7 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 		List<TasksEntry> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<TasksEntry>)FinderCacheUtil.getResult(finderPath,
+			list = (List<TasksEntry>)finderCache.getResult(finderPath,
 					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
@@ -1127,10 +1128,10 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1418,8 +1419,7 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 
 		Object[] finderArgs = new Object[] { userId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -1443,10 +1443,10 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1573,7 +1573,7 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 		List<TasksEntry> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<TasksEntry>)FinderCacheUtil.getResult(finderPath,
+			list = (List<TasksEntry>)finderCache.getResult(finderPath,
 					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
@@ -1639,10 +1639,10 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1933,8 +1933,7 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 
 		Object[] finderArgs = new Object[] { assigneeUserId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -1958,10 +1957,10 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2088,7 +2087,7 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 		List<TasksEntry> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<TasksEntry>)FinderCacheUtil.getResult(finderPath,
+			list = (List<TasksEntry>)finderCache.getResult(finderPath,
 					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
@@ -2154,10 +2153,10 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2448,8 +2447,7 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 
 		Object[] finderArgs = new Object[] { resolverUserId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -2473,10 +2471,10 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2605,7 +2603,7 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 		List<TasksEntry> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<TasksEntry>)FinderCacheUtil.getResult(finderPath,
+			list = (List<TasksEntry>)finderCache.getResult(finderPath,
 					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
@@ -2676,10 +2674,10 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -3310,8 +3308,7 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 
 		Object[] finderArgs = new Object[] { groupId, userId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -3339,10 +3336,10 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -3526,7 +3523,7 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 		List<TasksEntry> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<TasksEntry>)FinderCacheUtil.getResult(finderPath,
+			list = (List<TasksEntry>)finderCache.getResult(finderPath,
 					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
@@ -3597,10 +3594,10 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -4232,8 +4229,7 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 
 		Object[] finderArgs = new Object[] { groupId, assigneeUserId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -4261,10 +4257,10 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -4448,7 +4444,7 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 		List<TasksEntry> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<TasksEntry>)FinderCacheUtil.getResult(finderPath,
+			list = (List<TasksEntry>)finderCache.getResult(finderPath,
 					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
@@ -4519,10 +4515,10 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -5154,8 +5150,7 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 
 		Object[] finderArgs = new Object[] { groupId, resolverUserId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -5183,10 +5178,10 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -5373,7 +5368,7 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 		List<TasksEntry> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<TasksEntry>)FinderCacheUtil.getResult(finderPath,
+			list = (List<TasksEntry>)finderCache.getResult(finderPath,
 					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
@@ -5444,10 +5439,10 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -5835,7 +5830,7 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 		List<TasksEntry> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<TasksEntry>)FinderCacheUtil.getResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_U_S,
+			list = (List<TasksEntry>)finderCache.getResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_U_S,
 					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
@@ -5909,11 +5904,11 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_U_S,
+				finderCache.putResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_U_S,
 					finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_U_S,
+				finderCache.removeResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_U_S,
 					finderArgs);
 
 				throw processException(e);
@@ -5953,8 +5948,7 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 
 		Object[] finderArgs = new Object[] { userId, status };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -5982,10 +5976,10 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -6017,7 +6011,7 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 
 		Object[] finderArgs = new Object[] { userId, StringUtil.merge(statuses) };
 
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_U_S,
+		Long count = (Long)finderCache.getResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_U_S,
 				finderArgs, this);
 
 		if (count == null) {
@@ -6057,11 +6051,11 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_U_S,
+				finderCache.putResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_U_S,
 					finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_U_S,
+				finderCache.removeResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_U_S,
 					finderArgs);
 
 				throw processException(e);
@@ -6198,7 +6192,7 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 		List<TasksEntry> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<TasksEntry>)FinderCacheUtil.getResult(finderPath,
+			list = (List<TasksEntry>)finderCache.getResult(finderPath,
 					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
@@ -6269,10 +6263,10 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -6663,7 +6657,7 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 		List<TasksEntry> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<TasksEntry>)FinderCacheUtil.getResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_A_S,
+			list = (List<TasksEntry>)finderCache.getResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_A_S,
 					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
@@ -6737,11 +6731,11 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_A_S,
+				finderCache.putResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_A_S,
 					finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_A_S,
+				finderCache.removeResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_A_S,
 					finderArgs);
 
 				throw processException(e);
@@ -6781,8 +6775,7 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 
 		Object[] finderArgs = new Object[] { assigneeUserId, status };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -6810,10 +6803,10 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -6847,7 +6840,7 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 				assigneeUserId, StringUtil.merge(statuses)
 			};
 
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_A_S,
+		Long count = (Long)finderCache.getResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_A_S,
 				finderArgs, this);
 
 		if (count == null) {
@@ -6887,11 +6880,11 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_A_S,
+				finderCache.putResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_A_S,
 					finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_A_S,
+				finderCache.removeResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_A_S,
 					finderArgs);
 
 				throw processException(e);
@@ -7043,7 +7036,7 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 		List<TasksEntry> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<TasksEntry>)FinderCacheUtil.getResult(finderPath,
+			list = (List<TasksEntry>)finderCache.getResult(finderPath,
 					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
@@ -7119,10 +7112,10 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -8028,7 +8021,7 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 		List<TasksEntry> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<TasksEntry>)FinderCacheUtil.getResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_G_U_S,
+			list = (List<TasksEntry>)finderCache.getResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_G_U_S,
 					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
@@ -8107,11 +8100,11 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_G_U_S,
+				finderCache.putResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_G_U_S,
 					finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_G_U_S,
+				finderCache.removeResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_G_U_S,
 					finderArgs);
 
 				throw processException(e);
@@ -8153,8 +8146,7 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 
 		Object[] finderArgs = new Object[] { groupId, userId, status };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(4);
@@ -8186,10 +8178,10 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -8224,7 +8216,7 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 				groupId, userId, StringUtil.merge(statuses)
 			};
 
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_U_S,
+		Long count = (Long)finderCache.getResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_U_S,
 				finderArgs, this);
 
 		if (count == null) {
@@ -8268,11 +8260,11 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_U_S,
+				finderCache.putResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_U_S,
 					finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_U_S,
+				finderCache.removeResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_U_S,
 					finderArgs);
 
 				throw processException(e);
@@ -8564,7 +8556,7 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 		List<TasksEntry> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<TasksEntry>)FinderCacheUtil.getResult(finderPath,
+			list = (List<TasksEntry>)finderCache.getResult(finderPath,
 					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
@@ -8640,10 +8632,10 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -9551,7 +9543,7 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 		List<TasksEntry> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<TasksEntry>)FinderCacheUtil.getResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_G_A_S,
+			list = (List<TasksEntry>)finderCache.getResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_G_A_S,
 					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
@@ -9630,11 +9622,11 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_G_A_S,
+				finderCache.putResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_G_A_S,
 					finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_G_A_S,
+				finderCache.removeResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_G_A_S,
 					finderArgs);
 
 				throw processException(e);
@@ -9676,8 +9668,7 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 
 		Object[] finderArgs = new Object[] { groupId, assigneeUserId, status };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(4);
@@ -9709,10 +9700,10 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -9747,7 +9738,7 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 				groupId, assigneeUserId, StringUtil.merge(statuses)
 			};
 
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_A_S,
+		Long count = (Long)finderCache.getResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_A_S,
 				finderArgs, this);
 
 		if (count == null) {
@@ -9791,11 +9782,11 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_A_S,
+				finderCache.putResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_A_S,
 					finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_A_S,
+				finderCache.removeResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_A_S,
 					finderArgs);
 
 				throw processException(e);
@@ -9961,7 +9952,7 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 	 */
 	@Override
 	public void cacheResult(TasksEntry tasksEntry) {
-		EntityCacheUtil.putResult(TasksEntryModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(TasksEntryModelImpl.ENTITY_CACHE_ENABLED,
 			TasksEntryImpl.class, tasksEntry.getPrimaryKey(), tasksEntry);
 
 		tasksEntry.resetOriginalValues();
@@ -9975,7 +9966,7 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 	@Override
 	public void cacheResult(List<TasksEntry> tasksEntries) {
 		for (TasksEntry tasksEntry : tasksEntries) {
-			if (EntityCacheUtil.getResult(
+			if (entityCache.getResult(
 						TasksEntryModelImpl.ENTITY_CACHE_ENABLED,
 						TasksEntryImpl.class, tasksEntry.getPrimaryKey()) == null) {
 				cacheResult(tasksEntry);
@@ -9990,41 +9981,41 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 	 * Clears the cache for all tasks entries.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache() {
-		EntityCacheUtil.clearCache(TasksEntryImpl.class);
+		entityCache.clearCache(TasksEntryImpl.class);
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	/**
 	 * Clears the cache for the tasks entry.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache(TasksEntry tasksEntry) {
-		EntityCacheUtil.removeResult(TasksEntryModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.removeResult(TasksEntryModelImpl.ENTITY_CACHE_ENABLED,
 			TasksEntryImpl.class, tasksEntry.getPrimaryKey());
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	@Override
 	public void clearCache(List<TasksEntry> tasksEntries) {
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (TasksEntry tasksEntry : tasksEntries) {
-			EntityCacheUtil.removeResult(TasksEntryModelImpl.ENTITY_CACHE_ENABLED,
+			entityCache.removeResult(TasksEntryModelImpl.ENTITY_CACHE_ENABLED,
 				TasksEntryImpl.class, tasksEntry.getPrimaryKey());
 		}
 	}
@@ -10195,37 +10186,35 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
 		if (!TasksEntryModelImpl.COLUMN_BITMASK_ENABLED) {
-			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 		else
 		 if (isNew) {
 			Object[] args = new Object[] { tasksEntryModelImpl.getGroupId() };
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
+			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
 				args);
 
 			args = new Object[] { tasksEntryModelImpl.getUserId() };
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
+			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
 				args);
 
 			args = new Object[] { tasksEntryModelImpl.getAssigneeUserId() };
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_ASSIGNEEUSERID,
-				args);
-			FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ASSIGNEEUSERID,
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_ASSIGNEEUSERID, args);
+			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ASSIGNEEUSERID,
 				args);
 
 			args = new Object[] { tasksEntryModelImpl.getResolverUserId() };
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_RESOLVERUSERID,
-				args);
-			FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_RESOLVERUSERID,
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_RESOLVERUSERID, args);
+			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_RESOLVERUSERID,
 				args);
 
 			args = new Object[] {
@@ -10233,8 +10222,8 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 					tasksEntryModelImpl.getUserId()
 				};
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_U, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_U,
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_U, args);
+			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_U,
 				args);
 
 			args = new Object[] {
@@ -10242,8 +10231,8 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 					tasksEntryModelImpl.getAssigneeUserId()
 				};
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_A, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_A,
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_A, args);
+			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_A,
 				args);
 
 			args = new Object[] {
@@ -10251,8 +10240,8 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 					tasksEntryModelImpl.getResolverUserId()
 				};
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_R, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_R,
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_R, args);
+			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_R,
 				args);
 
 			args = new Object[] {
@@ -10260,8 +10249,8 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 					tasksEntryModelImpl.getStatus()
 				};
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_U_S, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_U_S,
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_U_S, args);
+			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_U_S,
 				args);
 
 			args = new Object[] {
@@ -10269,8 +10258,8 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 					tasksEntryModelImpl.getStatus()
 				};
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_A_S, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_A_S,
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_A_S, args);
+			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_A_S,
 				args);
 
 			args = new Object[] {
@@ -10279,8 +10268,8 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 					tasksEntryModelImpl.getStatus()
 				};
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_U_S, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_U_S,
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_U_S, args);
+			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_U_S,
 				args);
 
 			args = new Object[] {
@@ -10289,13 +10278,12 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 					tasksEntryModelImpl.getStatus()
 				};
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_A_S, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_A_S,
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_A_S, args);
+			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_A_S,
 				args);
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_ALL,
-				FINDER_ARGS_EMPTY);
-			FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL,
+			finderCache.removeResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY);
+			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL,
 				FINDER_ARGS_EMPTY);
 		}
 
@@ -10306,14 +10294,14 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 						tasksEntryModelImpl.getOriginalGroupId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
 					args);
 
 				args = new Object[] { tasksEntryModelImpl.getGroupId() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
 					args);
 			}
 
@@ -10323,14 +10311,14 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 						tasksEntryModelImpl.getOriginalUserId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
 					args);
 
 				args = new Object[] { tasksEntryModelImpl.getUserId() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
 					args);
 			}
 
@@ -10340,16 +10328,16 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 						tasksEntryModelImpl.getOriginalAssigneeUserId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_ASSIGNEEUSERID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_ASSIGNEEUSERID,
 					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ASSIGNEEUSERID,
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ASSIGNEEUSERID,
 					args);
 
 				args = new Object[] { tasksEntryModelImpl.getAssigneeUserId() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_ASSIGNEEUSERID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_ASSIGNEEUSERID,
 					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ASSIGNEEUSERID,
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ASSIGNEEUSERID,
 					args);
 			}
 
@@ -10359,16 +10347,16 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 						tasksEntryModelImpl.getOriginalResolverUserId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_RESOLVERUSERID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_RESOLVERUSERID,
 					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_RESOLVERUSERID,
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_RESOLVERUSERID,
 					args);
 
 				args = new Object[] { tasksEntryModelImpl.getResolverUserId() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_RESOLVERUSERID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_RESOLVERUSERID,
 					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_RESOLVERUSERID,
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_RESOLVERUSERID,
 					args);
 			}
 
@@ -10379,8 +10367,8 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 						tasksEntryModelImpl.getOriginalUserId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_U, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_U,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_U, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_U,
 					args);
 
 				args = new Object[] {
@@ -10388,8 +10376,8 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 						tasksEntryModelImpl.getUserId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_U, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_U,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_U, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_U,
 					args);
 			}
 
@@ -10400,8 +10388,8 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 						tasksEntryModelImpl.getOriginalAssigneeUserId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_A, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_A,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_A, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_A,
 					args);
 
 				args = new Object[] {
@@ -10409,8 +10397,8 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 						tasksEntryModelImpl.getAssigneeUserId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_A, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_A,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_A, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_A,
 					args);
 			}
 
@@ -10421,8 +10409,8 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 						tasksEntryModelImpl.getOriginalResolverUserId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_R, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_R,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_R, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_R,
 					args);
 
 				args = new Object[] {
@@ -10430,8 +10418,8 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 						tasksEntryModelImpl.getResolverUserId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_R, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_R,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_R, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_R,
 					args);
 			}
 
@@ -10442,8 +10430,8 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 						tasksEntryModelImpl.getOriginalStatus()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_U_S, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_U_S,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_U_S, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_U_S,
 					args);
 
 				args = new Object[] {
@@ -10451,8 +10439,8 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 						tasksEntryModelImpl.getStatus()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_U_S, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_U_S,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_U_S, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_U_S,
 					args);
 			}
 
@@ -10463,8 +10451,8 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 						tasksEntryModelImpl.getOriginalStatus()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_A_S, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_A_S,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_A_S, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_A_S,
 					args);
 
 				args = new Object[] {
@@ -10472,8 +10460,8 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 						tasksEntryModelImpl.getStatus()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_A_S, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_A_S,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_A_S, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_A_S,
 					args);
 			}
 
@@ -10485,8 +10473,8 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 						tasksEntryModelImpl.getOriginalStatus()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_U_S, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_U_S,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_U_S, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_U_S,
 					args);
 
 				args = new Object[] {
@@ -10495,8 +10483,8 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 						tasksEntryModelImpl.getStatus()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_U_S, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_U_S,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_U_S, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_U_S,
 					args);
 			}
 
@@ -10508,8 +10496,8 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 						tasksEntryModelImpl.getOriginalStatus()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_A_S, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_A_S,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_A_S, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_A_S,
 					args);
 
 				args = new Object[] {
@@ -10518,13 +10506,13 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 						tasksEntryModelImpl.getStatus()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_A_S, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_A_S,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_A_S, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_A_S,
 					args);
 			}
 		}
 
-		EntityCacheUtil.putResult(TasksEntryModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(TasksEntryModelImpl.ENTITY_CACHE_ENABLED,
 			TasksEntryImpl.class, tasksEntry.getPrimaryKey(), tasksEntry, false);
 
 		tasksEntry.resetOriginalValues();
@@ -10577,7 +10565,7 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 	 */
 	@Override
 	public TasksEntry fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = EntityCacheUtil.getResult(TasksEntryModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(TasksEntryModelImpl.ENTITY_CACHE_ENABLED,
 				TasksEntryImpl.class, primaryKey);
 
 		if (serializable == nullModel) {
@@ -10599,12 +10587,12 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 					cacheResult(tasksEntry);
 				}
 				else {
-					EntityCacheUtil.putResult(TasksEntryModelImpl.ENTITY_CACHE_ENABLED,
+					entityCache.putResult(TasksEntryModelImpl.ENTITY_CACHE_ENABLED,
 						TasksEntryImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
-				EntityCacheUtil.removeResult(TasksEntryModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.removeResult(TasksEntryModelImpl.ENTITY_CACHE_ENABLED,
 					TasksEntryImpl.class, primaryKey);
 
 				throw processException(e);
@@ -10654,7 +10642,7 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = EntityCacheUtil.getResult(TasksEntryModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(TasksEntryModelImpl.ENTITY_CACHE_ENABLED,
 					TasksEntryImpl.class, primaryKey);
 
 			if (serializable != nullModel) {
@@ -10708,7 +10696,7 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 			}
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(TasksEntryModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.putResult(TasksEntryModelImpl.ENTITY_CACHE_ENABLED,
 					TasksEntryImpl.class, primaryKey, nullModel);
 			}
 		}
@@ -10801,7 +10789,7 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 		List<TasksEntry> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<TasksEntry>)FinderCacheUtil.getResult(finderPath,
+			list = (List<TasksEntry>)finderCache.getResult(finderPath,
 					finderArgs, this);
 		}
 
@@ -10850,10 +10838,10 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -10883,7 +10871,7 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
+		Long count = (Long)finderCache.getResult(FINDER_PATH_COUNT_ALL,
 				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
@@ -10896,11 +10884,11 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
-					FINDER_ARGS_EMPTY, count);
+				finderCache.putResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY,
+					count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_ALL,
+				finderCache.removeResult(FINDER_PATH_COUNT_ALL,
 					FINDER_ARGS_EMPTY);
 
 				throw processException(e);
@@ -10925,14 +10913,16 @@ public class TasksEntryPersistenceImpl extends BasePersistenceImpl<TasksEntry>
 	}
 
 	public void destroy() {
-		EntityCacheUtil.removeCache(TasksEntryImpl.class.getName());
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		entityCache.removeCache(TasksEntryImpl.class.getName());
+		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	@BeanReference(type = CompanyProviderWrapper.class)
 	protected CompanyProvider companyProvider;
+	protected EntityCache entityCache = EntityCacheUtil.getEntityCache();
+	protected FinderCache finderCache = FinderCacheUtil.getFinderCache();
 	private static final String _SQL_SELECT_TASKSENTRY = "SELECT tasksEntry FROM TasksEntry tasksEntry";
 	private static final String _SQL_SELECT_TASKSENTRY_WHERE_PKS_IN = "SELECT tasksEntry FROM TasksEntry tasksEntry WHERE tasksEntryId IN (";
 	private static final String _SQL_SELECT_TASKSENTRY_WHERE = "SELECT tasksEntry FROM TasksEntry tasksEntry WHERE ";
