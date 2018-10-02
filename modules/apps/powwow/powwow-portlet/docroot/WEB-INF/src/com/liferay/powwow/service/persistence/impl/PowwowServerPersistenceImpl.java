@@ -19,7 +19,9 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.petra.string.StringBundler;
 
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
+import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
@@ -207,7 +209,7 @@ public class PowwowServerPersistenceImpl extends BasePersistenceImpl<PowwowServe
 		List<PowwowServer> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<PowwowServer>)FinderCacheUtil.getResult(finderPath,
+			list = (List<PowwowServer>)finderCache.getResult(finderPath,
 					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
@@ -293,10 +295,10 @@ public class PowwowServerPersistenceImpl extends BasePersistenceImpl<PowwowServe
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -619,8 +621,7 @@ public class PowwowServerPersistenceImpl extends BasePersistenceImpl<PowwowServe
 
 		Object[] finderArgs = new Object[] { providerType, active };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -662,10 +663,10 @@ public class PowwowServerPersistenceImpl extends BasePersistenceImpl<PowwowServe
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -711,7 +712,7 @@ public class PowwowServerPersistenceImpl extends BasePersistenceImpl<PowwowServe
 	 */
 	@Override
 	public void cacheResult(PowwowServer powwowServer) {
-		EntityCacheUtil.putResult(PowwowServerModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(PowwowServerModelImpl.ENTITY_CACHE_ENABLED,
 			PowwowServerImpl.class, powwowServer.getPrimaryKey(), powwowServer);
 
 		powwowServer.resetOriginalValues();
@@ -725,7 +726,7 @@ public class PowwowServerPersistenceImpl extends BasePersistenceImpl<PowwowServe
 	@Override
 	public void cacheResult(List<PowwowServer> powwowServers) {
 		for (PowwowServer powwowServer : powwowServers) {
-			if (EntityCacheUtil.getResult(
+			if (entityCache.getResult(
 						PowwowServerModelImpl.ENTITY_CACHE_ENABLED,
 						PowwowServerImpl.class, powwowServer.getPrimaryKey()) == null) {
 				cacheResult(powwowServer);
@@ -740,41 +741,41 @@ public class PowwowServerPersistenceImpl extends BasePersistenceImpl<PowwowServe
 	 * Clears the cache for all powwow servers.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache() {
-		EntityCacheUtil.clearCache(PowwowServerImpl.class);
+		entityCache.clearCache(PowwowServerImpl.class);
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	/**
 	 * Clears the cache for the powwow server.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache(PowwowServer powwowServer) {
-		EntityCacheUtil.removeResult(PowwowServerModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.removeResult(PowwowServerModelImpl.ENTITY_CACHE_ENABLED,
 			PowwowServerImpl.class, powwowServer.getPrimaryKey());
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	@Override
 	public void clearCache(List<PowwowServer> powwowServers) {
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (PowwowServer powwowServer : powwowServers) {
-			EntityCacheUtil.removeResult(PowwowServerModelImpl.ENTITY_CACHE_ENABLED,
+			entityCache.removeResult(PowwowServerModelImpl.ENTITY_CACHE_ENABLED,
 				PowwowServerImpl.class, powwowServer.getPrimaryKey());
 		}
 	}
@@ -945,10 +946,10 @@ public class PowwowServerPersistenceImpl extends BasePersistenceImpl<PowwowServe
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
 		if (!PowwowServerModelImpl.COLUMN_BITMASK_ENABLED) {
-			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 		else
 		 if (isNew) {
@@ -957,13 +958,12 @@ public class PowwowServerPersistenceImpl extends BasePersistenceImpl<PowwowServe
 					powwowServerModelImpl.isActive()
 				};
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_PT_A, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PT_A,
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_PT_A, args);
+			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PT_A,
 				args);
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_ALL,
-				FINDER_ARGS_EMPTY);
-			FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL,
+			finderCache.removeResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY);
+			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL,
 				FINDER_ARGS_EMPTY);
 		}
 
@@ -975,8 +975,8 @@ public class PowwowServerPersistenceImpl extends BasePersistenceImpl<PowwowServe
 						powwowServerModelImpl.getOriginalActive()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_PT_A, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PT_A,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_PT_A, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PT_A,
 					args);
 
 				args = new Object[] {
@@ -984,13 +984,13 @@ public class PowwowServerPersistenceImpl extends BasePersistenceImpl<PowwowServe
 						powwowServerModelImpl.isActive()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_PT_A, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PT_A,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_PT_A, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PT_A,
 					args);
 			}
 		}
 
-		EntityCacheUtil.putResult(PowwowServerModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(PowwowServerModelImpl.ENTITY_CACHE_ENABLED,
 			PowwowServerImpl.class, powwowServer.getPrimaryKey(), powwowServer,
 			false);
 
@@ -1044,7 +1044,7 @@ public class PowwowServerPersistenceImpl extends BasePersistenceImpl<PowwowServe
 	 */
 	@Override
 	public PowwowServer fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = EntityCacheUtil.getResult(PowwowServerModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(PowwowServerModelImpl.ENTITY_CACHE_ENABLED,
 				PowwowServerImpl.class, primaryKey);
 
 		if (serializable == nullModel) {
@@ -1066,12 +1066,12 @@ public class PowwowServerPersistenceImpl extends BasePersistenceImpl<PowwowServe
 					cacheResult(powwowServer);
 				}
 				else {
-					EntityCacheUtil.putResult(PowwowServerModelImpl.ENTITY_CACHE_ENABLED,
+					entityCache.putResult(PowwowServerModelImpl.ENTITY_CACHE_ENABLED,
 						PowwowServerImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
-				EntityCacheUtil.removeResult(PowwowServerModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.removeResult(PowwowServerModelImpl.ENTITY_CACHE_ENABLED,
 					PowwowServerImpl.class, primaryKey);
 
 				throw processException(e);
@@ -1121,7 +1121,7 @@ public class PowwowServerPersistenceImpl extends BasePersistenceImpl<PowwowServe
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = EntityCacheUtil.getResult(PowwowServerModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(PowwowServerModelImpl.ENTITY_CACHE_ENABLED,
 					PowwowServerImpl.class, primaryKey);
 
 			if (serializable != nullModel) {
@@ -1175,7 +1175,7 @@ public class PowwowServerPersistenceImpl extends BasePersistenceImpl<PowwowServe
 			}
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(PowwowServerModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.putResult(PowwowServerModelImpl.ENTITY_CACHE_ENABLED,
 					PowwowServerImpl.class, primaryKey, nullModel);
 			}
 		}
@@ -1268,7 +1268,7 @@ public class PowwowServerPersistenceImpl extends BasePersistenceImpl<PowwowServe
 		List<PowwowServer> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<PowwowServer>)FinderCacheUtil.getResult(finderPath,
+			list = (List<PowwowServer>)finderCache.getResult(finderPath,
 					finderArgs, this);
 		}
 
@@ -1317,10 +1317,10 @@ public class PowwowServerPersistenceImpl extends BasePersistenceImpl<PowwowServe
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1350,7 +1350,7 @@ public class PowwowServerPersistenceImpl extends BasePersistenceImpl<PowwowServe
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
+		Long count = (Long)finderCache.getResult(FINDER_PATH_COUNT_ALL,
 				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
@@ -1363,11 +1363,11 @@ public class PowwowServerPersistenceImpl extends BasePersistenceImpl<PowwowServe
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
-					FINDER_ARGS_EMPTY, count);
+				finderCache.putResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY,
+					count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_ALL,
+				finderCache.removeResult(FINDER_PATH_COUNT_ALL,
 					FINDER_ARGS_EMPTY);
 
 				throw processException(e);
@@ -1397,14 +1397,16 @@ public class PowwowServerPersistenceImpl extends BasePersistenceImpl<PowwowServe
 	}
 
 	public void destroy() {
-		EntityCacheUtil.removeCache(PowwowServerImpl.class.getName());
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		entityCache.removeCache(PowwowServerImpl.class.getName());
+		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	@BeanReference(type = CompanyProviderWrapper.class)
 	protected CompanyProvider companyProvider;
+	protected EntityCache entityCache = EntityCacheUtil.getEntityCache();
+	protected FinderCache finderCache = FinderCacheUtil.getFinderCache();
 	private static final String _SQL_SELECT_POWWOWSERVER = "SELECT powwowServer FROM PowwowServer powwowServer";
 	private static final String _SQL_SELECT_POWWOWSERVER_WHERE_PKS_IN = "SELECT powwowServer FROM PowwowServer powwowServer WHERE powwowServerId IN (";
 	private static final String _SQL_SELECT_POWWOWSERVER_WHERE = "SELECT powwowServer FROM PowwowServer powwowServer WHERE ";
