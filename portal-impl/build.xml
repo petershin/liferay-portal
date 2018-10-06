@@ -141,6 +141,7 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 			<arg value="-Dbuild.profile=portal" />
 			<arg value="-Dlicense.report.enabled=true" />
 			<arg value="-Dlicense.report.output.dir=${project.dir}/tmp/license-reports" />
+			<arg value="-Dspdx.file=${spdx.file}" />
 		</gradle-execute>
 
 		<pathconvert pathsep="," property="modules.lib.versions.files">
@@ -157,6 +158,7 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 			inputstring="${modules.lib.versions.files},${project.dir}/lib/versions.xml,${project.dir}/lib/versions-ext.xml"
 			newenvironment="true"
 		>
+			<jvmarg if:true="${jvm.debug}" value="${jpda.settings}" />
 			<jvmarg value="-Dexternal-properties=com/liferay/portal/tools/dependencies/portal-tools.properties" />
 			<arg value="${project.dir}/lib/versions.xsl" />
 			<arg value="${project.dir}/lib/versions.html" />
