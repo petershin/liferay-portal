@@ -5839,6 +5839,7 @@ to version 2.3.276.
 to version 2.3.277.
 - [LPS-86408]: Update the [Liferay Source Formatter] dependency to version
 1.0.751.
+- [LPS-86018]: Enable `watch` task for theme and WAR projects.
 
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
@@ -6288,6 +6289,7 @@ to version 2.3.277.
 [LPS-85678]: https://issues.liferay.com/browse/LPS-85678
 [LPS-85954]: https://issues.liferay.com/browse/LPS-85954
 [LPS-85959]: https://issues.liferay.com/browse/LPS-85959
+[LPS-86018]: https://issues.liferay.com/browse/LPS-86018
 [LPS-86308]: https://issues.liferay.com/browse/LPS-86308
 [LPS-86362]: https://issues.liferay.com/browse/LPS-86362
 [LPS-86371]: https://issues.liferay.com/browse/LPS-86371
