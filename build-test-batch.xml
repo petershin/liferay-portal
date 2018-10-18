@@ -3737,6 +3737,8 @@ log.sanitizer.enabled=false</echo>
 	<target name="gradle-plugins-test-jdk8">
 		<run-batch-test>
 			<test-action>
+				<antcall target="setup-sdk" />
+
 				<for keepgoing="true" param="gradle.plugin.dir">
 					<path>
 						<dirset
