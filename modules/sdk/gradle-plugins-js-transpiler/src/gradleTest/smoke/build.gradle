@@ -32,7 +32,19 @@ runGradleTest {
 
 			File expectedFile = file(generatedFile.name + ".expected")
 
-			assert expectedFile.text.normalize() == generatedFile.text.normalize()
+			assert _normalize(expectedFile) == _normalize(generatedFile)
 		}
 	}
+}
+
+private String _normalize(File file) {
+	String text = file.getText()
+
+	text = text.normalize()
+
+	text = text.replace("\r\n", "\n")
+
+	text = text.replace("\r", "\n")
+
+	return text.trim()
 }
