@@ -2,6 +2,7 @@ task jarPatched(type: Zip)
 
 dependencies {
 	compileOnly group: "org.apache.aries.spifly", name: "org.apache.aries.spifly.dynamic.framework.extension", version: "1.0.14"
+	compile group: "org.ow2.asm", name: "asm-tree", version: "7.0-beta"
 }
 
 jar {
@@ -16,6 +17,8 @@ jarPatched {
 	duplicatesStrategy = "exclude"
 
 	from sourceSets.main.output
+
+	exclude "org/objectweb/asm/Item.class"
 
 	from {
 		zipTree(configurations.compileOnly.singleFile)
