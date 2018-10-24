@@ -22,7 +22,7 @@ runGradleTest {
 		String ideaModule = ideaModuleFile.text
 
 		for (String dirName : ["src/testIntegration/java", "src/testIntegration/javaBar", "src/testIntegration/javaFoo", "src/testIntegration/resources", "src/testIntegration/resourcesBar", "src/testIntegration/resourcesFoo"]) {
-			assert eclipseClasspath.contains("<classpathentry kind=\"src\" path=\"${dirName}\"/>") || eclipseClasspath.contains("<classpathentry path=\"${dirName}\" kind=\"src\"/>")
+			assert eclipseClasspath.contains("<classpathentry kind=\"src\" path=\"${dirName}\"/>") || eclipseClasspath.contains("<classpathentry output=\"bin/testIntegration\" kind=\"src\" path=\"${dirName}\">")
 			assert ideaModule.contains("<sourceFolder url=\"file://\$MODULE_DIR\$/${dirName}\" isTestSource=\"true\"/>") || ideaModule.contains("<sourceFolder isTestSource=\"true\" url=\"file://\$MODULE_DIR\$/${dirName}\"/>")
 		}
 	}
