@@ -159,6 +159,12 @@ warnings recursively:
 - [LPS-86583]: Improve performance of the configuration phase for the `baseline`
 task.
 
+## 1.3.10 - 2018-10-25
+
+### Added
+- [LPS-86583]: Use the `TaskContainer` to see if the `baseline` task will be run
+before checking whether to skip the task.
+
 [Bnd Builder Gradle Plugin]: https://github.com/bndtools/bnd/tree/master/biz.aQute.bnd.gradle
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
 [Liferay Gradle Util]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-util
