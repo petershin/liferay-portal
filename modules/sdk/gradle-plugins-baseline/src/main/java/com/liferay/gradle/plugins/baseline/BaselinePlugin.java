@@ -79,7 +79,8 @@ public class BaselinePlugin implements Plugin<Project> {
 
 		final BaselineTask baselineTask = _addTaskBaseline(jar);
 
-		_configureTasksBaseline(project, baselineConfigurationExtension);
+		_configureTasksBaseline(
+			project, baselineConfiguration, baselineConfigurationExtension);
 
 		project.afterEvaluate(
 			new Action<Project>() {
@@ -276,24 +277,12 @@ public class BaselinePlugin implements Plugin<Project> {
 		final FileCollection oldJarFileCollection,
 		BaselineConfigurationExtension baselineConfigurationExtension) {
 
-		VersionNumber lowestBaselineVersionNumber = VersionNumber.parse(
-			baselineConfigurationExtension.getLowestBaselineVersion());
-		VersionNumber versionNumber = VersionNumber.parse(
-			newJarTask.getVersion());
-
-		if (lowestBaselineVersionNumber.compareTo(versionNumber) >= 0) {
-			baselineTask.setEnabled(false);
-
+		if (!baselineTask.isEnabled()) {
 			return;
 		}
 
-		if (versionNumber.compareTo(VersionNumber.parse("2.0.0")) == 0) {
-			if (_isModuleVersionNotFound(oldJarFileCollection)) {
-				baselineTask.setEnabled(false);
-
-				return;
-			}
-		}
+		VersionNumber versionNumber = VersionNumber.parse(
+			newJarTask.getVersion());
 
 		Integer lowestMajorVersion =
 			baselineConfigurationExtension.getLowestMajorVersion();
@@ -351,8 +340,37 @@ public class BaselinePlugin implements Plugin<Project> {
 	}
 
 	private void _configureTaskBaseline(
-		BaselineTask baselineTask,
+		BaselineTask baselineTask, Configuration baselineConfiguration,
 		final BaselineConfigurationExtension baselineConfigurationExtension) {
+
+		Jar jar = (Jar)GradleUtil.getTask(
+			baselineTask.getProject(), JavaPlugin.JAR_TASK_NAME);
+
+		VersionNumber jarVersionNumber = VersionNumber.parse(jar.getVersion());
+
+		VersionNumber lowestBaselineVersionNumber = VersionNumber.parse(
+			baselineConfigurationExtension.getLowestBaselineVersion());
+
+		if (lowestBaselineVersionNumber.compareTo(jarVersionNumber) >= 0) {
+			baselineTask.setEnabled(false);
+
+			return;
+		}
+
+		if (jarVersionNumber.compareTo(VersionNumber.parse("2.0.0")) == 0) {
+			try {
+				baselineConfiguration.getSingleFile();
+			}
+			catch (ResolveException re) {
+				Throwable throwable = re.getCause();
+
+				if (throwable instanceof ModuleVersionNotFoundException) {
+					baselineTask.setEnabled(false);
+
+					return;
+				}
+			}
+		}
 
 		baselineTask.doFirst(
 			new Action<Task>() {
@@ -416,7 +434,7 @@ public class BaselinePlugin implements Plugin<Project> {
 	}
 
 	private void _configureTasksBaseline(
-		Project project,
+		Project project, final Configuration baselineConfiguration,
 		final BaselineConfigurationExtension baselineConfigurationExtension) {
 
 		TaskContainer taskContainer = project.getTasks();
@@ -428,7 +446,8 @@ public class BaselinePlugin implements Plugin<Project> {
 				@Override
 				public void execute(BaselineTask baselineTask) {
 					_configureTaskBaseline(
-						baselineTask, baselineConfigurationExtension);
+						baselineTask, baselineConfiguration,
+						baselineConfigurationExtension);
 				}
 
 			});
@@ -466,21 +485,6 @@ public class BaselinePlugin implements Plugin<Project> {
 		args.put("version", version);
 
 		return dependencyHandler.create(args);
-	}
-
-	private boolean _isModuleVersionNotFound(FileCollection fileCollection) {
-		try {
-			fileCollection.getSingleFile();
-		}
-		catch (ResolveException re) {
-			Throwable throwable = re.getCause();
-
-			if (throwable instanceof ModuleVersionNotFoundException) {
-				return true;
-			}
-		}
-
-		return false;
 	}
 
 }
