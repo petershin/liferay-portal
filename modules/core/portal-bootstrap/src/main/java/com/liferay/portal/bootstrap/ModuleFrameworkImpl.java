@@ -95,8 +95,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.jar.Attributes;
-import java.util.jar.JarEntry;
-import java.util.jar.JarFile;
 import java.util.jar.JarInputStream;
 import java.util.jar.Manifest;
 import java.util.zip.ZipEntry;
@@ -1044,12 +1042,16 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		throws PortalException {
 
 		try {
-			Attributes attributes = _readJarAttributes(inputStream);
+			JarInputStream jarInputStream = new JarInputStream(inputStream);
 
-			if (attributes == null) {
+			Manifest manifest = jarInputStream.getManifest();
+
+			if (manifest == null) {
 				throw new IllegalStateException(
 					"No manifest found at location " + location);
 			}
+
+			Attributes attributes = manifest.getMainAttributes();
 
 			String bundleSymbolicNameAttributeValue = attributes.getValue(
 				Constants.BUNDLE_SYMBOLICNAME);
@@ -1205,44 +1207,6 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		}
 
 		return true;
-	}
-
-	private Attributes _readJarAttributes(InputStream inputStream)
-		throws Exception {
-
-		JarInputStream jarInputStream = new JarInputStream(inputStream);
-
-		Manifest manifest = jarInputStream.getManifest();
-
-		if (manifest != null) {
-			return manifest.getMainAttributes();
-		}
-
-		JarEntry jarEntry = jarInputStream.getNextJarEntry();
-
-		Attributes attributes = null;
-
-		while (jarEntry != null) {
-			if (StringUtil.equalsIgnoreCase(
-					JarFile.MANIFEST_NAME, jarEntry.getName())) {
-
-				manifest = new Manifest();
-
-				manifest.read(jarInputStream);
-
-				attributes = manifest.getMainAttributes();
-
-				break;
-			}
-
-			jarEntry = jarInputStream.getNextJarEntry();
-		}
-
-		if (jarEntry == null) {
-			return null;
-		}
-
-		return attributes;
 	}
 
 	private void _refreshBundles(List<Bundle> refreshBundles) {
