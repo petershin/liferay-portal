@@ -1,4 +1,4 @@
-task jarPatched(type: Zip)
+task jarPatched(type: Jar)
 
 dependencies {
 	compile group: "org.ow2.asm", name: "asm-tree", version: "7.0-beta"
