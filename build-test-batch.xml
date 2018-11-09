@@ -3790,7 +3790,9 @@ log.sanitizer.enabled=false</echo>
 	<target name="gradle-plugins-test-jdk8">
 		<run-batch-test>
 			<test-action>
-				<for keepgoing="true" param="gradle.plugin.dir">
+				<var name="gradle.test.tasks" value="" />
+
+				<for param="gradle.plugin.dir">
 					<path>
 						<dirset
 							dir="modules/sdk"
@@ -3799,15 +3801,38 @@ log.sanitizer.enabled=false</echo>
 						/>
 					</path>
 					<sequential>
+						<local name="gradle.plugin.name" />
+
 						<if>
 							<resourcecontains
 								resource="@{gradle.plugin.dir}/build.gradle"
 								substring="gradleTest"
 							/>
 							<then>
-								<gradle-execute dir="@{gradle.plugin.dir}" task="gradleTest" />
+								<basename file="@{gradle.plugin.dir}" property="gradle.plugin.name" />
+
+								<var name="gradle.test.tasks" value="${gradle.test.tasks} :sdk:${gradle.plugin.name}:gradleTest" />
 							</then>
 						</if>
+					</sequential>
+				</for>
+
+				<loadresource property="gradle.test.task.groups">
+					<filterchain>
+						<tokenfilter>
+							<replaceregex flags="g" pattern="(\S+ ){${gradle.plugins.test.groups.size}}" replace="\0," />
+						</tokenfilter>
+					</filterchain>
+					<propertyresource name="gradle.test.tasks" />
+				</loadresource>
+
+				<for keepgoing="true" list="${gradle.test.task.groups}" param="gradle.test.task.group" trim="true">
+					<sequential>
+						<echo>Executing Gradle tasks: @{gradle.test.task.group}.</echo>
+
+						<gradle-execute dir="modules" task="@{gradle.test.task.group}">
+							<arg value="--continue" />
+						</gradle-execute>
 					</sequential>
 				</for>
 			</test-action>
