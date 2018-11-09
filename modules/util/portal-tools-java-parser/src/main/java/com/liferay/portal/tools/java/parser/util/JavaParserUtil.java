@@ -21,16 +21,19 @@ import com.liferay.portal.tools.java.parser.JavaAnnotationMemberValuePair;
 import com.liferay.portal.tools.java.parser.JavaArray;
 import com.liferay.portal.tools.java.parser.JavaArrayDeclarator;
 import com.liferay.portal.tools.java.parser.JavaArrayElement;
+import com.liferay.portal.tools.java.parser.JavaBreakStatement;
 import com.liferay.portal.tools.java.parser.JavaCatchStatement;
 import com.liferay.portal.tools.java.parser.JavaClassCall;
 import com.liferay.portal.tools.java.parser.JavaConstructor;
 import com.liferay.portal.tools.java.parser.JavaConstructorCall;
+import com.liferay.portal.tools.java.parser.JavaContinueStatement;
 import com.liferay.portal.tools.java.parser.JavaElseStatement;
 import com.liferay.portal.tools.java.parser.JavaEnhancedForStatement;
 import com.liferay.portal.tools.java.parser.JavaExpression;
 import com.liferay.portal.tools.java.parser.JavaForStatement;
 import com.liferay.portal.tools.java.parser.JavaIfStatement;
 import com.liferay.portal.tools.java.parser.JavaInstanceofStatement;
+import com.liferay.portal.tools.java.parser.JavaLabeledStatement;
 import com.liferay.portal.tools.java.parser.JavaLambdaExpression;
 import com.liferay.portal.tools.java.parser.JavaLambdaParameter;
 import com.liferay.portal.tools.java.parser.JavaMethod;
@@ -66,6 +69,20 @@ import java.util.List;
  * @author Hugo Huijser
  */
 public class JavaParserUtil {
+
+	public static JavaBreakStatement parseJavaBreakStatement(
+		DetailAST literalBreakDetailAST) {
+
+		JavaBreakStatement javaBreakStatement = new JavaBreakStatement();
+
+		DetailAST firstChildDetailAST = literalBreakDetailAST.getFirstChild();
+
+		if (firstChildDetailAST.getType() == TokenTypes.IDENT) {
+			javaBreakStatement.setIdentifierName(firstChildDetailAST.getText());
+		}
+
+		return javaBreakStatement;
+	}
 
 	public static JavaCatchStatement parseJavaCatchStatement(
 		DetailAST literalCatchDetailAST) {
@@ -145,6 +162,23 @@ public class JavaParserUtil {
 				detailAST.findFirstToken(TokenTypes.ELIST)));
 
 		return javaConstructorCall;
+	}
+
+	public static JavaContinueStatement parseJavaContinueStatement(
+		DetailAST literalContinueDetailAST) {
+
+		JavaContinueStatement javaContinueStatement =
+			new JavaContinueStatement();
+
+		DetailAST firstChildDetailAST =
+			literalContinueDetailAST.getFirstChild();
+
+		if (firstChildDetailAST.getType() == TokenTypes.IDENT) {
+			javaContinueStatement.setIdentifierName(
+				firstChildDetailAST.getText());
+		}
+
+		return javaContinueStatement;
 	}
 
 	public static JavaElseStatement parseJavaElseStatement(
@@ -287,6 +321,29 @@ public class JavaParserUtil {
 			parseJavaExpression(firstChildDetailAST.getNextSibling()));
 
 		return javaIfStatement;
+	}
+
+	public static JavaLabeledStatement parseJavaLabeledStatement(
+		DetailAST labeledStatementDetailAST) {
+
+		DetailAST firstChildDetailAST =
+			labeledStatementDetailAST.getFirstChild();
+
+		JavaLabeledStatement javaLabeledStatement = new JavaLabeledStatement(
+			firstChildDetailAST.getText());
+
+		DetailAST nextSiblingDetailAST = firstChildDetailAST.getNextSibling();
+
+		if (nextSiblingDetailAST.getType() == TokenTypes.LITERAL_FOR) {
+			javaLabeledStatement.setLoopJavaTerm(
+				parseJavaForStatement(nextSiblingDetailAST));
+		}
+		else if (nextSiblingDetailAST.getType() == TokenTypes.LITERAL_WHILE) {
+			javaLabeledStatement.setLoopJavaTerm(
+				parseJavaWhileStatement(nextSiblingDetailAST));
+		}
+
+		return javaLabeledStatement;
 	}
 
 	public static JavaMethod parseJavaMethod(
@@ -817,16 +874,19 @@ public class JavaParserUtil {
 		DetailAST forIteratorDetailAST = literalForDetailAST.findFirstToken(
 			TokenTypes.FOR_ITERATOR);
 
+		List<JavaExpression> iteratorJavaExpressions = new ArrayList<>();
+
 		DetailAST elistDetailAST = forIteratorDetailAST.findFirstToken(
 			TokenTypes.ELIST);
 
-		List<JavaExpression> iteratorJavaExpressions = new ArrayList<>();
+		if (elistDetailAST != null) {
+			List<DetailAST> exprDetailASTList = DetailASTUtil.getAllChildTokens(
+				elistDetailAST, false, TokenTypes.EXPR);
 
-		List<DetailAST> exprDetailASTList = DetailASTUtil.getAllChildTokens(
-			elistDetailAST, false, TokenTypes.EXPR);
-
-		for (DetailAST curExprDetailAST : exprDetailASTList) {
-			iteratorJavaExpressions.add(parseJavaExpression(curExprDetailAST));
+			for (DetailAST curExprDetailAST : exprDetailASTList) {
+				iteratorJavaExpressions.add(
+					parseJavaExpression(curExprDetailAST));
+			}
 		}
 
 		javaForStatement.setIteratorJavaExpression(iteratorJavaExpressions);

@@ -12,26 +12,22 @@
  * details.
  */
 
-package com.liferay.jenkins.results.parser;
-
-import java.util.Properties;
-import java.util.Set;
+package com.liferay.portal.tools.java.parser;
 
 /**
- * @author Michael Hashimoto
+ * @author Hugo Huijser
  */
-public interface Job {
+public class JavaLabeledStatement extends BaseJavaTerm {
 
-	public Set<String> getBatchNames();
+	public JavaLabeledStatement(String labelName) {
+		_labelName = new JavaSimpleValue(labelName);
+	}
 
-	public Set<String> getDistTypes();
+	public void setLoopJavaTerm(JavaTerm loopJavaTerm) {
+		_loopJavaTerm = loopJavaTerm;
+	}
 
-	public String getJobName();
-
-	public Properties getJobProperties();
-
-	public String getJobProperty(String key);
-
-	public void readJobProperties();
+	private final JavaSimpleValue _labelName;
+	private JavaTerm _loopJavaTerm;
 
 }

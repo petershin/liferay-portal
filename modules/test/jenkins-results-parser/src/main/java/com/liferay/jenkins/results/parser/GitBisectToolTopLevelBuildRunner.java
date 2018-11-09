@@ -14,8 +14,13 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import org.apache.commons.lang.StringUtils;
 
 import org.dom4j.Element;
 
@@ -96,7 +101,31 @@ public class GitBisectToolTopLevelBuildRunner
 		WorkspaceGitRepository workspaceGitRepository =
 			portalWorkspace.getPrimaryPortalWorkspaceGitRepository();
 
-		workspaceGitRepository.storeCommitHistory(_getPortalBranchSHAs());
+		try {
+			workspaceGitRepository.storeCommitHistory(_getPortalBranchSHAs());
+		}
+		catch (Exception e) {
+			String portalGitHubURL = getBuildParameter(_PORTAL_GITHUB_URL);
+
+			failBuildRunner(
+				JenkinsResultsParserUtil.combine(
+					_PORTAL_BRANCH_SHAS,
+					" has SHAs that are not be found within the latest ",
+					String.valueOf(WorkspaceGitRepository.MAX_COMMIT_HISTORY),
+					" commits of <a href=\"", portalGitHubURL, "\">",
+					portalGitHubURL, "</a>"),
+				e);
+		}
+	}
+
+	@Override
+	protected void validateBuildParameters() {
+		_validateBuildParameterJenkinsGitHubURL();
+		_validateBuildParameterPortalBatchName();
+		_validateBuildParameterPortalBatchTestSelector();
+		_validateBuildParameterPortalBranchSHAs();
+		_validateBuildParameterPortalGitHubURL();
+		_validateBuildParameterPortalUpstreamBranchName();
 	}
 
 	private String _getBatchName() {
@@ -135,23 +164,223 @@ public class GitBisectToolTopLevelBuildRunner
 	}
 
 	private List<String> _getPortalBranchSHAs() {
-		PortalTopLevelBuildData portalTopLevelBuildData = getBuildData();
+		String portalBranchSHAs = getBuildParameter(_PORTAL_BRANCH_SHAS);
 
-		String portalGitCommits = JenkinsResultsParserUtil.getBuildParameter(
-			portalTopLevelBuildData.getBuildURL(), "PORTAL_BRANCH_SHAS");
+		List<String> list = new ArrayList<>();
 
-		return Arrays.asList(portalGitCommits.split(","));
+		for (String portalBranchSHA : portalBranchSHAs.split(",")) {
+			list.add(portalBranchSHA.trim());
+		}
+
+		return list;
 	}
 
 	private List<String> _getTestList() {
-		PortalTopLevelBuildData portalTopLevelBuildData = getBuildData();
+		String portalBatchTestSelector = getBuildParameter(
+			_PORTAL_BATCH_TEST_SELECTOR);
 
-		String portalBatchTestSelector =
-			JenkinsResultsParserUtil.getBuildParameter(
-				portalTopLevelBuildData.getBuildURL(),
-				"PORTAL_BATCH_TEST_SELECTOR");
+		List<String> list = new ArrayList<>();
 
-		return Arrays.asList(portalBatchTestSelector.split(","));
+		for (String portalBatchTest : portalBatchTestSelector.split(",")) {
+			list.add(portalBatchTest.trim());
+		}
+
+		return list;
 	}
+
+	private void _validateBuildParameterJenkinsGitHubURL() {
+		String jenkinsGitHubURL = getBuildParameter(_JENKINS_GITHUB_URL);
+
+		if ((jenkinsGitHubURL == null) || jenkinsGitHubURL.isEmpty()) {
+			return;
+		}
+
+		String failureMessage = JenkinsResultsParserUtil.combine(
+			_JENKINS_GITHUB_URL,
+			" has an invalid Jenkins GitHub URL <a href=\"", jenkinsGitHubURL,
+			"\">", jenkinsGitHubURL, "</a>");
+
+		Matcher matcher = _pattern.matcher(jenkinsGitHubURL);
+
+		if (!matcher.find()) {
+			failBuildRunner(failureMessage);
+		}
+
+		String repositoryName = matcher.group("repositoryName");
+
+		if (!repositoryName.equals("liferay-jenkins-ee")) {
+			failBuildRunner(failureMessage);
+		}
+	}
+
+	private void _validateBuildParameterPortalBatchName() {
+		String portalBatchName = getBuildParameter(_PORTAL_BATCH_NAME);
+
+		if ((portalBatchName == null) || portalBatchName.isEmpty()) {
+			failBuildRunner(_PORTAL_BATCH_NAME + " is null");
+		}
+
+		String allowedPortalBatchNames = getJobProperty(
+			JenkinsResultsParserUtil.combine(
+				"allowed.portal.batch.names[",
+				getBuildParameter(_PORTAL_UPSTREAM_BRANCH_NAME), "]"));
+
+		if ((allowedPortalBatchNames == null) ||
+			allowedPortalBatchNames.isEmpty()) {
+
+			return;
+		}
+
+		List<String> allowedPortalBatchNamesList = Arrays.asList(
+			allowedPortalBatchNames.split(","));
+
+		if (!allowedPortalBatchNamesList.contains(portalBatchName)) {
+			StringBuilder sb = new StringBuilder();
+
+			sb.append(_PORTAL_BATCH_NAME);
+			sb.append(" must match one of the following: ");
+
+			sb.append("<ul>");
+
+			for (String allowedPortalBatchName : allowedPortalBatchNamesList) {
+				sb.append("<li>");
+				sb.append(allowedPortalBatchName);
+				sb.append("</li>");
+			}
+
+			sb.append("</ul>");
+
+			failBuildRunner(sb.toString());
+		}
+	}
+
+	private void _validateBuildParameterPortalBatchTestSelector() {
+		String portalBatchTestSelector = getBuildParameter(
+			_PORTAL_BATCH_TEST_SELECTOR);
+
+		if ((portalBatchTestSelector == null) ||
+			portalBatchTestSelector.isEmpty()) {
+
+			failBuildRunner(_PORTAL_BATCH_TEST_SELECTOR + " is null");
+		}
+	}
+
+	private void _validateBuildParameterPortalBranchSHAs() {
+		String portalBranchSHAs = getBuildParameter(_PORTAL_BRANCH_SHAS);
+
+		if ((portalBranchSHAs == null) || portalBranchSHAs.isEmpty()) {
+			failBuildRunner(_PORTAL_BRANCH_SHAS + " is null");
+		}
+
+		String allowedPortalBranchSHAs = getJobProperty(
+			"allowed.portal.branch.shas");
+
+		if ((allowedPortalBranchSHAs == null) ||
+			allowedPortalBranchSHAs.isEmpty()) {
+
+			return;
+		}
+
+		Integer portalBranchSHACount = StringUtils.countMatches(
+			portalBranchSHAs, ",") + 1;
+
+		if (portalBranchSHACount >
+				Integer.valueOf(allowedPortalBranchSHAs)) {
+
+			failBuildRunner(
+				JenkinsResultsParserUtil.combine(
+					_PORTAL_BRANCH_SHAS, " can only reference ",
+					allowedPortalBranchSHAs, " portal branch SHAs"));
+		}
+	}
+
+	private void _validateBuildParameterPortalGitHubURL() {
+		String portalGitHubURL = getBuildParameter(_PORTAL_GITHUB_URL);
+
+		if ((portalGitHubURL == null) || portalGitHubURL.isEmpty()) {
+			failBuildRunner(_PORTAL_GITHUB_URL + " is null");
+		}
+
+		String failureMessage = JenkinsResultsParserUtil.combine(
+			_PORTAL_GITHUB_URL, " has an invalid Portal GitHub URL <a href=\"",
+			portalGitHubURL, "\">", portalGitHubURL, "</a>");
+
+		Matcher matcher = _pattern.matcher(portalGitHubURL);
+
+		if (!matcher.find()) {
+			failBuildRunner(failureMessage);
+		}
+
+		String repositoryName = matcher.group("repositoryName");
+
+		if (!repositoryName.equals("liferay-portal") &&
+			!repositoryName.equals("liferay-portal-ee")) {
+
+			failBuildRunner(failureMessage);
+		}
+	}
+
+	private void _validateBuildParameterPortalUpstreamBranchName() {
+		String portalUpstreamBranchName = getBuildParameter(
+			_PORTAL_UPSTREAM_BRANCH_NAME);
+
+		if ((portalUpstreamBranchName == null) ||
+			portalUpstreamBranchName.isEmpty()) {
+
+			failBuildRunner(_PORTAL_UPSTREAM_BRANCH_NAME + " is null");
+		}
+
+		String allowedPortalUpstreamBranchNames = getJobProperty(
+			"allowed.portal.upstream.branch.names");
+
+		if ((allowedPortalUpstreamBranchNames == null) ||
+			allowedPortalUpstreamBranchNames.isEmpty()) {
+
+			return;
+		}
+
+		List<String> allowedPortalUpstreamBranchNamesList = Arrays.asList(
+			allowedPortalUpstreamBranchNames.split(","));
+
+		if (!allowedPortalUpstreamBranchNamesList.contains(
+				portalUpstreamBranchName)) {
+
+			StringBuilder sb = new StringBuilder();
+
+			sb.append(_PORTAL_UPSTREAM_BRANCH_NAME);
+			sb.append(" must match one of the following: ");
+
+			sb.append("<ul>");
+
+			for (String allowedPortalUpstreamBranchName :
+					allowedPortalUpstreamBranchNamesList) {
+
+				sb.append("<li>");
+				sb.append(allowedPortalUpstreamBranchName);
+				sb.append("</li>");
+			}
+
+			sb.append("</ul>");
+
+			failBuildRunner(sb.toString());
+		}
+	}
+
+	private static final String _JENKINS_GITHUB_URL = "JENKINS_GITHUB_URL";
+
+	private static final String _PORTAL_BATCH_NAME = "PORTAL_BATCH_NAME";
+
+	private static final String _PORTAL_BATCH_TEST_SELECTOR =
+		"PORTAL_BATCH_TEST_SELECTOR";
+
+	private static final String _PORTAL_BRANCH_SHAS = "PORTAL_BRANCH_SHAS";
+
+	private static final String _PORTAL_GITHUB_URL = "PORTAL_GITHUB_URL";
+
+	private static final String _PORTAL_UPSTREAM_BRANCH_NAME =
+		"PORTAL_UPSTREAM_BRANCH_NAME";
+
+	private static final Pattern _pattern = Pattern.compile(
+		"https://github.com/[^/]+/(?<repositoryName>[^/]+)/tree/.+");
 
 }

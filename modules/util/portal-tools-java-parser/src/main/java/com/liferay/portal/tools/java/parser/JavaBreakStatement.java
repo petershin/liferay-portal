@@ -12,26 +12,17 @@
  * details.
  */
 
-package com.liferay.jenkins.results.parser;
-
-import java.util.Properties;
-import java.util.Set;
+package com.liferay.portal.tools.java.parser;
 
 /**
- * @author Michael Hashimoto
+ * @author Hugo Huijser
  */
-public interface Job {
+public class JavaBreakStatement extends BaseJavaTerm {
 
-	public Set<String> getBatchNames();
+	public void setIdentifierName(String identifierName) {
+		_identifierName = new JavaSimpleValue(identifierName);
+	}
 
-	public Set<String> getDistTypes();
-
-	public String getJobName();
-
-	public Properties getJobProperties();
-
-	public String getJobProperty(String key);
-
-	public void readJobProperties();
+	private JavaSimpleValue _identifierName;
 
 }

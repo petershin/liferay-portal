@@ -272,6 +272,11 @@ public class FriendlyURLServlet extends HttpServlet {
 		String actualURL = portal.getActualURL(
 			group.getGroupId(), _private, Portal.PATH_MAIN, friendlyURL, params,
 			requestContext);
+		String portalURL = portal.getPortalURL(request);
+
+		if (actualURL.startsWith(portalURL)) {
+			actualURL = StringUtil.removeSubstring(actualURL, portalURL);
+		}
 
 		return new Redirect(actualURL);
 	}

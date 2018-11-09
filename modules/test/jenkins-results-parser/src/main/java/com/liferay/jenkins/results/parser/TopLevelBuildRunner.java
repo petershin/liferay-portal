@@ -37,6 +37,8 @@ public abstract class TopLevelBuildRunner
 
 	@Override
 	public void run() {
+		validateBuildParameters();
+
 		publishJenkinsReport();
 
 		updateBuildDescription();
@@ -81,8 +83,38 @@ public abstract class TopLevelBuildRunner
 		_downstreamBuildDataList.add(buildData);
 	}
 
+	protected void failBuildRunner(String message) {
+		failBuildRunner(message, null);
+	}
+
+	protected void failBuildRunner(String message, Exception exception) {
+		TopLevelBuildData topLevelBuildData = getBuildData();
+
+		topLevelBuildData.setBuildDescription("<b>ERROR:</b> " + message);
+
+		updateBuildDescription();
+
+		if (exception == null) {
+			throw new RuntimeException(message);
+		}
+
+		throw new RuntimeException(message, exception);
+	}
+
+	protected String getBuildParameter(String key) {
+		TopLevelBuildData topLevelBuildData = getBuildData();
+
+		return topLevelBuildData.getBuildParameter(key);
+	}
+
 	protected Element getJenkinsReportElement() {
 		return _topLevelBuild.getJenkinsReportElement();
+	}
+
+	protected String getJobProperty(String key) {
+		Job job = getJob();
+
+		return job.getJobProperty(key);
 	}
 
 	protected TopLevelBuild getTopLevelBuild() {
@@ -166,6 +198,8 @@ public abstract class TopLevelBuildRunner
 
 		publishJenkinsReport();
 	}
+
+	protected abstract void validateBuildParameters();
 
 	protected void waitForDownstreamBuildsToComplete() {
 		while (true) {
