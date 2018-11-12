@@ -34,7 +34,5 @@ gradleTest {
 	dependsOn copyRepo
 	dependsOn jar
 
-	deprecationMessagesAreFailures = false
-
 	versions "4.10.2"
 }
