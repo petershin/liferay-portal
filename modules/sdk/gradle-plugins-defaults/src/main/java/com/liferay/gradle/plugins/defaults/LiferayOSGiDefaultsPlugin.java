@@ -2649,12 +2649,15 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	private void _configureSourceSetClassesDir(
 		Project project, SourceSet sourceSet, String classesDirName) {
 
+		SourceDirectorySet sourceDirectorySet = sourceSet.getJava();
 		SourceSetOutput sourceSetOutput = sourceSet.getOutput();
 
 		if (FileUtil.isChild(
-				sourceSetOutput.getClassesDir(), project.getBuildDir())) {
+				sourceDirectorySet.getOutputDir(), project.getBuildDir())) {
 
-			sourceSetOutput.setClassesDir(classesDirName);
+			File outputDir = GradleUtil.toFile(project, classesDirName);
+
+			sourceDirectorySet.setOutputDir(outputDir);
 			sourceSetOutput.setResourcesDir(classesDirName);
 		}
 	}

@@ -559,10 +559,11 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 					SourceSet sourceSet = GradleUtil.getSourceSet(
 						project, SourceSet.MAIN_SOURCE_SET_NAME);
 
+					SourceDirectorySet sourceDirectorySet = sourceSet.getJava();
 					SourceSetOutput sourceSetOutput = sourceSet.getOutput();
 
 					return new File[] {
-						sourceSetOutput.getClassesDir(),
+						sourceDirectorySet.getOutputDir(),
 						sourceSetOutput.getResourcesDir()
 					};
 				}
