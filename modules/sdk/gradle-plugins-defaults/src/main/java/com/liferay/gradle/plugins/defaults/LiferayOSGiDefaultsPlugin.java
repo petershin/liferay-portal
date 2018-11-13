@@ -3057,7 +3057,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 				javaCompile, jarJSPsTask, artifactProperties);
 
 			if (copy != null) {
-				javaCompile.deleteAllActions();
+				javaCompile.setActions(Collections.emptyList());
 				javaCompile.setDependsOn(Collections.singleton(copy));
 			}
 		}

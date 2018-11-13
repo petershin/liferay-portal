@@ -516,9 +516,9 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		Jar jar = GradleUtil.addTask(
 			project, buildWSDDTask.getName() + "Jar", Jar.class);
 
-		jar.dependsOn(buildWSDDTask);
+		jar.setActions(Collections.emptyList());
 
-		jar.deleteAllActions();
+		jar.dependsOn(buildWSDDTask);
 
 		jar.doLast(
 			new Action<Task>() {

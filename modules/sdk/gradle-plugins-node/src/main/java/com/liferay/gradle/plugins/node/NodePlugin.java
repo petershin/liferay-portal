@@ -28,6 +28,7 @@ import groovy.json.JsonSlurper;
 
 import java.io.File;
 
+import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Callable;
@@ -338,7 +339,8 @@ public class NodePlugin implements Plugin<Project> {
 				rootProject, taskName, nodeExtension);
 		}
 
-		downloadNodeTask.deleteAllActions();
+		downloadNodeTask.setActions(Collections.emptyList());
+
 		downloadNodeTask.dependsOn(rootDownloadNodeTask);
 	}
 
