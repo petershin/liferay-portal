@@ -599,22 +599,7 @@
 
 		<ant inheritAll="false" target="deploy" />
 
-		<if>
-			<not>
-				<equals arg1="${tomcat.keep.app.server.properties}" arg2="true" />
-			</not>
-			<then>
-				<app-server-properties-reset />
-			</then>
-		</if>
-
-		<antcall inheritAll="false" target="resolve-dynamic-jars" />
-
-		<antcall target="deploy-plugins">
-			<param name="deployer.dest.dir" value="${app.server.parent.dir}/tomcat-${app.server.tomcat.version}/webapps" />
-			<param name="deployer.app.server.type" value="tomcat" />
-			<param name="deployer.app.server.lib.portal.dir" value="${app.server.parent.dir}/tomcat-${app.server.tomcat.version}/webapps/ROOT/WEB-INF/lib" />
-		</antcall>
+		<echo message="#### SKIP ####" />
 	</target>
 
 	<target name="build-dist-tomcat-bare">
