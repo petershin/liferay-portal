@@ -47,7 +47,7 @@ public class LiferayDefaultsPlugin extends LiferayPlugin {
 		NodeDefaultsPlugin.INSTANCE.apply(project);
 
 		if (_isRunningInCIEnvironment()) {
-			LiferayCIPlugin.INSTANCE.apply(project);
+			// LiferayCIPlugin.INSTANCE.apply(project);
 		}
 	}
 
