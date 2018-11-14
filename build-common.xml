@@ -471,7 +471,7 @@ information.
 				test.type="integration"
 			/>
 
-			<ant dir="${project.dir}/portal-kernel" inheritAll="false" target="jar" />
+			<echo message="#### SKIP portal-kernel jar ####" />
 
 			<if>
 				<uptodate
@@ -480,7 +480,7 @@ information.
 					<srcfiles dir="${project.dir}/portal-impl/classes" includes="**/*" />
 				</uptodate>
 				<else>
-					<ant dir="${project.dir}/portal-impl" inheritAll="false" target="jar" />
+					<echo message="#### SKIP portal-impl jar ####" />
 				</else>
 			</if>
 
