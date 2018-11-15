@@ -11,3 +11,5 @@ dependencies {
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-soy")
 	compileOnly project(":core:petra:petra-lang")
 }
+
+deploy.dependsOn compileJSP

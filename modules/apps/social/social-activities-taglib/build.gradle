@@ -11,3 +11,5 @@ dependencies {
 	compileOnly project(":apps:rss:rss-taglib")
 	compileOnly project(":core:petra:petra-string")
 }
+
+deploy.dependsOn compileJSP
