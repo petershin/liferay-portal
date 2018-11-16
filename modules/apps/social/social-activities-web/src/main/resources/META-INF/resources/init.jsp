@@ -34,6 +34,8 @@ page import="com.liferay.social.activities.web.internal.portlet.display.context.
 page import="com.liferay.social.activities.web.internal.portlet.display.context.util.SocialActivitiesRequestHelper" %><%@
 page import="com.liferay.social.activities.web.internal.util.SocialActivitiesQueryHelper" %>
 
+<liferay-frontend:defineObjects />
+
 <liferay-theme:defineObjects />
 
 <portlet:defineObjects />
