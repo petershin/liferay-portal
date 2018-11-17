@@ -487,12 +487,16 @@ message.
 				<if>
 					<equals arg1="${jsp.precompile.parallel}" arg2="on" />
 					<then>
+						<echo message="#### build:compileJSP:parallel:start" />
+
 						<gradle-execute dir="${project.dir}/modules" task="compileJSP">
 							<arg value="--parallel" />
 							<arg value="-Dbuild.exclude.dirs=${build.exclude.dirs}" />
 							<arg value="-Dbuild.include.dirs=${build.include.dirs}" />
 							<arg value="-Dbuild.profile=${build.profile}" />
 						</gradle-execute>
+
+						<echo message="#### build:compileJSP:parallel:end" />
 					</then>
 					<else>
 						<gradle-execute dir="${project.dir}/modules" task="compileJSP">

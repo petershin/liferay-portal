@@ -597,6 +597,12 @@
 	<target name="build-dist-tomcat">
 		<build-dist-tomcat-bare />
 
+		<echo message="#### build-dist-tomcat:compile:start" />
+
+		<ant inheritAll="false" target="compile" />
+
+		<echo message="#### build-dist-tomcat:compile:end" />
+
 		<ant inheritAll="false" target="deploy" />
 
 		<if>
