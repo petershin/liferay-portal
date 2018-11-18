@@ -3,5 +3,5 @@ Bundle-SymbolicName: com.liferay.product.navigation.user
 Bundle-Version: 4.0.0
 Require-Capability:\
 	osgi.extender;\
-		filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/soy))"
+		filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/frontend))"
 Web-ContextPath: /product-navigation-user

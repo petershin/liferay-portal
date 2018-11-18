@@ -3,6 +3,6 @@ Bundle-SymbolicName: com.liferay.microblogs.web
 Bundle-Version: 4.0.0
 Require-Capability:\
 	osgi.extender;\
-		filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/soy))"
+		filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/frontend))"
 Web-ContextPath: /microblogs-web
 -dsannotations-options: inherit
