@@ -481,29 +481,16 @@ message.
 			</else>
 		</if>
 
-		<if>
-			<equals arg1="${jsp.precompile.modules}" arg2="on" />
-			<then>
-				<if>
-					<equals arg1="${jsp.precompile.parallel}" arg2="on" />
-					<then>
-						<gradle-execute dir="${project.dir}/modules" task="compileJSP">
-							<arg value="--parallel" />
-							<arg value="-Dbuild.exclude.dirs=${build.exclude.dirs}" />
-							<arg value="-Dbuild.include.dirs=${build.include.dirs}" />
-							<arg value="-Dbuild.profile=${build.profile}" />
-						</gradle-execute>
-					</then>
-					<else>
-						<gradle-execute dir="${project.dir}/modules" task="compileJSP">
-							<arg value="-Dbuild.exclude.dirs=${build.exclude.dirs}" />
-							<arg value="-Dbuild.include.dirs=${build.include.dirs}" />
-							<arg value="-Dbuild.profile=${build.profile}" />
-						</gradle-execute>
-					</else>
-				</if>
-			</then>
-		</if>
+		<echo>#### jsp.precompile.from.source ${jsp.precompile.from.source}</echo>
+		<echo>#### jsp.precompile.modules ${jsp.precompile.modules}</echo>
+		<echo>#### jsp.precompile.parallel ${jsp.precompile.parallel}</echo>
+
+		<gradle-execute dir="${project.dir}/modules" task="compileJSP">
+			<arg value="--parallel" />
+			<arg value="-Dbuild.exclude.dirs=${build.exclude.dirs}" />
+			<arg value="-Dbuild.include.dirs=${build.include.dirs}" />
+			<arg value="-Dbuild.profile=${build.profile}" />
+		</gradle-execute>
 
 		<stopwatch action="elapsed" name="modules.stopwatch" />
 

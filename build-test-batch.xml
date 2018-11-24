@@ -681,6 +681,14 @@ app.server.type=@{app.server.type}]]></echo>
 				</then>
 				<else>
 					<ant antfile="build-dist.xml" inheritAll="false" target="build-dist-@{app.server.type}" />
+
+					<fileset id="work.contents2" dir="bundles/work/com.liferay.product.navigation.user.personal.bar.web-4.0.0" includes="**"/> 
+					<property name="prop.work.contents2" refid="work.contents2"/>
+					<for delimiter=";" list="${prop.work.contents2}" param="prop.work.content">
+						<sequential>
+							<echo>#### DIST @{prop.work.content}</echo>
+						</sequential>
+					</for>
 				</else>
 			</if>
 
@@ -749,6 +757,15 @@ app.server.type=@{app.server.type}]]></echo>
 					tar --file=liferay-portal-bundle-@{app.server.type}.tar.gz --gzip --list --verbose
 				]]>
 			</execute>
+
+			<fileset id="work.contents" dir="bundles/work/com.liferay.product.navigation.user.personal.bar.web-4.0.0" includes="**"/> 
+			<property name="prop.work.contents" refid="work.contents"/>
+			<for delimiter=";" list="${prop.work.contents}" param="prop.work.content">
+				<sequential>
+					<echo>#### @{prop.work.content}</echo>
+				</sequential>
+			</for>
+
 		</sequential>
 	</macrodef>
 
@@ -788,6 +805,14 @@ app.server.type=@{app.server.type}]]></echo>
 				dest="."
 				src="liferay-portal-bundle-@{app.server.type}.tar.gz"
 			/>
+
+			<fileset id="work.contents" dir="bundles/work/com.liferay.product.navigation.user.personal.bar.web-4.0.0" includes="**" /> 
+			<property name="prop.work.contents" refid="work.contents"/>
+			<for delimiter=";" list="${prop.work.contents}" param="prop.work.content">
+				<sequential>
+					<echo>#### @{prop.work.content}</echo>
+				</sequential>
+			</for>
 
 			<chmod
 				perm="a+x"

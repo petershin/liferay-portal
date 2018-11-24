@@ -2978,13 +2978,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	private void _configureTaskCompileJSP(
 		Project project, Jar jarJSPsTask, LiferayExtension liferayExtension) {
 
-		boolean jspPrecompileEnabled = GradleUtil.getProperty(
-			project, "jsp.precompile.enabled", false);
-
-		if (!jspPrecompileEnabled) {
-			return;
-		}
-
 		JavaCompile javaCompile = (JavaCompile)GradleUtil.getTask(
 			project, JspCPlugin.COMPILE_JSP_TASK_NAME);
 
@@ -3020,17 +3013,27 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		boolean jspPrecompileFromSource = GradleUtil.getProperty(
 			project, "jsp.precompile.from.source", true);
 
-		if (Validator.isNull(dirName) || jspPrecompileFromSource) {
-			dirName =
-				GradleUtil.getArchivesBaseName(project) + "-" +
-					project.getVersion();
-		}
+		Logger logger = project.getLogger();
+
+		logger.lifecycle(
+			"GRAD jsp.precompile.from.source:" + jspPrecompileFromSource);
+
+		logger.lifecycle("GRAD " + dirName);
+
+		dirName =
+			GradleUtil.getArchivesBaseName(project) + "-" +
+				project.getVersion();
+
+		logger.lifecycle("GRAD " + dirName);
 
 		File dir = new File(
 			liferayExtension.getLiferayHome(), "work/" + dirName);
 
+		logger.lifecycle("GRAD " + dir);
+
 		javaCompile.setDestinationDir(dir);
 
+		/*
 		if (!jspPrecompileFromSource && (artifactProperties != null)) {
 			Copy copy = _addTaskDownloadCompiledJSP(
 				javaCompile, jarJSPsTask, artifactProperties);
@@ -3040,6 +3043,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 				javaCompile.setDependsOn(Collections.singleton(copy));
 			}
 		}
+		*/
 	}
 
 	private void _configureTaskDeploy(
