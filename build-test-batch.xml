@@ -749,6 +749,10 @@ app.server.type=@{app.server.type}]]></echo>
 					tar --file=liferay-portal-bundle-@{app.server.type}.tar.gz --gzip --list --verbose
 				]]>
 			</execute>
+
+			<dirset id="work.contents" dir="bundles/work" includes="*"/> 
+			<property name="prop.work.contents" refid="work.contents"/>
+			<echo>${prop.work.contents}</echo>
 		</sequential>
 	</macrodef>
 
@@ -788,6 +792,10 @@ app.server.type=@{app.server.type}]]></echo>
 				dest="."
 				src="liferay-portal-bundle-@{app.server.type}.tar.gz"
 			/>
+
+			<dirset id="work.contents" dir="bundles/work" includes="*"/> 
+			<property name="prop.work.contents" refid="work.contents"/>
+			<echo>${prop.work.contents}</echo>
 
 			<chmod
 				perm="a+x"

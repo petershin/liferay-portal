@@ -5441,7 +5441,8 @@ go]]></replacevalue>
 
 				<delete dir="${test.app.server.liferay.home}/logs" />
 				<delete dir="${test.app.server.liferay.home}/osgi/state" />
-				<delete dir="${test.app.server.liferay.home}/work" />
+
+				<echo message="#### KEEP ${test.app.server.liferay.home}/work" />
 
 				<delete file="${test.app.server.liferay.home}/portal-setup-wizard.properties" />
 			</then>
