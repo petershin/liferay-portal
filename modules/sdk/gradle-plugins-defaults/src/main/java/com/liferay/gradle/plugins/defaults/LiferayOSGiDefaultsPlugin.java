@@ -2981,9 +2981,9 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		boolean jspPrecompileEnabled = GradleUtil.getProperty(
 			project, "jsp.precompile.enabled", false);
 
-		if (!jspPrecompileEnabled) {
-			return;
-		}
+		Logger logger = project.getLogger();
+
+		logger.lifecycle("#### jsp.precompile.enabled:" + jspPrecompileEnabled);
 
 		JavaCompile javaCompile = (JavaCompile)GradleUtil.getTask(
 			project, JspCPlugin.COMPILE_JSP_TASK_NAME);
