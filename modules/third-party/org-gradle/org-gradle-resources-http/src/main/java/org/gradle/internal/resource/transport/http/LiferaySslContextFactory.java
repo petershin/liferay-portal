@@ -18,9 +18,6 @@ import javax.net.ssl.SSLContext;
 
 import org.apache.http.ssl.SSLContexts;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * @author Peter Shin
  */
@@ -32,14 +29,10 @@ public class LiferaySslContextFactory extends DefaultSslContextFactory {
 			return super.createSslContext();
 		}
 
-		if (_logger.isInfoEnabled()) {
-			_logger.info("Creating default SSL context from system properties");
-		}
+		System.out.println(
+			"#### Creating default SSL context from system properties");
 
 		return SSLContexts.createSystemDefault();
 	}
-
-	private static final Logger _logger = LoggerFactory.getLogger(
-		LiferaySslContextFactory.class);
 
 }
