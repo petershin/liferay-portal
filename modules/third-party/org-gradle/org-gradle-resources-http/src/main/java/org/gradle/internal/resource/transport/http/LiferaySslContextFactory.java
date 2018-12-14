@@ -14,12 +14,11 @@
 
 package org.gradle.internal.resource.transport.http;
 
+import java.io.File;
+
 import javax.net.ssl.SSLContext;
 
 import org.apache.http.ssl.SSLContexts;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * @author Peter Shin
@@ -32,14 +31,47 @@ public class LiferaySslContextFactory extends DefaultSslContextFactory {
 			return super.createSslContext();
 		}
 
-		if (_logger.isInfoEnabled()) {
-			_logger.info("Creating default SSL context from system properties");
-		}
+		System.out.println(
+			"#### Creating default SSL context from system properties");
 
-		return SSLContexts.createSystemDefault();
+		try {
+			return _getSSLContext();
+		}
+		catch (Throwable t1) {
+			try {
+				return _getSSLContext();
+			}
+			catch (Throwable t2) {
+				throw t2;
+			}
+		}
 	}
 
-	private static final Logger _logger = LoggerFactory.getLogger(
-		LiferaySslContextFactory.class);
+	private SSLContext _getSSLContext() {
+		try {
+			return SSLContexts.createSystemDefault();
+		}
+		catch (NoClassDefFoundError ncdfe) {
+			System.out.println(
+				"#### SSL cipher " +
+					ClassLoader.getSystemResource("javax/crypto/Cipher.class"));
+
+			String path =
+				System.getProperty("java.home") + File.separator + "lib" +
+					File.separator + "security" + File.separator;
+
+			File jarFile = new File(path, "US_export_policy.jar");
+
+			System.out.println(
+				"#### SSL export policy " + jarFile + ":" + jarFile.exists());
+
+			jarFile = new File(path, "local_policy.jar");
+
+			System.out.println(
+				"#### SSL local policy " + jarFile + ":" + jarFile.exists());
+
+			throw ncdfe;
+		}
+	}
 
 }
