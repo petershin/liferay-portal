@@ -19,9 +19,6 @@ import java.nio.file.Paths;
 
 import javax.net.ssl.SSLContext;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * @author Peter Shin
  */
@@ -42,17 +39,13 @@ public class LiferaySslContextFactory extends DefaultSslContextFactory {
 
 			// See https://github.com/gradle/gradle/issues/7842
 
-			if (_logger.isWarnEnabled()) {
-				_logger.warn("Mutated java.home system property");
-			}
+			System.out.println("#### Mutated java.home system property");
 
 			try {
 				Thread.sleep(1000);
 			}
 			catch (InterruptedException ie) {
-				if (_logger.isWarnEnabled()) {
-					_logger.warn("Interrupted while sleeping", ie);
-				}
+				System.out.println("#### Interrupted while sleeping");
 			}
 
 			count = count + 1;
@@ -62,8 +55,5 @@ public class LiferaySslContextFactory extends DefaultSslContextFactory {
 	}
 
 	private static final int _RETRY_COUNT = 5;
-
-	private static final Logger _logger = LoggerFactory.getLogger(
-		LiferaySslContextFactory.class);
 
 }
