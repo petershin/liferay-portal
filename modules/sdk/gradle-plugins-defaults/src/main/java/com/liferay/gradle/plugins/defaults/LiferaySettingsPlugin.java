@@ -69,7 +69,14 @@ public class LiferaySettingsPlugin implements Plugin<Settings> {
 		}
 
 		try {
-			_includeProjects(settings, rootDirPath, projectPathPrefix);
+			Path projectPathRootDirPath = rootDirPath;
+
+			if (_isPortalRootDirPath(rootDirPath)) {
+				projectPathRootDirPath = rootDirPath.resolve("modules");
+			}
+
+			_includeProjects(
+				settings, projectPathRootDirPath, projectPathPrefix);
 		}
 		catch (IOException ioe) {
 			throw new UncheckedIOException(ioe);
@@ -238,6 +245,18 @@ public class LiferaySettingsPlugin implements Plugin<Settings> {
 				}
 
 			});
+	}
+
+	private boolean _isPortalRootDirPath(Path dirPath) {
+		if (!Files.exists(dirPath.resolve("build-working-dir.xml"))) {
+			return false;
+		}
+
+		if (!Files.exists(dirPath.resolve("portal-impl"))) {
+			return false;
+		}
+
+		return true;
 	}
 
 	private boolean _startsWith(Path path, Iterable<Path> parentPaths) {
