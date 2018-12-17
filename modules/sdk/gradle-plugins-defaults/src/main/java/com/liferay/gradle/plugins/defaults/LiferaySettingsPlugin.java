@@ -69,8 +69,7 @@ public class LiferaySettingsPlugin implements Plugin<Settings> {
 		}
 
 		try {
-			_includeProjects(
-				settings, rootDirPath, rootDirPath, projectPathPrefix);
+			_includeProjects(settings, rootDirPath, projectPathPrefix);
 		}
 		catch (IOException ioe) {
 			throw new UncheckedIOException(ioe);
@@ -159,8 +158,8 @@ public class LiferaySettingsPlugin implements Plugin<Settings> {
 	}
 
 	private void _includeProjects(
-			final Settings settings, final Path rootDirPath,
-			final Path projectPathRootDirPath, final String projectPathPrefix)
+			final Settings settings, final Path projectPathRootDirPath,
+			final String projectPathPrefix)
 		throws IOException {
 
 		final Set<String> buildProfileFileNames =
@@ -169,21 +168,21 @@ public class LiferaySettingsPlugin implements Plugin<Settings> {
 				GradleUtil.getProperty(
 					settings, "liferay.releng.public", true));
 		final Set<Path> excludedDirPaths = _getDirPaths(
-			"build.exclude.dirs", rootDirPath);
+			"build.exclude.dirs", projectPathRootDirPath);
 		final Set<Path> includedDirPaths = _getDirPaths(
-			"build.include.dirs", rootDirPath);
+			"build.include.dirs", projectPathRootDirPath);
 		final Set<ProjectDirType> excludedProjectDirTypes = _getFlags(
 			"build.exclude.", ProjectDirType.class);
 
 		Files.walkFileTree(
-			rootDirPath,
+			projectPathRootDirPath,
 			new SimpleFileVisitor<Path>() {
 
 				@Override
 				public FileVisitResult preVisitDirectory(
 					Path dirPath, BasicFileAttributes basicFileAttributes) {
 
-					if (dirPath.equals(rootDirPath)) {
+					if (dirPath.equals(projectPathRootDirPath)) {
 						return FileVisitResult.CONTINUE;
 					}
 
