@@ -48,7 +48,7 @@
 		</mojo>
 		<mojo>
 			<goal>create-token</goal>
-			<requiresDirectInvocation>false</requiresDirectInvocation>
+			<requiresDirectInvocation>true</requiresDirectInvocation>
 			<requiresProject>true</requiresProject>
 			<requiresReports>false</requiresReports>
 			<aggregator>false</aggregator>
