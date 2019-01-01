@@ -191,7 +191,9 @@ public class NpmRunTask extends ExecuteNpmTask {
 		return completeArgs;
 	}
 
-	private static final String[] _SOURCE_PATHNAMES = {"src"};
+	private static final String[] _SOURCE_PATHNAMES = {
+		"src/main/resources/META-INF/resources", "test"
+	};
 
 	private final Object _reportFile;
 	private String _scriptName;
