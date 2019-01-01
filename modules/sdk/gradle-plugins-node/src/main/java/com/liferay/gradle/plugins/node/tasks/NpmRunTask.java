@@ -38,6 +38,7 @@ import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputDirectory;
 import org.gradle.api.tasks.InputFile;
 import org.gradle.api.tasks.InputFiles;
+import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.OutputFile;
 import org.gradle.util.GUtil;
 
@@ -154,7 +155,12 @@ public class NpmRunTask extends ExecuteNpmTask {
 	}
 
 	@InputFiles
+	@Optional
 	public FileCollection getSourceFiles() {
+		if ((_sources == null) || _sources.isEmpty()) {
+			return null;
+		}
+
 		Project project = getProject();
 
 		return project.files(_sources);
