@@ -97,7 +97,7 @@ public class NpmRunTask extends ExecuteNpmTask {
 
 	@Input
 	public String getScriptName() {
-		return _scriptName;
+		return GradleUtil.toString(_scriptName);
 	}
 
 	@InputFile
@@ -143,7 +143,7 @@ public class NpmRunTask extends ExecuteNpmTask {
 		_npmVersion = npmVersion;
 	}
 
-	public void setScriptName(String scriptName) {
+	public void setScriptName(Object scriptName) {
 		_scriptName = scriptName;
 	}
 
@@ -169,7 +169,7 @@ public class NpmRunTask extends ExecuteNpmTask {
 		List<String> completeArgs = super.getCompleteArgs();
 
 		completeArgs.add("run-script");
-		completeArgs.add(_scriptName);
+		completeArgs.add(getScriptName());
 
 		return completeArgs;
 	}
@@ -186,7 +186,7 @@ public class NpmRunTask extends ExecuteNpmTask {
 
 	private Object _nodeVersion;
 	private Object _npmVersion;
-	private String _scriptName;
+	private Object _scriptName;
 	private final Set<Object> _sources = new LinkedHashSet<>();
 
 }
