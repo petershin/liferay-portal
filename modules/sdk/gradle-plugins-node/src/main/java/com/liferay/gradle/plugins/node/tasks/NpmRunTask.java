@@ -26,14 +26,20 @@ import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
+import java.util.Arrays;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.gradle.api.Project;
+import org.gradle.api.file.FileCollection;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputDirectory;
 import org.gradle.api.tasks.InputFile;
+import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.OutputFile;
+import org.gradle.util.GUtil;
 
 /**
  * @author David Truong
@@ -44,7 +50,14 @@ public class NpmRunTask extends ExecuteNpmTask {
 		Project project = getProject();
 
 		_reportFile = new File(getTemporaryDir(), "report.txt");
-		_sourceDir = project.file("src");
+
+		for (String pathname : _SOURCE_PATHNAMES) {
+			File sourceDir = new File(project.getProjectDir(), pathname);
+
+			if (sourceDir.exists()) {
+				sources(project.fileTree(sourceDir));
+			}
+		}
 	}
 
 	@Override
@@ -140,17 +153,32 @@ public class NpmRunTask extends ExecuteNpmTask {
 		return _scriptName;
 	}
 
-	@InputDirectory
-	public File getSourceDir() {
-		return GradleUtil.toFile(getProject(), _sourceDir);
+	@InputFiles
+	public FileCollection getSourceFiles() {
+		Project project = getProject();
+
+		return project.files(_sources);
 	}
 
 	public void setScriptName(String scriptName) {
 		_scriptName = scriptName;
 	}
 
-	public void setSourceDir(Object sourceDir) {
-		_sourceDir = sourceDir;
+	public void setSources(Object... sources) {
+		_sources.clear();
+
+		sources(sources);
+	}
+
+	@SuppressWarnings("unchecked")
+	public NpmRunTask sources(Iterable<?> sources) {
+		GUtil.addToCollection(_sources, sources);
+
+		return this;
+	}
+
+	public NpmRunTask sources(Object... sources) {
+		return sources(Arrays.asList(sources));
 	}
 
 	@Override
@@ -163,8 +191,10 @@ public class NpmRunTask extends ExecuteNpmTask {
 		return completeArgs;
 	}
 
+	private static final String[] _SOURCE_PATHNAMES = {"src"};
+
 	private final Object _reportFile;
 	private String _scriptName;
-	private Object _sourceDir;
+	private final Set<Object> _sources = new LinkedHashSet<>();
 
 }
