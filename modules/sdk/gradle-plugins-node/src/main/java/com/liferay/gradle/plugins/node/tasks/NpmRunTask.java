@@ -15,6 +15,7 @@
 package com.liferay.gradle.plugins.node.tasks;
 
 import com.liferay.gradle.plugins.node.internal.util.FileUtil;
+import com.liferay.gradle.plugins.node.internal.util.GradleUtil;
 
 import java.io.File;
 
@@ -29,7 +30,6 @@ import java.util.Set;
 import org.gradle.api.Project;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.tasks.Input;
-import org.gradle.api.tasks.InputDirectory;
 import org.gradle.api.tasks.InputFile;
 import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.Optional;
@@ -62,11 +62,16 @@ public class NpmRunTask extends ExecuteNpmTask {
 		_writeDigest(sourceFilesDigest.getBytes(StandardCharsets.UTF_8));
 	}
 
-	@InputDirectory
-	public File getNodeModulesDir() {
-		Project project = getProject();
+	@Input
+	@Optional
+	public String getNodeVersion() {
+		return GradleUtil.toString(_nodeVersion);
+	}
 
-		return project.file("node_modules");
+	@Input
+	@Optional
+	public String getNpmVersion() {
+		return GradleUtil.toString(_npmVersion);
 	}
 
 	@InputFile
@@ -76,9 +81,37 @@ public class NpmRunTask extends ExecuteNpmTask {
 		return project.file("package.json");
 	}
 
+	@InputFile
+	@Optional
+	public File getPackageLockJsonFile() {
+		Project project = getProject();
+
+		File file = project.file("package-lock.json");
+
+		if (!file.exists()) {
+			return null;
+		}
+
+		return file;
+	}
+
 	@Input
 	public String getScriptName() {
 		return _scriptName;
+	}
+
+	@InputFile
+	@Optional
+	public File getShrinkwrapJsonFile() {
+		Project project = getProject();
+
+		File file = project.file("npm-shrinkwrap.json");
+
+		if (!file.exists()) {
+			return null;
+		}
+
+		return file;
 	}
 
 	@OutputFile
@@ -100,6 +133,14 @@ public class NpmRunTask extends ExecuteNpmTask {
 		Project project = getProject();
 
 		return project.files(_sources);
+	}
+
+	public void setNodeVersion(Object nodeVersion) {
+		_nodeVersion = nodeVersion;
+	}
+
+	public void setNpmVersion(Object npmVersion) {
+		_npmVersion = npmVersion;
 	}
 
 	public void setScriptName(String scriptName) {
@@ -143,6 +184,8 @@ public class NpmRunTask extends ExecuteNpmTask {
 		"src/main/resources/META-INF/resources", "test"
 	};
 
+	private Object _nodeVersion;
+	private Object _npmVersion;
 	private String _scriptName;
 	private final Set<Object> _sources = new LinkedHashSet<>();
 
