@@ -1384,6 +1384,7 @@ print AdminControl.invoke(appManager, 'startApplication', 'liferay-portal')
 		</gradle-execute>
 
 		<gradle-execute dir="modules" forcedcacheenabled="false" setupbinariescache="false" task="classes">
+			<arg value="--continue" />
 			<arg value="--parallel" />
 			<arg value="testClasses" />
 			<arg value="testIntegrationClasses" />
