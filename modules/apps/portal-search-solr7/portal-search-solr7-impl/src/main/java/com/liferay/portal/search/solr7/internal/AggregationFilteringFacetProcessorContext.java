@@ -32,6 +32,8 @@ public class AggregationFilteringFacetProcessorContext
 	public static FacetProcessorContext newInstance(
 		Map<String, Facet> facets, boolean basicFacetSelection) {
 
+		// Test
+
 		if (basicFacetSelection) {
 			return new AggregationFilteringFacetProcessorContext(
 				Optional.of(getAllNamesString(facets)));
