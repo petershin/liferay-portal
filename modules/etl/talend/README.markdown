@@ -17,10 +17,10 @@ Download Talend Open Studio: https://www.talend.com/products/talend-open-studio/
 
 ## Build
 
-Run Maven `install` task in the components folder:
+Run Maven `install` task in the talend folder:
 
 ```sh
-$ cd components-liferay
+$ cd modules/etl/talend
 $ mvn clean install
 ```
 
