@@ -688,7 +688,6 @@ public class BundleSupportCommandsTest {
 		_assertNotExists(liferayHomeDir, prodPropertiesFile.getName());
 		_assertPosixFilePermissions(
 			liferayHomeDir, "bin/hello.sh", _expectedPosixFilePermissions);
-		
 	}
 
 	private void _testInitBundleTar(
