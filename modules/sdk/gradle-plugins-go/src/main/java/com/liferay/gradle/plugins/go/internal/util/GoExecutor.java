@@ -392,6 +392,22 @@ public class GoExecutor {
 
 				environment.put(pathKey, path);
 			}
+
+			environment.put("GOBIN", executableDir.getAbsolutePath());
+		}
+
+		File goDir = getGoDir();
+
+		if (goDir != null) {
+			environment.put("GOROOT", goDir.getAbsolutePath());
+
+			File goParentDir = goDir.getParentFile();
+
+			if (goParentDir != null) {
+				File goWorkspaceDir = new File(goParentDir, "go-workspace");
+
+				environment.put("GOPATH", goWorkspaceDir.getAbsolutePath());
+			}
 		}
 	}
 
