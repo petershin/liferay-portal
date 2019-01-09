@@ -14,8 +14,10 @@
 
 package com.liferay.gradle.plugins.go.tasks;
 
+import com.liferay.gradle.plugins.go.GoExtension;
 import com.liferay.gradle.plugins.go.GoPlugin;
 import com.liferay.gradle.plugins.go.internal.util.GoExecutor;
+import com.liferay.gradle.util.GradleUtil;
 
 import java.io.File;
 
@@ -34,6 +36,12 @@ public class ExecuteGoTask extends DefaultTask {
 		_goExecutor = new GoExecutor(getProject());
 
 		dependsOn(GoPlugin.DOWNLOAD_GO_TASK_NAME);
+
+		GoExtension goExtension = GradleUtil.getExtension(
+			getProject(), GoExtension.class);
+
+		setGoDir(goExtension.getGoDir());
+		setGoWorkspaceDir(goExtension.getGoWorkspaceDir());
 	}
 
 	public ExecuteGoTask args(Iterable<?> args) {
@@ -81,6 +89,10 @@ public class ExecuteGoTask extends DefaultTask {
 		return _goExecutor.getGoDir();
 	}
 
+	public File getGoWorkspaceDir() {
+		return _goExecutor.getGoWorkspaceDir();
+	}
+
 	public File getWorkingDir() {
 		return _goExecutor.getWorkingDir();
 	}
@@ -111,6 +123,10 @@ public class ExecuteGoTask extends DefaultTask {
 
 	public void setGoDir(Object goDir) {
 		_goExecutor.setGoDir(goDir);
+	}
+
+	public void setGoWorkspaceDir(Object goWorkspaceDir) {
+		_goExecutor.setGoWorkspaceDir(goWorkspaceDir);
 	}
 
 	public void setInheritProxy(boolean inheritProxy) {

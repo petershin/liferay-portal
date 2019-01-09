@@ -82,6 +82,15 @@ public class GoExtension {
 
 		};
 
+		_goWorkspaceDir = new Callable<File>() {
+
+			@Override
+			public File call() throws Exception {
+				return new File(project.getBuildDir(), "go-workspace");
+			}
+
+		};
+
 		_project = project;
 	}
 
@@ -97,6 +106,10 @@ public class GoExtension {
 		return GradleUtil.toString(_goVersion);
 	}
 
+	public File getGoWorkspaceDir() {
+		return GradleUtil.toFile(_project, _goWorkspaceDir);
+	}
+
 	public void setGoDir(Object goDir) {
 		_goDir = goDir;
 	}
@@ -109,9 +122,14 @@ public class GoExtension {
 		_goVersion = goVersion;
 	}
 
+	public void setGoWorkspaceDir(Object goWorkspaceDir) {
+		_goWorkspaceDir = goWorkspaceDir;
+	}
+
 	private Object _goDir;
 	private Object _goUrl;
 	private Object _goVersion = "1.11.4";
+	private Object _goWorkspaceDir;
 	private final Project _project;
 
 }

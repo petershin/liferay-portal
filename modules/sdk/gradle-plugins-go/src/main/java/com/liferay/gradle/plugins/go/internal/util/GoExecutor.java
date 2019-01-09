@@ -101,6 +101,10 @@ public class GoExecutor {
 		return GradleUtil.toFile(_project, _goDir);
 	}
 
+	public File getGoWorkspaceDir() {
+		return GradleUtil.toFile(_project, _goWorkspaceDir);
+	}
+
 	public File getWorkingDir() {
 		return GradleUtil.toFile(_project, _workingDir);
 	}
@@ -135,6 +139,10 @@ public class GoExecutor {
 
 	public void setGoDir(Object goDir) {
 		_goDir = goDir;
+	}
+
+	public void setGoWorkspaceDir(Object goWorkspaceDir) {
+		_goWorkspaceDir = goWorkspaceDir;
 	}
 
 	public void setInheritProxy(boolean inheritProxy) {
@@ -231,9 +239,32 @@ public class GoExecutor {
 
 	private File _getExecutableDir() {
 		File goDir = getGoDir();
+		File goWorkspaceDir = getGoWorkspaceDir();
 
-		if (goDir == null) {
+		if ((goDir == null) && (goWorkspaceDir == null)) {
 			return null;
+		}
+
+		File binDir = new File(goWorkspaceDir, "bin");
+
+		if (binDir.exists()) {
+			String fileName = getCommand();
+
+			if (OSDetector.isWindows()) {
+				fileName = getCommand() + ".exe";
+			}
+
+			File[] files = binDir.listFiles();
+
+			for (File file : files) {
+				if (file.isDirectory()) {
+					continue;
+				}
+
+				if (fileName.equalsIgnoreCase(file.getName())) {
+					return binDir;
+				}
+			}
 		}
 
 		return new File(goDir, "bin");
@@ -387,25 +418,34 @@ public class GoExecutor {
 					continue;
 				}
 
-				path =
-					executableDir.getAbsolutePath() + File.pathSeparator + path;
+				File goDir = getGoDir();
+
+				if (goDir != null) {
+					File dir = new File(goDir, "bin");
+
+					path = dir.getAbsolutePath() + File.pathSeparator + path;
+				}
+
+				File goWorkspaceDir = getGoWorkspaceDir();
+
+				if (goWorkspaceDir != null) {
+					File dir = new File(goWorkspaceDir, "bin");
+
+					path = dir.getAbsolutePath() + File.pathSeparator + path;
+				}
 
 				environment.put(pathKey, path);
 			}
 
-			environment.put("GOBIN", executableDir.getAbsolutePath());
-		}
+			File goDir = getGoDir();
 
-		File goDir = getGoDir();
+			if (goDir != null) {
+				environment.put("GOROOT", goDir.getAbsolutePath());
+			}
 
-		if (goDir != null) {
-			environment.put("GOROOT", goDir.getAbsolutePath());
+			File goWorkspaceDir = getGoWorkspaceDir();
 
-			File goParentDir = goDir.getParentFile();
-
-			if (goParentDir != null) {
-				File goWorkspaceDir = new File(goParentDir, "go-workspace");
-
+			if (goWorkspaceDir != null) {
 				environment.put("GOPATH", goWorkspaceDir.getAbsolutePath());
 			}
 		}
@@ -421,6 +461,7 @@ public class GoExecutor {
 	private Object _command = "go";
 	private final Map<Object, Object> _environment = new LinkedHashMap<>();
 	private Object _goDir;
+	private Object _goWorkspaceDir;
 	private boolean _inheritProxy = true;
 	private final Project _project;
 	private boolean _useGradleExec;
