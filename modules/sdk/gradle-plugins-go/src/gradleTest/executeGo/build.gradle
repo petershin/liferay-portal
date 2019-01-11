@@ -1,0 +1,19 @@
+apply plugin: "com.liferay.go"
+
+task runGradleTest
+
+runGradleTest {
+	dependsOn goBuildHelloWorld
+	dependsOn goRunHelloWorld
+	dependsOn goTestHelloWorld
+
+	doLast {
+		File helloWorldFile = file("hello-world")
+
+		if (!helloWorldFile.exists()) {
+			helloWorldFile = file("hello-world.exe")
+		}
+
+		assert helloWorldFile.exists()
+	}
+}
