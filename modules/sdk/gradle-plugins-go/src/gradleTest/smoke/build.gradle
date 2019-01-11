@@ -1,0 +1,13 @@
+apply plugin: "com.liferay.go"
+
+task runGradleTest
+
+runGradleTest {
+	dependsOn downloadGo
+
+	doLast {
+		File generatedFile = new File(buildDir, "go/api/go1.1.txt")
+
+		assert generatedFile.exists()
+	}
+}

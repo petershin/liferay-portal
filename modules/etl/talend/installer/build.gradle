@@ -1,0 +1,92 @@
+import com.liferay.gradle.plugins.go.tasks.ExecuteGoTask
+
+import java.nio.file.Paths
+
+buildscript {
+	dependencies {
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.go", version: "latest.release"
+	}
+
+	repositories {
+		File dir = rootProject.projectDir
+
+		while (dir != null) {
+			File tmpMavenRepositoryDir = new File(dir, ".m2-tmp")
+
+			if (tmpMavenRepositoryDir.exists()) {
+				maven {
+					url tmpMavenRepositoryDir
+				}
+			}
+
+			dir = dir.getParentFile();
+		}
+
+		maven {
+			url "https://repository-cdn.liferay.com/nexus/content/groups/public"
+		}
+	}
+}
+
+apply plugin: "com.liferay.go"
+
+task compileInstaller(type: Exec)
+task createInstaller(type: Copy)
+task getInstallerDependencies(type: Exec)
+task installComponentMavenArtifacts(type: Exec)
+task packageInstaller(type: Zip)
+
+defaultTasks "packageInstaller"
+
+Date now = new Date()
+
+task goxTest(type: ExecuteGoTask) {
+	dependsOn "installGox"
+
+	args "-h"
+	command "gox"
+}
+
+task installGox(type: ExecuteGoTask) {
+	args "get", "-x", "-v", "github.com/mitchellh/gox"
+}
+
+compileInstaller {
+	dependsOn getInstallerDependencies
+
+	commandLine _getCommand("gox -osarch=\"darwin/amd64 linux/amd64 windows/amd64\" -output \"build/talend-installer/{{.Dir}}-{{.OS}}-{{.Arch}}\" installer")
+}
+
+createInstaller {
+	dependsOn compileInstaller
+
+	from Paths.get("..", "tos-dependencies")
+	into Paths.get("build", "talend-installer")
+}
+
+getInstallerDependencies {
+	dependsOn installComponentMavenArtifacts
+
+	commandLine _getCommand("go mod tidy")
+}
+
+installComponentMavenArtifacts {
+	commandLine _getCommand("mvn clean install -f ./../pom.xml")
+}
+
+packageInstaller {
+	dependsOn createInstaller
+
+	archiveName = "tLiferayComponents-TOS-7.1.1-${now.format('yyyyMMddHHmmss')}.zip"
+	destinationDir = file("$buildDir/dist")
+
+	from "$buildDir/talend-installer"
+}
+
+private List<String> _getCommand(String command) {
+	if (File.pathSeparator.equals(";")) {
+		return ["cmd.exe", "/c", "${command}"]
+	}
+
+	return ["/bin/sh", "-c", "${command}"]
+}
