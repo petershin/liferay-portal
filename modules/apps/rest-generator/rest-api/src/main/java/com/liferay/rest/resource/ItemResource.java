@@ -14,8 +14,8 @@
 
 package com.liferay.rest.resource;
 
-import com.liferay.commerce.openapi.core.context.Pagination;
 import com.liferay.oauth2.provider.scope.RequiresScope;
+import com.liferay.rest.booster.context.Pagination;
 import com.liferay.rest.model.CollectionDTO;
 import com.liferay.rest.model.ItemDTO;
 
