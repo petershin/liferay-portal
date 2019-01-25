@@ -19,4 +19,5 @@ dependencies {
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
 	compileOnly group: "org.osgi", name: "org.osgi.service.jaxrs", version: "1.0.0"
 	compileOnly project(":apps:rest-generator:rest-api")
+	compileOnly project(":apps:rest-generator:rest-booster-api")
 }
