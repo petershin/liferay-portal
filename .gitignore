@@ -47,6 +47,7 @@
 /modules/.releng/private
 /modules/private
 /nbproject/private
+/node_modules
 /out
 /portal-client/*.ipr
 /portal-client/*.iws
