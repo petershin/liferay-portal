@@ -12,7 +12,8 @@
 		"cross-env": "^5.2.0",
 		"liferay-npm-bundler": "^2.6.1",
 		"liferay-npm-bundler-preset-liferay-dev": "^1.1.1",
-		"metal-tools-soy": "^4.2.9"
+		"metal-tools-soy": "^4.2.9",
+		"rimraf": "^2.6.3"
 	},
 	"name": "site-navigation-item-selector-web",
 	"scripts": {
