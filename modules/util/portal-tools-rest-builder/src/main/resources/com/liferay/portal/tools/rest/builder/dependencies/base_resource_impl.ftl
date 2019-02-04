@@ -132,6 +132,8 @@ public abstract class Base${schemaName}ResourceImpl implements ${schemaName}Reso
 							<#if parameter.schema.type??>
 								<#if parameter.schema.format?? && stringUtil.equals(parameter.schema.format, "int64") && stringUtil.equals(parameter.schema.type, "integer")>
 									Long
+								<#elseif parameter.schema.format?? && stringUtil.equals(parameter.schema.format, "date-time") && stringUtil.equals(parameter.schema.type, "string")>
+									Date
 								<#else>
 									${parameter.schema.type?cap_first}
 								</#if>

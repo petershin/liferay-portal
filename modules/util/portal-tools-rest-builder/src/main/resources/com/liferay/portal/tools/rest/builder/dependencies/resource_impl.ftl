@@ -5,6 +5,8 @@ import ${configYAML.apiPackagePath}.resource.${schemaName}Resource;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ServiceScope;
 
+import java.util.Date;
+
 /**
  * @author ${configYAML.author}
  */

@@ -10,6 +10,8 @@ import javax.annotation.Generated;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+import java.util.Date;
+
 /**
  * @author ${configYAML.author}
  * @generated
@@ -39,6 +41,8 @@ public class ${schemaName} {
 			<#else>
 				<#if properties.format?? && stringUtil.equals(properties.format, "int64") && stringUtil.equals(properties.type, "integer")>
 					<#assign parameterType = "Long" />
+				<#elseif properties.format?? && stringUtil.equals(properties.format, "date-time") && stringUtil.equals(properties.type, "string")>
+					<#assign parameterType = "Date" />
 				<#else>
 					<#assign parameterType = properties.type?cap_first />
 				</#if>

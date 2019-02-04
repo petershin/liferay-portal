@@ -28,6 +28,8 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 
+import java.util.Date;
+
 /**
  * To access this resource, run:
  *
@@ -199,6 +201,8 @@ public interface ${schemaName}Resource {
 
 								<#if parameter.schema.format?? && stringUtil.equals(parameter.schema.format, "int64") && stringUtil.equals(parameter.schema.type, "integer")>
 									Long
+								<#elseif parameter.schema.format?? && stringUtil.equals(parameter.schema.format, "date-time") && stringUtil.equals(parameter.schema.type, "string")>
+									Date
 								<#else>
 									${parameter.schema.type?cap_first}
 								</#if>
