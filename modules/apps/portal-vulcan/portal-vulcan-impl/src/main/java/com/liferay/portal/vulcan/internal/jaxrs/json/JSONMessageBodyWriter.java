@@ -31,6 +31,7 @@ import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.ext.MessageBodyWriter;
 import javax.ws.rs.ext.Provider;
 
+import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
 
@@ -77,8 +78,7 @@ public class JSONMessageBodyWriter implements MessageBodyWriter<Object> {
 
 	private static final ObjectMapper _objectMapper = new ObjectMapper() {
 		{
-			configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-			enable(SerializationFeature.INDENT_OUTPUT);
+			setDateFormat(new ISO8601DateFormat());
 		}
 	};
 

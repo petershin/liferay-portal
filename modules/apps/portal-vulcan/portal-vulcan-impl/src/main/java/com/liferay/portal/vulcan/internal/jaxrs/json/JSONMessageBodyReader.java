@@ -14,6 +14,7 @@
 
 package com.liferay.portal.vulcan.internal.jaxrs.json;
 
+import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
@@ -29,6 +30,8 @@ import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.ext.MessageBodyReader;
 import javax.ws.rs.ext.Provider;
 
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
 
@@ -61,6 +64,12 @@ public class JSONMessageBodyReader implements MessageBodyReader<Object> {
 		return _objectMapper.readValue(inputStream, clazz);
 	}
 
-	private static final ObjectMapper _objectMapper = new ObjectMapper();
+	private static final ObjectMapper _objectMapper = new ObjectMapper() {
+		{
+			configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
+			enable(SerializationFeature.INDENT_OUTPUT);
+			setDateFormat(new ISO8601DateFormat());
+		}
+	};
 
 }
