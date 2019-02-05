@@ -1,4 +1,5 @@
 apiDir: "../headless-foundation-api/src/main/java"
+apiName: "headless-foundation"
 apiPackagePath: "com.liferay.headless.foundation"
 application:
     baseURI: "/headless-foundation"

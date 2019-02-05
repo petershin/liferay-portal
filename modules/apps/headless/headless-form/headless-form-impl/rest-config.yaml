@@ -1,4 +1,5 @@
 apiDir: "../headless-form-api/src/main/java"
+apiName: "headless-form"
 apiPackagePath: "com.liferay.headless.form"
 application:
     baseURI: "/headless-form"

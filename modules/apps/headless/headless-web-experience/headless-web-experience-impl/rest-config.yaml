@@ -1,4 +1,5 @@
 apiDir: "../headless-web-experience-api/src/main/java"
+apiName: "headless-web-experience"
 apiPackagePath: "com.liferay.headless.web.experience"
 application:
     baseURI: "/headless-web-experience"

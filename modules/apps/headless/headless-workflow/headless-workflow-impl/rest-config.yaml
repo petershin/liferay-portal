@@ -1,4 +1,5 @@
 apiDir: "../headless-workflow-api/src/main/java"
+apiName: "headless-workflow"
 apiPackagePath: "com.liferay.headless.workflow"
 application:
     baseURI: "/headless-workflow"

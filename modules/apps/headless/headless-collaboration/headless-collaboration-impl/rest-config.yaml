@@ -1,4 +1,5 @@
 apiDir: "../headless-collaboration-api/src/main/java"
+apiName: "headless-collaboration"
 apiPackagePath: "com.liferay.headless.collaboration"
 application:
     baseURI: "/headless-collaboration"

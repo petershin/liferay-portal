@@ -1,4 +1,5 @@
 apiDir: "../headless-document-library-api/src/main/java"
+apiName: "headless-document-library"
 apiPackagePath: "com.liferay.headless.document.library"
 application:
     baseURI: "/headless-document-library"
