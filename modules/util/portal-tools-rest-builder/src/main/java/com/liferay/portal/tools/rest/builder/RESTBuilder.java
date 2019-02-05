@@ -73,6 +73,8 @@ public class RESTBuilder {
 		context.put("validator", Validator_IW.getInstance());
 
 		_createApplicationFile(context);
+		_createBndFile(context);
+		_createGradleFile(context);
 
 		Components components = _openAPIYAML.getComponents();
 
@@ -147,6 +149,17 @@ public class RESTBuilder {
 				_copyrightFileName, "base_resource_impl", context));
 	}
 
+	private void _createBndFile(Map<String, Object> context) throws Exception {
+		File file = new File("./bnd.bnd");
+
+		if (file.exists()) {
+			return;
+		}
+
+		FileUtil.write(
+			file, FreeMarkerUtil.processTemplate("", "bnd", context));
+	}
+
 	private void _createDTOFile(Map<String, Object> context, String schemaName)
 		throws Exception {
 
@@ -166,6 +179,19 @@ public class RESTBuilder {
 		FileUtil.write(
 			sb.toString(),
 			FreeMarkerUtil.processTemplate(_copyrightFileName, "dto", context));
+	}
+
+	private void _createGradleFile(Map<String, Object> context)
+		throws Exception {
+
+		File file = new File("./build.gradle");
+
+		if (file.exists()) {
+			return;
+		}
+
+		FileUtil.write(
+			file, FreeMarkerUtil.processTemplate("", "gradle", context));
 	}
 
 	private void _createPropertiesFile(

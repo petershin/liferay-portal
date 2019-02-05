@@ -14,6 +14,8 @@
 
 package com.liferay.portal.tools.rest.builder.internal.yaml.config;
 
+import com.liferay.portal.tools.rest.builder.internal.util.CamelCaseUtil;
+
 /**
  * @author Peter Shin
  */
@@ -21,6 +23,16 @@ public class ConfigYAML {
 
 	public String getApiDir() {
 		return _apiDir;
+	}
+
+	public String getApiName() {
+		return _apiName;
+	}
+
+	public String getApiNameCamelCase() {
+		String apiName = _apiName.replaceAll("-", " ");
+
+		return CamelCaseUtil.toCamelCase(apiName, true, false);
 	}
 
 	public String getApiPackagePath() {
@@ -43,6 +55,10 @@ public class ConfigYAML {
 		_apiDir = apiDir;
 	}
 
+	public void setApiName(String apiName) {
+		_apiName = apiName;
+	}
+
 	public void setApiPackagePath(String apiPackagePath) {
 		_apiPackagePath = apiPackagePath;
 	}
@@ -60,6 +76,7 @@ public class ConfigYAML {
 	}
 
 	private String _apiDir;
+	private String _apiName;
 	private String _apiPackagePath;
 	private Application _application;
 	private String _author;

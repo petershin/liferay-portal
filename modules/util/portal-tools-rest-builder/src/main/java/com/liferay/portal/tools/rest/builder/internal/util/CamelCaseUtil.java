@@ -57,6 +57,12 @@ public class CamelCaseUtil {
 	}
 
 	public static String toCamelCase(String s, boolean capitalize) {
+		return toCamelCase(s, capitalize, true);
+	}
+
+	public static String toCamelCase(
+		String s, boolean capitalize, boolean skipChar) {
+
 		StringBuilder sb = new StringBuilder(s.length());
 
 		boolean upperCase = capitalize;
@@ -66,6 +72,10 @@ public class CamelCaseUtil {
 
 			if (!Character.isDigit(c) && !Character.isLetter(c)) {
 				upperCase = true;
+
+				if (!skipChar) {
+					sb.append(c);
+				}
 			}
 			else if (upperCase) {
 				sb.append(Character.toUpperCase(c));
