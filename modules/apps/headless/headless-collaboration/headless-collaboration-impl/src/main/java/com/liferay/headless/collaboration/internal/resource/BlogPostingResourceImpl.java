@@ -17,7 +17,6 @@ package com.liferay.headless.collaboration.internal.resource;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryService;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
-import com.liferay.friendly.url.exception.DuplicateFriendlyURLEntryException;
 import com.liferay.headless.collaboration.dto.BlogPosting;
 import com.liferay.headless.collaboration.dto.ImageObject;
 import com.liferay.headless.collaboration.resource.BlogPostingResource;
@@ -39,7 +38,6 @@ import java.util.Date;
 import java.util.Optional;
 
 import javax.ws.rs.BadRequestException;
-import javax.ws.rs.ClientErrorException;
 import javax.ws.rs.core.Response;
 
 import org.osgi.service.component.annotations.Component;
@@ -103,23 +101,17 @@ public class BlogPostingResourceImpl extends BaseBlogPostingResourceImpl {
 
 		LocalDateTime localDateTime = timestamp.toLocalDateTime();
 
-		try {
-			BlogsEntry blogsEntry = _blogsEntryService.addEntry(
-				blogPosting.getHeadline(), blogPosting.getAlternativeHeadline(),
-				blogPosting.getFriendlyUrlPath(), blogPosting.getDescription(),
-				blogPosting.getArticleBody(), localDateTime.getMonthValue() - 1,
-				localDateTime.getDayOfMonth(), localDateTime.getYear(),
-				localDateTime.getHour(), localDateTime.getMinute(), true, true,
-				new String[0], blogPosting.getCaption(),
-				_getImageSelector(blogPosting), null,
-				_getServiceContext(contentSpaceId, blogPosting));
+		BlogsEntry blogsEntry = _blogsEntryService.addEntry(
+			blogPosting.getHeadline(), blogPosting.getAlternativeHeadline(),
+			blogPosting.getFriendlyUrlPath(), blogPosting.getDescription(),
+			blogPosting.getArticleBody(), localDateTime.getMonthValue() - 1,
+			localDateTime.getDayOfMonth(), localDateTime.getYear(),
+			localDateTime.getHour(), localDateTime.getMinute(), true, true,
+			new String[0], blogPosting.getCaption(),
+			_getImageSelector(blogPosting), null,
+			_getServiceContext(contentSpaceId, blogPosting));
 
-			return _toBlogPosting(blogsEntry);
-		}
-		catch (DuplicateFriendlyURLEntryException dfurlee) {
-			throw new ClientErrorException(
-				"Duplicate friendly URL", 422, dfurlee);
-		}
+		return _toBlogPosting(blogsEntry);
 	}
 
 	@Override
@@ -139,24 +131,18 @@ public class BlogPostingResourceImpl extends BaseBlogPostingResourceImpl {
 
 		BlogsEntry blogsEntry = _blogsEntryService.getEntry(blogPostingId);
 
-		try {
-			BlogsEntry updatedBlogsEntry = _blogsEntryService.updateEntry(
-				blogPostingId, blogPosting.getHeadline(),
-				blogPosting.getAlternativeHeadline(),
-				blogPosting.getFriendlyUrlPath(), blogPosting.getDescription(),
-				blogPosting.getArticleBody(), localDateTime.getMonthValue() - 1,
-				localDateTime.getDayOfMonth(), localDateTime.getYear(),
-				localDateTime.getHour(), localDateTime.getMinute(), true, true,
-				new String[0], blogPosting.getCaption(),
-				_getImageSelector(blogPosting), null,
-				_getServiceContext(blogsEntry.getGroupId(), blogPosting));
+		BlogsEntry updatedBlogsEntry = _blogsEntryService.updateEntry(
+			blogPostingId, blogPosting.getHeadline(),
+			blogPosting.getAlternativeHeadline(),
+			blogPosting.getFriendlyUrlPath(), blogPosting.getDescription(),
+			blogPosting.getArticleBody(), localDateTime.getMonthValue() - 1,
+			localDateTime.getDayOfMonth(), localDateTime.getYear(),
+			localDateTime.getHour(), localDateTime.getMinute(), true, true,
+			new String[0], blogPosting.getCaption(),
+			_getImageSelector(blogPosting), null,
+			_getServiceContext(blogsEntry.getGroupId(), blogPosting));
 
-			return _toBlogPosting(updatedBlogsEntry);
-		}
-		catch (DuplicateFriendlyURLEntryException dfurlee) {
-			throw new ClientErrorException(
-				"Duplicate friendly URL", 422, dfurlee);
-		}
+		return _toBlogPosting(updatedBlogsEntry);
 	}
 
 	private ImageSelector _getImageSelector(BlogPosting blogPosting) {
