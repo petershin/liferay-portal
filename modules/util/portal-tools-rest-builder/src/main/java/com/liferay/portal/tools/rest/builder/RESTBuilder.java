@@ -103,7 +103,12 @@ public class RESTBuilder {
 
 		StringBuilder sb = new StringBuilder();
 
-		sb.append(_configYAML.getImplDir());
+		if(_configYAML.getBaseDir() != null) {
+			sb.append(_configYAML.getBaseDir());
+		} else {
+			sb.append(_configYAML.getImplDir());
+		}
+
 		sb.append("/");
 
 		String apiPackagePath = _configYAML.getApiPackagePath();
@@ -130,7 +135,12 @@ public class RESTBuilder {
 
 		StringBuilder sb = new StringBuilder();
 
-		sb.append(_configYAML.getImplDir());
+		if(_configYAML.getBaseDir() != null) {
+			sb.append(_configYAML.getBaseDir());
+		} else {
+			sb.append(_configYAML.getImplDir());
+		}
+
 		sb.append("/");
 
 		String apiPackagePath = _configYAML.getApiPackagePath();
@@ -174,7 +184,12 @@ public class RESTBuilder {
 
 		StringBuilder sb = new StringBuilder();
 
-		sb.append(_configYAML.getImplDir());
+		if(_configYAML.getBaseDir() != null) {
+			sb.append(_configYAML.getBaseDir());
+		} else {
+			sb.append(_configYAML.getImplDir());
+		}
+
 		sb.append("/../resources/OSGI-INF/");
 		sb.append(CamelCaseUtil.fromCamelCase(schemaName));
 		sb.append(".properties");
@@ -213,7 +228,12 @@ public class RESTBuilder {
 
 		StringBuilder sb = new StringBuilder();
 
-		sb.append(_configYAML.getImplDir());
+		if(_configYAML.getBaseDir() != null) {
+			sb.append(_configYAML.getBaseDir());
+		} else {
+			sb.append(_configYAML.getImplDir());
+		}
+
 		sb.append("/");
 
 		String apiPackagePath = _configYAML.getApiPackagePath();
