@@ -46,6 +46,8 @@ import org.osgi.service.component.annotations.Component;
 		"auth.verifier.auth.verifier.PortalSessionAuthVerifier.urls.includes=/*",
 		"osgi.jaxrs.application.base=${configYAML.application.baseURI}",
 		"osgi.jaxrs.extension.select=(osgi.jaxrs.name=Liferay.Vulcan.CompanyContextProvider)",
+		"osgi.jaxrs.extension.select=(osgi.jaxrs.name=Liferay.Vulcan.NoSuchModelExceptionMapper)",
+		"osgi.jaxrs.extension.select=(osgi.jaxrs.name=Liferay.Vulcan.PortalExceptionMapper)",
 		"osgi.jaxrs.name=${configYAML.application.name}.rest"
 	},
 	service = Application.class
