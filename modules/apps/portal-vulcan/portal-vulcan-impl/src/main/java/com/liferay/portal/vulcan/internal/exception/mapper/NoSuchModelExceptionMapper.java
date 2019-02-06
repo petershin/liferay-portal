@@ -16,7 +16,12 @@ package com.liferay.portal.vulcan.internal.exception.mapper;
 
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 
+import java.lang.reflect.Method;
+
+import javax.ws.rs.DELETE;
 import javax.ws.rs.NotFoundException;
+import javax.ws.rs.container.ResourceInfo;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 
@@ -42,7 +47,18 @@ public class NoSuchModelExceptionMapper
 
 	@Override
 	public Response toResponse(NoSuchModelException nsme) {
+		Method resourceMethod = _resourceInfo.getResourceMethod();
+
+		if (resourceMethod.isAnnotationPresent(DELETE.class)) {
+			return Response.status(
+				Response.Status.NO_CONTENT
+			).build();
+		}
+
 		throw new NotFoundException(nsme);
 	}
+
+	@Context
+	private ResourceInfo _resourceInfo;
 
 }

@@ -55,11 +55,7 @@ public class BlogPostingResourceImpl extends BaseBlogPostingResourceImpl {
 
 	@Override
 	public Response deleteBlogPosting(Long blogPostingId) throws Exception {
-		try {
-			_blogsEntryService.deleteEntry(blogPostingId);
-		}
-		catch (NoSuchModelException nsme) {
-		}
+		_blogsEntryService.deleteEntry(blogPostingId);
 
 		return null;
 	}
