@@ -39,6 +39,8 @@ import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.RequestBody;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Response;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Schema;
 
+import java.beans.Introspector;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -313,6 +315,26 @@ public class JavaTool {
 				"Pagination");
 
 			javaParameters.add(javaParameter);
+		}
+
+		RequestBody requestBody = operation.getRequestBody();
+
+		if (requestBody != null) {
+			Map<String, Content> contents = requestBody.getContent();
+
+			for (Content content : contents.values()) {
+				Schema schema = content.getSchema();
+
+				String parameterType = _getJavaType(
+					null, schema.getFormat(), schema.getItems(),
+					schema.getReference(), schema.getType());
+
+				String parameterName = Introspector.decapitalize(parameterType);
+
+				javaParameters.add(
+					new JavaParameter(
+						new ArrayList<>(), parameterName, parameterType));
+			}
 		}
 
 		return javaParameters;
