@@ -230,27 +230,21 @@ components:
                     geo:
                       description: https://www.schema.org/GeoCoordinates
                       properties:
-                        id:
-                          format: int64
-                          type: integer
                         latitude:
                           type: number
                         longitude:
                           type: number
-                        self:
-                          format: uri
-                          type: string
                       type: object
                 - properties:
                     link:
                       format: uri
                       type: string
                 - properties:
-                    structuredContent:
+                    structuredContentValue:
                       allOf:
                         - $ref: "#/components/schemas/StructuredContent"
                       readOnly: true
-                    structuredContentId:
+                    structuredContentValueId:
                       format: int64
                       type: integer
                       writeOnly: true
