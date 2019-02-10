@@ -14,6 +14,7 @@
 
 package com.liferay.portal.vulcan.yaml.openapi;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -30,6 +31,10 @@ public class Schema {
 		return _anyOfSchemas;
 	}
 
+	public List<String> getChildSchemas() {
+		return _childSchemas;
+	}
+
 	public String getDescription() {
 		return _description;
 	}
@@ -44,6 +49,10 @@ public class Schema {
 
 	public List<Schema> getOneOfSchemas() {
 		return _oneOfSchemas;
+	}
+
+	public String getParentSchema() {
+		return _parentSchema;
 	}
 
 	public Map<String, Schema> getPropertySchemas() {
@@ -66,6 +75,10 @@ public class Schema {
 		_anyOfSchemas = anyOfSchemas;
 	}
 
+	public void setChildSchemas(List<String> childSchemas) {
+		_childSchemas = childSchemas;
+	}
+
 	public void setDescription(String description) {
 		_description = description;
 	}
@@ -82,6 +95,10 @@ public class Schema {
 		_oneOfSchemas = oneOfSchemas;
 	}
 
+	public void setParentSchema(String parentSchema) {
+		_parentSchema = parentSchema;
+	}
+
 	public void setPropertySchemas(Map<String, Schema> propertySchemas) {
 		_propertySchemas = propertySchemas;
 	}
@@ -96,10 +113,12 @@ public class Schema {
 
 	private List<Schema> _allOfSchemas;
 	private List<Schema> _anyOfSchemas;
+	private List<String> _childSchemas = new ArrayList<>();
 	private String _description;
 	private String _format;
 	private Items _items;
 	private List<Schema> _oneOfSchemas;
+	private String _parentSchema;
 	private Map<String, Schema> _propertySchemas;
 	private String _reference;
 	private String _type;
