@@ -14,6 +14,9 @@
 
 package com.liferay.headless.web.experience.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
 import javax.annotation.Generated;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -23,6 +26,15 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
+@JsonSubTypes( {
+		@JsonSubTypes.Type(value = Data.class, name = "Data"),
+		@JsonSubTypes.Type(value = Document.class, name = "Document"),
+		@JsonSubTypes.Type(value = Geo.class, name = "Geo"),
+		@JsonSubTypes.Type(value = Link.class, name = "Link"),
+		@JsonSubTypes.Type(value = StructuredContentValue.class, name = "StructuredContentValue")
+})
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME,
+	include = JsonTypeInfo.As.PROPERTY, property = "discriminator")
 @XmlRootElement(name = "Values")
 public class Values {
 

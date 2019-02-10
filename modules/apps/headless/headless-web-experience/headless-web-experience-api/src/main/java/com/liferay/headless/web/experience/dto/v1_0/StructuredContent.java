@@ -100,7 +100,7 @@ public class StructuredContent {
 		return _title;
 	}
 
-	public Values getValues() {
+	public Values[] getValues() {
 		return _values;
 	}
 
@@ -178,7 +178,7 @@ public class StructuredContent {
 		_title = title;
 	}
 
-	public void setValues(Values values) {
+	public void setValues(Values[] values) {
 		_values = values;
 	}
 
@@ -200,6 +200,6 @@ public class StructuredContent {
 	private RenderedContentsByTemplate _renderedContentsByTemplate;
 	private String _self;
 	private String _title;
-	private Values _values;
+	private Values[] _values;
 
 }
