@@ -111,6 +111,18 @@ public class Schema {
 		_type = type;
 	}
 
+	public Schema _findAnyOfSchema() {
+		if (_propertySchemas != null) {
+			for (Schema schema : _propertySchemas.values()) {
+
+				if (schema.getAnyOfSchemas() != null) {
+					return this;
+				}
+			}
+		}
+		return null;
+	}
+
 	private List<Schema> _allOfSchemas;
 	private List<Schema> _anyOfSchemas;
 	private List<String> _childSchemas = new ArrayList<>();

@@ -29,6 +29,7 @@ import com.liferay.portal.vulcan.yaml.config.Application;
 import com.liferay.portal.vulcan.yaml.config.ConfigYAML;
 import com.liferay.portal.vulcan.yaml.openapi.Components;
 import com.liferay.portal.vulcan.yaml.openapi.Info;
+import com.liferay.portal.vulcan.yaml.openapi.Items;
 import com.liferay.portal.vulcan.yaml.openapi.OpenAPIYAML;
 import com.liferay.portal.vulcan.yaml.openapi.Schema;
 
@@ -37,11 +38,15 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Queue;
+import java.util.Set;
+import java.util.stream.Stream;
 
 /**
  * @author Peter Shin
@@ -155,6 +160,10 @@ public class RESTBuilder {
 					context.put(
 						"schemaPath", CamelCaseUtil.fromCamelCase(schemaName));
 
+					_convertAnyOfSchemasToArray(schema);
+
+					_queueAnyOfSchemas(schemasMapsQueue, schema, schemaName);
+
 					_createDTOFile(context, schemaName, versionDirName);
 
 					schemasMapsQueue.add(schema.getPropertySchemas());
@@ -166,6 +175,40 @@ public class RESTBuilder {
 		FileUtil.deleteFiles(_configYAML.getImplDir(), _files);
 		FileUtil.deleteFiles(
 			_configYAML.getImplDir() + "/../resources/OSGI-INF/", _files);
+	}
+
+	private void _convertAnyOfSchemasToArray(Schema schema) {
+		Schema anyOfSchema = _findAnyOfSchema(schema);
+
+		if (anyOfSchema != null) {
+			anyOfSchema.setType("array");
+
+			Items items = new Items();
+
+			items.setType("object");
+
+			anyOfSchema.setItems(items);
+		}
+	}
+
+	private HashMap<String, Schema> _createAnyOfSchema(
+		Schema schema, String key) {
+
+		Map<String, Schema> propertySchemas = schema.getPropertySchemas();
+
+		Schema childSchema = propertySchemas.get(key);
+
+		if ((propertySchemas.size() == 1) &&
+			(childSchema.getPropertySchemas() != null)) {
+
+			schema.setPropertySchemas(childSchema.getPropertySchemas());
+		}
+
+		HashMap<String, Schema> anyOfSchemaMap = new HashMap<>();
+
+		anyOfSchemaMap.put(key, schema);
+
+		return anyOfSchemaMap;
 	}
 
 	private void _createApplicationFile(Map<String, Object> context)
@@ -341,6 +384,59 @@ public class RESTBuilder {
 			file,
 			FreeMarkerUtil.processTemplate(
 				_copyrightFileName, "resource_impl", context));
+	}
+
+	private Schema _findAnyOfSchema(Schema schema) {
+		return Stream.of(
+			schema.getPropertySchemas()
+		).map(
+			Map::values
+		).flatMap(
+			Collection::stream
+		).map(
+			Schema::_findAnyOfSchema
+		).filter(
+			Objects::nonNull
+		).findFirst(
+		).orElse(
+			null
+		);
+	}
+
+	private String _getAnyOfKey(Schema anyOfSchema) {
+		Map<String, Schema> propertySchemas = anyOfSchema.getPropertySchemas();
+
+		Set<String> keySet = propertySchemas.keySet();
+
+		return keySet.toArray(new String[0])[0];
+	}
+
+	private void _queueAnyOfSchemas(
+		Queue<Map<String, Schema>> schemasMapsQueue, Schema schema,
+		String schemaName) {
+
+		Map<String, Schema> propertySchemas = schema.getPropertySchemas();
+
+		if (propertySchemas != null) {
+			for (Schema childSchema : propertySchemas.values()) {
+				List<Schema> anyOfSchemas = childSchema.getAnyOfSchemas();
+
+				if (anyOfSchemas != null) {
+					for (Schema anyOfSchema : anyOfSchemas) {
+						anyOfSchema.setParentSchema(schemaName);
+
+						List<String> childSchemas = schema.getChildSchemas();
+
+						String key = _getAnyOfKey(anyOfSchema);
+
+						childSchemas.add(StringUtil.upperCaseFirstLetter(key));
+
+						schemasMapsQueue.add(
+							_createAnyOfSchema(anyOfSchema, key));
+					}
+				}
+			}
+		}
 	}
 
 	private final File _configDir;
