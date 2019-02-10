@@ -8,6 +8,11 @@ package ${configYAML.apiPackagePath}.dto.${versionDirName};
 
 import java.util.Date;
 
+<#if schema.childSchemas?has_content>
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+</#if>
+
 import javax.annotation.Generated;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -18,7 +23,21 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Generated("")
 @XmlRootElement(name = "${schemaName}")
-public class ${schemaName} {
+<#if schema.childSchemas?has_content>
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME,
+	include = JsonTypeInfo.As.PROPERTY,
+	property = "discriminator")
+@JsonSubTypes({
+	<#list schema.childSchemas as childSchema>
+		@JsonSubTypes.Type(value=${childSchema}.class, name = "${childSchema}")<#if childSchema_has_next>,</#if>
+	</#list>
+})
+</#if>
+public class ${schemaName}
+	<#if schema.parentSchema??>
+		extends ${schema.parentSchema}
+	</#if>
+	{
 
 	<#if schema.propertySchemas??>
 		<#list schema.propertySchemas?keys as propertySchemaName>
