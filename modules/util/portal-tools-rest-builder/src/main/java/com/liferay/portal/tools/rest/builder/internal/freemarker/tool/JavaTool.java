@@ -299,6 +299,24 @@ public class JavaTool {
 			javaParameters.add(javaParameter);
 		}
 
+		RequestBody requestBody = operation.getRequestBody();
+
+		if (requestBody != null) {
+			Map<String, Content> content = requestBody.getContent();
+
+			for (Map.Entry<String, Content> contentEntry : content.entrySet()) {
+				String key = contentEntry.getKey();
+
+				if (key.equals("multipart/form-data")) {
+					javaParameters.add(
+						new JavaParameter(
+							null, "multipartBody", "MultipartBody"));
+
+					return javaParameters;
+				}
+			}
+		}
+
 		String httpMethod = getHTTPMethod(operation);
 
 		if ((Objects.equals(httpMethod, "post") ||
