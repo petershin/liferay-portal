@@ -37,10 +37,6 @@ public abstract class Base${schemaName}ResourceImpl implements ${schemaName}Reso
 	public static final String ODATA_ENTITY_MODEL_NAME = "${stringUtil.replace("${configYAML.apiPackagePath}.dto.${versionDirName}.${schemaName}EntityModel", ".", "_")}";
 
 	<#list javaTool.getJavaSignatures(openAPIYAML, schemaName) as javaSignature>
-		<#if !stringUtil.equals(javaSignature.returnType, schemaName) && !stringUtil.equals(javaSignature.returnType, "Page<${schemaName}>") && !stringUtil.endsWith(javaSignature.methodName, schemaName)>
-			<#continue>
-		</#if>
-
 		@Override
 		<@compress single_line=true>
 			public ${javaSignature.returnType} ${javaSignature.methodName}(
