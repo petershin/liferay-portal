@@ -30,6 +30,7 @@ import com.liferay.portal.vulcan.yaml.openapi.RequestBody;
 import com.liferay.portal.vulcan.yaml.openapi.Response;
 import com.liferay.portal.vulcan.yaml.openapi.Schema;
 
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -96,29 +97,15 @@ public class JavaTool {
 		return StringUtil.lowerCase(clazz.getSimpleName());
 	}
 
-	public JavaParameter getJavaParameter(Parameter parameter) {
-		List<String> parameterAnnotations = new ArrayList<>();
-
+	public Map.Entry<String, String> getJavaParameter(Parameter parameter) {
 		Schema schema = parameter.getSchema();
-
-		if (schema.getType() != null) {
-			StringBuilder sb = new StringBuilder();
-
-			sb.append("@");
-			sb.append(StringUtil.upperCaseFirstLetter(parameter.getIn()));
-			sb.append("Param(\"");
-			sb.append(parameter.getName());
-			sb.append("\")");
-
-			parameterAnnotations.add(sb.toString());
-		}
 
 		String parameterName = CamelCaseUtil.toCamelCase(
 			parameter.getName(), false);
 		String parameterType = _getJavaParameterType(null, schema);
 
-		return new JavaParameter(
-			parameterAnnotations, parameterName, parameterType);
+		return new AbstractMap.SimpleImmutableEntry<>(
+			parameterName, parameterType);
 	}
 
 	public JavaParameter getJavaParameter(
