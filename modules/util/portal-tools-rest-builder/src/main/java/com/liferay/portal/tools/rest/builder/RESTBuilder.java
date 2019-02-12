@@ -42,6 +42,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Peter Shin
@@ -104,9 +106,13 @@ public class RESTBuilder {
 				continue;
 			}
 
-			String versionDirName = version.replaceAll("\\D", "_");
+			Matcher matcher = _nonDigitPattern.matcher(version);
 
-			versionDirName = "v" + versionDirName.replaceFirst("^_+", "");
+			String versionDirName = matcher.replaceAll("_");
+
+			matcher = _leadingUnderscorePattern.matcher(versionDirName);
+
+			versionDirName = "v" + matcher.replaceFirst("");
 
 			context.put("openAPIYAML", openAPIYAML);
 			context.put("versionDirName", versionDirName);
@@ -423,6 +429,10 @@ public class RESTBuilder {
 			FreeMarkerUtil.processTemplate(
 				_copyrightFileName, "resource_test", context));
 	}
+
+	private static final Pattern _leadingUnderscorePattern = Pattern.compile(
+		"^_+");
+	private static final Pattern _nonDigitPattern = Pattern.compile("\\D");
 
 	private final File _configDir;
 	private final ConfigYAML _configYAML;
