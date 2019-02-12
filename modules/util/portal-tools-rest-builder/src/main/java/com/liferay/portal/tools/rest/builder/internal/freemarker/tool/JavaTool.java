@@ -37,6 +37,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Consumer;
 
 /**
  * @author Peter Shin
@@ -144,17 +145,19 @@ public class JavaTool {
 			String path = entry.getKey();
 			PathItem pathItem = entry.getValue();
 
-			for (Operation operation : getOperations(pathItem)) {
-				String returnType = _getReturnType(openAPIYAML, operation);
+			_visitOperations(
+				pathItem,
+				operation -> {
+					String returnType = _getReturnType(openAPIYAML, operation);
 
-				JavaSignature javaSignature = new JavaSignature(
-					_getJavaParameters(operation, returnType, schemaName),
-					_getMethodAnnotations(operation, pathItem, path),
-					_getMethodName(operation, path, returnType, schemaName),
-					returnType);
+					JavaSignature javaSignature = new JavaSignature(
+						_getJavaParameters(operation, returnType, schemaName),
+						_getMethodAnnotations(operation, pathItem, path),
+						_getMethodName(operation, path, returnType, schemaName),
+						returnType);
 
-				javaSignatures.add(javaSignature);
-			}
+					javaSignatures.add(javaSignature);
+				});
 		}
 
 		return javaSignatures;
@@ -170,36 +173,6 @@ public class JavaTool {
 		Collections.sort(mediaTypes);
 
 		return mediaTypes;
-	}
-
-	public List<Operation> getOperations(PathItem pathItem) {
-		List<Operation> operations = new ArrayList<>();
-
-		if (pathItem.getDelete() != null) {
-			operations.add(pathItem.getDelete());
-		}
-
-		if (pathItem.getGet() != null) {
-			operations.add(pathItem.getGet());
-		}
-
-		if (pathItem.getHead() != null) {
-			operations.add(pathItem.getHead());
-		}
-
-		if (pathItem.getOptions() != null) {
-			operations.add(pathItem.getOptions());
-		}
-
-		if (pathItem.getPost() != null) {
-			operations.add(pathItem.getPost());
-		}
-
-		if (pathItem.getPut() != null) {
-			operations.add(pathItem.getPut());
-		}
-
-		return operations;
 	}
 
 	private JavaTool() {
@@ -520,6 +493,34 @@ public class JavaTool {
 		}
 
 		return "Response";
+	}
+
+	private void _visitOperations(
+		PathItem pathItem, Consumer<Operation> consumer) {
+
+		if (pathItem.getDelete() != null) {
+			consumer.accept(pathItem.getDelete());
+		}
+
+		if (pathItem.getGet() != null) {
+			consumer.accept(pathItem.getGet());
+		}
+
+		if (pathItem.getHead() != null) {
+			consumer.accept(pathItem.getHead());
+		}
+
+		if (pathItem.getOptions() != null) {
+			consumer.accept(pathItem.getOptions());
+		}
+
+		if (pathItem.getPost() != null) {
+			consumer.accept(pathItem.getPost());
+		}
+
+		if (pathItem.getPut() != null) {
+			consumer.accept(pathItem.getPut());
+		}
 	}
 
 	private static JavaTool _instance = new JavaTool();
