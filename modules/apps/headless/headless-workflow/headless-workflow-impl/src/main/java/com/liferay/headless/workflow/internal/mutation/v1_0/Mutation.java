@@ -17,12 +17,6 @@ package com.liferay.headless.workflow.internal.mutation.v1_0;
 import com.liferay.headless.workflow.dto.v1_0.WorkflowTask;
 import com.liferay.headless.workflow.resource.v1_0.WorkflowTaskResource;
 
-import graphql.annotations.annotationTypes.GraphQLField;
-import graphql.annotations.annotationTypes.GraphQLInvokeDetached;
-import graphql.annotations.annotationTypes.GraphQLName;
-
-import graphql.schema.DataFetchingEnvironment;
-
 import javax.annotation.Generated;
 
 import org.osgi.framework.Bundle;
@@ -36,14 +30,12 @@ import org.osgi.util.tracker.ServiceTracker;
 @Generated("")
 public class Mutation {
 
-	@GraphQLField
-	@GraphQLInvokeDetached
 	public WorkflowTask postWorkflowTasksAssignToMe(
-			final DataFetchingEnvironment env,
-			@GraphQLName("workflow-task-id") Long workflowTaskId)
+			Long workflowTaskId, WorkflowTask workflowTask)
 		throws Exception {
 
-		return _getWorkflowTaskResource().postWorkflowTasksAssignToMe(workflowTaskId);
+		return _getWorkflowTaskResource().postWorkflowTasksAssignToMe(
+			workflowTaskId, workflowTask);
 	}
 
 	@GraphQLField

@@ -21,17 +21,16 @@ import com.liferay.headless.workflow.resource.v1_0.WorkflowTaskResource;
 import com.liferay.portal.vulcan.context.Pagination;
 import com.liferay.portal.vulcan.dto.Page;
 
-import graphql.annotations.annotationTypes.GraphQLField;
-import graphql.annotations.annotationTypes.GraphQLInvokeDetached;
-import graphql.annotations.annotationTypes.GraphQLName;
-
-import graphql.schema.DataFetchingEnvironment;
+import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
 
 import javax.annotation.Generated;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.util.tracker.ServiceTracker;
+
+import java.util.Collection;
 
 /**
  * @author Javier Gamarra
@@ -40,25 +39,21 @@ import org.osgi.util.tracker.ServiceTracker;
 @Generated("")
 public class Query {
 
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public Page<WorkflowTask> getRolesWorkflowTasksPage(
-			final DataFetchingEnvironment env,
-			@GraphQLName("role-id") Long roleId,
-			@GraphQLName("Pagination") Pagination pagination)
+	public Collection<WorkflowTask> getRolesWorkflowTasksPage(
+			Long roleId, int itemsPerPage, int pageNumber)
 		throws Exception {
 
-		return _getWorkflowTaskResource().getRolesWorkflowTasksPage(roleId, pagination);
+		Page<WorkflowTask> page =
+			_getWorkflowTaskResource().getRolesWorkflowTasksPage(
+				roleId, Pagination.of(itemsPerPage, pageNumber));
+
+		return page.getItems();
 	}
 
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public WorkflowLog getWorkflowLog(
-			final DataFetchingEnvironment env,
-			@GraphQLName("workflow-log-id") Long workflowLogId)
+	public WorkflowLog getWorkflowLog(Long workflowLogId)
 		throws Exception {
 
-		return _getWorkflowLogResource().getWorkflowLog(workflowLogId);
+		return _getWorkflowLogResource().getWorkflowLogs(workflowLogId);
 	}
 
 	@GraphQLField
