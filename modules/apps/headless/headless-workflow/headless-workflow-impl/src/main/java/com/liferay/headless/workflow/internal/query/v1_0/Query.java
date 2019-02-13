@@ -18,13 +18,15 @@ import com.liferay.headless.workflow.dto.v1_0.WorkflowLog;
 import com.liferay.headless.workflow.dto.v1_0.WorkflowTask;
 import com.liferay.headless.workflow.resource.v1_0.WorkflowLogResource;
 import com.liferay.headless.workflow.resource.v1_0.WorkflowTaskResource;
-import com.liferay.portal.vulcan.context.Pagination;
-import com.liferay.portal.vulcan.dto.Page;
 
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
 import javax.annotation.Generated;
+
+import graphql.annotations.annotationTypes.GraphQLField;
+import graphql.annotations.annotationTypes.GraphQLInvokeDetached;
+import graphql.annotations.annotationTypes.GraphQLName;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
@@ -40,7 +42,9 @@ import java.util.Collection;
 public class Query {
 
 	public Collection<WorkflowTask> getRolesWorkflowTasksPage(
-			Long roleId, int itemsPerPage, int pageNumber)
+			@GraphQLName("role-id") Long roleId,
+			@GraphQLName("per_page") int itemsPerPage,
+			@GraphQLName("page") int pageNumber)
 		throws Exception {
 
 		Page<WorkflowTask> page =
@@ -58,33 +62,40 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public WorkflowTask getWorkflowTask(
-			final DataFetchingEnvironment env,
+	public WorkflowTask getWorkflowTasks(
 			@GraphQLName("workflow-task-id") Long workflowTaskId)
 		throws Exception {
 
-		return _getWorkflowTaskResource().getWorkflowTask(workflowTaskId);
+		return _getWorkflowTaskResource().getWorkflowTasks(workflowTaskId);
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Page<WorkflowTask> getWorkflowTasksPage(
-			final DataFetchingEnvironment env,
-			@GraphQLName("Pagination") Pagination pagination)
+	public Collection<WorkflowTask> getWorkflowTasksPage(
+			@GraphQLName("per_page") int itemsPerPage,
+			@GraphQLName("page") int pageNumber)
 		throws Exception {
 
-		return _getWorkflowTaskResource().getWorkflowTasksPage(pagination);
+		Page<WorkflowTask> page =
+			_getWorkflowTaskResource().getWorkflowTasksPage(
+				Pagination.of(itemsPerPage, pageNumber));
+
+		return page.getItems();
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Page<WorkflowLog> getWorkflowTasksWorkflowLogsPage(
-			final DataFetchingEnvironment env,
+	public Collection<WorkflowLog> getWorkflowTasksWorkflowLogsPage(
 			@GraphQLName("workflow-task-id") Long workflowTaskId,
-			@GraphQLName("Pagination") Pagination pagination)
+			@GraphQLName("per_page") int itemsPerPage,
+			@GraphQLName("page") int pageNumber)
 		throws Exception {
 
-		return _getWorkflowLogResource().getWorkflowTasksWorkflowLogsPage(workflowTaskId, pagination);
+		Page<WorkflowLog> page =
+			_getWorkflowLogResource().getWorkflowTasksWorkflowLogsPage(
+				workflowTaskId, Pagination.of(itemsPerPage, pageNumber));
+
+		return page.getItems();
 	}
 
 	private static WorkflowLogResource _getWorkflowLogResource() {
