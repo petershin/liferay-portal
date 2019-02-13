@@ -17,7 +17,8 @@ package com.liferay.portal.vulcan.internal.graphql.servlet;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
 
-import graphql.schema.GraphQLObjectType;
+import graphql.annotations.processor.GraphQLAnnotations;
+
 import graphql.schema.GraphQLSchema;
 
 import graphql.servlet.SimpleGraphQLHttpServlet;
@@ -66,9 +67,23 @@ public class GraphQLServletExtender {
 			ServletData servletData = _bundleContext.getService(
 				serviceReference);
 
-			Dictionary<String, Object> properties = new HashMapDictionary<>();
-
+			Object mutation = servletData.getMutation();
 			String path = servletData.getPath();
+			Object query = servletData.getQuery();
+
+			GraphQLSchema.Builder schemaBuilder = GraphQLSchema.newSchema();
+
+			schemaBuilder.mutation(
+				GraphQLAnnotations.object(mutation.getClass()));
+
+			schemaBuilder.query(GraphQLAnnotations.object(query.getClass()));
+
+			SimpleGraphQLHttpServlet.Builder servletBuilder =
+				SimpleGraphQLHttpServlet.newBuilder(schemaBuilder.build());
+
+			Servlet servlet = servletBuilder.build();
+
+			Dictionary<String, Object> properties = new HashMapDictionary<>();
 
 			properties.put("osgi.http.whiteboard.context.path", path);
 			properties.put(
@@ -78,23 +93,6 @@ public class GraphQLServletExtender {
 
 			properties.put(
 				"osgi.http.whiteboard.servlet.name", clazz.getName());
-
-			GraphQLSchema.Builder schemaBuilder = GraphQLSchema.newSchema();
-
-			GraphQLObjectType.Builder mutationBuilder =
-				GraphQLObjectType.newObject();
-
-			schemaBuilder.mutation(mutationBuilder);
-
-			GraphQLObjectType.Builder queryBuilder =
-				GraphQLObjectType.newObject();
-
-			schemaBuilder.query(queryBuilder);
-
-			SimpleGraphQLHttpServlet.Builder servletBuilder =
-				SimpleGraphQLHttpServlet.newBuilder(schemaBuilder.build());
-
-			Servlet servlet = servletBuilder.build();
 
 			return _bundleContext.registerService(
 				Servlet.class, servlet, properties);
