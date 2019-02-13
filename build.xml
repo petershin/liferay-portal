@@ -241,6 +241,7 @@ message.
 
 	<target name="compile">
 		<setup-libs />
+		<setup-npm />
 		<setup-sdk />
 
 		<delete file="javac.output.txt" />
