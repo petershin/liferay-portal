@@ -54,18 +54,6 @@ import javax.ws.rs.core.Response;
  */
 @Generated("")
 @Path("/v1.0")
-public interface WorkflowLogResource {
-
-	@GET
-	@Path("/workflow-logs/{workflow-log-id}")
-	@Produces("application/json")
-	@RequiresScope("everything.read")
-	public WorkflowLog getWorkflowLogs( @PathParam("workflow-log-id") Long workflowLogId ) throws Exception;
-
-	@GET
-	@Path("/workflow-tasks/{workflow-task-id}/workflow-logs")
-	@Produces("application/json")
-	@RequiresScope("everything.read")
-	public Page<WorkflowLog> getWorkflowTasksWorkflowLogsPage( @PathParam("workflow-task-id") Long workflowTaskId , @Context Pagination pagination ) throws Exception;
+public interface ObjectReviewedResource {
 
 }
