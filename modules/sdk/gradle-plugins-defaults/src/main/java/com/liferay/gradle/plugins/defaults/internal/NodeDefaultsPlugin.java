@@ -45,7 +45,11 @@ public class NodeDefaultsPlugin extends BaseDefaultsPlugin<NodePlugin> {
 		String portalVersion = PortalTools.getPortalVersion(project);
 
 		_configureNode(project, portalVersion);
-		_configureTaskNpmInstall(project, portalVersion);
+
+		File portalRootDir = GradleUtil.getRootDir(
+			project.getRootProject(), "portal-impl");
+
+		_configureTaskNpmInstall(project, portalVersion, portalRootDir);
 
 		_configureTaskNpmRunBuild(project);
 		_configureTasksPublishNodeModule(project);
@@ -77,7 +81,7 @@ public class NodeDefaultsPlugin extends BaseDefaultsPlugin<NodePlugin> {
 	}
 
 	private void _configureTaskNpmInstall(
-		Project project, String portalVersion) {
+		Project project, String portalVersion, File portalRootDir) {
 
 		NpmInstallTask npmInstallTask = (NpmInstallTask)GradleUtil.getTask(
 			project, NodePlugin.NPM_INSTALL_TASK_NAME);
@@ -87,6 +91,13 @@ public class NodeDefaultsPlugin extends BaseDefaultsPlugin<NodePlugin> {
 
 		if (!PortalTools.PORTAL_VERSION_7_0_X.equals(portalVersion)) {
 			npmInstallTask.setUseNpmCI(Boolean.TRUE);
+		}
+
+		if ((portalRootDir != null) &&
+			!PortalTools.PORTAL_VERSION_7_0_X.equals(portalVersion) &&
+			!PortalTools.PORTAL_VERSION_7_1_X.equals(portalVersion)) {
+
+			npmInstallTask.setEnabled(false);
 		}
 	}
 
