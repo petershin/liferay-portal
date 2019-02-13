@@ -1540,6 +1540,14 @@ artifact.url=${remote.repository.url}/com/liferay/portal/com.liferay.${processed
 		</sequential>
 	</macrodef>
 
+	<macrodef name="setup-npm">
+		<sequential>
+			<gradle-execute task="setUpNPM">
+				<arg value="--build-file=${project.dir}/modules/util.gradle" />
+			</gradle-execute>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="setup-sdk">
 		<attribute default="true" name="setupbinariescache" />
 
