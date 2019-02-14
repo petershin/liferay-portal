@@ -47,6 +47,8 @@ public class GraphQLServletExtender {
 		_serviceTracker = new ServiceTracker<>(
 			bundleContext, ServletData.class,
 			new ServletDataServiceTrackerCustomizer(bundleContext));
+
+		_serviceTracker.open();
 	}
 
 	@Deactivate
