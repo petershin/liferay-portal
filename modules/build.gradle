@@ -191,6 +191,12 @@ gradle.beforeProject {
 			}
 		}
 
+		pluginManager.withPlugin("com.liferay.node") {
+			npmInstall {
+				enabled = false
+			}
+		}
+
 		pluginManager.withPlugin("com.liferay.osgi.plugin") {
 			afterEvaluate {
 				bundle.jarBuilderFactory.contextClassLoader = buildscript.classLoader
