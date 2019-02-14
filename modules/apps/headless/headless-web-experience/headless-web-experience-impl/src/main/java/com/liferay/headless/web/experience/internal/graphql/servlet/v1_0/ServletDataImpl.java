@@ -21,7 +21,6 @@ import com.liferay.portal.vulcan.graphql.servlet.ServletData;
 import javax.annotation.Generated;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Javier Gamarra
@@ -33,7 +32,7 @@ public class ServletDataImpl implements ServletData {
 
 	@Override
 	public Mutation getMutation() {
-		return _mutation;
+		return new Mutation();
 	}
 
 	@Override
@@ -43,13 +42,7 @@ public class ServletDataImpl implements ServletData {
 
 	@Override
 	public Query getQuery() {
-		return _query;
+		return new Query();
 	}
-
-	@Reference
-	private Mutation _mutation;
-
-	@Reference
-	private Query _query;
 
 }
