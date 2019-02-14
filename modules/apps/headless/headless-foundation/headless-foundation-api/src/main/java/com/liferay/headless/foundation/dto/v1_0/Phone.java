@@ -14,6 +14,9 @@
 
 package com.liferay.headless.foundation.dto.v1_0;
 
+import graphql.annotations.annotationTypes.GraphQLField;
+import graphql.annotations.annotationTypes.GraphQLName;
+
 import javax.annotation.Generated;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -23,44 +26,52 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
+@GraphQLName("Phone")
 @XmlRootElement(name = "Phone")
 public class Phone {
 
 	public String getExtension() {
-		return _extension;
+		return extension;
 	}
 
 	public Long getId() {
-		return _id;
+		return id;
 	}
 
 	public String getPhoneNumber() {
-		return _phoneNumber;
+		return phoneNumber;
 	}
 
 	public String getPhoneType() {
-		return _phoneType;
+		return phoneType;
 	}
 
 	public void setExtension(String extension) {
-		_extension = extension;
+		this.extension = extension;
 	}
 
 	public void setId(Long id) {
-		_id = id;
+		this.id = id;
 	}
 
 	public void setPhoneNumber(String phoneNumber) {
-		_phoneNumber = phoneNumber;
+		this.phoneNumber = phoneNumber;
 	}
 
 	public void setPhoneType(String phoneType) {
-		_phoneType = phoneType;
+		this.phoneType = phoneType;
 	}
 
-	private String _extension;
-	private Long _id;
-	private String _phoneNumber;
-	private String _phoneType;
+	@GraphQLField
+	protected String extension;
+
+	@GraphQLField
+	protected Long id;
+
+	@GraphQLField
+	protected String phoneNumber;
+
+	@GraphQLField
+	protected String phoneType;
 
 }

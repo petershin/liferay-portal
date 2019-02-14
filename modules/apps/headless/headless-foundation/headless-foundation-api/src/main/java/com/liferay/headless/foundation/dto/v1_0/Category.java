@@ -14,6 +14,9 @@
 
 package com.liferay.headless.foundation.dto.v1_0;
 
+import graphql.annotations.annotationTypes.GraphQLField;
+import graphql.annotations.annotationTypes.GraphQLName;
+
 import java.util.Date;
 
 import javax.annotation.Generated;
@@ -25,125 +28,151 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
+@GraphQLName("Category")
 @XmlRootElement(name = "Category")
 public class Category {
 
 	public String[] getAvailableLanguages() {
-		return _availableLanguages;
+		return availableLanguages;
 	}
 
 	public Category getCategory() {
-		return _category;
+		return category;
 	}
 
 	public Long getCategoryId() {
-		return _categoryId;
+		return categoryId;
 	}
 
 	public UserAccount getCreator() {
-		return _creator;
+		return creator;
 	}
 
 	public Long getCreatorId() {
-		return _creatorId;
+		return creatorId;
 	}
 
 	public Date getDateCreated() {
-		return _dateCreated;
+		return dateCreated;
 	}
 
 	public Date getDateModified() {
-		return _dateModified;
+		return dateModified;
 	}
 
 	public String getDescription() {
-		return _description;
+		return description;
 	}
 
 	public Long getId() {
-		return _id;
+		return id;
 	}
 
 	public String getName() {
-		return _name;
+		return name;
 	}
 
 	public Category[] getSubcategories() {
-		return _subcategories;
+		return subcategories;
 	}
 
 	public Vocabulary getVocabulary() {
-		return _vocabulary;
+		return vocabulary;
 	}
 
 	public Long getVocabularyId() {
-		return _vocabularyId;
+		return vocabularyId;
 	}
 
 	public void setAvailableLanguages(String[] availableLanguages) {
-		_availableLanguages = availableLanguages;
+		this.availableLanguages = availableLanguages;
 	}
 
 	public void setCategory(Category category) {
-		_category = category;
+		this.category = category;
 	}
 
 	public void setCategoryId(Long categoryId) {
-		_categoryId = categoryId;
+		this.categoryId = categoryId;
 	}
 
 	public void setCreator(UserAccount creator) {
-		_creator = creator;
+		this.creator = creator;
 	}
 
 	public void setCreatorId(Long creatorId) {
-		_creatorId = creatorId;
+		this.creatorId = creatorId;
 	}
 
 	public void setDateCreated(Date dateCreated) {
-		_dateCreated = dateCreated;
+		this.dateCreated = dateCreated;
 	}
 
 	public void setDateModified(Date dateModified) {
-		_dateModified = dateModified;
+		this.dateModified = dateModified;
 	}
 
 	public void setDescription(String description) {
-		_description = description;
+		this.description = description;
 	}
 
 	public void setId(Long id) {
-		_id = id;
+		this.id = id;
 	}
 
 	public void setName(String name) {
-		_name = name;
+		this.name = name;
 	}
 
 	public void setSubcategories(Category[] subcategories) {
-		_subcategories = subcategories;
+		this.subcategories = subcategories;
 	}
 
 	public void setVocabulary(Vocabulary vocabulary) {
-		_vocabulary = vocabulary;
+		this.vocabulary = vocabulary;
 	}
 
 	public void setVocabularyId(Long vocabularyId) {
-		_vocabularyId = vocabularyId;
+		this.vocabularyId = vocabularyId;
 	}
 
-	private String[] _availableLanguages;
-	private Category _category;
-	private Long _categoryId;
-	private UserAccount _creator;
-	private Long _creatorId;
-	private Date _dateCreated;
-	private Date _dateModified;
-	private String _description;
-	private Long _id;
-	private String _name;
-	private Category[] _subcategories;
-	private Vocabulary _vocabulary;
-	private Long _vocabularyId;
+	@GraphQLField
+	protected String[] availableLanguages;
+
+	@GraphQLField
+	protected Category category;
+
+	@GraphQLField
+	protected Long categoryId;
+
+	@GraphQLField
+	protected UserAccount creator;
+
+	@GraphQLField
+	protected Long creatorId;
+
+	@GraphQLField
+	protected Date dateCreated;
+
+	@GraphQLField
+	protected Date dateModified;
+
+	@GraphQLField
+	protected String description;
+
+	@GraphQLField
+	protected Long id;
+
+	@GraphQLField
+	protected String name;
+
+	@GraphQLField
+	protected Category[] subcategories;
+
+	@GraphQLField
+	protected Vocabulary vocabulary;
+
+	@GraphQLField
+	protected Long vocabularyId;
 
 }

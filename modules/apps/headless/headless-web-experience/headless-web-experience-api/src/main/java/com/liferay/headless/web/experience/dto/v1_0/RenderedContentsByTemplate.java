@@ -14,6 +14,9 @@
 
 package com.liferay.headless.web.experience.dto.v1_0;
 
+import graphql.annotations.annotationTypes.GraphQLField;
+import graphql.annotations.annotationTypes.GraphQLName;
+
 import javax.annotation.Generated;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -23,35 +26,41 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
+@GraphQLName("RenderedContentsByTemplate")
 @XmlRootElement(name = "RenderedContentsByTemplate")
 public class RenderedContentsByTemplate {
 
 	public Long getId() {
-		return _id;
+		return id;
 	}
 
 	public String getRenderedContent() {
-		return _renderedContent;
+		return renderedContent;
 	}
 
 	public String getTemplate() {
-		return _template;
+		return template;
 	}
 
 	public void setId(Long id) {
-		_id = id;
+		this.id = id;
 	}
 
 	public void setRenderedContent(String renderedContent) {
-		_renderedContent = renderedContent;
+		this.renderedContent = renderedContent;
 	}
 
 	public void setTemplate(String template) {
-		_template = template;
+		this.template = template;
 	}
 
-	private Long _id;
-	private String _renderedContent;
-	private String _template;
+	@GraphQLField
+	protected Long id;
+
+	@GraphQLField
+	protected String renderedContent;
+
+	@GraphQLField
+	protected String template;
 
 }

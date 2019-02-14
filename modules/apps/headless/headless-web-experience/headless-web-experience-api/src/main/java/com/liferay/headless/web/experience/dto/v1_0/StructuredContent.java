@@ -14,6 +14,9 @@
 
 package com.liferay.headless.web.experience.dto.v1_0;
 
+import graphql.annotations.annotationTypes.GraphQLField;
+import graphql.annotations.annotationTypes.GraphQLName;
+
 import java.util.Date;
 
 import javax.annotation.Generated;
@@ -25,172 +28,208 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
+@GraphQLName("StructuredContent")
 @XmlRootElement(name = "StructuredContent")
 public class StructuredContent {
 
 	public AggregateRating getAggregateRating() {
-		return _aggregateRating;
+		return aggregateRating;
 	}
 
 	public String[] getAvailableLanguages() {
-		return _availableLanguages;
+		return availableLanguages;
 	}
 
 	public Long[] getCategory() {
-		return _category;
+		return category;
 	}
 
 	public Comment[] getComment() {
-		return _comment;
+		return comment;
 	}
 
 	public Long getContentSpace() {
-		return _contentSpace;
+		return contentSpace;
 	}
 
 	public ContentStructure getContentStructure() {
-		return _contentStructure;
+		return contentStructure;
 	}
 
 	public Long getContentStructureId() {
-		return _contentStructureId;
+		return contentStructureId;
 	}
 
 	public Creator getCreator() {
-		return _creator;
+		return creator;
 	}
 
 	public Date getDateCreated() {
-		return _dateCreated;
+		return dateCreated;
 	}
 
 	public Date getDateModified() {
-		return _dateModified;
+		return dateModified;
 	}
 
 	public Date getDatePublished() {
-		return _datePublished;
+		return datePublished;
 	}
 
 	public String getDescription() {
-		return _description;
+		return description;
 	}
 
 	public Long getId() {
-		return _id;
+		return id;
 	}
 
 	public String[] getKeywords() {
-		return _keywords;
+		return keywords;
 	}
 
 	public Date getLastReviewed() {
-		return _lastReviewed;
+		return lastReviewed;
 	}
 
 	public RenderedContentsByTemplate[] getRenderedContentsByTemplate() {
-		return _renderedContentsByTemplate;
+		return renderedContentsByTemplate;
 	}
 
 	public String getTitle() {
-		return _title;
+		return title;
 	}
 
 	public Values[] getValues() {
-		return _values;
+		return values;
 	}
 
 	public void setAggregateRating(AggregateRating aggregateRating) {
-		_aggregateRating = aggregateRating;
+		this.aggregateRating = aggregateRating;
 	}
 
 	public void setAvailableLanguages(String[] availableLanguages) {
-		_availableLanguages = availableLanguages;
+		this.availableLanguages = availableLanguages;
 	}
 
 	public void setCategory(Long[] category) {
-		_category = category;
+		this.category = category;
 	}
 
 	public void setComment(Comment[] comment) {
-		_comment = comment;
+		this.comment = comment;
 	}
 
 	public void setContentSpace(Long contentSpace) {
-		_contentSpace = contentSpace;
+		this.contentSpace = contentSpace;
 	}
 
 	public void setContentStructure(ContentStructure contentStructure) {
-		_contentStructure = contentStructure;
+		this.contentStructure = contentStructure;
 	}
 
 	public void setContentStructureId(Long contentStructureId) {
-		_contentStructureId = contentStructureId;
+		this.contentStructureId = contentStructureId;
 	}
 
 	public void setCreator(Creator creator) {
-		_creator = creator;
+		this.creator = creator;
 	}
 
 	public void setDateCreated(Date dateCreated) {
-		_dateCreated = dateCreated;
+		this.dateCreated = dateCreated;
 	}
 
 	public void setDateModified(Date dateModified) {
-		_dateModified = dateModified;
+		this.dateModified = dateModified;
 	}
 
 	public void setDatePublished(Date datePublished) {
-		_datePublished = datePublished;
+		this.datePublished = datePublished;
 	}
 
 	public void setDescription(String description) {
-		_description = description;
+		this.description = description;
 	}
 
 	public void setId(Long id) {
-		_id = id;
+		this.id = id;
 	}
 
 	public void setKeywords(String[] keywords) {
-		_keywords = keywords;
+		this.keywords = keywords;
 	}
 
 	public void setLastReviewed(Date lastReviewed) {
-		_lastReviewed = lastReviewed;
+		this.lastReviewed = lastReviewed;
 	}
 
 	public void setRenderedContentsByTemplate(
 		RenderedContentsByTemplate[] renderedContentsByTemplate) {
 
-		_renderedContentsByTemplate = renderedContentsByTemplate;
+		this.renderedContentsByTemplate = renderedContentsByTemplate;
 	}
 
 	public void setTitle(String title) {
-		_title = title;
+		this.title = title;
 	}
 
 	public void setValues(Values[] values) {
-		_values = values;
+		this.values = values;
 	}
 
-	private AggregateRating _aggregateRating;
-	private String[] _availableLanguages;
-	private Long[] _category;
-	private Comment[] _comment;
-	private Long _contentSpace;
-	private ContentStructure _contentStructure;
-	private Long _contentStructureId;
-	private Creator _creator;
-	private Date _dateCreated;
-	private Date _dateModified;
-	private Date _datePublished;
-	private String _description;
-	private Long _id;
-	private String[] _keywords;
-	private Date _lastReviewed;
-	private RenderedContentsByTemplate[] _renderedContentsByTemplate;
-	private String _title;
-	private Values[] _values;
+	@GraphQLField
+	protected AggregateRating aggregateRating;
+
+	@GraphQLField
+	protected String[] availableLanguages;
+
+	@GraphQLField
+	protected Long[] category;
+
+	@GraphQLField
+	protected Comment[] comment;
+
+	@GraphQLField
+	protected Long contentSpace;
+
+	@GraphQLField
+	protected ContentStructure contentStructure;
+
+	@GraphQLField
+	protected Long contentStructureId;
+
+	@GraphQLField
+	protected Creator creator;
+
+	@GraphQLField
+	protected Date dateCreated;
+
+	@GraphQLField
+	protected Date dateModified;
+
+	@GraphQLField
+	protected Date datePublished;
+
+	@GraphQLField
+	protected String description;
+
+	@GraphQLField
+	protected Long id;
+
+	@GraphQLField
+	protected String[] keywords;
+
+	@GraphQLField
+	protected Date lastReviewed;
+
+	@GraphQLField
+	protected RenderedContentsByTemplate[] renderedContentsByTemplate;
+
+	@GraphQLField
+	protected String title;
+
+	@GraphQLField
+	protected Values[] values;
 
 }

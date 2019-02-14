@@ -14,6 +14,9 @@
 
 package com.liferay.headless.foundation.dto.v1_0;
 
+import graphql.annotations.annotationTypes.GraphQLField;
+import graphql.annotations.annotationTypes.GraphQLName;
+
 import javax.annotation.Generated;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -23,35 +26,41 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
+@GraphQLName("Location")
 @XmlRootElement(name = "Location")
 public class Location {
 
 	public String getAddressCountry() {
-		return _addressCountry;
+		return addressCountry;
 	}
 
 	public String getAddressRegion() {
-		return _addressRegion;
+		return addressRegion;
 	}
 
 	public Long getId() {
-		return _id;
+		return id;
 	}
 
 	public void setAddressCountry(String addressCountry) {
-		_addressCountry = addressCountry;
+		this.addressCountry = addressCountry;
 	}
 
 	public void setAddressRegion(String addressRegion) {
-		_addressRegion = addressRegion;
+		this.addressRegion = addressRegion;
 	}
 
 	public void setId(Long id) {
-		_id = id;
+		this.id = id;
 	}
 
-	private String _addressCountry;
-	private String _addressRegion;
-	private Long _id;
+	@GraphQLField
+	protected String addressCountry;
+
+	@GraphQLField
+	protected String addressRegion;
+
+	@GraphQLField
+	protected Long id;
 
 }

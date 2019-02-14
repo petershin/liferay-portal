@@ -14,6 +14,9 @@
 
 package com.liferay.headless.form.dto.v1_0;
 
+import graphql.annotations.annotationTypes.GraphQLField;
+import graphql.annotations.annotationTypes.GraphQLName;
+
 import javax.annotation.Generated;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -23,53 +26,63 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
+@GraphQLName("FieldValues")
 @XmlRootElement(name = "FieldValues")
 public class FieldValues {
 
 	public FormDocument getDocument() {
-		return _document;
+		return document;
 	}
 
 	public Long getDocumentId() {
-		return _documentId;
+		return documentId;
 	}
 
 	public Long getId() {
-		return _id;
+		return id;
 	}
 
 	public String getName() {
-		return _name;
+		return name;
 	}
 
 	public String getValue() {
-		return _value;
+		return value;
 	}
 
 	public void setDocument(FormDocument document) {
-		_document = document;
+		this.document = document;
 	}
 
 	public void setDocumentId(Long documentId) {
-		_documentId = documentId;
+		this.documentId = documentId;
 	}
 
 	public void setId(Long id) {
-		_id = id;
+		this.id = id;
 	}
 
 	public void setName(String name) {
-		_name = name;
+		this.name = name;
 	}
 
 	public void setValue(String value) {
-		_value = value;
+		this.value = value;
 	}
 
-	private FormDocument _document;
-	private Long _documentId;
-	private Long _id;
-	private String _name;
-	private String _value;
+	@GraphQLField
+	protected FormDocument document;
+
+	@GraphQLField
+	protected Long documentId;
+
+	@GraphQLField
+	protected Long id;
+
+	@GraphQLField
+	protected String name;
+
+	@GraphQLField
+	protected String value;
 
 }

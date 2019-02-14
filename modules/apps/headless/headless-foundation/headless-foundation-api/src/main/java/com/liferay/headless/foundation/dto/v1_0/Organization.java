@@ -14,6 +14,9 @@
 
 package com.liferay.headless.foundation.dto.v1_0;
 
+import graphql.annotations.annotationTypes.GraphQLField;
+import graphql.annotations.annotationTypes.GraphQLName;
+
 import javax.annotation.Generated;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -23,125 +26,151 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
+@GraphQLName("Organization")
 @XmlRootElement(name = "Organization")
 public class Organization {
 
 	public String getComment() {
-		return _comment;
+		return comment;
 	}
 
 	public ContactInformation getContactInformation() {
-		return _contactInformation;
+		return contactInformation;
 	}
 
 	public Long getId() {
-		return _id;
+		return id;
 	}
 
 	public Location getLocation() {
-		return _location;
+		return location;
 	}
 
 	public String getLogo() {
-		return _logo;
+		return logo;
 	}
 
 	public UserAccount[] getMembers() {
-		return _members;
+		return members;
 	}
 
 	public Long[] getMembersIds() {
-		return _membersIds;
+		return membersIds;
 	}
 
 	public String getName() {
-		return _name;
+		return name;
 	}
 
 	public Organization getParentOrganization() {
-		return _parentOrganization;
+		return parentOrganization;
 	}
 
 	public Long getParentOrganizationId() {
-		return _parentOrganizationId;
+		return parentOrganizationId;
 	}
 
 	public Services[] getServices() {
-		return _services;
+		return services;
 	}
 
 	public Organization[] getSubOrganization() {
-		return _subOrganization;
+		return subOrganization;
 	}
 
 	public Long[] getSubOrganizationIds() {
-		return _subOrganizationIds;
+		return subOrganizationIds;
 	}
 
 	public void setComment(String comment) {
-		_comment = comment;
+		this.comment = comment;
 	}
 
 	public void setContactInformation(ContactInformation contactInformation) {
-		_contactInformation = contactInformation;
+		this.contactInformation = contactInformation;
 	}
 
 	public void setId(Long id) {
-		_id = id;
+		this.id = id;
 	}
 
 	public void setLocation(Location location) {
-		_location = location;
+		this.location = location;
 	}
 
 	public void setLogo(String logo) {
-		_logo = logo;
+		this.logo = logo;
 	}
 
 	public void setMembers(UserAccount[] members) {
-		_members = members;
+		this.members = members;
 	}
 
 	public void setMembersIds(Long[] membersIds) {
-		_membersIds = membersIds;
+		this.membersIds = membersIds;
 	}
 
 	public void setName(String name) {
-		_name = name;
+		this.name = name;
 	}
 
 	public void setParentOrganization(Organization parentOrganization) {
-		_parentOrganization = parentOrganization;
+		this.parentOrganization = parentOrganization;
 	}
 
 	public void setParentOrganizationId(Long parentOrganizationId) {
-		_parentOrganizationId = parentOrganizationId;
+		this.parentOrganizationId = parentOrganizationId;
 	}
 
 	public void setServices(Services[] services) {
-		_services = services;
+		this.services = services;
 	}
 
 	public void setSubOrganization(Organization[] subOrganization) {
-		_subOrganization = subOrganization;
+		this.subOrganization = subOrganization;
 	}
 
 	public void setSubOrganizationIds(Long[] subOrganizationIds) {
-		_subOrganizationIds = subOrganizationIds;
+		this.subOrganizationIds = subOrganizationIds;
 	}
 
-	private String _comment;
-	private ContactInformation _contactInformation;
-	private Long _id;
-	private Location _location;
-	private String _logo;
-	private UserAccount[] _members;
-	private Long[] _membersIds;
-	private String _name;
-	private Organization _parentOrganization;
-	private Long _parentOrganizationId;
-	private Services[] _services;
-	private Organization[] _subOrganization;
-	private Long[] _subOrganizationIds;
+	@GraphQLField
+	protected String comment;
+
+	@GraphQLField
+	protected ContactInformation contactInformation;
+
+	@GraphQLField
+	protected Long id;
+
+	@GraphQLField
+	protected Location location;
+
+	@GraphQLField
+	protected String logo;
+
+	@GraphQLField
+	protected UserAccount[] members;
+
+	@GraphQLField
+	protected Long[] membersIds;
+
+	@GraphQLField
+	protected String name;
+
+	@GraphQLField
+	protected Organization parentOrganization;
+
+	@GraphQLField
+	protected Long parentOrganizationId;
+
+	@GraphQLField
+	protected Services[] services;
+
+	@GraphQLField
+	protected Organization[] subOrganization;
+
+	@GraphQLField
+	protected Long[] subOrganizationIds;
 
 }

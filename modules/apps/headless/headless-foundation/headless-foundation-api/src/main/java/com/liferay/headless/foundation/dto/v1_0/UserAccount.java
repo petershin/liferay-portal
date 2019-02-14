@@ -14,6 +14,9 @@
 
 package com.liferay.headless.foundation.dto.v1_0;
 
+import graphql.annotations.annotationTypes.GraphQLField;
+import graphql.annotations.annotationTypes.GraphQLName;
+
 import java.util.Date;
 
 import javax.annotation.Generated;
@@ -25,197 +28,239 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
+@GraphQLName("UserAccount")
 @XmlRootElement(name = "UserAccount")
 public class UserAccount {
 
 	public String getAdditionalName() {
-		return _additionalName;
+		return additionalName;
 	}
 
 	public String getAlternateName() {
-		return _alternateName;
+		return alternateName;
 	}
 
 	public Date getBirthDate() {
-		return _birthDate;
+		return birthDate;
 	}
 
 	public ContactInformation getContactInformation() {
-		return _contactInformation;
+		return contactInformation;
 	}
 
 	public String getDashboardURL() {
-		return _dashboardURL;
+		return dashboardURL;
 	}
 
 	public String getEmail() {
-		return _email;
+		return email;
 	}
 
 	public String getFamilyName() {
-		return _familyName;
+		return familyName;
 	}
 
 	public String getGivenName() {
-		return _givenName;
+		return givenName;
 	}
 
 	public String getHonorificPrefix() {
-		return _honorificPrefix;
+		return honorificPrefix;
 	}
 
 	public String getHonorificSuffix() {
-		return _honorificSuffix;
+		return honorificSuffix;
 	}
 
 	public Long getId() {
-		return _id;
+		return id;
 	}
 
 	public String getImage() {
-		return _image;
+		return image;
 	}
 
 	public String getJobTitle() {
-		return _jobTitle;
+		return jobTitle;
 	}
 
 	public Organization[] getMyOrganizations() {
-		return _myOrganizations;
+		return myOrganizations;
 	}
 
 	public Long[] getMyOrganizationsIds() {
-		return _myOrganizationsIds;
+		return myOrganizationsIds;
 	}
 
 	public String getName() {
-		return _name;
+		return name;
 	}
 
 	public String getProfileURL() {
-		return _profileURL;
+		return profileURL;
 	}
 
 	public Role[] getRoles() {
-		return _roles;
+		return roles;
 	}
 
 	public Long[] getRolesIds() {
-		return _rolesIds;
+		return rolesIds;
 	}
 
 	public String[] getTasksAssignedToMe() {
-		return _tasksAssignedToMe;
+		return tasksAssignedToMe;
 	}
 
 	public String[] getTasksAssignedToMyRoles() {
-		return _tasksAssignedToMyRoles;
+		return tasksAssignedToMyRoles;
 	}
 
 	public void setAdditionalName(String additionalName) {
-		_additionalName = additionalName;
+		this.additionalName = additionalName;
 	}
 
 	public void setAlternateName(String alternateName) {
-		_alternateName = alternateName;
+		this.alternateName = alternateName;
 	}
 
 	public void setBirthDate(Date birthDate) {
-		_birthDate = birthDate;
+		this.birthDate = birthDate;
 	}
 
 	public void setContactInformation(ContactInformation contactInformation) {
-		_contactInformation = contactInformation;
+		this.contactInformation = contactInformation;
 	}
 
 	public void setDashboardURL(String dashboardURL) {
-		_dashboardURL = dashboardURL;
+		this.dashboardURL = dashboardURL;
 	}
 
 	public void setEmail(String email) {
-		_email = email;
+		this.email = email;
 	}
 
 	public void setFamilyName(String familyName) {
-		_familyName = familyName;
+		this.familyName = familyName;
 	}
 
 	public void setGivenName(String givenName) {
-		_givenName = givenName;
+		this.givenName = givenName;
 	}
 
 	public void setHonorificPrefix(String honorificPrefix) {
-		_honorificPrefix = honorificPrefix;
+		this.honorificPrefix = honorificPrefix;
 	}
 
 	public void setHonorificSuffix(String honorificSuffix) {
-		_honorificSuffix = honorificSuffix;
+		this.honorificSuffix = honorificSuffix;
 	}
 
 	public void setId(Long id) {
-		_id = id;
+		this.id = id;
 	}
 
 	public void setImage(String image) {
-		_image = image;
+		this.image = image;
 	}
 
 	public void setJobTitle(String jobTitle) {
-		_jobTitle = jobTitle;
+		this.jobTitle = jobTitle;
 	}
 
 	public void setMyOrganizations(Organization[] myOrganizations) {
-		_myOrganizations = myOrganizations;
+		this.myOrganizations = myOrganizations;
 	}
 
 	public void setMyOrganizationsIds(Long[] myOrganizationsIds) {
-		_myOrganizationsIds = myOrganizationsIds;
+		this.myOrganizationsIds = myOrganizationsIds;
 	}
 
 	public void setName(String name) {
-		_name = name;
+		this.name = name;
 	}
 
 	public void setProfileURL(String profileURL) {
-		_profileURL = profileURL;
+		this.profileURL = profileURL;
 	}
 
 	public void setRoles(Role[] roles) {
-		_roles = roles;
+		this.roles = roles;
 	}
 
 	public void setRolesIds(Long[] rolesIds) {
-		_rolesIds = rolesIds;
+		this.rolesIds = rolesIds;
 	}
 
 	public void setTasksAssignedToMe(String[] tasksAssignedToMe) {
-		_tasksAssignedToMe = tasksAssignedToMe;
+		this.tasksAssignedToMe = tasksAssignedToMe;
 	}
 
 	public void setTasksAssignedToMyRoles(String[] tasksAssignedToMyRoles) {
-		_tasksAssignedToMyRoles = tasksAssignedToMyRoles;
+		this.tasksAssignedToMyRoles = tasksAssignedToMyRoles;
 	}
 
-	private String _additionalName;
-	private String _alternateName;
-	private Date _birthDate;
-	private ContactInformation _contactInformation;
-	private String _dashboardURL;
-	private String _email;
-	private String _familyName;
-	private String _givenName;
-	private String _honorificPrefix;
-	private String _honorificSuffix;
-	private Long _id;
-	private String _image;
-	private String _jobTitle;
-	private Organization[] _myOrganizations;
-	private Long[] _myOrganizationsIds;
-	private String _name;
-	private String _profileURL;
-	private Role[] _roles;
-	private Long[] _rolesIds;
-	private String[] _tasksAssignedToMe;
-	private String[] _tasksAssignedToMyRoles;
+	@GraphQLField
+	protected String additionalName;
+
+	@GraphQLField
+	protected String alternateName;
+
+	@GraphQLField
+	protected Date birthDate;
+
+	@GraphQLField
+	protected ContactInformation contactInformation;
+
+	@GraphQLField
+	protected String dashboardURL;
+
+	@GraphQLField
+	protected String email;
+
+	@GraphQLField
+	protected String familyName;
+
+	@GraphQLField
+	protected String givenName;
+
+	@GraphQLField
+	protected String honorificPrefix;
+
+	@GraphQLField
+	protected String honorificSuffix;
+
+	@GraphQLField
+	protected Long id;
+
+	@GraphQLField
+	protected String image;
+
+	@GraphQLField
+	protected String jobTitle;
+
+	@GraphQLField
+	protected Organization[] myOrganizations;
+
+	@GraphQLField
+	protected Long[] myOrganizationsIds;
+
+	@GraphQLField
+	protected String name;
+
+	@GraphQLField
+	protected String profileURL;
+
+	@GraphQLField
+	protected Role[] roles;
+
+	@GraphQLField
+	protected Long[] rolesIds;
+
+	@GraphQLField
+	protected String[] tasksAssignedToMe;
+
+	@GraphQLField
+	protected String[] tasksAssignedToMyRoles;
 
 }

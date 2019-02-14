@@ -14,6 +14,9 @@
 
 package com.liferay.headless.form.dto.v1_0;
 
+import graphql.annotations.annotationTypes.GraphQLField;
+import graphql.annotations.annotationTypes.GraphQLName;
+
 import java.util.Date;
 
 import javax.annotation.Generated;
@@ -25,134 +28,162 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
+@GraphQLName("Form")
 @XmlRootElement(name = "Form")
 public class Form {
 
 	public String[] getAvailableLanguages() {
-		return _availableLanguages;
+		return availableLanguages;
 	}
 
 	public Long getContentSpace() {
-		return _contentSpace;
+		return contentSpace;
 	}
 
 	public Creator getCreator() {
-		return _creator;
+		return creator;
 	}
 
 	public Date getDateCreated() {
-		return _dateCreated;
+		return dateCreated;
 	}
 
 	public Date getDateModified() {
-		return _dateModified;
+		return dateModified;
 	}
 
 	public Date getDatePublished() {
-		return _datePublished;
+		return datePublished;
 	}
 
 	public String getDefaultLanguage() {
-		return _defaultLanguage;
+		return defaultLanguage;
 	}
 
 	public String getDescription() {
-		return _description;
+		return description;
 	}
 
 	public FormRecord[] getFormRecords() {
-		return _formRecords;
+		return formRecords;
 	}
 
 	public Long[] getFormRecordsIds() {
-		return _formRecordsIds;
+		return formRecordsIds;
 	}
 
 	public Long getId() {
-		return _id;
+		return id;
 	}
 
 	public String getName() {
-		return _name;
+		return name;
 	}
 
 	public FormStructure getStructure() {
-		return _structure;
+		return structure;
 	}
 
 	public Long getStructureId() {
-		return _structureId;
+		return structureId;
 	}
 
 	public void setAvailableLanguages(String[] availableLanguages) {
-		_availableLanguages = availableLanguages;
+		this.availableLanguages = availableLanguages;
 	}
 
 	public void setContentSpace(Long contentSpace) {
-		_contentSpace = contentSpace;
+		this.contentSpace = contentSpace;
 	}
 
 	public void setCreator(Creator creator) {
-		_creator = creator;
+		this.creator = creator;
 	}
 
 	public void setDateCreated(Date dateCreated) {
-		_dateCreated = dateCreated;
+		this.dateCreated = dateCreated;
 	}
 
 	public void setDateModified(Date dateModified) {
-		_dateModified = dateModified;
+		this.dateModified = dateModified;
 	}
 
 	public void setDatePublished(Date datePublished) {
-		_datePublished = datePublished;
+		this.datePublished = datePublished;
 	}
 
 	public void setDefaultLanguage(String defaultLanguage) {
-		_defaultLanguage = defaultLanguage;
+		this.defaultLanguage = defaultLanguage;
 	}
 
 	public void setDescription(String description) {
-		_description = description;
+		this.description = description;
 	}
 
 	public void setFormRecords(FormRecord[] formRecords) {
-		_formRecords = formRecords;
+		this.formRecords = formRecords;
 	}
 
 	public void setFormRecordsIds(Long[] formRecordsIds) {
-		_formRecordsIds = formRecordsIds;
+		this.formRecordsIds = formRecordsIds;
 	}
 
 	public void setId(Long id) {
-		_id = id;
+		this.id = id;
 	}
 
 	public void setName(String name) {
-		_name = name;
+		this.name = name;
 	}
 
 	public void setStructure(FormStructure structure) {
-		_structure = structure;
+		this.structure = structure;
 	}
 
 	public void setStructureId(Long structureId) {
-		_structureId = structureId;
+		this.structureId = structureId;
 	}
 
-	private String[] _availableLanguages;
-	private Long _contentSpace;
-	private Creator _creator;
-	private Date _dateCreated;
-	private Date _dateModified;
-	private Date _datePublished;
-	private String _defaultLanguage;
-	private String _description;
-	private FormRecord[] _formRecords;
-	private Long[] _formRecordsIds;
-	private Long _id;
-	private String _name;
-	private FormStructure _structure;
-	private Long _structureId;
+	@GraphQLField
+	protected String[] availableLanguages;
+
+	@GraphQLField
+	protected Long contentSpace;
+
+	@GraphQLField
+	protected Creator creator;
+
+	@GraphQLField
+	protected Date dateCreated;
+
+	@GraphQLField
+	protected Date dateModified;
+
+	@GraphQLField
+	protected Date datePublished;
+
+	@GraphQLField
+	protected String defaultLanguage;
+
+	@GraphQLField
+	protected String description;
+
+	@GraphQLField
+	protected FormRecord[] formRecords;
+
+	@GraphQLField
+	protected Long[] formRecordsIds;
+
+	@GraphQLField
+	protected Long id;
+
+	@GraphQLField
+	protected String name;
+
+	@GraphQLField
+	protected FormStructure structure;
+
+	@GraphQLField
+	protected Long structureId;
 
 }

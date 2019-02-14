@@ -14,6 +14,9 @@
 
 package com.liferay.headless.form.dto.v1_0;
 
+import graphql.annotations.annotationTypes.GraphQLField;
+import graphql.annotations.annotationTypes.GraphQLName;
+
 import javax.annotation.Generated;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -23,35 +26,41 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
+@GraphQLName("Validation")
 @XmlRootElement(name = "Validation")
 public class Validation {
 
 	public String getErrorMessage() {
-		return _errorMessage;
+		return errorMessage;
 	}
 
 	public String getExpression() {
-		return _expression;
+		return expression;
 	}
 
 	public Long getId() {
-		return _id;
+		return id;
 	}
 
 	public void setErrorMessage(String errorMessage) {
-		_errorMessage = errorMessage;
+		this.errorMessage = errorMessage;
 	}
 
 	public void setExpression(String expression) {
-		_expression = expression;
+		this.expression = expression;
 	}
 
 	public void setId(Long id) {
-		_id = id;
+		this.id = id;
 	}
 
-	private String _errorMessage;
-	private String _expression;
-	private Long _id;
+	@GraphQLField
+	protected String errorMessage;
+
+	@GraphQLField
+	protected String expression;
+
+	@GraphQLField
+	protected Long id;
 
 }

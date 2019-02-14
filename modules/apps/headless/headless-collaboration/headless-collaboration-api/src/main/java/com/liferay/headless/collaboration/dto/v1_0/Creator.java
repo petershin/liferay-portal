@@ -14,6 +14,9 @@
 
 package com.liferay.headless.collaboration.dto.v1_0;
 
+import graphql.annotations.annotationTypes.GraphQLField;
+import graphql.annotations.annotationTypes.GraphQLName;
+
 import javax.annotation.Generated;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -23,98 +26,118 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
+@GraphQLName("Creator")
 @XmlRootElement(name = "Creator")
 public class Creator {
 
 	public String getAdditionalName() {
-		return _additionalName;
+		return additionalName;
 	}
 
 	public String getAlternateName() {
-		return _alternateName;
+		return alternateName;
 	}
 
 	public String getEmail() {
-		return _email;
+		return email;
 	}
 
 	public String getFamilyName() {
-		return _familyName;
+		return familyName;
 	}
 
 	public String getGivenName() {
-		return _givenName;
+		return givenName;
 	}
 
 	public Long getId() {
-		return _id;
+		return id;
 	}
 
 	public String getImage() {
-		return _image;
+		return image;
 	}
 
 	public String getJobTitle() {
-		return _jobTitle;
+		return jobTitle;
 	}
 
 	public String getName() {
-		return _name;
+		return name;
 	}
 
 	public String getProfileURL() {
-		return _profileURL;
+		return profileURL;
 	}
 
 	public void setAdditionalName(String additionalName) {
-		_additionalName = additionalName;
+		this.additionalName = additionalName;
 	}
 
 	public void setAlternateName(String alternateName) {
-		_alternateName = alternateName;
+		this.alternateName = alternateName;
 	}
 
 	public void setEmail(String email) {
-		_email = email;
+		this.email = email;
 	}
 
 	public void setFamilyName(String familyName) {
-		_familyName = familyName;
+		this.familyName = familyName;
 	}
 
 	public void setGivenName(String givenName) {
-		_givenName = givenName;
+		this.givenName = givenName;
 	}
 
 	public void setId(Long id) {
-		_id = id;
+		this.id = id;
 	}
 
 	public void setImage(String image) {
-		_image = image;
+		this.image = image;
 	}
 
 	public void setJobTitle(String jobTitle) {
-		_jobTitle = jobTitle;
+		this.jobTitle = jobTitle;
 	}
 
 	public void setName(String name) {
-		_name = name;
+		this.name = name;
 	}
 
 	public void setProfileURL(String profileURL) {
-		_profileURL = profileURL;
+		this.profileURL = profileURL;
 	}
 
-	private String _additionalName;
-	private String _alternateName;
-	private String _email;
-	private String _familyName;
-	private String _givenName;
-	private Long _id;
-	private String _image;
-	private String _jobTitle;
-	private String _name;
-	private String _profileURL;
+	@GraphQLField
+	protected String additionalName;
+
+	@GraphQLField
+	protected String alternateName;
+
+	@GraphQLField
+	protected String email;
+
+	@GraphQLField
+	protected String familyName;
+
+	@GraphQLField
+	protected String givenName;
+
+	@GraphQLField
+	protected Long id;
+
+	@GraphQLField
+	protected String image;
+
+	@GraphQLField
+	protected String jobTitle;
+
+	@GraphQLField
+	protected String name;
+
+	@GraphQLField
+	protected String profileURL;
 
 }

@@ -14,6 +14,9 @@
 
 package com.liferay.headless.form.dto.v1_0;
 
+import graphql.annotations.annotationTypes.GraphQLField;
+import graphql.annotations.annotationTypes.GraphQLName;
+
 import javax.annotation.Generated;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -23,44 +26,52 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
+@GraphQLName("FormPages")
 @XmlRootElement(name = "FormPages")
 public class FormPages {
 
 	public Fields[] getFields() {
-		return _fields;
+		return fields;
 	}
 
 	public String getHeadline() {
-		return _headline;
+		return headline;
 	}
 
 	public Long getId() {
-		return _id;
+		return id;
 	}
 
 	public String getText() {
-		return _text;
+		return text;
 	}
 
 	public void setFields(Fields[] fields) {
-		_fields = fields;
+		this.fields = fields;
 	}
 
 	public void setHeadline(String headline) {
-		_headline = headline;
+		this.headline = headline;
 	}
 
 	public void setId(Long id) {
-		_id = id;
+		this.id = id;
 	}
 
 	public void setText(String text) {
-		_text = text;
+		this.text = text;
 	}
 
-	private Fields[] _fields;
-	private String _headline;
-	private Long _id;
-	private String _text;
+	@GraphQLField
+	protected Fields[] fields;
+
+	@GraphQLField
+	protected String headline;
+
+	@GraphQLField
+	protected Long id;
+
+	@GraphQLField
+	protected String text;
 
 }

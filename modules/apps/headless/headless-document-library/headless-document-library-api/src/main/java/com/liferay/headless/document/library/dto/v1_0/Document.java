@@ -14,6 +14,9 @@
 
 package com.liferay.headless.document.library.dto.v1_0;
 
+import graphql.annotations.annotationTypes.GraphQLField;
+import graphql.annotations.annotationTypes.GraphQLName;
+
 import java.util.Date;
 
 import javax.annotation.Generated;
@@ -25,143 +28,173 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
+@GraphQLName("Document")
 @XmlRootElement(name = "Document")
 public class Document {
 
 	public AdaptedMedia[] getAdaptedMedia() {
-		return _adaptedMedia;
+		return adaptedMedia;
 	}
 
 	public Long[] getCategory() {
-		return _category;
+		return category;
 	}
 
 	public String getContentUrl() {
-		return _contentUrl;
+		return contentUrl;
 	}
 
 	public Creator getCreator() {
-		return _creator;
+		return creator;
 	}
 
 	public Date getDateCreated() {
-		return _dateCreated;
+		return dateCreated;
 	}
 
 	public Date getDateModified() {
-		return _dateModified;
+		return dateModified;
 	}
 
 	public String getDescription() {
-		return _description;
+		return description;
 	}
 
 	public String getEncodingFormat() {
-		return _encodingFormat;
+		return encodingFormat;
 	}
 
 	public String getFileExtension() {
-		return _fileExtension;
+		return fileExtension;
 	}
 
 	public Folder getFolder() {
-		return _folder;
+		return folder;
 	}
 
 	public Long getFolderId() {
-		return _folderId;
+		return folderId;
 	}
 
 	public Long getId() {
-		return _id;
+		return id;
 	}
 
 	public String[] getKeywords() {
-		return _keywords;
+		return keywords;
 	}
 
 	public Number getSizeInBytes() {
-		return _sizeInBytes;
+		return sizeInBytes;
 	}
 
 	public String getTitle() {
-		return _title;
+		return title;
 	}
 
 	public void setAdaptedMedia(AdaptedMedia[] adaptedMedia) {
-		_adaptedMedia = adaptedMedia;
+		this.adaptedMedia = adaptedMedia;
 	}
 
 	public void setCategory(Long[] category) {
-		_category = category;
+		this.category = category;
 	}
 
 	public void setContentUrl(String contentUrl) {
-		_contentUrl = contentUrl;
+		this.contentUrl = contentUrl;
 	}
 
 	public void setCreator(Creator creator) {
-		_creator = creator;
+		this.creator = creator;
 	}
 
 	public void setDateCreated(Date dateCreated) {
-		_dateCreated = dateCreated;
+		this.dateCreated = dateCreated;
 	}
 
 	public void setDateModified(Date dateModified) {
-		_dateModified = dateModified;
+		this.dateModified = dateModified;
 	}
 
 	public void setDescription(String description) {
-		_description = description;
+		this.description = description;
 	}
 
 	public void setEncodingFormat(String encodingFormat) {
-		_encodingFormat = encodingFormat;
+		this.encodingFormat = encodingFormat;
 	}
 
 	public void setFileExtension(String fileExtension) {
-		_fileExtension = fileExtension;
+		this.fileExtension = fileExtension;
 	}
 
 	public void setFolder(Folder folder) {
-		_folder = folder;
+		this.folder = folder;
 	}
 
 	public void setFolderId(Long folderId) {
-		_folderId = folderId;
+		this.folderId = folderId;
 	}
 
 	public void setId(Long id) {
-		_id = id;
+		this.id = id;
 	}
 
 	public void setKeywords(String[] keywords) {
-		_keywords = keywords;
+		this.keywords = keywords;
 	}
 
 	public void setSizeInBytes(Number sizeInBytes) {
-		_sizeInBytes = sizeInBytes;
+		this.sizeInBytes = sizeInBytes;
 	}
 
 	public void setTitle(String title) {
-		_title = title;
+		this.title = title;
 	}
 
-	private AdaptedMedia[] _adaptedMedia;
-	private Long[] _category;
-	private String _contentUrl;
-	private Creator _creator;
-	private Date _dateCreated;
-	private Date _dateModified;
-	private String _description;
-	private String _encodingFormat;
-	private String _fileExtension;
-	private Folder _folder;
-	private Long _folderId;
-	private Long _id;
-	private String[] _keywords;
-	private Number _sizeInBytes;
-	private String _title;
+	@GraphQLField
+	protected AdaptedMedia[] adaptedMedia;
+
+	@GraphQLField
+	protected Long[] category;
+
+	@GraphQLField
+	protected String contentUrl;
+
+	@GraphQLField
+	protected Creator creator;
+
+	@GraphQLField
+	protected Date dateCreated;
+
+	@GraphQLField
+	protected Date dateModified;
+
+	@GraphQLField
+	protected String description;
+
+	@GraphQLField
+	protected String encodingFormat;
+
+	@GraphQLField
+	protected String fileExtension;
+
+	@GraphQLField
+	protected Folder folder;
+
+	@GraphQLField
+	protected Long folderId;
+
+	@GraphQLField
+	protected Long id;
+
+	@GraphQLField
+	protected String[] keywords;
+
+	@GraphQLField
+	protected Number sizeInBytes;
+
+	@GraphQLField
+	protected String title;
 
 }

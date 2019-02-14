@@ -14,6 +14,9 @@
 
 package com.liferay.headless.form.dto.v1_0;
 
+import graphql.annotations.annotationTypes.GraphQLField;
+import graphql.annotations.annotationTypes.GraphQLName;
+
 import java.util.Date;
 
 import javax.annotation.Generated;
@@ -25,98 +28,118 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
+@GraphQLName("FormStructure")
 @XmlRootElement(name = "FormStructure")
 public class FormStructure {
 
 	public String[] getAvailableLanguages() {
-		return _availableLanguages;
+		return availableLanguages;
 	}
 
 	public Long getContentSpace() {
-		return _contentSpace;
+		return contentSpace;
 	}
 
 	public Creator getCreator() {
-		return _creator;
+		return creator;
 	}
 
 	public Date getDateCreated() {
-		return _dateCreated;
+		return dateCreated;
 	}
 
 	public Date getDateModified() {
-		return _dateModified;
+		return dateModified;
 	}
 
 	public String getDescription() {
-		return _description;
+		return description;
 	}
 
 	public FormPages[] getFormPages() {
-		return _formPages;
+		return formPages;
 	}
 
 	public Long getId() {
-		return _id;
+		return id;
 	}
 
 	public String getName() {
-		return _name;
+		return name;
 	}
 
 	public SuccessPage getSuccessPage() {
-		return _successPage;
+		return successPage;
 	}
 
 	public void setAvailableLanguages(String[] availableLanguages) {
-		_availableLanguages = availableLanguages;
+		this.availableLanguages = availableLanguages;
 	}
 
 	public void setContentSpace(Long contentSpace) {
-		_contentSpace = contentSpace;
+		this.contentSpace = contentSpace;
 	}
 
 	public void setCreator(Creator creator) {
-		_creator = creator;
+		this.creator = creator;
 	}
 
 	public void setDateCreated(Date dateCreated) {
-		_dateCreated = dateCreated;
+		this.dateCreated = dateCreated;
 	}
 
 	public void setDateModified(Date dateModified) {
-		_dateModified = dateModified;
+		this.dateModified = dateModified;
 	}
 
 	public void setDescription(String description) {
-		_description = description;
+		this.description = description;
 	}
 
 	public void setFormPages(FormPages[] formPages) {
-		_formPages = formPages;
+		this.formPages = formPages;
 	}
 
 	public void setId(Long id) {
-		_id = id;
+		this.id = id;
 	}
 
 	public void setName(String name) {
-		_name = name;
+		this.name = name;
 	}
 
 	public void setSuccessPage(SuccessPage successPage) {
-		_successPage = successPage;
+		this.successPage = successPage;
 	}
 
-	private String[] _availableLanguages;
-	private Long _contentSpace;
-	private Creator _creator;
-	private Date _dateCreated;
-	private Date _dateModified;
-	private String _description;
-	private FormPages[] _formPages;
-	private Long _id;
-	private String _name;
-	private SuccessPage _successPage;
+	@GraphQLField
+	protected String[] availableLanguages;
+
+	@GraphQLField
+	protected Long contentSpace;
+
+	@GraphQLField
+	protected Creator creator;
+
+	@GraphQLField
+	protected Date dateCreated;
+
+	@GraphQLField
+	protected Date dateModified;
+
+	@GraphQLField
+	protected String description;
+
+	@GraphQLField
+	protected FormPages[] formPages;
+
+	@GraphQLField
+	protected Long id;
+
+	@GraphQLField
+	protected String name;
+
+	@GraphQLField
+	protected SuccessPage successPage;
 
 }

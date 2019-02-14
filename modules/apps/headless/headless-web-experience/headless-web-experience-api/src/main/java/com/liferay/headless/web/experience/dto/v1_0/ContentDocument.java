@@ -14,6 +14,9 @@
 
 package com.liferay.headless.web.experience.dto.v1_0;
 
+import graphql.annotations.annotationTypes.GraphQLField;
+import graphql.annotations.annotationTypes.GraphQLName;
+
 import java.util.Date;
 
 import javax.annotation.Generated;
@@ -25,89 +28,107 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
+@GraphQLName("ContentDocument")
 @XmlRootElement(name = "ContentDocument")
 public class ContentDocument {
 
 	public String getContentUrl() {
-		return _contentUrl;
+		return contentUrl;
 	}
 
 	public Creator getCreator() {
-		return _creator;
+		return creator;
 	}
 
 	public Date getDateCreated() {
-		return _dateCreated;
+		return dateCreated;
 	}
 
 	public Date getDateModified() {
-		return _dateModified;
+		return dateModified;
 	}
 
 	public String getEncodingFormat() {
-		return _encodingFormat;
+		return encodingFormat;
 	}
 
 	public String getFileExtension() {
-		return _fileExtension;
+		return fileExtension;
 	}
 
 	public Long getId() {
-		return _id;
+		return id;
 	}
 
 	public Number getSizeInBytes() {
-		return _sizeInBytes;
+		return sizeInBytes;
 	}
 
 	public String getTitle() {
-		return _title;
+		return title;
 	}
 
 	public void setContentUrl(String contentUrl) {
-		_contentUrl = contentUrl;
+		this.contentUrl = contentUrl;
 	}
 
 	public void setCreator(Creator creator) {
-		_creator = creator;
+		this.creator = creator;
 	}
 
 	public void setDateCreated(Date dateCreated) {
-		_dateCreated = dateCreated;
+		this.dateCreated = dateCreated;
 	}
 
 	public void setDateModified(Date dateModified) {
-		_dateModified = dateModified;
+		this.dateModified = dateModified;
 	}
 
 	public void setEncodingFormat(String encodingFormat) {
-		_encodingFormat = encodingFormat;
+		this.encodingFormat = encodingFormat;
 	}
 
 	public void setFileExtension(String fileExtension) {
-		_fileExtension = fileExtension;
+		this.fileExtension = fileExtension;
 	}
 
 	public void setId(Long id) {
-		_id = id;
+		this.id = id;
 	}
 
 	public void setSizeInBytes(Number sizeInBytes) {
-		_sizeInBytes = sizeInBytes;
+		this.sizeInBytes = sizeInBytes;
 	}
 
 	public void setTitle(String title) {
-		_title = title;
+		this.title = title;
 	}
 
-	private String _contentUrl;
-	private Creator _creator;
-	private Date _dateCreated;
-	private Date _dateModified;
-	private String _encodingFormat;
-	private String _fileExtension;
-	private Long _id;
-	private Number _sizeInBytes;
-	private String _title;
+	@GraphQLField
+	protected String contentUrl;
+
+	@GraphQLField
+	protected Creator creator;
+
+	@GraphQLField
+	protected Date dateCreated;
+
+	@GraphQLField
+	protected Date dateModified;
+
+	@GraphQLField
+	protected String encodingFormat;
+
+	@GraphQLField
+	protected String fileExtension;
+
+	@GraphQLField
+	protected Long id;
+
+	@GraphQLField
+	protected Number sizeInBytes;
+
+	@GraphQLField
+	protected String title;
 
 }

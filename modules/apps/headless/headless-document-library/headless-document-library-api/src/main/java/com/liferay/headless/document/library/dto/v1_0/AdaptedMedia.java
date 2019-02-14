@@ -14,6 +14,9 @@
 
 package com.liferay.headless.document.library.dto.v1_0;
 
+import graphql.annotations.annotationTypes.GraphQLField;
+import graphql.annotations.annotationTypes.GraphQLName;
+
 import javax.annotation.Generated;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -23,62 +26,74 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
+@GraphQLName("AdaptedMedia")
 @XmlRootElement(name = "AdaptedMedia")
 public class AdaptedMedia {
 
 	public String getContentUrl() {
-		return _contentUrl;
+		return contentUrl;
 	}
 
 	public Number getHeight() {
-		return _height;
+		return height;
 	}
 
 	public Long getId() {
-		return _id;
+		return id;
 	}
 
 	public String getResolutionName() {
-		return _resolutionName;
+		return resolutionName;
 	}
 
 	public Number getSizeInBytes() {
-		return _sizeInBytes;
+		return sizeInBytes;
 	}
 
 	public Number getWidth() {
-		return _width;
+		return width;
 	}
 
 	public void setContentUrl(String contentUrl) {
-		_contentUrl = contentUrl;
+		this.contentUrl = contentUrl;
 	}
 
 	public void setHeight(Number height) {
-		_height = height;
+		this.height = height;
 	}
 
 	public void setId(Long id) {
-		_id = id;
+		this.id = id;
 	}
 
 	public void setResolutionName(String resolutionName) {
-		_resolutionName = resolutionName;
+		this.resolutionName = resolutionName;
 	}
 
 	public void setSizeInBytes(Number sizeInBytes) {
-		_sizeInBytes = sizeInBytes;
+		this.sizeInBytes = sizeInBytes;
 	}
 
 	public void setWidth(Number width) {
-		_width = width;
+		this.width = width;
 	}
 
-	private String _contentUrl;
-	private Number _height;
-	private Long _id;
-	private String _resolutionName;
-	private Number _sizeInBytes;
-	private Number _width;
+	@GraphQLField
+	protected String contentUrl;
+
+	@GraphQLField
+	protected Number height;
+
+	@GraphQLField
+	protected Long id;
+
+	@GraphQLField
+	protected String resolutionName;
+
+	@GraphQLField
+	protected Number sizeInBytes;
+
+	@GraphQLField
+	protected Number width;
 
 }

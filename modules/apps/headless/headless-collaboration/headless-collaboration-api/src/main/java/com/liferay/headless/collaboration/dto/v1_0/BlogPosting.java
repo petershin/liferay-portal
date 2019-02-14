@@ -14,6 +14,9 @@
 
 package com.liferay.headless.collaboration.dto.v1_0;
 
+import graphql.annotations.annotationTypes.GraphQLField;
+import graphql.annotations.annotationTypes.GraphQLName;
+
 import java.util.Date;
 
 import javax.annotation.Generated;
@@ -25,197 +28,239 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
+@GraphQLName("BlogPosting")
 @XmlRootElement(name = "BlogPosting")
 public class BlogPosting {
 
 	public AggregateRating getAggregateRating() {
-		return _aggregateRating;
+		return aggregateRating;
 	}
 
 	public String getAlternativeHeadline() {
-		return _alternativeHeadline;
+		return alternativeHeadline;
 	}
 
 	public String getArticleBody() {
-		return _articleBody;
+		return articleBody;
 	}
 
 	public String getCaption() {
-		return _caption;
+		return caption;
 	}
 
 	public Long[] getCategory() {
-		return _category;
+		return category;
 	}
 
 	public Comment[] getComment() {
-		return _comment;
+		return comment;
 	}
 
 	public Long getContentSpace() {
-		return _contentSpace;
+		return contentSpace;
 	}
 
 	public Creator getCreator() {
-		return _creator;
+		return creator;
 	}
 
 	public Date getDateCreated() {
-		return _dateCreated;
+		return dateCreated;
 	}
 
 	public Date getDateModified() {
-		return _dateModified;
+		return dateModified;
 	}
 
 	public Date getDatePublished() {
-		return _datePublished;
+		return datePublished;
 	}
 
 	public String getDescription() {
-		return _description;
+		return description;
 	}
 
 	public String getEncodingFormat() {
-		return _encodingFormat;
+		return encodingFormat;
 	}
 
 	public String getFriendlyUrlPath() {
-		return _friendlyUrlPath;
+		return friendlyUrlPath;
 	}
 
 	public String getHeadline() {
-		return _headline;
+		return headline;
 	}
 
 	public Long getId() {
-		return _id;
+		return id;
 	}
 
 	public ImageObject getImage() {
-		return _image;
+		return image;
 	}
 
 	public Long getImageId() {
-		return _imageId;
+		return imageId;
 	}
 
 	public String[] getKeywords() {
-		return _keywords;
+		return keywords;
 	}
 
 	public ImageObjectRepository getRepository() {
-		return _repository;
+		return repository;
 	}
 
 	public Long getRepositoryId() {
-		return _repositoryId;
+		return repositoryId;
 	}
 
 	public void setAggregateRating(AggregateRating aggregateRating) {
-		_aggregateRating = aggregateRating;
+		this.aggregateRating = aggregateRating;
 	}
 
 	public void setAlternativeHeadline(String alternativeHeadline) {
-		_alternativeHeadline = alternativeHeadline;
+		this.alternativeHeadline = alternativeHeadline;
 	}
 
 	public void setArticleBody(String articleBody) {
-		_articleBody = articleBody;
+		this.articleBody = articleBody;
 	}
 
 	public void setCaption(String caption) {
-		_caption = caption;
+		this.caption = caption;
 	}
 
 	public void setCategory(Long[] category) {
-		_category = category;
+		this.category = category;
 	}
 
 	public void setComment(Comment[] comment) {
-		_comment = comment;
+		this.comment = comment;
 	}
 
 	public void setContentSpace(Long contentSpace) {
-		_contentSpace = contentSpace;
+		this.contentSpace = contentSpace;
 	}
 
 	public void setCreator(Creator creator) {
-		_creator = creator;
+		this.creator = creator;
 	}
 
 	public void setDateCreated(Date dateCreated) {
-		_dateCreated = dateCreated;
+		this.dateCreated = dateCreated;
 	}
 
 	public void setDateModified(Date dateModified) {
-		_dateModified = dateModified;
+		this.dateModified = dateModified;
 	}
 
 	public void setDatePublished(Date datePublished) {
-		_datePublished = datePublished;
+		this.datePublished = datePublished;
 	}
 
 	public void setDescription(String description) {
-		_description = description;
+		this.description = description;
 	}
 
 	public void setEncodingFormat(String encodingFormat) {
-		_encodingFormat = encodingFormat;
+		this.encodingFormat = encodingFormat;
 	}
 
 	public void setFriendlyUrlPath(String friendlyUrlPath) {
-		_friendlyUrlPath = friendlyUrlPath;
+		this.friendlyUrlPath = friendlyUrlPath;
 	}
 
 	public void setHeadline(String headline) {
-		_headline = headline;
+		this.headline = headline;
 	}
 
 	public void setId(Long id) {
-		_id = id;
+		this.id = id;
 	}
 
 	public void setImage(ImageObject image) {
-		_image = image;
+		this.image = image;
 	}
 
 	public void setImageId(Long imageId) {
-		_imageId = imageId;
+		this.imageId = imageId;
 	}
 
 	public void setKeywords(String[] keywords) {
-		_keywords = keywords;
+		this.keywords = keywords;
 	}
 
 	public void setRepository(ImageObjectRepository repository) {
-		_repository = repository;
+		this.repository = repository;
 	}
 
 	public void setRepositoryId(Long repositoryId) {
-		_repositoryId = repositoryId;
+		this.repositoryId = repositoryId;
 	}
 
-	private AggregateRating _aggregateRating;
-	private String _alternativeHeadline;
-	private String _articleBody;
-	private String _caption;
-	private Long[] _category;
-	private Comment[] _comment;
-	private Long _contentSpace;
-	private Creator _creator;
-	private Date _dateCreated;
-	private Date _dateModified;
-	private Date _datePublished;
-	private String _description;
-	private String _encodingFormat;
-	private String _friendlyUrlPath;
-	private String _headline;
-	private Long _id;
-	private ImageObject _image;
-	private Long _imageId;
-	private String[] _keywords;
-	private ImageObjectRepository _repository;
-	private Long _repositoryId;
+	@GraphQLField
+	protected AggregateRating aggregateRating;
+
+	@GraphQLField
+	protected String alternativeHeadline;
+
+	@GraphQLField
+	protected String articleBody;
+
+	@GraphQLField
+	protected String caption;
+
+	@GraphQLField
+	protected Long[] category;
+
+	@GraphQLField
+	protected Comment[] comment;
+
+	@GraphQLField
+	protected Long contentSpace;
+
+	@GraphQLField
+	protected Creator creator;
+
+	@GraphQLField
+	protected Date dateCreated;
+
+	@GraphQLField
+	protected Date dateModified;
+
+	@GraphQLField
+	protected Date datePublished;
+
+	@GraphQLField
+	protected String description;
+
+	@GraphQLField
+	protected String encodingFormat;
+
+	@GraphQLField
+	protected String friendlyUrlPath;
+
+	@GraphQLField
+	protected String headline;
+
+	@GraphQLField
+	protected Long id;
+
+	@GraphQLField
+	protected ImageObject image;
+
+	@GraphQLField
+	protected Long imageId;
+
+	@GraphQLField
+	protected String[] keywords;
+
+	@GraphQLField
+	protected ImageObjectRepository repository;
+
+	@GraphQLField
+	protected Long repositoryId;
 
 }

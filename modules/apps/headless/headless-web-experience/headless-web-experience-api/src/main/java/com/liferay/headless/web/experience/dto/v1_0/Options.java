@@ -14,6 +14,9 @@
 
 package com.liferay.headless.web.experience.dto.v1_0;
 
+import graphql.annotations.annotationTypes.GraphQLField;
+import graphql.annotations.annotationTypes.GraphQLName;
+
 import javax.annotation.Generated;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -23,26 +26,30 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
+@GraphQLName("Options")
 @XmlRootElement(name = "Options")
 public class Options {
 
 	public String getLabel() {
-		return _label;
+		return label;
 	}
 
 	public String getValue() {
-		return _value;
+		return value;
 	}
 
 	public void setLabel(String label) {
-		_label = label;
+		this.label = label;
 	}
 
 	public void setValue(String value) {
-		_value = value;
+		this.value = value;
 	}
 
-	private String _label;
-	private String _value;
+	@GraphQLField
+	protected String label;
+
+	@GraphQLField
+	protected String value;
 
 }

@@ -14,6 +14,9 @@
 
 package com.liferay.headless.web.experience.dto.v1_0;
 
+import graphql.annotations.annotationTypes.GraphQLField;
+import graphql.annotations.annotationTypes.GraphQLName;
+
 import javax.annotation.Generated;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -23,71 +26,85 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
+@GraphQLName("Values")
 @XmlRootElement(name = "Values")
 public class Values {
 
 	public String getDataType() {
-		return _dataType;
+		return dataType;
 	}
 
 	public String getFilterAndSortIdentifier() {
-		return _filterAndSortIdentifier;
+		return filterAndSortIdentifier;
 	}
 
 	public Long getId() {
-		return _id;
+		return id;
 	}
 
 	public String getInputControl() {
-		return _inputControl;
+		return inputControl;
 	}
 
 	public String getLabel() {
-		return _label;
+		return label;
 	}
 
 	public String getName() {
-		return _name;
+		return name;
 	}
 
 	public Object getValue() {
-		return _value;
+		return value;
 	}
 
 	public void setDataType(String dataType) {
-		_dataType = dataType;
+		this.dataType = dataType;
 	}
 
 	public void setFilterAndSortIdentifier(String filterAndSortIdentifier) {
-		_filterAndSortIdentifier = filterAndSortIdentifier;
+		this.filterAndSortIdentifier = filterAndSortIdentifier;
 	}
 
 	public void setId(Long id) {
-		_id = id;
+		this.id = id;
 	}
 
 	public void setInputControl(String inputControl) {
-		_inputControl = inputControl;
+		this.inputControl = inputControl;
 	}
 
 	public void setLabel(String label) {
-		_label = label;
+		this.label = label;
 	}
 
 	public void setName(String name) {
-		_name = name;
+		this.name = name;
 	}
 
 	public void setValue(Object value) {
-		_value = value;
+		this.value = value;
 	}
 
-	private String _dataType;
-	private String _filterAndSortIdentifier;
-	private Long _id;
-	private String _inputControl;
-	private String _label;
-	private String _name;
-	private Object _value;
+	@GraphQLField
+	protected String dataType;
+
+	@GraphQLField
+	protected String filterAndSortIdentifier;
+
+	@GraphQLField
+	protected Long id;
+
+	@GraphQLField
+	protected String inputControl;
+
+	@GraphQLField
+	protected String label;
+
+	@GraphQLField
+	protected String name;
+
+	@GraphQLField
+	protected Object value;
 
 }

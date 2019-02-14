@@ -14,6 +14,9 @@
 
 package com.liferay.headless.foundation.dto.v1_0;
 
+import graphql.annotations.annotationTypes.GraphQLField;
+import graphql.annotations.annotationTypes.GraphQLName;
+
 import java.util.Date;
 
 import javax.annotation.Generated;
@@ -25,71 +28,85 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
+@GraphQLName("Keyword")
 @XmlRootElement(name = "Keyword")
 public class Keyword {
 
 	public Long getContentSpace() {
-		return _contentSpace;
+		return contentSpace;
 	}
 
 	public UserAccount getCreator() {
-		return _creator;
+		return creator;
 	}
 
 	public Date getDateCreated() {
-		return _dateCreated;
+		return dateCreated;
 	}
 
 	public Date getDateModified() {
-		return _dateModified;
+		return dateModified;
 	}
 
 	public Long getId() {
-		return _id;
+		return id;
 	}
 
 	public Number getKeywordUsageCount() {
-		return _keywordUsageCount;
+		return keywordUsageCount;
 	}
 
 	public String getName() {
-		return _name;
+		return name;
 	}
 
 	public void setContentSpace(Long contentSpace) {
-		_contentSpace = contentSpace;
+		this.contentSpace = contentSpace;
 	}
 
 	public void setCreator(UserAccount creator) {
-		_creator = creator;
+		this.creator = creator;
 	}
 
 	public void setDateCreated(Date dateCreated) {
-		_dateCreated = dateCreated;
+		this.dateCreated = dateCreated;
 	}
 
 	public void setDateModified(Date dateModified) {
-		_dateModified = dateModified;
+		this.dateModified = dateModified;
 	}
 
 	public void setId(Long id) {
-		_id = id;
+		this.id = id;
 	}
 
 	public void setKeywordUsageCount(Number keywordUsageCount) {
-		_keywordUsageCount = keywordUsageCount;
+		this.keywordUsageCount = keywordUsageCount;
 	}
 
 	public void setName(String name) {
-		_name = name;
+		this.name = name;
 	}
 
-	private Long _contentSpace;
-	private UserAccount _creator;
-	private Date _dateCreated;
-	private Date _dateModified;
-	private Long _id;
-	private Number _keywordUsageCount;
-	private String _name;
+	@GraphQLField
+	protected Long contentSpace;
+
+	@GraphQLField
+	protected UserAccount creator;
+
+	@GraphQLField
+	protected Date dateCreated;
+
+	@GraphQLField
+	protected Date dateModified;
+
+	@GraphQLField
+	protected Long id;
+
+	@GraphQLField
+	protected Number keywordUsageCount;
+
+	@GraphQLField
+	protected String name;
 
 }

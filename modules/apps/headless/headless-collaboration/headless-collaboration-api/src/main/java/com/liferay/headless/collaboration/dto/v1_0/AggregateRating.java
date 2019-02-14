@@ -14,6 +14,9 @@
 
 package com.liferay.headless.collaboration.dto.v1_0;
 
+import graphql.annotations.annotationTypes.GraphQLField;
+import graphql.annotations.annotationTypes.GraphQLName;
+
 import javax.annotation.Generated;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -23,53 +26,63 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
+@GraphQLName("AggregateRating")
 @XmlRootElement(name = "AggregateRating")
 public class AggregateRating {
 
 	public Number getBestRating() {
-		return _bestRating;
+		return bestRating;
 	}
 
 	public Long getId() {
-		return _id;
+		return id;
 	}
 
 	public Number getRatingCount() {
-		return _ratingCount;
+		return ratingCount;
 	}
 
 	public Number getRatingValue() {
-		return _ratingValue;
+		return ratingValue;
 	}
 
 	public Number getWorstRating() {
-		return _worstRating;
+		return worstRating;
 	}
 
 	public void setBestRating(Number bestRating) {
-		_bestRating = bestRating;
+		this.bestRating = bestRating;
 	}
 
 	public void setId(Long id) {
-		_id = id;
+		this.id = id;
 	}
 
 	public void setRatingCount(Number ratingCount) {
-		_ratingCount = ratingCount;
+		this.ratingCount = ratingCount;
 	}
 
 	public void setRatingValue(Number ratingValue) {
-		_ratingValue = ratingValue;
+		this.ratingValue = ratingValue;
 	}
 
 	public void setWorstRating(Number worstRating) {
-		_worstRating = worstRating;
+		this.worstRating = worstRating;
 	}
 
-	private Number _bestRating;
-	private Long _id;
-	private Number _ratingCount;
-	private Number _ratingValue;
-	private Number _worstRating;
+	@GraphQLField
+	protected Number bestRating;
+
+	@GraphQLField
+	protected Long id;
+
+	@GraphQLField
+	protected Number ratingCount;
+
+	@GraphQLField
+	protected Number ratingValue;
+
+	@GraphQLField
+	protected Number worstRating;
 
 }
