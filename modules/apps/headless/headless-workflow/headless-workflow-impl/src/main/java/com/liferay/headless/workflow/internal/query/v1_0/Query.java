@@ -18,21 +18,19 @@ import com.liferay.headless.workflow.dto.v1_0.WorkflowLog;
 import com.liferay.headless.workflow.dto.v1_0.WorkflowTask;
 import com.liferay.headless.workflow.resource.v1_0.WorkflowLogResource;
 import com.liferay.headless.workflow.resource.v1_0.WorkflowTaskResource;
-
-import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-
-import javax.annotation.Generated;
 
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLInvokeDetached;
 import graphql.annotations.annotationTypes.GraphQLName;
 
+import java.util.Collection;
+
+import javax.annotation.Generated;
+
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.util.tracker.ServiceTracker;
-
-import java.util.Collection;
 
 /**
  * @author Javier Gamarra
@@ -41,61 +39,51 @@ import java.util.Collection;
 @Generated("")
 public class Query {
 
-	public Collection<WorkflowTask> getRolesWorkflowTasksPage(
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Collection<WorkflowTask> getRoleWorkflowTasksPage(
 			@GraphQLName("role-id") Long roleId,
-			@GraphQLName("per_page") int itemsPerPage,
-			@GraphQLName("page") int pageNumber)
+			@GraphQLName("per_page") int perPage, @GraphQLName("page") int page)
 		throws Exception {
 
-		Page<WorkflowTask> page =
-			_getWorkflowTaskResource().getRolesWorkflowTasksPage(
-				roleId, Pagination.of(itemsPerPage, pageNumber));
-
-		return page.getItems();
-	}
-
-	public WorkflowLog getWorkflowLog(Long workflowLogId)
-		throws Exception {
-
-		return _getWorkflowLogResource().getWorkflowLogs(workflowLogId);
+		return _getWorkflowTaskResource().getRoleWorkflowTasksPage(roleId, Pagination.of(perPage, page)).getItems();
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public WorkflowTask getWorkflowTasks(
+	public WorkflowLog getWorkflowLog(
+			@GraphQLName("workflow-log-id") Long workflowLogId)
+		throws Exception {
+
+		return _getWorkflowLogResource().getWorkflowLog(workflowLogId);
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public WorkflowTask getWorkflowTask(
 			@GraphQLName("workflow-task-id") Long workflowTaskId)
 		throws Exception {
 
-		return _getWorkflowTaskResource().getWorkflowTasks(workflowTaskId);
+		return _getWorkflowTaskResource().getWorkflowTask(workflowTaskId);
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<WorkflowTask> getWorkflowTasksPage(
-			@GraphQLName("per_page") int itemsPerPage,
-			@GraphQLName("page") int pageNumber)
+			@GraphQLName("per_page") int perPage, @GraphQLName("page") int page)
 		throws Exception {
 
-		Page<WorkflowTask> page =
-			_getWorkflowTaskResource().getWorkflowTasksPage(
-				Pagination.of(itemsPerPage, pageNumber));
-
-		return page.getItems();
+		return _getWorkflowTaskResource().getWorkflowTasksPage(Pagination.of(perPage, page)).getItems();
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<WorkflowLog> getWorkflowTasksWorkflowLogsPage(
+	public Collection<WorkflowLog> getWorkflowTaskWorkflowLogsPage(
 			@GraphQLName("workflow-task-id") Long workflowTaskId,
-			@GraphQLName("per_page") int itemsPerPage,
-			@GraphQLName("page") int pageNumber)
+			@GraphQLName("per_page") int perPage, @GraphQLName("page") int page)
 		throws Exception {
 
-		Page<WorkflowLog> page =
-			_getWorkflowLogResource().getWorkflowTasksWorkflowLogsPage(
-				workflowTaskId, Pagination.of(itemsPerPage, pageNumber));
-
-		return page.getItems();
+		return _getWorkflowLogResource().getWorkflowTaskWorkflowLogsPage(workflowTaskId, Pagination.of(perPage, page)).getItems();
 	}
 
 	private static WorkflowLogResource _getWorkflowLogResource() {
