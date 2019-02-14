@@ -84,6 +84,8 @@ repositories {
 
 setUpNPM {
 	args "install"
+	args "--frozen-lockfile"
+
 	scriptFile new File(projectDir, "yarn-1.13.0.js");
 }
 
