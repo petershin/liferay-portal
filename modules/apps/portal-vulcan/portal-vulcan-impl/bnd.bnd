@@ -4,4 +4,7 @@ Bundle-Version: 1.0.0
 Import-Package:\
 	!com.google.errorprone.annotations.*,\
 	\
+	graphql.annotations.annotationTypes;version="5.4",\
+	\
 	*
+-includeresource: @graphql-java-annotations-[0-9]*.jar!/!graphql/annotations/annotationTypes/*
