@@ -47,17 +47,10 @@ public class ObjectReviewedImpl implements ObjectReviewed {
 	}
 
 	@JsonIgnore
-	public void setId(
-			UnsafeSupplier<Long, Throwable>
-				idUnsafeSupplier) {
+	public <E extends Throwable> void setId(
+		UnsafeSupplier<Long, E> idUnsafeSupplier) throws E {
 
-			try {
-				id =
-					idUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
+		id = idUnsafeSupplier.get();
 	}
 
 	@GraphQLField

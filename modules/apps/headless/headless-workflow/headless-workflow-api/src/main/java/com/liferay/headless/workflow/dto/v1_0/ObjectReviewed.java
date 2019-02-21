@@ -30,9 +30,9 @@ public interface ObjectReviewed {
 	public void setId(
 			Long id);
 
-	public void setId(
-			UnsafeSupplier<Long, Throwable>
-				idUnsafeSupplier);
+	public <E extends Throwable> void setId(
+		UnsafeSupplier<Long, E> idUnsafeSupplier) throws E;
+
 	public String getIdentifier();
 
 	public void setIdentifier(
