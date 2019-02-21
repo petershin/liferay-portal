@@ -22,6 +22,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.liferay.headless.foundation.dto.v1_0.Creator;
 import com.liferay.headless.foundation.dto.v1_0.Vocabulary;
 import com.liferay.petra.function.UnsafeSupplier;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -31,7 +32,6 @@ import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -67,22 +67,22 @@ public abstract class BaseVocabularyResourceTestCase {
 	}
 
 	@Test
-	public void testGetContentSpaceVocabulariesPage() throws Exception {
-		Assert.assertTrue(true);
-	}
-
-	@Test
-	public void testPostContentSpaceVocabulary() throws Exception {
-		Assert.assertTrue(true);
-	}
-
-	@Test
 	public void testDeleteVocabulary() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
+	public void testGetContentSpaceVocabulariesPage() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	@Test
 	public void testGetVocabulary() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	@Test
+	public void testPostContentSpaceVocabulary() throws Exception {
 		Assert.assertTrue(true);
 	}
 
@@ -96,6 +96,37 @@ public abstract class BaseVocabularyResourceTestCase {
 
 		Assert.assertEquals(
 			expectedResponseCode, actualResponse.getResponseCode());
+	}
+
+	protected boolean invokeDeleteVocabulary(Long vocabularyId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setDelete(true);
+
+		options.setLocation(
+			_resourceURL +
+				_toPath("/vocabularies/{vocabulary-id}", vocabularyId));
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), Boolean.class);
+	}
+
+	protected Http.Response invokeDeleteVocabularyResponse(Long vocabularyId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setDelete(true);
+
+		options.setLocation(
+			_resourceURL +
+				_toPath("/vocabularies/{vocabulary-id}", vocabularyId));
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
 	}
 
 	protected Page<Vocabulary> invokeGetContentSpaceVocabulariesPage(
@@ -127,6 +158,33 @@ public abstract class BaseVocabularyResourceTestCase {
 				_toPath(
 					"/content-spaces/{content-space-id}/vocabularies",
 					contentSpaceId, filter, sorts));
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	protected Vocabulary invokeGetVocabulary(Long vocabularyId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL +
+				_toPath("/vocabularies/{vocabulary-id}", vocabularyId));
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), VocabularyImpl.class);
+	}
+
+	protected Http.Response invokeGetVocabularyResponse(Long vocabularyId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL +
+				_toPath("/vocabularies/{vocabulary-id}", vocabularyId));
 
 		HttpUtil.URLtoString(options);
 
@@ -172,64 +230,6 @@ public abstract class BaseVocabularyResourceTestCase {
 					contentSpaceId, vocabulary));
 
 		options.setPost(true);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
-	protected boolean invokeDeleteVocabulary(Long vocabularyId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setDelete(true);
-
-		options.setLocation(
-			_resourceURL +
-				_toPath("/vocabularies/{vocabulary-id}", vocabularyId));
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), Boolean.class);
-	}
-
-	protected Http.Response invokeDeleteVocabularyResponse(Long vocabularyId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setDelete(true);
-
-		options.setLocation(
-			_resourceURL +
-				_toPath("/vocabularies/{vocabulary-id}", vocabularyId));
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
-	protected Vocabulary invokeGetVocabulary(Long vocabularyId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setLocation(
-			_resourceURL +
-				_toPath("/vocabularies/{vocabulary-id}", vocabularyId));
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), VocabularyImpl.class);
-	}
-
-	protected Http.Response invokeGetVocabularyResponse(Long vocabularyId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setLocation(
-			_resourceURL +
-				_toPath("/vocabularies/{vocabulary-id}", vocabularyId));
 
 		HttpUtil.URLtoString(options);
 
@@ -301,6 +301,38 @@ public abstract class BaseVocabularyResourceTestCase {
 			return availableLanguages;
 		}
 
+		public Long getContentSpace() {
+			return contentSpace;
+		}
+
+		public Creator getCreator() {
+			return creator;
+		}
+
+		public Date getDateCreated() {
+			return dateCreated;
+		}
+
+		public Date getDateModified() {
+			return dateModified;
+		}
+
+		public String getDescription() {
+			return description;
+		}
+
+		public Boolean getHasCategories() {
+			return hasCategories;
+		}
+
+		public Long getId() {
+			return id;
+		}
+
+		public String getName() {
+			return name;
+		}
+
 		public void setAvailableLanguages(String[] availableLanguages) {
 			this.availableLanguages = availableLanguages;
 		}
@@ -316,13 +348,6 @@ public abstract class BaseVocabularyResourceTestCase {
 			catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
-		}
-
-		@JsonProperty
-		protected String[] availableLanguages;
-
-		public Long getContentSpace() {
-			return contentSpace;
 		}
 
 		public void setContentSpace(Long contentSpace) {
@@ -341,13 +366,6 @@ public abstract class BaseVocabularyResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected Long contentSpace;
-
-		public Creator getCreator() {
-			return creator;
-		}
-
 		public void setCreator(Creator creator) {
 			this.creator = creator;
 		}
@@ -362,13 +380,6 @@ public abstract class BaseVocabularyResourceTestCase {
 			catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
-		}
-
-		@JsonProperty
-		protected Creator creator;
-
-		public Date getDateCreated() {
-			return dateCreated;
 		}
 
 		public void setDateCreated(Date dateCreated) {
@@ -387,13 +398,6 @@ public abstract class BaseVocabularyResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected Date dateCreated;
-
-		public Date getDateModified() {
-			return dateModified;
-		}
-
 		public void setDateModified(Date dateModified) {
 			this.dateModified = dateModified;
 		}
@@ -408,13 +412,6 @@ public abstract class BaseVocabularyResourceTestCase {
 			catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
-		}
-
-		@JsonProperty
-		protected Date dateModified;
-
-		public String getDescription() {
-			return description;
 		}
 
 		public void setDescription(String description) {
@@ -433,13 +430,6 @@ public abstract class BaseVocabularyResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected String description;
-
-		public Boolean getHasCategories() {
-			return hasCategories;
-		}
-
 		public void setHasCategories(Boolean hasCategories) {
 			this.hasCategories = hasCategories;
 		}
@@ -456,13 +446,6 @@ public abstract class BaseVocabularyResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected Boolean hasCategories;
-
-		public Long getId() {
-			return id;
-		}
-
 		public void setId(Long id) {
 			this.id = id;
 		}
@@ -475,13 +458,6 @@ public abstract class BaseVocabularyResourceTestCase {
 			catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
-		}
-
-		@JsonProperty
-		protected Long id;
-
-		public String getName() {
-			return name;
 		}
 
 		public void setName(String name) {
@@ -499,6 +475,30 @@ public abstract class BaseVocabularyResourceTestCase {
 				throw new RuntimeException(t);
 			}
 		}
+
+		@JsonProperty
+		protected String[] availableLanguages;
+
+		@JsonProperty
+		protected Long contentSpace;
+
+		@JsonProperty
+		protected Creator creator;
+
+		@JsonProperty
+		protected Date dateCreated;
+
+		@JsonProperty
+		protected Date dateModified;
+
+		@JsonProperty
+		protected String description;
+
+		@JsonProperty
+		protected Boolean hasCategories;
+
+		@JsonProperty
+		protected Long id;
 
 		@JsonProperty
 		protected String name;
@@ -527,12 +527,12 @@ public abstract class BaseVocabularyResourceTestCase {
 		return template.replaceAll("\\{.*\\}", String.valueOf(values[0]));
 	}
 
-	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {
+	private static final ObjectMapper _inputObjectMapper = new ObjectMapper() {
 		{
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
 		}
 	};
-	private final static ObjectMapper _outputObjectMapper = new ObjectMapper();
+	private static final ObjectMapper _outputObjectMapper = new ObjectMapper();
 
 	private URL _resourceURL;
 

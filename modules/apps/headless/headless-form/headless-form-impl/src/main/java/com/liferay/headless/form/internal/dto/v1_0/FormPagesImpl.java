@@ -41,6 +41,18 @@ public class FormPagesImpl implements FormPages {
 		return fields;
 	}
 
+	public String getHeadline() {
+		return headline;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public String getText() {
+		return text;
+	}
+
 	public void setFields(Fields[] fields) {
 		this.fields = fields;
 	}
@@ -55,14 +67,6 @@ public class FormPagesImpl implements FormPages {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Fields[] fields;
-
-	public String getHeadline() {
-		return headline;
 	}
 
 	public void setHeadline(String headline) {
@@ -81,14 +85,6 @@ public class FormPagesImpl implements FormPages {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected String headline;
-
-	public Long getId() {
-		return id;
-	}
-
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -101,14 +97,6 @@ public class FormPagesImpl implements FormPages {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Long id;
-
-	public String getText() {
-		return text;
 	}
 
 	public void setText(String text) {
@@ -124,6 +112,18 @@ public class FormPagesImpl implements FormPages {
 			throw new RuntimeException(t);
 		}
 	}
+
+	@GraphQLField
+	@JsonProperty
+	protected Fields[] fields;
+
+	@GraphQLField
+	@JsonProperty
+	protected String headline;
+
+	@GraphQLField
+	@JsonProperty
+	protected Long id;
 
 	@GraphQLField
 	@JsonProperty

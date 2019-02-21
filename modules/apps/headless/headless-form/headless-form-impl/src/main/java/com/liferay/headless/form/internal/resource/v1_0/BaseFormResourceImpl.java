@@ -46,8 +46,8 @@ import javax.ws.rs.core.Context;
 @Path("/v1.0")
 public abstract class BaseFormResourceImpl implements FormResource {
 
-	@Override
 	@GET
+	@Override
 	@Path("/content-spaces/{content-space-id}/form")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
@@ -59,8 +59,8 @@ public abstract class BaseFormResourceImpl implements FormResource {
 		return Page.of(Collections.emptyList());
 	}
 
-	@Override
 	@GET
+	@Override
 	@Path("/forms/{form-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
@@ -68,21 +68,8 @@ public abstract class BaseFormResourceImpl implements FormResource {
 		return new FormImpl();
 	}
 
-	@Override
-	@Consumes("application/json")
-	@POST
-	@Path("/forms/{form-id}/evaluate-context")
-	@Produces("application/json")
-	@RequiresScope("everything.write")
-	public Form postFormEvaluateContext(
-			@PathParam("form-id") Long formId, Form form)
-		throws Exception {
-
-		return new FormImpl();
-	}
-
-	@Override
 	@GET
+	@Override
 	@Path("/forms/{form-id}/fetch-latest-draft")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
@@ -92,10 +79,23 @@ public abstract class BaseFormResourceImpl implements FormResource {
 		return new FormImpl();
 	}
 
-	@Override
 	@Consumes("application/json")
+	@Override
+	@Path("/forms/{form-id}/evaluate-context")
 	@POST
+	@Produces("application/json")
+	@RequiresScope("everything.write")
+	public Form postFormEvaluateContext(
+			@PathParam("form-id") Long formId, Form form)
+		throws Exception {
+
+		return new FormImpl();
+	}
+
+	@Consumes("application/json")
+	@Override
 	@Path("/forms/{form-id}/upload-file")
+	@POST
 	@Produces("application/json")
 	@RequiresScope("everything.write")
 	public Form postFormUploadFile(@PathParam("form-id") Long formId, Form form)

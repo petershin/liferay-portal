@@ -25,6 +25,7 @@ import com.liferay.headless.form.dto.v1_0.FormRecord;
 import com.liferay.headless.form.dto.v1_0.FormStructure;
 import com.liferay.headless.form.dto.v1_0.Options;
 import com.liferay.petra.function.UnsafeSupplier;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -32,7 +33,6 @@ import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -77,12 +77,12 @@ public abstract class BaseFormResourceTestCase {
 	}
 
 	@Test
-	public void testPostFormEvaluateContext() throws Exception {
+	public void testGetFormFetchLatestDraft() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testGetFormFetchLatestDraft() throws Exception {
+	public void testPostFormEvaluateContext() throws Exception {
 		Assert.assertTrue(true);
 	}
 
@@ -138,6 +138,31 @@ public abstract class BaseFormResourceTestCase {
 			HttpUtil.URLtoString(options), FormImpl.class);
 	}
 
+	protected Form invokeGetFormFetchLatestDraft(Long formId) throws Exception {
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL +
+				_toPath("/forms/{form-id}/fetch-latest-draft", formId));
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), FormImpl.class);
+	}
+
+	protected Http.Response invokeGetFormFetchLatestDraftResponse(Long formId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL +
+				_toPath("/forms/{form-id}/fetch-latest-draft", formId));
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
 	protected Http.Response invokeGetFormResponse(Long formId)
 		throws Exception {
 
@@ -184,31 +209,6 @@ public abstract class BaseFormResourceTestCase {
 				_toPath("/forms/{form-id}/evaluate-context", formId, form));
 
 		options.setPost(true);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
-	protected Form invokeGetFormFetchLatestDraft(Long formId) throws Exception {
-		Http.Options options = _createHttpOptions();
-
-		options.setLocation(
-			_resourceURL +
-				_toPath("/forms/{form-id}/fetch-latest-draft", formId));
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), FormImpl.class);
-	}
-
-	protected Http.Response invokeGetFormFetchLatestDraftResponse(Long formId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setLocation(
-			_resourceURL +
-				_toPath("/forms/{form-id}/fetch-latest-draft", formId));
 
 		HttpUtil.URLtoString(options);
 
@@ -279,6 +279,58 @@ public abstract class BaseFormResourceTestCase {
 			return availableLanguages;
 		}
 
+		public Long getContentSpace() {
+			return contentSpace;
+		}
+
+		public Creator getCreator() {
+			return creator;
+		}
+
+		public Date getDateCreated() {
+			return dateCreated;
+		}
+
+		public Date getDateModified() {
+			return dateModified;
+		}
+
+		public Date getDatePublished() {
+			return datePublished;
+		}
+
+		public String getDefaultLanguage() {
+			return defaultLanguage;
+		}
+
+		public String getDescription() {
+			return description;
+		}
+
+		public FormRecord[] getFormRecords() {
+			return formRecords;
+		}
+
+		public Long[] getFormRecordsIds() {
+			return formRecordsIds;
+		}
+
+		public Long getId() {
+			return id;
+		}
+
+		public String getName() {
+			return name;
+		}
+
+		public FormStructure getStructure() {
+			return structure;
+		}
+
+		public Long getStructureId() {
+			return structureId;
+		}
+
 		public void setAvailableLanguages(String[] availableLanguages) {
 			this.availableLanguages = availableLanguages;
 		}
@@ -294,13 +346,6 @@ public abstract class BaseFormResourceTestCase {
 			catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
-		}
-
-		@JsonProperty
-		protected String[] availableLanguages;
-
-		public Long getContentSpace() {
-			return contentSpace;
 		}
 
 		public void setContentSpace(Long contentSpace) {
@@ -319,13 +364,6 @@ public abstract class BaseFormResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected Long contentSpace;
-
-		public Creator getCreator() {
-			return creator;
-		}
-
 		public void setCreator(Creator creator) {
 			this.creator = creator;
 		}
@@ -340,13 +378,6 @@ public abstract class BaseFormResourceTestCase {
 			catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
-		}
-
-		@JsonProperty
-		protected Creator creator;
-
-		public Date getDateCreated() {
-			return dateCreated;
 		}
 
 		public void setDateCreated(Date dateCreated) {
@@ -365,13 +396,6 @@ public abstract class BaseFormResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected Date dateCreated;
-
-		public Date getDateModified() {
-			return dateModified;
-		}
-
 		public void setDateModified(Date dateModified) {
 			this.dateModified = dateModified;
 		}
@@ -386,13 +410,6 @@ public abstract class BaseFormResourceTestCase {
 			catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
-		}
-
-		@JsonProperty
-		protected Date dateModified;
-
-		public Date getDatePublished() {
-			return datePublished;
 		}
 
 		public void setDatePublished(Date datePublished) {
@@ -411,13 +428,6 @@ public abstract class BaseFormResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected Date datePublished;
-
-		public String getDefaultLanguage() {
-			return defaultLanguage;
-		}
-
 		public void setDefaultLanguage(String defaultLanguage) {
 			this.defaultLanguage = defaultLanguage;
 		}
@@ -432,13 +442,6 @@ public abstract class BaseFormResourceTestCase {
 			catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
-		}
-
-		@JsonProperty
-		protected String defaultLanguage;
-
-		public String getDescription() {
-			return description;
 		}
 
 		public void setDescription(String description) {
@@ -457,13 +460,6 @@ public abstract class BaseFormResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected String description;
-
-		public FormRecord[] getFormRecords() {
-			return formRecords;
-		}
-
 		public void setFormRecords(FormRecord[] formRecords) {
 			this.formRecords = formRecords;
 		}
@@ -478,13 +474,6 @@ public abstract class BaseFormResourceTestCase {
 			catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
-		}
-
-		@JsonProperty
-		protected FormRecord[] formRecords;
-
-		public Long[] getFormRecordsIds() {
-			return formRecordsIds;
 		}
 
 		public void setFormRecordsIds(Long[] formRecordsIds) {
@@ -503,13 +492,6 @@ public abstract class BaseFormResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected Long[] formRecordsIds;
-
-		public Long getId() {
-			return id;
-		}
-
 		public void setId(Long id) {
 			this.id = id;
 		}
@@ -522,13 +504,6 @@ public abstract class BaseFormResourceTestCase {
 			catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
-		}
-
-		@JsonProperty
-		protected Long id;
-
-		public String getName() {
-			return name;
 		}
 
 		public void setName(String name) {
@@ -547,13 +522,6 @@ public abstract class BaseFormResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected String name;
-
-		public FormStructure getStructure() {
-			return structure;
-		}
-
 		public void setStructure(FormStructure structure) {
 			this.structure = structure;
 		}
@@ -568,13 +536,6 @@ public abstract class BaseFormResourceTestCase {
 			catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
-		}
-
-		@JsonProperty
-		protected FormStructure structure;
-
-		public Long getStructureId() {
-			return structureId;
 		}
 
 		public void setStructureId(Long structureId) {
@@ -592,6 +553,45 @@ public abstract class BaseFormResourceTestCase {
 				throw new RuntimeException(t);
 			}
 		}
+
+		@JsonProperty
+		protected String[] availableLanguages;
+
+		@JsonProperty
+		protected Long contentSpace;
+
+		@JsonProperty
+		protected Creator creator;
+
+		@JsonProperty
+		protected Date dateCreated;
+
+		@JsonProperty
+		protected Date dateModified;
+
+		@JsonProperty
+		protected Date datePublished;
+
+		@JsonProperty
+		protected String defaultLanguage;
+
+		@JsonProperty
+		protected String description;
+
+		@JsonProperty
+		protected FormRecord[] formRecords;
+
+		@JsonProperty
+		protected Long[] formRecordsIds;
+
+		@JsonProperty
+		protected Long id;
+
+		@JsonProperty
+		protected String name;
+
+		@JsonProperty
+		protected FormStructure structure;
 
 		@JsonProperty
 		protected Long structureId;
@@ -620,12 +620,12 @@ public abstract class BaseFormResourceTestCase {
 		return template.replaceAll("\\{.*\\}", String.valueOf(values[0]));
 	}
 
-	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {
+	private static final ObjectMapper _inputObjectMapper = new ObjectMapper() {
 		{
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
 		}
 	};
-	private final static ObjectMapper _outputObjectMapper = new ObjectMapper();
+	private static final ObjectMapper _outputObjectMapper = new ObjectMapper();
 
 	private URL _resourceURL;
 

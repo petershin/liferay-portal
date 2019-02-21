@@ -40,6 +40,14 @@ public class GeoImpl implements Geo {
 		return id;
 	}
 
+	public Number getLatitude() {
+		return latitude;
+	}
+
+	public Number getLongitude() {
+		return longitude;
+	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -52,14 +60,6 @@ public class GeoImpl implements Geo {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Long id;
-
-	public Number getLatitude() {
-		return latitude;
 	}
 
 	public void setLatitude(Number latitude) {
@@ -78,14 +78,6 @@ public class GeoImpl implements Geo {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected Number latitude;
-
-	public Number getLongitude() {
-		return longitude;
-	}
-
 	public void setLongitude(Number longitude) {
 		this.longitude = longitude;
 	}
@@ -101,6 +93,14 @@ public class GeoImpl implements Geo {
 			throw new RuntimeException(t);
 		}
 	}
+
+	@GraphQLField
+	@JsonProperty
+	protected Long id;
+
+	@GraphQLField
+	@JsonProperty
+	protected Number latitude;
 
 	@GraphQLField
 	@JsonProperty

@@ -44,8 +44,8 @@ import javax.ws.rs.core.Context;
 @Path("/v1.0")
 public abstract class BaseCommentResourceImpl implements CommentResource {
 
-	@Override
 	@GET
+	@Override
 	@Path("/comments/{comment-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
@@ -55,8 +55,8 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 		return new CommentImpl();
 	}
 
-	@Override
 	@GET
+	@Override
 	@Path("/comments/{comment-id}/comments")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
@@ -68,8 +68,8 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 		return Page.of(Collections.emptyList());
 	}
 
-	@Override
 	@GET
+	@Override
 	@Path("/documents/{document-id}/comments")
 	@Produces("application/json")
 	@RequiresScope("everything.read")

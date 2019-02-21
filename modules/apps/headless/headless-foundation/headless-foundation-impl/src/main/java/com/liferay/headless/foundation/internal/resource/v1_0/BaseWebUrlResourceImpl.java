@@ -44,8 +44,8 @@ import javax.ws.rs.core.Context;
 @Path("/v1.0")
 public abstract class BaseWebUrlResourceImpl implements WebUrlResource {
 
-	@Override
 	@GET
+	@Override
 	@Path("/web-urls")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
@@ -57,8 +57,8 @@ public abstract class BaseWebUrlResourceImpl implements WebUrlResource {
 		return Page.of(Collections.emptyList());
 	}
 
-	@Override
 	@GET
+	@Override
 	@Path("/web-urls/{web-url-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")

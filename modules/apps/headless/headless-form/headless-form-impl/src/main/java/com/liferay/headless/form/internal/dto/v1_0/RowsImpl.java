@@ -40,6 +40,14 @@ public class RowsImpl implements Rows {
 		return id;
 	}
 
+	public String getLabel() {
+		return label;
+	}
+
+	public String getValue() {
+		return value;
+	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -52,14 +60,6 @@ public class RowsImpl implements Rows {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Long id;
-
-	public String getLabel() {
-		return label;
 	}
 
 	public void setLabel(String label) {
@@ -78,14 +78,6 @@ public class RowsImpl implements Rows {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected String label;
-
-	public String getValue() {
-		return value;
-	}
-
 	public void setValue(String value) {
 		this.value = value;
 	}
@@ -101,6 +93,14 @@ public class RowsImpl implements Rows {
 			throw new RuntimeException(t);
 		}
 	}
+
+	@GraphQLField
+	@JsonProperty
+	protected Long id;
+
+	@GraphQLField
+	@JsonProperty
+	protected String label;
 
 	@GraphQLField
 	@JsonProperty

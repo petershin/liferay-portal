@@ -41,6 +41,22 @@ public class FieldValuesImpl implements FieldValues {
 		return document;
 	}
 
+	public Long getDocumentId() {
+		return documentId;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public String getValue() {
+		return value;
+	}
+
 	public void setDocument(FormDocument document) {
 		this.document = document;
 	}
@@ -55,14 +71,6 @@ public class FieldValuesImpl implements FieldValues {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected FormDocument document;
-
-	public Long getDocumentId() {
-		return documentId;
 	}
 
 	public void setDocumentId(Long documentId) {
@@ -81,14 +89,6 @@ public class FieldValuesImpl implements FieldValues {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected Long documentId;
-
-	public Long getId() {
-		return id;
-	}
-
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -103,14 +103,6 @@ public class FieldValuesImpl implements FieldValues {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected Long id;
-
-	public String getName() {
-		return name;
-	}
-
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -123,14 +115,6 @@ public class FieldValuesImpl implements FieldValues {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected String name;
-
-	public String getValue() {
-		return value;
 	}
 
 	public void setValue(String value) {
@@ -148,6 +132,22 @@ public class FieldValuesImpl implements FieldValues {
 			throw new RuntimeException(t);
 		}
 	}
+
+	@GraphQLField
+	@JsonProperty
+	protected FormDocument document;
+
+	@GraphQLField
+	@JsonProperty
+	protected Long documentId;
+
+	@GraphQLField
+	@JsonProperty
+	protected Long id;
+
+	@GraphQLField
+	@JsonProperty
+	protected String name;
 
 	@GraphQLField
 	@JsonProperty

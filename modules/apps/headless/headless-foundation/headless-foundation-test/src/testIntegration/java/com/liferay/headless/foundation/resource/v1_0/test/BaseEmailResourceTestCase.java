@@ -60,12 +60,12 @@ public abstract class BaseEmailResourceTestCase {
 	}
 
 	@Test
-	public void testGetGenericParentEmailsPage() throws Exception {
+	public void testGetEmail() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testGetEmail() throws Exception {
+	public void testGetGenericParentEmailsPage() throws Exception {
 		Assert.assertTrue(true);
 	}
 
@@ -74,6 +74,29 @@ public abstract class BaseEmailResourceTestCase {
 
 		Assert.assertEquals(
 			expectedResponseCode, actualResponse.getResponseCode());
+	}
+
+	protected Email invokeGetEmail(Long emailId) throws Exception {
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL + _toPath("/emails/{email-id}", emailId));
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), EmailImpl.class);
+	}
+
+	protected Http.Response invokeGetEmailResponse(Long emailId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL + _toPath("/emails/{email-id}", emailId));
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
 	}
 
 	protected Page<Email> invokeGetGenericParentEmailsPage(
@@ -101,29 +124,6 @@ public abstract class BaseEmailResourceTestCase {
 		return options.getResponse();
 	}
 
-	protected Email invokeGetEmail(Long emailId) throws Exception {
-		Http.Options options = _createHttpOptions();
-
-		options.setLocation(
-			_resourceURL + _toPath("/emails/{email-id}", emailId));
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), EmailImpl.class);
-	}
-
-	protected Http.Response invokeGetEmailResponse(Long emailId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setLocation(
-			_resourceURL + _toPath("/emails/{email-id}", emailId));
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
 	protected Email randomEmail() {
 		return new EmailImpl() {
 			{
@@ -142,6 +142,14 @@ public abstract class BaseEmailResourceTestCase {
 			return email;
 		}
 
+		public Long getId() {
+			return id;
+		}
+
+		public String getType() {
+			return type;
+		}
+
 		public void setEmail(String email) {
 			this.email = email;
 		}
@@ -158,13 +166,6 @@ public abstract class BaseEmailResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected String email;
-
-		public Long getId() {
-			return id;
-		}
-
 		public void setId(Long id) {
 			this.id = id;
 		}
@@ -177,13 +178,6 @@ public abstract class BaseEmailResourceTestCase {
 			catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
-		}
-
-		@JsonProperty
-		protected Long id;
-
-		public String getType() {
-			return type;
 		}
 
 		public void setType(String type) {
@@ -201,6 +195,12 @@ public abstract class BaseEmailResourceTestCase {
 				throw new RuntimeException(t);
 			}
 		}
+
+		@JsonProperty
+		protected String email;
+
+		@JsonProperty
+		protected Long id;
 
 		@JsonProperty
 		protected String type;
@@ -229,12 +229,12 @@ public abstract class BaseEmailResourceTestCase {
 		return template.replaceAll("\\{.*\\}", String.valueOf(values[0]));
 	}
 
-	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {
+	private static final ObjectMapper _inputObjectMapper = new ObjectMapper() {
 		{
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
 		}
 	};
-	private final static ObjectMapper _outputObjectMapper = new ObjectMapper();
+	private static final ObjectMapper _outputObjectMapper = new ObjectMapper();
 
 	private URL _resourceURL;
 

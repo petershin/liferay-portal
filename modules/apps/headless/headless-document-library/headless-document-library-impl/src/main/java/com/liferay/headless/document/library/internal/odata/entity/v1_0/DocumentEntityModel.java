@@ -52,7 +52,6 @@ public class DocumentEntityModel implements EntityModel {
 			new IdEntityField(
 				"encodingFormat", locale -> "mimeType",
 				mimeType -> {
-
 					String encodingFormat = String.valueOf(mimeType);
 
 					return encodingFormat.replace(

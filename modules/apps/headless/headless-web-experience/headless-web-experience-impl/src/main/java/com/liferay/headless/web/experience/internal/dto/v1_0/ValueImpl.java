@@ -43,6 +43,30 @@ public class ValueImpl implements Value {
 		return data;
 	}
 
+	public ContentDocument getDocument() {
+		return document;
+	}
+
+	public Long getDocumentId() {
+		return documentId;
+	}
+
+	public Geo getGeo() {
+		return geo;
+	}
+
+	public String getLink() {
+		return link;
+	}
+
+	public StructuredContent getStructuredContent() {
+		return structuredContent;
+	}
+
+	public Long getStructuredContentId() {
+		return structuredContentId;
+	}
+
 	public void setData(String data) {
 		this.data = data;
 	}
@@ -55,14 +79,6 @@ public class ValueImpl implements Value {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected String data;
-
-	public ContentDocument getDocument() {
-		return document;
 	}
 
 	public void setDocument(ContentDocument document) {
@@ -81,14 +97,6 @@ public class ValueImpl implements Value {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected ContentDocument document;
-
-	public Long getDocumentId() {
-		return documentId;
-	}
-
 	public void setDocumentId(Long documentId) {
 		this.documentId = documentId;
 	}
@@ -105,14 +113,6 @@ public class ValueImpl implements Value {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected Long documentId;
-
-	public Geo getGeo() {
-		return geo;
-	}
-
 	public void setGeo(Geo geo) {
 		this.geo = geo;
 	}
@@ -127,14 +127,6 @@ public class ValueImpl implements Value {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected Geo geo;
-
-	public String getLink() {
-		return link;
-	}
-
 	public void setLink(String link) {
 		this.link = link;
 	}
@@ -147,14 +139,6 @@ public class ValueImpl implements Value {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected String link;
-
-	public StructuredContent getStructuredContent() {
-		return structuredContent;
 	}
 
 	public void setStructuredContent(StructuredContent structuredContent) {
@@ -174,14 +158,6 @@ public class ValueImpl implements Value {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected StructuredContent structuredContent;
-
-	public Long getStructuredContentId() {
-		return structuredContentId;
-	}
-
 	public void setStructuredContentId(Long structuredContentId) {
 		this.structuredContentId = structuredContentId;
 	}
@@ -197,6 +173,30 @@ public class ValueImpl implements Value {
 			throw new RuntimeException(t);
 		}
 	}
+
+	@GraphQLField
+	@JsonProperty
+	protected String data;
+
+	@GraphQLField
+	@JsonProperty
+	protected ContentDocument document;
+
+	@GraphQLField
+	@JsonProperty
+	protected Long documentId;
+
+	@GraphQLField
+	@JsonProperty
+	protected Geo geo;
+
+	@GraphQLField
+	@JsonProperty
+	protected String link;
+
+	@GraphQLField
+	@JsonProperty
+	protected StructuredContent structuredContent;
 
 	@GraphQLField
 	@JsonProperty

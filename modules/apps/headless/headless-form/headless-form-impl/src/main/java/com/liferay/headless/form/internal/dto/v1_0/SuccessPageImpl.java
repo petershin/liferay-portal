@@ -40,6 +40,14 @@ public class SuccessPageImpl implements SuccessPage {
 		return description;
 	}
 
+	public String getHeadline() {
+		return headline;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
 	public void setDescription(String description) {
 		this.description = description;
 	}
@@ -54,14 +62,6 @@ public class SuccessPageImpl implements SuccessPage {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected String description;
-
-	public String getHeadline() {
-		return headline;
 	}
 
 	public void setHeadline(String headline) {
@@ -80,14 +80,6 @@ public class SuccessPageImpl implements SuccessPage {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected String headline;
-
-	public Long getId() {
-		return id;
-	}
-
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -101,6 +93,14 @@ public class SuccessPageImpl implements SuccessPage {
 			throw new RuntimeException(t);
 		}
 	}
+
+	@GraphQLField
+	@JsonProperty
+	protected String description;
+
+	@GraphQLField
+	@JsonProperty
+	protected String headline;
 
 	@GraphQLField
 	@JsonProperty

@@ -43,8 +43,8 @@ import javax.ws.rs.core.Context;
 public abstract class BaseFormDocumentResourceImpl
 	implements FormDocumentResource {
 
-	@Override
 	@DELETE
+	@Override
 	@Path("/form-documents/{form-document-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
@@ -55,8 +55,8 @@ public abstract class BaseFormDocumentResourceImpl
 		return false;
 	}
 
-	@Override
 	@GET
+	@Override
 	@Path("/form-documents/{form-document-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")

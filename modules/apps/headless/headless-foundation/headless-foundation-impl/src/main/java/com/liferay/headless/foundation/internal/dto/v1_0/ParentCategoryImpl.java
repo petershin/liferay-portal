@@ -40,6 +40,10 @@ public class ParentCategoryImpl implements ParentCategory {
 		return id;
 	}
 
+	public String getName() {
+		return name;
+	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -52,14 +56,6 @@ public class ParentCategoryImpl implements ParentCategory {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Long id;
-
-	public String getName() {
-		return name;
 	}
 
 	public void setName(String name) {
@@ -75,6 +71,10 @@ public class ParentCategoryImpl implements ParentCategory {
 			throw new RuntimeException(t);
 		}
 	}
+
+	@GraphQLField
+	@JsonProperty
+	protected Long id;
 
 	@GraphQLField
 	@JsonProperty

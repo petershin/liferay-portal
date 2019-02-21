@@ -44,8 +44,8 @@ import javax.ws.rs.core.Context;
 @Path("/v1.0")
 public abstract class BasePhoneResourceImpl implements PhoneResource {
 
-	@Override
 	@GET
+	@Override
 	@Path("/phones")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
@@ -57,8 +57,8 @@ public abstract class BasePhoneResourceImpl implements PhoneResource {
 		return Page.of(Collections.emptyList());
 	}
 
-	@Override
 	@GET
+	@Override
 	@Path("/phones/{phone-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")

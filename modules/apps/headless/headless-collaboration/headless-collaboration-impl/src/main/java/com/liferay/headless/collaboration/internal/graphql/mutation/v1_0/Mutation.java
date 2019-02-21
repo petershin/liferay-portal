@@ -46,22 +46,20 @@ public class Mutation {
 	}
 
 	@GraphQLInvokeDetached
+	public boolean deleteImageObject(
+			@GraphQLName("image-object-id") Long imageObjectId)
+		throws Exception {
+
+		return _getBlogPostingImageResource().deleteImageObject(imageObjectId);
+	}
+
+	@GraphQLInvokeDetached
 	public BlogPosting patchBlogPosting(
 			@GraphQLName("blog-posting-id") Long blogPostingId,
 			@GraphQLName("BlogPosting") BlogPosting blogPosting)
 		throws Exception {
 
 		return _getBlogPostingResource().patchBlogPosting(
-			blogPostingId, blogPosting);
-	}
-
-	@GraphQLInvokeDetached
-	public BlogPosting putBlogPosting(
-			@GraphQLName("blog-posting-id") Long blogPostingId,
-			@GraphQLName("BlogPosting") BlogPosting blogPosting)
-		throws Exception {
-
-		return _getBlogPostingResource().putBlogPosting(
 			blogPostingId, blogPosting);
 	}
 
@@ -88,11 +86,17 @@ public class Mutation {
 	}
 
 	@GraphQLInvokeDetached
-	public boolean deleteImageObject(
-			@GraphQLName("image-object-id") Long imageObjectId)
+	public BlogPosting putBlogPosting(
+			@GraphQLName("blog-posting-id") Long blogPostingId,
+			@GraphQLName("BlogPosting") BlogPosting blogPosting)
 		throws Exception {
 
-		return _getBlogPostingImageResource().deleteImageObject(imageObjectId);
+		return _getBlogPostingResource().putBlogPosting(
+			blogPostingId, blogPosting);
+	}
+
+	private static BlogPostingImageResource _getBlogPostingImageResource() {
+		return _blogPostingImageResourceServiceTracker.getService();
 	}
 
 	private static BlogPostingResource _getBlogPostingResource() {
@@ -100,16 +104,11 @@ public class Mutation {
 	}
 
 	private static final ServiceTracker
-		<BlogPostingResource, BlogPostingResource>
-			_blogPostingResourceServiceTracker;
-
-	private static BlogPostingImageResource _getBlogPostingImageResource() {
-		return _blogPostingImageResourceServiceTracker.getService();
-	}
-
-	private static final ServiceTracker
 		<BlogPostingImageResource, BlogPostingImageResource>
 			_blogPostingImageResourceServiceTracker;
+	private static final ServiceTracker
+		<BlogPostingResource, BlogPostingResource>
+			_blogPostingResourceServiceTracker;
 
 	static {
 		Bundle bundle = FrameworkUtil.getBundle(Mutation.class);

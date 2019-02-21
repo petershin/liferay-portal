@@ -69,17 +69,12 @@ public abstract class BaseDocumentResourceTestCase {
 	}
 
 	@Test
-	public void testGetContentSpaceDocumentsPage() throws Exception {
-		Assert.assertTrue(true);
-	}
-
-	@Test
-	public void testPostContentSpaceDocument() throws Exception {
-		Assert.assertTrue(true);
-	}
-
-	@Test
 	public void testDeleteDocument() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	@Test
+	public void testGetContentSpaceDocumentsPage() throws Exception {
 		Assert.assertTrue(true);
 	}
 
@@ -94,6 +89,11 @@ public abstract class BaseDocumentResourceTestCase {
 	}
 
 	@Test
+	public void testPostContentSpaceDocument() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	@Test
 	public void testPostFolderDocument() throws Exception {
 		Assert.assertTrue(true);
 	}
@@ -103,6 +103,33 @@ public abstract class BaseDocumentResourceTestCase {
 
 		Assert.assertEquals(
 			expectedResponseCode, actualResponse.getResponseCode());
+	}
+
+	protected boolean invokeDeleteDocument(Long documentId) throws Exception {
+		Http.Options options = _createHttpOptions();
+
+		options.setDelete(true);
+
+		options.setLocation(
+			_resourceURL + _toPath("/documents/{document-id}", documentId));
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), Boolean.class);
+	}
+
+	protected Http.Response invokeDeleteDocumentResponse(Long documentId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setDelete(true);
+
+		options.setLocation(
+			_resourceURL + _toPath("/documents/{document-id}", documentId));
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
 	}
 
 	protected Page<Document> invokeGetContentSpaceDocumentsPage(
@@ -134,70 +161,6 @@ public abstract class BaseDocumentResourceTestCase {
 				_toPath(
 					"/content-spaces/{content-space-id}/documents",
 					contentSpaceId, filter, sorts));
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
-	protected Document invokePostContentSpaceDocument(
-			Long contentSpaceId, MultipartBody multipartBody)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setLocation(
-			_resourceURL +
-				_toPath(
-					"/content-spaces/{content-space-id}/documents",
-					contentSpaceId, multipartBody));
-
-		options.setPost(true);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), DocumentImpl.class);
-	}
-
-	protected Http.Response invokePostContentSpaceDocumentResponse(
-			Long contentSpaceId, MultipartBody multipartBody)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setLocation(
-			_resourceURL +
-				_toPath(
-					"/content-spaces/{content-space-id}/documents",
-					contentSpaceId, multipartBody));
-
-		options.setPost(true);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
-	protected boolean invokeDeleteDocument(Long documentId) throws Exception {
-		Http.Options options = _createHttpOptions();
-
-		options.setDelete(true);
-
-		options.setLocation(
-			_resourceURL + _toPath("/documents/{document-id}", documentId));
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), Boolean.class);
-	}
-
-	protected Http.Response invokeDeleteDocumentResponse(Long documentId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setDelete(true);
-
-		options.setLocation(
-			_resourceURL + _toPath("/documents/{document-id}", documentId));
 
 		HttpUtil.URLtoString(options);
 
@@ -252,6 +215,43 @@ public abstract class BaseDocumentResourceTestCase {
 			_resourceURL +
 				_toPath(
 					"/folders/{folder-id}/documents", folderId, filter, sorts));
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	protected Document invokePostContentSpaceDocument(
+			Long contentSpaceId, MultipartBody multipartBody)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/content-spaces/{content-space-id}/documents",
+					contentSpaceId, multipartBody));
+
+		options.setPost(true);
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), DocumentImpl.class);
+	}
+
+	protected Http.Response invokePostContentSpaceDocumentResponse(
+			Long contentSpaceId, MultipartBody multipartBody)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/content-spaces/{content-space-id}/documents",
+					contentSpaceId, multipartBody));
+
+		options.setPost(true);
 
 		HttpUtil.URLtoString(options);
 
@@ -317,6 +317,66 @@ public abstract class BaseDocumentResourceTestCase {
 			return adaptedImages;
 		}
 
+		public AggregateRating getAggregateRating() {
+			return aggregateRating;
+		}
+
+		public Categories[] getCategories() {
+			return categories;
+		}
+
+		public Long[] getCategoryIds() {
+			return categoryIds;
+		}
+
+		public String getContentUrl() {
+			return contentUrl;
+		}
+
+		public Creator getCreator() {
+			return creator;
+		}
+
+		public Date getDateCreated() {
+			return dateCreated;
+		}
+
+		public Date getDateModified() {
+			return dateModified;
+		}
+
+		public String getDescription() {
+			return description;
+		}
+
+		public String getEncodingFormat() {
+			return encodingFormat;
+		}
+
+		public String getFileExtension() {
+			return fileExtension;
+		}
+
+		public Long getFolderId() {
+			return folderId;
+		}
+
+		public Long getId() {
+			return id;
+		}
+
+		public String[] getKeywords() {
+			return keywords;
+		}
+
+		public Number getSizeInBytes() {
+			return sizeInBytes;
+		}
+
+		public String getTitle() {
+			return title;
+		}
+
 		public void setAdaptedImages(AdaptedImages[] adaptedImages) {
 			this.adaptedImages = adaptedImages;
 		}
@@ -332,13 +392,6 @@ public abstract class BaseDocumentResourceTestCase {
 			catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
-		}
-
-		@JsonProperty
-		protected AdaptedImages[] adaptedImages;
-
-		public AggregateRating getAggregateRating() {
-			return aggregateRating;
 		}
 
 		public void setAggregateRating(AggregateRating aggregateRating) {
@@ -358,13 +411,6 @@ public abstract class BaseDocumentResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected AggregateRating aggregateRating;
-
-		public Categories[] getCategories() {
-			return categories;
-		}
-
 		public void setCategories(Categories[] categories) {
 			this.categories = categories;
 		}
@@ -379,13 +425,6 @@ public abstract class BaseDocumentResourceTestCase {
 			catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
-		}
-
-		@JsonProperty
-		protected Categories[] categories;
-
-		public Long[] getCategoryIds() {
-			return categoryIds;
 		}
 
 		public void setCategoryIds(Long[] categoryIds) {
@@ -404,13 +443,6 @@ public abstract class BaseDocumentResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected Long[] categoryIds;
-
-		public String getContentUrl() {
-			return contentUrl;
-		}
-
 		public void setContentUrl(String contentUrl) {
 			this.contentUrl = contentUrl;
 		}
@@ -425,13 +457,6 @@ public abstract class BaseDocumentResourceTestCase {
 			catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
-		}
-
-		@JsonProperty
-		protected String contentUrl;
-
-		public Creator getCreator() {
-			return creator;
 		}
 
 		public void setCreator(Creator creator) {
@@ -450,13 +475,6 @@ public abstract class BaseDocumentResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected Creator creator;
-
-		public Date getDateCreated() {
-			return dateCreated;
-		}
-
 		public void setDateCreated(Date dateCreated) {
 			this.dateCreated = dateCreated;
 		}
@@ -471,13 +489,6 @@ public abstract class BaseDocumentResourceTestCase {
 			catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
-		}
-
-		@JsonProperty
-		protected Date dateCreated;
-
-		public Date getDateModified() {
-			return dateModified;
 		}
 
 		public void setDateModified(Date dateModified) {
@@ -496,13 +507,6 @@ public abstract class BaseDocumentResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected Date dateModified;
-
-		public String getDescription() {
-			return description;
-		}
-
 		public void setDescription(String description) {
 			this.description = description;
 		}
@@ -517,13 +521,6 @@ public abstract class BaseDocumentResourceTestCase {
 			catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
-		}
-
-		@JsonProperty
-		protected String description;
-
-		public String getEncodingFormat() {
-			return encodingFormat;
 		}
 
 		public void setEncodingFormat(String encodingFormat) {
@@ -542,13 +539,6 @@ public abstract class BaseDocumentResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected String encodingFormat;
-
-		public String getFileExtension() {
-			return fileExtension;
-		}
-
 		public void setFileExtension(String fileExtension) {
 			this.fileExtension = fileExtension;
 		}
@@ -563,13 +553,6 @@ public abstract class BaseDocumentResourceTestCase {
 			catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
-		}
-
-		@JsonProperty
-		protected String fileExtension;
-
-		public Long getFolderId() {
-			return folderId;
 		}
 
 		public void setFolderId(Long folderId) {
@@ -588,13 +571,6 @@ public abstract class BaseDocumentResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected Long folderId;
-
-		public Long getId() {
-			return id;
-		}
-
 		public void setId(Long id) {
 			this.id = id;
 		}
@@ -607,13 +583,6 @@ public abstract class BaseDocumentResourceTestCase {
 			catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
-		}
-
-		@JsonProperty
-		protected Long id;
-
-		public String[] getKeywords() {
-			return keywords;
 		}
 
 		public void setKeywords(String[] keywords) {
@@ -632,13 +601,6 @@ public abstract class BaseDocumentResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected String[] keywords;
-
-		public Number getSizeInBytes() {
-			return sizeInBytes;
-		}
-
 		public void setSizeInBytes(Number sizeInBytes) {
 			this.sizeInBytes = sizeInBytes;
 		}
@@ -653,13 +615,6 @@ public abstract class BaseDocumentResourceTestCase {
 			catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
-		}
-
-		@JsonProperty
-		protected Number sizeInBytes;
-
-		public String getTitle() {
-			return title;
 		}
 
 		public void setTitle(String title) {
@@ -677,6 +632,51 @@ public abstract class BaseDocumentResourceTestCase {
 				throw new RuntimeException(t);
 			}
 		}
+
+		@JsonProperty
+		protected AdaptedImages[] adaptedImages;
+
+		@JsonProperty
+		protected AggregateRating aggregateRating;
+
+		@JsonProperty
+		protected Categories[] categories;
+
+		@JsonProperty
+		protected Long[] categoryIds;
+
+		@JsonProperty
+		protected String contentUrl;
+
+		@JsonProperty
+		protected Creator creator;
+
+		@JsonProperty
+		protected Date dateCreated;
+
+		@JsonProperty
+		protected Date dateModified;
+
+		@JsonProperty
+		protected String description;
+
+		@JsonProperty
+		protected String encodingFormat;
+
+		@JsonProperty
+		protected String fileExtension;
+
+		@JsonProperty
+		protected Long folderId;
+
+		@JsonProperty
+		protected Long id;
+
+		@JsonProperty
+		protected String[] keywords;
+
+		@JsonProperty
+		protected Number sizeInBytes;
 
 		@JsonProperty
 		protected String title;
@@ -705,12 +705,12 @@ public abstract class BaseDocumentResourceTestCase {
 		return template.replaceAll("\\{.*\\}", String.valueOf(values[0]));
 	}
 
-	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {
+	private static final ObjectMapper _inputObjectMapper = new ObjectMapper() {
 		{
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
 		}
 	};
-	private final static ObjectMapper _outputObjectMapper = new ObjectMapper();
+	private static final ObjectMapper _outputObjectMapper = new ObjectMapper();
 
 	private URL _resourceURL;
 

@@ -27,45 +27,45 @@ public interface Value {
 
 	public String getData();
 
+	public ContentDocument getDocument();
+
+	public Long getDocumentId();
+
+	public Geo getGeo();
+
+	public String getLink();
+
+	public StructuredContent getStructuredContent();
+
+	public Long getStructuredContentId();
+
 	public void setData(String data);
 
 	public void setData(UnsafeSupplier<String, Throwable> dataUnsafeSupplier);
-
-	public ContentDocument getDocument();
 
 	public void setDocument(ContentDocument document);
 
 	public void setDocument(
 		UnsafeSupplier<ContentDocument, Throwable> documentUnsafeSupplier);
 
-	public Long getDocumentId();
-
 	public void setDocumentId(Long documentId);
 
 	public void setDocumentId(
 		UnsafeSupplier<Long, Throwable> documentIdUnsafeSupplier);
 
-	public Geo getGeo();
-
 	public void setGeo(Geo geo);
 
 	public void setGeo(UnsafeSupplier<Geo, Throwable> geoUnsafeSupplier);
 
-	public String getLink();
-
 	public void setLink(String link);
 
 	public void setLink(UnsafeSupplier<String, Throwable> linkUnsafeSupplier);
-
-	public StructuredContent getStructuredContent();
 
 	public void setStructuredContent(StructuredContent structuredContent);
 
 	public void setStructuredContent(
 		UnsafeSupplier<StructuredContent, Throwable>
 			structuredContentUnsafeSupplier);
-
-	public Long getStructuredContentId();
 
 	public void setStructuredContentId(Long structuredContentId);
 

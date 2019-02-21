@@ -47,8 +47,8 @@ import javax.ws.rs.core.Context;
 public abstract class BaseContentStructureResourceImpl
 	implements ContentStructureResource {
 
-	@Override
 	@GET
+	@Override
 	@Path("/content-spaces/{content-space-id}/content-structures")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
@@ -61,8 +61,8 @@ public abstract class BaseContentStructureResourceImpl
 		return Page.of(Collections.emptyList());
 	}
 
-	@Override
 	@GET
+	@Override
 	@Path("/content-structures/{content-structure-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")

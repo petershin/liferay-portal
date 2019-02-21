@@ -41,6 +41,26 @@ public class ValuesImpl implements Values {
 		return dataType;
 	}
 
+	public Long getId() {
+		return id;
+	}
+
+	public String getInputControl() {
+		return inputControl;
+	}
+
+	public String getLabel() {
+		return label;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public Value getValue() {
+		return value;
+	}
+
 	public void setDataType(String dataType) {
 		this.dataType = dataType;
 	}
@@ -57,14 +77,6 @@ public class ValuesImpl implements Values {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected String dataType;
-
-	public Long getId() {
-		return id;
-	}
-
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -77,14 +89,6 @@ public class ValuesImpl implements Values {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Long id;
-
-	public String getInputControl() {
-		return inputControl;
 	}
 
 	public void setInputControl(String inputControl) {
@@ -103,14 +107,6 @@ public class ValuesImpl implements Values {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected String inputControl;
-
-	public String getLabel() {
-		return label;
-	}
-
 	public void setLabel(String label) {
 		this.label = label;
 	}
@@ -127,14 +123,6 @@ public class ValuesImpl implements Values {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected String label;
-
-	public String getName() {
-		return name;
-	}
-
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -149,18 +137,6 @@ public class ValuesImpl implements Values {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected String name;
-
-	public Value getValue() {
-		return value;
-	}
-
-	public void setValue(Value value) {
-		this.value = value;
-	}
-
 	@JsonIgnore
 	public void setValue(UnsafeSupplier<Value, Throwable> valueUnsafeSupplier) {
 		try {
@@ -170,6 +146,30 @@ public class ValuesImpl implements Values {
 			throw new RuntimeException(t);
 		}
 	}
+
+	public void setValue(Value value) {
+		this.value = value;
+	}
+
+	@GraphQLField
+	@JsonProperty
+	protected String dataType;
+
+	@GraphQLField
+	@JsonProperty
+	protected Long id;
+
+	@GraphQLField
+	@JsonProperty
+	protected String inputControl;
+
+	@GraphQLField
+	@JsonProperty
+	protected String label;
+
+	@GraphQLField
+	@JsonProperty
+	protected String name;
 
 	@GraphQLField
 	@JsonProperty

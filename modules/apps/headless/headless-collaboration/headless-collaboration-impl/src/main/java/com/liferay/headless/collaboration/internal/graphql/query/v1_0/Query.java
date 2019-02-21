@@ -61,27 +61,6 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<BlogPosting> getContentSpaceBlogPostingsPage(
-			@GraphQLName("content-space-id") Long contentSpaceId,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
-		throws Exception {
-
-		BlogPostingResource blogPostingResource = _getBlogPostingResource();
-
-		blogPostingResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
-
-		Page paginationPage =
-			blogPostingResource.getContentSpaceBlogPostingsPage(
-				contentSpaceId, Pagination.of(pageSize, page));
-
-		return paginationPage.getItems();
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
 	public Collection<Comment> getBlogPostingCommentsPage(
 			@GraphQLName("blog-posting-id") Long blogPostingId,
 			@GraphQLName("pageSize") int pageSize,
@@ -158,6 +137,27 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
+	public Collection<BlogPosting> getContentSpaceBlogPostingsPage(
+			@GraphQLName("content-space-id") Long contentSpaceId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
+
+		BlogPostingResource blogPostingResource = _getBlogPostingResource();
+
+		blogPostingResource.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
+
+		Page paginationPage =
+			blogPostingResource.getContentSpaceBlogPostingsPage(
+				contentSpaceId, Pagination.of(pageSize, page));
+
+		return paginationPage.getItems();
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
 	public BlogPostingImage getImageObject(
 			@GraphQLName("image-object-id") Long imageObjectId)
 		throws Exception {
@@ -172,26 +172,24 @@ public class Query {
 		return blogPostingImageResource.getImageObject(imageObjectId);
 	}
 
-	private static BlogPostingResource _getBlogPostingResource() {
-		return _blogPostingResourceServiceTracker.getService();
-	}
-
-	private static final ServiceTracker
-		<BlogPostingResource, BlogPostingResource>
-			_blogPostingResourceServiceTracker;
-
 	private static BlogPostingImageResource _getBlogPostingImageResource() {
 		return _blogPostingImageResourceServiceTracker.getService();
 	}
 
-	private static final ServiceTracker
-		<BlogPostingImageResource, BlogPostingImageResource>
-			_blogPostingImageResourceServiceTracker;
+	private static BlogPostingResource _getBlogPostingResource() {
+		return _blogPostingResourceServiceTracker.getService();
+	}
 
 	private static CommentResource _getCommentResource() {
 		return _commentResourceServiceTracker.getService();
 	}
 
+	private static final ServiceTracker
+		<BlogPostingImageResource, BlogPostingImageResource>
+			_blogPostingImageResourceServiceTracker;
+	private static final ServiceTracker
+		<BlogPostingResource, BlogPostingResource>
+			_blogPostingResourceServiceTracker;
 	private static final ServiceTracker<CommentResource, CommentResource>
 		_commentResourceServiceTracker;
 

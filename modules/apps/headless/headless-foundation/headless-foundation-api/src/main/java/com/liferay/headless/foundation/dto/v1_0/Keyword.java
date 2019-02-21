@@ -29,46 +29,46 @@ public interface Keyword {
 
 	public Long getContentSpace();
 
+	public Creator getCreator();
+
+	public Date getDateCreated();
+
+	public Date getDateModified();
+
+	public Long getId();
+
+	public Number getKeywordUsageCount();
+
+	public String getName();
+
 	public void setContentSpace(Long contentSpace);
 
 	public void setContentSpace(
 		UnsafeSupplier<Long, Throwable> contentSpaceUnsafeSupplier);
-
-	public Creator getCreator();
 
 	public void setCreator(Creator creator);
 
 	public void setCreator(
 		UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier);
 
-	public Date getDateCreated();
-
 	public void setDateCreated(Date dateCreated);
 
 	public void setDateCreated(
 		UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier);
-
-	public Date getDateModified();
 
 	public void setDateModified(Date dateModified);
 
 	public void setDateModified(
 		UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier);
 
-	public Long getId();
-
 	public void setId(Long id);
 
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier);
-
-	public Number getKeywordUsageCount();
 
 	public void setKeywordUsageCount(Number keywordUsageCount);
 
 	public void setKeywordUsageCount(
 		UnsafeSupplier<Number, Throwable> keywordUsageCountUnsafeSupplier);
-
-	public String getName();
 
 	public void setName(String name);
 

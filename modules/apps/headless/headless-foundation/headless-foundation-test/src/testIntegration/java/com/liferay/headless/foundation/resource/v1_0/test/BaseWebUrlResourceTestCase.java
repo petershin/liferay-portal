@@ -144,6 +144,14 @@ public abstract class BaseWebUrlResourceTestCase {
 			return id;
 		}
 
+		public String getUrl() {
+			return url;
+		}
+
+		public String getUrlType() {
+			return urlType;
+		}
+
 		public void setId(Long id) {
 			this.id = id;
 		}
@@ -156,13 +164,6 @@ public abstract class BaseWebUrlResourceTestCase {
 			catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
-		}
-
-		@JsonProperty
-		protected Long id;
-
-		public String getUrl() {
-			return url;
 		}
 
 		public void setUrl(String url) {
@@ -181,13 +182,6 @@ public abstract class BaseWebUrlResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected String url;
-
-		public String getUrlType() {
-			return urlType;
-		}
-
 		public void setUrlType(String urlType) {
 			this.urlType = urlType;
 		}
@@ -203,6 +197,12 @@ public abstract class BaseWebUrlResourceTestCase {
 				throw new RuntimeException(t);
 			}
 		}
+
+		@JsonProperty
+		protected Long id;
+
+		@JsonProperty
+		protected String url;
 
 		@JsonProperty
 		protected String urlType;
@@ -231,12 +231,12 @@ public abstract class BaseWebUrlResourceTestCase {
 		return template.replaceAll("\\{.*\\}", String.valueOf(values[0]));
 	}
 
-	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {
+	private static final ObjectMapper _inputObjectMapper = new ObjectMapper() {
 		{
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
 		}
 	};
-	private final static ObjectMapper _outputObjectMapper = new ObjectMapper();
+	private static final ObjectMapper _outputObjectMapper = new ObjectMapper();
 
 	private URL _resourceURL;
 

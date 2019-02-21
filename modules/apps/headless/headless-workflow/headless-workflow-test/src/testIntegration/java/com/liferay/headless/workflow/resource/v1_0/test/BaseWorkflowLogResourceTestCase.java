@@ -164,6 +164,46 @@ public abstract class BaseWorkflowLogResourceTestCase {
 			return auditPerson;
 		}
 
+		public String getCommentLog() {
+			return commentLog;
+		}
+
+		public Date getDateCreated() {
+			return dateCreated;
+		}
+
+		public Long getId() {
+			return id;
+		}
+
+		public String getPerson() {
+			return person;
+		}
+
+		public String getPreviousPerson() {
+			return previousPerson;
+		}
+
+		public String getPreviousState() {
+			return previousState;
+		}
+
+		public String getState() {
+			return state;
+		}
+
+		public WorkflowTask getTask() {
+			return task;
+		}
+
+		public Long getTaskId() {
+			return taskId;
+		}
+
+		public String getType() {
+			return type;
+		}
+
 		public void setAuditPerson(String auditPerson) {
 			this.auditPerson = auditPerson;
 		}
@@ -178,13 +218,6 @@ public abstract class BaseWorkflowLogResourceTestCase {
 			catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
-		}
-
-		@JsonProperty
-		protected String auditPerson;
-
-		public String getCommentLog() {
-			return commentLog;
 		}
 
 		public void setCommentLog(String commentLog) {
@@ -203,13 +236,6 @@ public abstract class BaseWorkflowLogResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected String commentLog;
-
-		public Date getDateCreated() {
-			return dateCreated;
-		}
-
 		public void setDateCreated(Date dateCreated) {
 			this.dateCreated = dateCreated;
 		}
@@ -226,13 +252,6 @@ public abstract class BaseWorkflowLogResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected Date dateCreated;
-
-		public Long getId() {
-			return id;
-		}
-
 		public void setId(Long id) {
 			this.id = id;
 		}
@@ -245,13 +264,6 @@ public abstract class BaseWorkflowLogResourceTestCase {
 			catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
-		}
-
-		@JsonProperty
-		protected Long id;
-
-		public String getPerson() {
-			return person;
 		}
 
 		public void setPerson(String person) {
@@ -270,13 +282,6 @@ public abstract class BaseWorkflowLogResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected String person;
-
-		public String getPreviousPerson() {
-			return previousPerson;
-		}
-
 		public void setPreviousPerson(String previousPerson) {
 			this.previousPerson = previousPerson;
 		}
@@ -291,13 +296,6 @@ public abstract class BaseWorkflowLogResourceTestCase {
 			catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
-		}
-
-		@JsonProperty
-		protected String previousPerson;
-
-		public String getPreviousState() {
-			return previousState;
 		}
 
 		public void setPreviousState(String previousState) {
@@ -316,13 +314,6 @@ public abstract class BaseWorkflowLogResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected String previousState;
-
-		public String getState() {
-			return state;
-		}
-
 		public void setState(String state) {
 			this.state = state;
 		}
@@ -339,17 +330,6 @@ public abstract class BaseWorkflowLogResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected String state;
-
-		public WorkflowTask getTask() {
-			return task;
-		}
-
-		public void setTask(WorkflowTask task) {
-			this.task = task;
-		}
-
 		@JsonIgnore
 		public void setTask(
 			UnsafeSupplier<WorkflowTask, Throwable> taskUnsafeSupplier) {
@@ -362,11 +342,8 @@ public abstract class BaseWorkflowLogResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected WorkflowTask task;
-
-		public Long getTaskId() {
-			return taskId;
+		public void setTask(WorkflowTask task) {
+			this.task = task;
 		}
 
 		public void setTaskId(Long taskId) {
@@ -385,13 +362,6 @@ public abstract class BaseWorkflowLogResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected Long taskId;
-
-		public String getType() {
-			return type;
-		}
-
 		public void setType(String type) {
 			this.type = type;
 		}
@@ -407,6 +377,36 @@ public abstract class BaseWorkflowLogResourceTestCase {
 				throw new RuntimeException(t);
 			}
 		}
+
+		@JsonProperty
+		protected String auditPerson;
+
+		@JsonProperty
+		protected String commentLog;
+
+		@JsonProperty
+		protected Date dateCreated;
+
+		@JsonProperty
+		protected Long id;
+
+		@JsonProperty
+		protected String person;
+
+		@JsonProperty
+		protected String previousPerson;
+
+		@JsonProperty
+		protected String previousState;
+
+		@JsonProperty
+		protected String state;
+
+		@JsonProperty
+		protected WorkflowTask task;
+
+		@JsonProperty
+		protected Long taskId;
 
 		@JsonProperty
 		protected String type;
@@ -435,12 +435,12 @@ public abstract class BaseWorkflowLogResourceTestCase {
 		return template.replaceAll("\\{.*\\}", String.valueOf(values[0]));
 	}
 
-	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {
+	private static final ObjectMapper _inputObjectMapper = new ObjectMapper() {
 		{
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
 		}
 	};
-	private final static ObjectMapper _outputObjectMapper = new ObjectMapper();
+	private static final ObjectMapper _outputObjectMapper = new ObjectMapper();
 
 	private URL _resourceURL;
 

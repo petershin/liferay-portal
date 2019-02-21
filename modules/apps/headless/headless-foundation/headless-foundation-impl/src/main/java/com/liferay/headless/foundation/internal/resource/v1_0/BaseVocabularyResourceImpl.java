@@ -50,8 +50,20 @@ import javax.ws.rs.core.Context;
 @Path("/v1.0")
 public abstract class BaseVocabularyResourceImpl implements VocabularyResource {
 
+	@DELETE
 	@Override
+	@Path("/vocabularies/{vocabulary-id}")
+	@Produces("application/json")
+	@RequiresScope("everything.read")
+	public boolean deleteVocabulary(
+			@PathParam("vocabulary-id") Long vocabularyId)
+		throws Exception {
+
+		return false;
+	}
+
 	@GET
+	@Override
 	@Path("/content-spaces/{content-space-id}/vocabularies")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
@@ -64,34 +76,8 @@ public abstract class BaseVocabularyResourceImpl implements VocabularyResource {
 		return Page.of(Collections.emptyList());
 	}
 
-	@Override
-	@Consumes("application/json")
-	@POST
-	@Path("/content-spaces/{content-space-id}/vocabularies")
-	@Produces("application/json")
-	@RequiresScope("everything.read")
-	public Vocabulary postContentSpaceVocabulary(
-			@PathParam("content-space-id") Long contentSpaceId,
-			Vocabulary vocabulary)
-		throws Exception {
-
-		return new VocabularyImpl();
-	}
-
-	@Override
-	@DELETE
-	@Path("/vocabularies/{vocabulary-id}")
-	@Produces("application/json")
-	@RequiresScope("everything.read")
-	public boolean deleteVocabulary(
-			@PathParam("vocabulary-id") Long vocabularyId)
-		throws Exception {
-
-		return false;
-	}
-
-	@Override
 	@GET
+	@Override
 	@Path("/vocabularies/{vocabulary-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
@@ -102,11 +88,25 @@ public abstract class BaseVocabularyResourceImpl implements VocabularyResource {
 		return new VocabularyImpl();
 	}
 
-	@Override
 	@Consumes("application/json")
-	@PUT
+	@Override
+	@Path("/content-spaces/{content-space-id}/vocabularies")
+	@POST
+	@Produces("application/json")
+	@RequiresScope("everything.read")
+	public Vocabulary postContentSpaceVocabulary(
+			@PathParam("content-space-id") Long contentSpaceId,
+			Vocabulary vocabulary)
+		throws Exception {
+
+		return new VocabularyImpl();
+	}
+
+	@Consumes("application/json")
+	@Override
 	@Path("/vocabularies/{vocabulary-id}")
 	@Produces("application/json")
+	@PUT
 	@RequiresScope("everything.read")
 	public Vocabulary putVocabulary(
 			@PathParam("vocabulary-id") Long vocabularyId,

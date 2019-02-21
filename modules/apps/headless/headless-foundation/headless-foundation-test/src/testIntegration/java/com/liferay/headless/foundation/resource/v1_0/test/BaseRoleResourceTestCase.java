@@ -68,12 +68,12 @@ public abstract class BaseRoleResourceTestCase {
 	}
 
 	@Test
-	public void testGetRolesPage() throws Exception {
+	public void testGetRole() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testGetRole() throws Exception {
+	public void testGetRolesPage() throws Exception {
 		Assert.assertTrue(true);
 	}
 
@@ -122,6 +122,27 @@ public abstract class BaseRoleResourceTestCase {
 		return options.getResponse();
 	}
 
+	protected Role invokeGetRole(Long roleId) throws Exception {
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(_resourceURL + _toPath("/roles/{role-id}", roleId));
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), RoleImpl.class);
+	}
+
+	protected Http.Response invokeGetRoleResponse(Long roleId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(_resourceURL + _toPath("/roles/{role-id}", roleId));
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
 	protected Page<Role> invokeGetRolesPage(Pagination pagination)
 		throws Exception {
 
@@ -139,27 +160,6 @@ public abstract class BaseRoleResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setLocation(_resourceURL + _toPath("/roles", pagination));
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
-	protected Role invokeGetRole(Long roleId) throws Exception {
-		Http.Options options = _createHttpOptions();
-
-		options.setLocation(_resourceURL + _toPath("/roles/{role-id}", roleId));
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), RoleImpl.class);
-	}
-
-	protected Http.Response invokeGetRoleResponse(Long roleId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setLocation(_resourceURL + _toPath("/roles/{role-id}", roleId));
 
 		HttpUtil.URLtoString(options);
 
@@ -218,6 +218,34 @@ public abstract class BaseRoleResourceTestCase {
 			return availableLanguages;
 		}
 
+		public Creator getCreator() {
+			return creator;
+		}
+
+		public Date getDateCreated() {
+			return dateCreated;
+		}
+
+		public Date getDateModified() {
+			return dateModified;
+		}
+
+		public String getDescription() {
+			return description;
+		}
+
+		public Long getId() {
+			return id;
+		}
+
+		public String getName() {
+			return name;
+		}
+
+		public String getRoleType() {
+			return roleType;
+		}
+
 		public void setAvailableLanguages(String[] availableLanguages) {
 			this.availableLanguages = availableLanguages;
 		}
@@ -233,13 +261,6 @@ public abstract class BaseRoleResourceTestCase {
 			catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
-		}
-
-		@JsonProperty
-		protected String[] availableLanguages;
-
-		public Creator getCreator() {
-			return creator;
 		}
 
 		public void setCreator(Creator creator) {
@@ -258,13 +279,6 @@ public abstract class BaseRoleResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected Creator creator;
-
-		public Date getDateCreated() {
-			return dateCreated;
-		}
-
 		public void setDateCreated(Date dateCreated) {
 			this.dateCreated = dateCreated;
 		}
@@ -279,13 +293,6 @@ public abstract class BaseRoleResourceTestCase {
 			catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
-		}
-
-		@JsonProperty
-		protected Date dateCreated;
-
-		public Date getDateModified() {
-			return dateModified;
 		}
 
 		public void setDateModified(Date dateModified) {
@@ -304,13 +311,6 @@ public abstract class BaseRoleResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected Date dateModified;
-
-		public String getDescription() {
-			return description;
-		}
-
 		public void setDescription(String description) {
 			this.description = description;
 		}
@@ -327,13 +327,6 @@ public abstract class BaseRoleResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected String description;
-
-		public Long getId() {
-			return id;
-		}
-
 		public void setId(Long id) {
 			this.id = id;
 		}
@@ -346,13 +339,6 @@ public abstract class BaseRoleResourceTestCase {
 			catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
-		}
-
-		@JsonProperty
-		protected Long id;
-
-		public String getName() {
-			return name;
 		}
 
 		public void setName(String name) {
@@ -371,13 +357,6 @@ public abstract class BaseRoleResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected String name;
-
-		public String getRoleType() {
-			return roleType;
-		}
-
 		public void setRoleType(String roleType) {
 			this.roleType = roleType;
 		}
@@ -393,6 +372,27 @@ public abstract class BaseRoleResourceTestCase {
 				throw new RuntimeException(t);
 			}
 		}
+
+		@JsonProperty
+		protected String[] availableLanguages;
+
+		@JsonProperty
+		protected Creator creator;
+
+		@JsonProperty
+		protected Date dateCreated;
+
+		@JsonProperty
+		protected Date dateModified;
+
+		@JsonProperty
+		protected String description;
+
+		@JsonProperty
+		protected Long id;
+
+		@JsonProperty
+		protected String name;
 
 		@JsonProperty
 		protected String roleType;
@@ -421,12 +421,12 @@ public abstract class BaseRoleResourceTestCase {
 		return template.replaceAll("\\{.*\\}", String.valueOf(values[0]));
 	}
 
-	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {
+	private static final ObjectMapper _inputObjectMapper = new ObjectMapper() {
 		{
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
 		}
 	};
-	private final static ObjectMapper _outputObjectMapper = new ObjectMapper();
+	private static final ObjectMapper _outputObjectMapper = new ObjectMapper();
 
 	private URL _resourceURL;
 

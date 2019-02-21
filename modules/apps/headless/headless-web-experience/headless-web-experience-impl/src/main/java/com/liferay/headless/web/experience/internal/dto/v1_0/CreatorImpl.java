@@ -40,6 +40,30 @@ public class CreatorImpl implements Creator {
 		return additionalName;
 	}
 
+	public String getFamilyName() {
+		return familyName;
+	}
+
+	public String getGivenName() {
+		return givenName;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public String getProfileURL() {
+		return profileURL;
+	}
+
 	public void setAdditionalName(String additionalName) {
 		this.additionalName = additionalName;
 	}
@@ -54,14 +78,6 @@ public class CreatorImpl implements Creator {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected String additionalName;
-
-	public String getFamilyName() {
-		return familyName;
 	}
 
 	public void setFamilyName(String familyName) {
@@ -80,14 +96,6 @@ public class CreatorImpl implements Creator {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected String familyName;
-
-	public String getGivenName() {
-		return givenName;
-	}
-
 	public void setGivenName(String givenName) {
 		this.givenName = givenName;
 	}
@@ -104,14 +112,6 @@ public class CreatorImpl implements Creator {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected String givenName;
-
-	public Long getId() {
-		return id;
-	}
-
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -124,14 +124,6 @@ public class CreatorImpl implements Creator {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Long id;
-
-	public String getImage() {
-		return image;
 	}
 
 	public void setImage(String image) {
@@ -150,14 +142,6 @@ public class CreatorImpl implements Creator {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected String image;
-
-	public String getName() {
-		return name;
-	}
-
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -170,14 +154,6 @@ public class CreatorImpl implements Creator {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected String name;
-
-	public String getProfileURL() {
-		return profileURL;
 	}
 
 	public void setProfileURL(String profileURL) {
@@ -195,6 +171,30 @@ public class CreatorImpl implements Creator {
 			throw new RuntimeException(t);
 		}
 	}
+
+	@GraphQLField
+	@JsonProperty
+	protected String additionalName;
+
+	@GraphQLField
+	@JsonProperty
+	protected String familyName;
+
+	@GraphQLField
+	@JsonProperty
+	protected String givenName;
+
+	@GraphQLField
+	@JsonProperty
+	protected Long id;
+
+	@GraphQLField
+	@JsonProperty
+	protected String image;
+
+	@GraphQLField
+	@JsonProperty
+	protected String name;
 
 	@GraphQLField
 	@JsonProperty

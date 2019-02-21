@@ -40,6 +40,14 @@ public class ObjectReviewedImpl implements ObjectReviewed {
 		return id;
 	}
 
+	public String getIdentifier() {
+		return identifier;
+	}
+
+	public String getResourceType() {
+		return resourceType;
+	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -52,14 +60,6 @@ public class ObjectReviewedImpl implements ObjectReviewed {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Long id;
-
-	public String getIdentifier() {
-		return identifier;
 	}
 
 	public void setIdentifier(String identifier) {
@@ -78,14 +78,6 @@ public class ObjectReviewedImpl implements ObjectReviewed {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected String identifier;
-
-	public String getResourceType() {
-		return resourceType;
-	}
-
 	public void setResourceType(String resourceType) {
 		this.resourceType = resourceType;
 	}
@@ -101,6 +93,14 @@ public class ObjectReviewedImpl implements ObjectReviewed {
 			throw new RuntimeException(t);
 		}
 	}
+
+	@GraphQLField
+	@JsonProperty
+	protected Long id;
+
+	@GraphQLField
+	@JsonProperty
+	protected String identifier;
 
 	@GraphQLField
 	@JsonProperty

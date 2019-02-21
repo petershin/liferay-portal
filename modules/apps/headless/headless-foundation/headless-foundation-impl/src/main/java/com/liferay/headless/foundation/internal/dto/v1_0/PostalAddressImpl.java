@@ -40,6 +40,38 @@ public class PostalAddressImpl implements PostalAddress {
 		return addressCountry;
 	}
 
+	public String getAddressLocality() {
+		return addressLocality;
+	}
+
+	public String getAddressRegion() {
+		return addressRegion;
+	}
+
+	public String getAddressType() {
+		return addressType;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public String getPostalCode() {
+		return postalCode;
+	}
+
+	public String getStreetAddressLine1() {
+		return streetAddressLine1;
+	}
+
+	public String getStreetAddressLine2() {
+		return streetAddressLine2;
+	}
+
+	public String getStreetAddressLine3() {
+		return streetAddressLine3;
+	}
+
 	public void setAddressCountry(String addressCountry) {
 		this.addressCountry = addressCountry;
 	}
@@ -54,14 +86,6 @@ public class PostalAddressImpl implements PostalAddress {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected String addressCountry;
-
-	public String getAddressLocality() {
-		return addressLocality;
 	}
 
 	public void setAddressLocality(String addressLocality) {
@@ -80,14 +104,6 @@ public class PostalAddressImpl implements PostalAddress {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected String addressLocality;
-
-	public String getAddressRegion() {
-		return addressRegion;
-	}
-
 	public void setAddressRegion(String addressRegion) {
 		this.addressRegion = addressRegion;
 	}
@@ -102,14 +118,6 @@ public class PostalAddressImpl implements PostalAddress {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected String addressRegion;
-
-	public String getAddressType() {
-		return addressType;
 	}
 
 	public void setAddressType(String addressType) {
@@ -128,14 +136,6 @@ public class PostalAddressImpl implements PostalAddress {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected String addressType;
-
-	public Long getId() {
-		return id;
-	}
-
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -148,14 +148,6 @@ public class PostalAddressImpl implements PostalAddress {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Long id;
-
-	public String getPostalCode() {
-		return postalCode;
 	}
 
 	public void setPostalCode(String postalCode) {
@@ -174,14 +166,6 @@ public class PostalAddressImpl implements PostalAddress {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected String postalCode;
-
-	public String getStreetAddressLine1() {
-		return streetAddressLine1;
-	}
-
 	public void setStreetAddressLine1(String streetAddressLine1) {
 		this.streetAddressLine1 = streetAddressLine1;
 	}
@@ -196,14 +180,6 @@ public class PostalAddressImpl implements PostalAddress {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected String streetAddressLine1;
-
-	public String getStreetAddressLine2() {
-		return streetAddressLine2;
 	}
 
 	public void setStreetAddressLine2(String streetAddressLine2) {
@@ -222,14 +198,6 @@ public class PostalAddressImpl implements PostalAddress {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected String streetAddressLine2;
-
-	public String getStreetAddressLine3() {
-		return streetAddressLine3;
-	}
-
 	public void setStreetAddressLine3(String streetAddressLine3) {
 		this.streetAddressLine3 = streetAddressLine3;
 	}
@@ -245,6 +213,38 @@ public class PostalAddressImpl implements PostalAddress {
 			throw new RuntimeException(t);
 		}
 	}
+
+	@GraphQLField
+	@JsonProperty
+	protected String addressCountry;
+
+	@GraphQLField
+	@JsonProperty
+	protected String addressLocality;
+
+	@GraphQLField
+	@JsonProperty
+	protected String addressRegion;
+
+	@GraphQLField
+	@JsonProperty
+	protected String addressType;
+
+	@GraphQLField
+	@JsonProperty
+	protected Long id;
+
+	@GraphQLField
+	@JsonProperty
+	protected String postalCode;
+
+	@GraphQLField
+	@JsonProperty
+	protected String streetAddressLine1;
+
+	@GraphQLField
+	@JsonProperty
+	protected String streetAddressLine2;
 
 	@GraphQLField
 	@JsonProperty

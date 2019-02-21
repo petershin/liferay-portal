@@ -42,6 +42,14 @@ public class GridImpl implements Grid {
 		return columns;
 	}
 
+	public Long getId() {
+		return id;
+	}
+
+	public Rows[] getRows() {
+		return rows;
+	}
+
 	public void setColumns(Columns[] columns) {
 		this.columns = columns;
 	}
@@ -58,14 +66,6 @@ public class GridImpl implements Grid {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected Columns[] columns;
-
-	public Long getId() {
-		return id;
-	}
-
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -78,14 +78,6 @@ public class GridImpl implements Grid {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Long id;
-
-	public Rows[] getRows() {
-		return rows;
 	}
 
 	public void setRows(Rows[] rows) {
@@ -101,6 +93,14 @@ public class GridImpl implements Grid {
 			throw new RuntimeException(t);
 		}
 	}
+
+	@GraphQLField
+	@JsonProperty
+	protected Columns[] columns;
+
+	@GraphQLField
+	@JsonProperty
+	protected Long id;
 
 	@GraphQLField
 	@JsonProperty

@@ -96,7 +96,6 @@ public class ObjectMapperContextResolver
 					{
 						setAbstractTypes(
 							new SimpleAbstractTypeResolver() {
-
 								{
 									addMapping(
 										Category.class, CategoryImpl.class);
@@ -138,6 +137,7 @@ public class ObjectMapperContextResolver
 								}
 							});
 					}
+
 				});
 			setDateFormat(new ISO8601DateFormat());
 		}

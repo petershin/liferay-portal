@@ -45,8 +45,8 @@ import javax.ws.rs.core.Context;
 public abstract class BaseFormStructureResourceImpl
 	implements FormStructureResource {
 
-	@Override
 	@GET
+	@Override
 	@Path("/content-spaces/{content-space-id}/form-structures")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
@@ -58,8 +58,8 @@ public abstract class BaseFormStructureResourceImpl
 		return Page.of(Collections.emptyList());
 	}
 
-	@Override
 	@GET
+	@Override
 	@Path("/form-structures/{form-structure-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")

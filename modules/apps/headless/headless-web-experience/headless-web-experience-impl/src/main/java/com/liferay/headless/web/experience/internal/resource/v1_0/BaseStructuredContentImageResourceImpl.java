@@ -45,23 +45,8 @@ import javax.ws.rs.core.Context;
 public abstract class BaseStructuredContentImageResourceImpl
 	implements StructuredContentImageResource {
 
-	@Override
-	@GET
-	@Path(
-		"/structured-contents/{structured-content-id}/structured-content-images"
-	)
-	@Produces("application/json")
-	@RequiresScope("everything.read")
-	public Page<StructuredContentImage>
-			getStructuredContentStructuredContentImagesPage(
-				@PathParam("structured-content-id") Long structuredContentId)
-		throws Exception {
-
-		return Page.of(Collections.emptyList());
-	}
-
-	@Override
 	@DELETE
+	@Override
 	@Path(
 		"/structured-contents/{structured-content-id}/structured-content-images/{content-document-id}"
 	)
@@ -75,8 +60,8 @@ public abstract class BaseStructuredContentImageResourceImpl
 		return false;
 	}
 
-	@Override
 	@GET
+	@Override
 	@Path(
 		"/structured-contents/{structured-content-id}/structured-content-images/{content-document-id}"
 	)
@@ -88,6 +73,21 @@ public abstract class BaseStructuredContentImageResourceImpl
 		throws Exception {
 
 		return new StructuredContentImageImpl();
+	}
+
+	@GET
+	@Override
+	@Path(
+		"/structured-contents/{structured-content-id}/structured-content-images"
+	)
+	@Produces("application/json")
+	@RequiresScope("everything.read")
+	public Page<StructuredContentImage>
+			getStructuredContentStructuredContentImagesPage(
+				@PathParam("structured-content-id") Long structuredContentId)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
 	}
 
 	public void setContextCompany(Company contextCompany) {

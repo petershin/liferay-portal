@@ -49,8 +49,20 @@ import javax.ws.rs.core.Context;
 public abstract class BaseBlogPostingImageResourceImpl
 	implements BlogPostingImageResource {
 
+	@DELETE
 	@Override
+	@Path("/blog-posting-images/{image-object-id}")
+	@Produces("application/json")
+	@RequiresScope("everything.read")
+	public boolean deleteImageObject(
+			@PathParam("image-object-id") Long imageObjectId)
+		throws Exception {
+
+		return false;
+	}
+
 	@GET
+	@Override
 	@Path("/content-spaces/{content-space-id}/blog-posting-images")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
@@ -62,39 +74,27 @@ public abstract class BaseBlogPostingImageResourceImpl
 		return Page.of(Collections.emptyList());
 	}
 
-	@Override
-	@Consumes("multipart/form-data")
-	@POST
-	@Path("/content-spaces/{content-space-id}/blog-posting-images")
-	@Produces("application/json")
-	@RequiresScope("everything.read")
-	public BlogPostingImage postContentSpaceBlogPostingImage(
-			@PathParam("content-space-id") Long contentSpaceId,
-			MultipartBody multipartBody)
-		throws Exception {
-
-		return new BlogPostingImageImpl();
-	}
-
-	@Override
-	@DELETE
-	@Path("/blog-posting-images/{image-object-id}")
-	@Produces("application/json")
-	@RequiresScope("everything.read")
-	public boolean deleteImageObject(
-			@PathParam("image-object-id") Long imageObjectId)
-		throws Exception {
-
-		return false;
-	}
-
-	@Override
 	@GET
+	@Override
 	@Path("/blog-posting-images/{image-object-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	public BlogPostingImage getImageObject(
 			@PathParam("image-object-id") Long imageObjectId)
+		throws Exception {
+
+		return new BlogPostingImageImpl();
+	}
+
+	@Consumes("multipart/form-data")
+	@Override
+	@Path("/content-spaces/{content-space-id}/blog-posting-images")
+	@POST
+	@Produces("application/json")
+	@RequiresScope("everything.read")
+	public BlogPostingImage postContentSpaceBlogPostingImage(
+			@PathParam("content-space-id") Long contentSpaceId,
+			MultipartBody multipartBody)
 		throws Exception {
 
 		return new BlogPostingImageImpl();

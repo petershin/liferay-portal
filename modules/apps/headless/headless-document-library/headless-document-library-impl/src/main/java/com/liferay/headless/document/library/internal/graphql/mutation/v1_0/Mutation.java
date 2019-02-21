@@ -37,6 +37,20 @@ import org.osgi.util.tracker.ServiceTracker;
 @Generated("")
 public class Mutation {
 
+	@GraphQLInvokeDetached
+	public boolean deleteDocument(@GraphQLName("document-id") Long documentId)
+		throws Exception {
+
+		return _getDocumentResource().deleteDocument(documentId);
+	}
+
+	@GraphQLInvokeDetached
+	public boolean deleteFolder(@GraphQLName("folder-id") Long folderId)
+		throws Exception {
+
+		return _getFolderResource().deleteFolder(folderId);
+	}
+
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Document postContentSpaceDocument(
@@ -48,11 +62,15 @@ public class Mutation {
 			contentSpaceId, multipartBody);
 	}
 
+	@GraphQLField
 	@GraphQLInvokeDetached
-	public boolean deleteDocument(@GraphQLName("document-id") Long documentId)
+	public Folder postContentSpaceFolder(
+			@GraphQLName("content-space-id") Long contentSpaceId,
+			@GraphQLName("Folder") Folder folder)
 		throws Exception {
 
-		return _getDocumentResource().deleteDocument(documentId);
+		return _getFolderResource().postContentSpaceFolder(
+			contentSpaceId, folder);
 	}
 
 	@GraphQLField
@@ -68,20 +86,12 @@ public class Mutation {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Folder postContentSpaceFolder(
-			@GraphQLName("content-space-id") Long contentSpaceId,
+	public Folder postFolderFolder(
+			@GraphQLName("folder-id") Long folderId,
 			@GraphQLName("Folder") Folder folder)
 		throws Exception {
 
-		return _getFolderResource().postContentSpaceFolder(
-			contentSpaceId, folder);
-	}
-
-	@GraphQLInvokeDetached
-	public boolean deleteFolder(@GraphQLName("folder-id") Long folderId)
-		throws Exception {
-
-		return _getFolderResource().deleteFolder(folderId);
+		return _getFolderResource().postFolderFolder(folderId, folder);
 	}
 
 	@GraphQLInvokeDetached
@@ -93,27 +103,16 @@ public class Mutation {
 		return _getFolderResource().putFolder(folderId, folder);
 	}
 
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public Folder postFolderFolder(
-			@GraphQLName("folder-id") Long folderId,
-			@GraphQLName("Folder") Folder folder)
-		throws Exception {
-
-		return _getFolderResource().postFolderFolder(folderId, folder);
-	}
-
 	private static DocumentResource _getDocumentResource() {
 		return _documentResourceServiceTracker.getService();
 	}
-
-	private static final ServiceTracker<DocumentResource, DocumentResource>
-		_documentResourceServiceTracker;
 
 	private static FolderResource _getFolderResource() {
 		return _folderResourceServiceTracker.getService();
 	}
 
+	private static final ServiceTracker<DocumentResource, DocumentResource>
+		_documentResourceServiceTracker;
 	private static final ServiceTracker<FolderResource, FolderResource>
 		_folderResourceServiceTracker;
 

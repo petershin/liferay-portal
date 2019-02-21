@@ -41,6 +41,46 @@ public class FieldsImpl implements Fields {
 		return dataType;
 	}
 
+	public String getInputControl() {
+		return inputControl;
+	}
+
+	public String getLabel() {
+		return label;
+	}
+
+	public Boolean getLocalizable() {
+		return localizable;
+	}
+
+	public Boolean getMultiple() {
+		return multiple;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public Options[] getOptions() {
+		return options;
+	}
+
+	public String getPredefinedValue() {
+		return predefinedValue;
+	}
+
+	public Boolean getRepeatable() {
+		return repeatable;
+	}
+
+	public Boolean getRequired() {
+		return required;
+	}
+
+	public Boolean getShowLabel() {
+		return showLabel;
+	}
+
 	public void setDataType(String dataType) {
 		this.dataType = dataType;
 	}
@@ -55,86 +95,6 @@ public class FieldsImpl implements Fields {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected String dataType;
-
-	public String getLabel() {
-		return label;
-	}
-
-	public void setLabel(String label) {
-		this.label = label;
-	}
-
-	@JsonIgnore
-	public void setLabel(
-		UnsafeSupplier<String, Throwable> labelUnsafeSupplier) {
-
-		try {
-			label = labelUnsafeSupplier.get();
-		}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected String label;
-
-	public Boolean getLocalizable() {
-		return localizable;
-	}
-
-	public void setLocalizable(Boolean localizable) {
-		this.localizable = localizable;
-	}
-
-	@JsonIgnore
-	public void setLocalizable(
-		UnsafeSupplier<Boolean, Throwable> localizableUnsafeSupplier) {
-
-		try {
-			localizable = localizableUnsafeSupplier.get();
-		}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Boolean localizable;
-
-	public Boolean getMultiple() {
-		return multiple;
-	}
-
-	public void setMultiple(Boolean multiple) {
-		this.multiple = multiple;
-	}
-
-	@JsonIgnore
-	public void setMultiple(
-		UnsafeSupplier<Boolean, Throwable> multipleUnsafeSupplier) {
-
-		try {
-			multiple = multipleUnsafeSupplier.get();
-		}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Boolean multiple;
-
-	public String getInputControl() {
-		return inputControl;
 	}
 
 	public void setInputControl(String inputControl) {
@@ -153,12 +113,82 @@ public class FieldsImpl implements Fields {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected String inputControl;
+	public void setLabel(String label) {
+		this.label = label;
+	}
 
-	public String getPredefinedValue() {
-		return predefinedValue;
+	@JsonIgnore
+	public void setLabel(
+		UnsafeSupplier<String, Throwable> labelUnsafeSupplier) {
+
+		try {
+			label = labelUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setLocalizable(Boolean localizable) {
+		this.localizable = localizable;
+	}
+
+	@JsonIgnore
+	public void setLocalizable(
+		UnsafeSupplier<Boolean, Throwable> localizableUnsafeSupplier) {
+
+		try {
+			localizable = localizableUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setMultiple(Boolean multiple) {
+		this.multiple = multiple;
+	}
+
+	@JsonIgnore
+	public void setMultiple(
+		UnsafeSupplier<Boolean, Throwable> multipleUnsafeSupplier) {
+
+		try {
+			multiple = multipleUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	@JsonIgnore
+	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
+		try {
+			name = nameUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setOptions(Options[] options) {
+		this.options = options;
+	}
+
+	@JsonIgnore
+	public void setOptions(
+		UnsafeSupplier<Options[], Throwable> optionsUnsafeSupplier) {
+
+		try {
+			options = optionsUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	public void setPredefinedValue(String predefinedValue) {
@@ -177,36 +207,6 @@ public class FieldsImpl implements Fields {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected String predefinedValue;
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	@JsonIgnore
-	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
-		try {
-			name = nameUnsafeSupplier.get();
-		}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected String name;
-
-	public Boolean getRepeatable() {
-		return repeatable;
-	}
-
 	public void setRepeatable(Boolean repeatable) {
 		this.repeatable = repeatable;
 	}
@@ -223,14 +223,6 @@ public class FieldsImpl implements Fields {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected Boolean repeatable;
-
-	public Boolean getRequired() {
-		return required;
-	}
-
 	public void setRequired(Boolean required) {
 		this.required = required;
 	}
@@ -245,14 +237,6 @@ public class FieldsImpl implements Fields {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Boolean required;
-
-	public Boolean getShowLabel() {
-		return showLabel;
 	}
 
 	public void setShowLabel(Boolean showLabel) {
@@ -273,30 +257,46 @@ public class FieldsImpl implements Fields {
 
 	@GraphQLField
 	@JsonProperty
-	protected Boolean showLabel;
+	protected String dataType;
 
-	public Options[] getOptions() {
-		return options;
-	}
+	@GraphQLField
+	@JsonProperty
+	protected String inputControl;
 
-	public void setOptions(Options[] options) {
-		this.options = options;
-	}
+	@GraphQLField
+	@JsonProperty
+	protected String label;
 
-	@JsonIgnore
-	public void setOptions(
-		UnsafeSupplier<Options[], Throwable> optionsUnsafeSupplier) {
+	@GraphQLField
+	@JsonProperty
+	protected Boolean localizable;
 
-		try {
-			options = optionsUnsafeSupplier.get();
-		}
-		catch (Throwable t) {
-			throw new RuntimeException(t);
-		}
-	}
+	@GraphQLField
+	@JsonProperty
+	protected Boolean multiple;
+
+	@GraphQLField
+	@JsonProperty
+	protected String name;
 
 	@GraphQLField
 	@JsonProperty
 	protected Options[] options;
+
+	@GraphQLField
+	@JsonProperty
+	protected String predefinedValue;
+
+	@GraphQLField
+	@JsonProperty
+	protected Boolean repeatable;
+
+	@GraphQLField
+	@JsonProperty
+	protected Boolean required;
+
+	@GraphQLField
+	@JsonProperty
+	protected Boolean showLabel;
 
 }

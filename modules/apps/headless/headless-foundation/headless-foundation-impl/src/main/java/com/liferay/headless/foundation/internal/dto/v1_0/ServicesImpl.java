@@ -41,6 +41,14 @@ public class ServicesImpl implements Services {
 		return hoursAvailable;
 	}
 
+	public Long getId() {
+		return id;
+	}
+
+	public String getServiceType() {
+		return serviceType;
+	}
+
 	public void setHoursAvailable(HoursAvailable[] hoursAvailable) {
 		this.hoursAvailable = hoursAvailable;
 	}
@@ -58,14 +66,6 @@ public class ServicesImpl implements Services {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected HoursAvailable[] hoursAvailable;
-
-	public Long getId() {
-		return id;
-	}
-
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -78,14 +78,6 @@ public class ServicesImpl implements Services {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Long id;
-
-	public String getServiceType() {
-		return serviceType;
 	}
 
 	public void setServiceType(String serviceType) {
@@ -103,6 +95,14 @@ public class ServicesImpl implements Services {
 			throw new RuntimeException(t);
 		}
 	}
+
+	@GraphQLField
+	@JsonProperty
+	protected HoursAvailable[] hoursAvailable;
+
+	@GraphQLField
+	@JsonProperty
+	protected Long id;
 
 	@GraphQLField
 	@JsonProperty

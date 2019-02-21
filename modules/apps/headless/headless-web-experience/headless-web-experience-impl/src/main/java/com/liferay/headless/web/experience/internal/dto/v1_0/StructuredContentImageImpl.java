@@ -43,6 +43,38 @@ public class StructuredContentImageImpl implements StructuredContentImage {
 		return contentUrl;
 	}
 
+	public Creator getCreator() {
+		return creator;
+	}
+
+	public Date getDateCreated() {
+		return dateCreated;
+	}
+
+	public Date getDateModified() {
+		return dateModified;
+	}
+
+	public String getEncodingFormat() {
+		return encodingFormat;
+	}
+
+	public String getFileExtension() {
+		return fileExtension;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public Number getSizeInBytes() {
+		return sizeInBytes;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
 	public void setContentUrl(String contentUrl) {
 		this.contentUrl = contentUrl;
 	}
@@ -57,14 +89,6 @@ public class StructuredContentImageImpl implements StructuredContentImage {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected String contentUrl;
-
-	public Creator getCreator() {
-		return creator;
 	}
 
 	public void setCreator(Creator creator) {
@@ -83,14 +107,6 @@ public class StructuredContentImageImpl implements StructuredContentImage {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected Creator creator;
-
-	public Date getDateCreated() {
-		return dateCreated;
-	}
-
 	public void setDateCreated(Date dateCreated) {
 		this.dateCreated = dateCreated;
 	}
@@ -105,14 +121,6 @@ public class StructuredContentImageImpl implements StructuredContentImage {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Date dateCreated;
-
-	public Date getDateModified() {
-		return dateModified;
 	}
 
 	public void setDateModified(Date dateModified) {
@@ -131,14 +139,6 @@ public class StructuredContentImageImpl implements StructuredContentImage {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected Date dateModified;
-
-	public String getEncodingFormat() {
-		return encodingFormat;
-	}
-
 	public void setEncodingFormat(String encodingFormat) {
 		this.encodingFormat = encodingFormat;
 	}
@@ -153,14 +153,6 @@ public class StructuredContentImageImpl implements StructuredContentImage {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected String encodingFormat;
-
-	public String getFileExtension() {
-		return fileExtension;
 	}
 
 	public void setFileExtension(String fileExtension) {
@@ -179,14 +171,6 @@ public class StructuredContentImageImpl implements StructuredContentImage {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected String fileExtension;
-
-	public Long getId() {
-		return id;
-	}
-
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -199,14 +183,6 @@ public class StructuredContentImageImpl implements StructuredContentImage {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Long id;
-
-	public Number getSizeInBytes() {
-		return sizeInBytes;
 	}
 
 	public void setSizeInBytes(Number sizeInBytes) {
@@ -225,14 +201,6 @@ public class StructuredContentImageImpl implements StructuredContentImage {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected Number sizeInBytes;
-
-	public String getTitle() {
-		return title;
-	}
-
 	public void setTitle(String title) {
 		this.title = title;
 	}
@@ -248,6 +216,38 @@ public class StructuredContentImageImpl implements StructuredContentImage {
 			throw new RuntimeException(t);
 		}
 	}
+
+	@GraphQLField
+	@JsonProperty
+	protected String contentUrl;
+
+	@GraphQLField
+	@JsonProperty
+	protected Creator creator;
+
+	@GraphQLField
+	@JsonProperty
+	protected Date dateCreated;
+
+	@GraphQLField
+	@JsonProperty
+	protected Date dateModified;
+
+	@GraphQLField
+	@JsonProperty
+	protected String encodingFormat;
+
+	@GraphQLField
+	@JsonProperty
+	protected String fileExtension;
+
+	@GraphQLField
+	@JsonProperty
+	protected Long id;
+
+	@GraphQLField
+	@JsonProperty
+	protected Number sizeInBytes;
 
 	@GraphQLField
 	@JsonProperty

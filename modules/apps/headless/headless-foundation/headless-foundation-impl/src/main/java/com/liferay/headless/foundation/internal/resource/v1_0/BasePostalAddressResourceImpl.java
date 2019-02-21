@@ -45,8 +45,19 @@ import javax.ws.rs.core.Context;
 public abstract class BasePostalAddressResourceImpl
 	implements PostalAddressResource {
 
-	@Override
 	@GET
+	@Override
+	@Path("/addresses/{address-id}")
+	@Produces("application/json")
+	@RequiresScope("everything.read")
+	public PostalAddress getAddress(@PathParam("address-id") Long addressId)
+		throws Exception {
+
+		return new PostalAddressImpl();
+	}
+
+	@GET
+	@Override
 	@Path("/addresses")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
@@ -56,17 +67,6 @@ public abstract class BasePostalAddressResourceImpl
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
-	}
-
-	@Override
-	@GET
-	@Path("/addresses/{address-id}")
-	@Produces("application/json")
-	@RequiresScope("everything.read")
-	public PostalAddress getAddress(@PathParam("address-id") Long addressId)
-		throws Exception {
-
-		return new PostalAddressImpl();
 	}
 
 	public void setContextCompany(Company contextCompany) {

@@ -44,8 +44,19 @@ import javax.ws.rs.core.Context;
 @Path("/v1.0")
 public abstract class BaseEmailResourceImpl implements EmailResource {
 
-	@Override
 	@GET
+	@Override
+	@Path("/emails/{email-id}")
+	@Produces("application/json")
+	@RequiresScope("everything.read")
+	public Email getEmail(@PathParam("email-id") Long emailId)
+		throws Exception {
+
+		return new EmailImpl();
+	}
+
+	@GET
+	@Override
 	@Path("/emails")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
@@ -55,17 +66,6 @@ public abstract class BaseEmailResourceImpl implements EmailResource {
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
-	}
-
-	@Override
-	@GET
-	@Path("/emails/{email-id}")
-	@Produces("application/json")
-	@RequiresScope("everything.read")
-	public Email getEmail(@PathParam("email-id") Long emailId)
-		throws Exception {
-
-		return new EmailImpl();
 	}
 
 	public void setContextCompany(Company contextCompany) {

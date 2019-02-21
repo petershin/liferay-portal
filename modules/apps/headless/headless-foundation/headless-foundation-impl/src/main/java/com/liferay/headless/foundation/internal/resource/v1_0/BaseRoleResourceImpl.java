@@ -44,8 +44,8 @@ import javax.ws.rs.core.Context;
 @Path("/v1.0")
 public abstract class BaseRoleResourceImpl implements RoleResource {
 
-	@Override
 	@GET
+	@Override
 	@Path("/my-user-accounts/{my-user-account-id}/roles")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
@@ -57,8 +57,17 @@ public abstract class BaseRoleResourceImpl implements RoleResource {
 		return Page.of(Collections.emptyList());
 	}
 
-	@Override
 	@GET
+	@Override
+	@Path("/roles/{role-id}")
+	@Produces("application/json")
+	@RequiresScope("everything.read")
+	public Role getRole(@PathParam("role-id") Long roleId) throws Exception {
+		return new RoleImpl();
+	}
+
+	@GET
+	@Override
 	@Path("/roles")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
@@ -68,17 +77,8 @@ public abstract class BaseRoleResourceImpl implements RoleResource {
 		return Page.of(Collections.emptyList());
 	}
 
-	@Override
 	@GET
-	@Path("/roles/{role-id}")
-	@Produces("application/json")
-	@RequiresScope("everything.read")
-	public Role getRole(@PathParam("role-id") Long roleId) throws Exception {
-		return new RoleImpl();
-	}
-
 	@Override
-	@GET
 	@Path("/user-accounts/{user-account-id}/roles")
 	@Produces("application/json")
 	@RequiresScope("everything.read")

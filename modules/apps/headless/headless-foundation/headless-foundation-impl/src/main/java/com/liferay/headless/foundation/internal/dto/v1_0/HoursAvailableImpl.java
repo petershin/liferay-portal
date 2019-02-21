@@ -40,6 +40,18 @@ public class HoursAvailableImpl implements HoursAvailable {
 		return closes;
 	}
 
+	public String getDayOfWeek() {
+		return dayOfWeek;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public String getOpens() {
+		return opens;
+	}
+
 	public void setCloses(String closes) {
 		this.closes = closes;
 	}
@@ -54,14 +66,6 @@ public class HoursAvailableImpl implements HoursAvailable {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected String closes;
-
-	public String getDayOfWeek() {
-		return dayOfWeek;
 	}
 
 	public void setDayOfWeek(String dayOfWeek) {
@@ -80,14 +84,6 @@ public class HoursAvailableImpl implements HoursAvailable {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected String dayOfWeek;
-
-	public Long getId() {
-		return id;
-	}
-
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -100,14 +96,6 @@ public class HoursAvailableImpl implements HoursAvailable {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Long id;
-
-	public String getOpens() {
-		return opens;
 	}
 
 	public void setOpens(String opens) {
@@ -125,6 +113,18 @@ public class HoursAvailableImpl implements HoursAvailable {
 			throw new RuntimeException(t);
 		}
 	}
+
+	@GraphQLField
+	@JsonProperty
+	protected String closes;
+
+	@GraphQLField
+	@JsonProperty
+	protected String dayOfWeek;
+
+	@GraphQLField
+	@JsonProperty
+	protected Long id;
 
 	@GraphQLField
 	@JsonProperty

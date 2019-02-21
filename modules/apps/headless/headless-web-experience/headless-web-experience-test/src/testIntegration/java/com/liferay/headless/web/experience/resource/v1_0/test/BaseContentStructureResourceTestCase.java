@@ -172,6 +172,38 @@ public abstract class BaseContentStructureResourceTestCase {
 			return availableLanguages;
 		}
 
+		public Long getContentSpace() {
+			return contentSpace;
+		}
+
+		public Creator getCreator() {
+			return creator;
+		}
+
+		public Date getDateCreated() {
+			return dateCreated;
+		}
+
+		public Date getDateModified() {
+			return dateModified;
+		}
+
+		public String getDescription() {
+			return description;
+		}
+
+		public Fields[] getFields() {
+			return fields;
+		}
+
+		public Long getId() {
+			return id;
+		}
+
+		public String getName() {
+			return name;
+		}
+
 		public void setAvailableLanguages(String[] availableLanguages) {
 			this.availableLanguages = availableLanguages;
 		}
@@ -187,13 +219,6 @@ public abstract class BaseContentStructureResourceTestCase {
 			catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
-		}
-
-		@JsonProperty
-		protected String[] availableLanguages;
-
-		public Long getContentSpace() {
-			return contentSpace;
 		}
 
 		public void setContentSpace(Long contentSpace) {
@@ -212,13 +237,6 @@ public abstract class BaseContentStructureResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected Long contentSpace;
-
-		public Creator getCreator() {
-			return creator;
-		}
-
 		public void setCreator(Creator creator) {
 			this.creator = creator;
 		}
@@ -233,13 +251,6 @@ public abstract class BaseContentStructureResourceTestCase {
 			catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
-		}
-
-		@JsonProperty
-		protected Creator creator;
-
-		public Date getDateCreated() {
-			return dateCreated;
 		}
 
 		public void setDateCreated(Date dateCreated) {
@@ -258,13 +269,6 @@ public abstract class BaseContentStructureResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected Date dateCreated;
-
-		public Date getDateModified() {
-			return dateModified;
-		}
-
 		public void setDateModified(Date dateModified) {
 			this.dateModified = dateModified;
 		}
@@ -279,13 +283,6 @@ public abstract class BaseContentStructureResourceTestCase {
 			catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
-		}
-
-		@JsonProperty
-		protected Date dateModified;
-
-		public String getDescription() {
-			return description;
 		}
 
 		public void setDescription(String description) {
@@ -304,13 +301,6 @@ public abstract class BaseContentStructureResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected String description;
-
-		public Fields[] getFields() {
-			return fields;
-		}
-
 		public void setFields(Fields[] fields) {
 			this.fields = fields;
 		}
@@ -327,13 +317,6 @@ public abstract class BaseContentStructureResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected Fields[] fields;
-
-		public Long getId() {
-			return id;
-		}
-
 		public void setId(Long id) {
 			this.id = id;
 		}
@@ -346,13 +329,6 @@ public abstract class BaseContentStructureResourceTestCase {
 			catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
-		}
-
-		@JsonProperty
-		protected Long id;
-
-		public String getName() {
-			return name;
 		}
 
 		public void setName(String name) {
@@ -370,6 +346,30 @@ public abstract class BaseContentStructureResourceTestCase {
 				throw new RuntimeException(t);
 			}
 		}
+
+		@JsonProperty
+		protected String[] availableLanguages;
+
+		@JsonProperty
+		protected Long contentSpace;
+
+		@JsonProperty
+		protected Creator creator;
+
+		@JsonProperty
+		protected Date dateCreated;
+
+		@JsonProperty
+		protected Date dateModified;
+
+		@JsonProperty
+		protected String description;
+
+		@JsonProperty
+		protected Fields[] fields;
+
+		@JsonProperty
+		protected Long id;
 
 		@JsonProperty
 		protected String name;
@@ -398,12 +398,12 @@ public abstract class BaseContentStructureResourceTestCase {
 		return template.replaceAll("\\{.*\\}", String.valueOf(values[0]));
 	}
 
-	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {
+	private static final ObjectMapper _inputObjectMapper = new ObjectMapper() {
 		{
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
 		}
 	};
-	private final static ObjectMapper _outputObjectMapper = new ObjectMapper();
+	private static final ObjectMapper _outputObjectMapper = new ObjectMapper();
 
 	private URL _resourceURL;
 

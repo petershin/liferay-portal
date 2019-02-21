@@ -40,6 +40,14 @@ public class ValidationImpl implements Validation {
 		return errorMessage;
 	}
 
+	public String getExpression() {
+		return expression;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
 	public void setErrorMessage(String errorMessage) {
 		this.errorMessage = errorMessage;
 	}
@@ -54,14 +62,6 @@ public class ValidationImpl implements Validation {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected String errorMessage;
-
-	public String getExpression() {
-		return expression;
 	}
 
 	public void setExpression(String expression) {
@@ -80,14 +80,6 @@ public class ValidationImpl implements Validation {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected String expression;
-
-	public Long getId() {
-		return id;
-	}
-
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -101,6 +93,14 @@ public class ValidationImpl implements Validation {
 			throw new RuntimeException(t);
 		}
 	}
+
+	@GraphQLField
+	@JsonProperty
+	protected String errorMessage;
+
+	@GraphQLField
+	@JsonProperty
+	protected String expression;
 
 	@GraphQLField
 	@JsonProperty

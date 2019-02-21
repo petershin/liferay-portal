@@ -84,26 +84,6 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Comment> getStructuredContentCommentsPage(
-			@GraphQLName("structured-content-id") Long structuredContentId,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
-		throws Exception {
-
-		CommentResource commentResource = _getCommentResource();
-
-		commentResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
-
-		Page paginationPage = commentResource.getStructuredContentCommentsPage(
-			structuredContentId, Pagination.of(pageSize, page));
-
-		return paginationPage.getItems();
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
 	public Collection<ContentStructure> getContentSpaceContentStructuresPage(
 			@GraphQLName("content-space-id") Long contentSpaceId,
 			@GraphQLName("filter") Filter filter,
@@ -123,22 +103,6 @@ public class Query {
 				contentSpaceId, filter, Pagination.of(pageSize, page), sorts);
 
 		return paginationPage.getItems();
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public ContentStructure getContentStructure(
-			@GraphQLName("content-structure-id") Long contentStructureId)
-		throws Exception {
-
-		ContentStructureResource contentStructureResource =
-			_getContentStructureResource();
-
-		contentStructureResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
-
-		return contentStructureResource.getContentStructure(contentStructureId);
 	}
 
 	@GraphQLField
@@ -194,6 +158,22 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
+	public ContentStructure getContentStructure(
+			@GraphQLName("content-structure-id") Long contentStructureId)
+		throws Exception {
+
+		ContentStructureResource contentStructureResource =
+			_getContentStructureResource();
+
+		contentStructureResource.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
+
+		return contentStructureResource.getContentStructure(contentStructureId);
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
 	public StructuredContent getStructuredContent(
 			@GraphQLName("structured-content-id") Long structuredContentId)
 		throws Exception {
@@ -207,6 +187,45 @@ public class Query {
 
 		return structuredContentResource.getStructuredContent(
 			structuredContentId);
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Collection<Comment> getStructuredContentCommentsPage(
+			@GraphQLName("structured-content-id") Long structuredContentId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
+
+		CommentResource commentResource = _getCommentResource();
+
+		commentResource.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
+
+		Page paginationPage = commentResource.getStructuredContentCommentsPage(
+			structuredContentId, Pagination.of(pageSize, page));
+
+		return paginationPage.getItems();
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public StructuredContentImage getStructuredContentContentDocument(
+			@GraphQLName("structured-content-id") Long structuredContentId,
+			@GraphQLName("content-document-id") Long contentDocumentId)
+		throws Exception {
+
+		StructuredContentImageResource structuredContentImageResource =
+			_getStructuredContentImageResource();
+
+		structuredContentImageResource.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
+
+		return structuredContentImageResource.
+			getStructuredContentContentDocument(
+				structuredContentId, contentDocumentId);
 	}
 
 	@GraphQLField
@@ -231,47 +250,13 @@ public class Query {
 		return paginationPage.getItems();
 	}
 
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public StructuredContentImage getStructuredContentContentDocument(
-			@GraphQLName("structured-content-id") Long structuredContentId,
-			@GraphQLName("content-document-id") Long contentDocumentId)
-		throws Exception {
-
-		StructuredContentImageResource structuredContentImageResource =
-			_getStructuredContentImageResource();
-
-		structuredContentImageResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
-
-		return structuredContentImageResource.
-			getStructuredContentContentDocument(
-				structuredContentId, contentDocumentId);
-	}
-
 	private static CommentResource _getCommentResource() {
 		return _commentResourceServiceTracker.getService();
 	}
 
-	private static final ServiceTracker<CommentResource, CommentResource>
-		_commentResourceServiceTracker;
-
 	private static ContentStructureResource _getContentStructureResource() {
 		return _contentStructureResourceServiceTracker.getService();
 	}
-
-	private static final ServiceTracker
-		<ContentStructureResource, ContentStructureResource>
-			_contentStructureResourceServiceTracker;
-
-	private static StructuredContentResource _getStructuredContentResource() {
-		return _structuredContentResourceServiceTracker.getService();
-	}
-
-	private static final ServiceTracker
-		<StructuredContentResource, StructuredContentResource>
-			_structuredContentResourceServiceTracker;
 
 	private static StructuredContentImageResource
 		_getStructuredContentImageResource() {
@@ -279,9 +264,21 @@ public class Query {
 		return _structuredContentImageResourceServiceTracker.getService();
 	}
 
+	private static StructuredContentResource _getStructuredContentResource() {
+		return _structuredContentResourceServiceTracker.getService();
+	}
+
+	private static final ServiceTracker<CommentResource, CommentResource>
+		_commentResourceServiceTracker;
+	private static final ServiceTracker
+		<ContentStructureResource, ContentStructureResource>
+			_contentStructureResourceServiceTracker;
 	private static final ServiceTracker
 		<StructuredContentImageResource, StructuredContentImageResource>
 			_structuredContentImageResourceServiceTracker;
+	private static final ServiceTracker
+		<StructuredContentResource, StructuredContentResource>
+			_structuredContentResourceServiceTracker;
 
 	static {
 		Bundle bundle = FrameworkUtil.getBundle(Query.class);

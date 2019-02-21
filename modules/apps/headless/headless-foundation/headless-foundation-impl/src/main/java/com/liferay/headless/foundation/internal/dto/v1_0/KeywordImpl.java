@@ -43,6 +43,30 @@ public class KeywordImpl implements Keyword {
 		return contentSpace;
 	}
 
+	public Creator getCreator() {
+		return creator;
+	}
+
+	public Date getDateCreated() {
+		return dateCreated;
+	}
+
+	public Date getDateModified() {
+		return dateModified;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public Number getKeywordUsageCount() {
+		return keywordUsageCount;
+	}
+
+	public String getName() {
+		return name;
+	}
+
 	public void setContentSpace(Long contentSpace) {
 		this.contentSpace = contentSpace;
 	}
@@ -57,14 +81,6 @@ public class KeywordImpl implements Keyword {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Long contentSpace;
-
-	public Creator getCreator() {
-		return creator;
 	}
 
 	public void setCreator(Creator creator) {
@@ -83,14 +99,6 @@ public class KeywordImpl implements Keyword {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected Creator creator;
-
-	public Date getDateCreated() {
-		return dateCreated;
-	}
-
 	public void setDateCreated(Date dateCreated) {
 		this.dateCreated = dateCreated;
 	}
@@ -105,14 +113,6 @@ public class KeywordImpl implements Keyword {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Date dateCreated;
-
-	public Date getDateModified() {
-		return dateModified;
 	}
 
 	public void setDateModified(Date dateModified) {
@@ -131,14 +131,6 @@ public class KeywordImpl implements Keyword {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected Date dateModified;
-
-	public Long getId() {
-		return id;
-	}
-
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -151,14 +143,6 @@ public class KeywordImpl implements Keyword {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Long id;
-
-	public Number getKeywordUsageCount() {
-		return keywordUsageCount;
 	}
 
 	public void setKeywordUsageCount(Number keywordUsageCount) {
@@ -177,14 +161,6 @@ public class KeywordImpl implements Keyword {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected Number keywordUsageCount;
-
-	public String getName() {
-		return name;
-	}
-
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -198,6 +174,30 @@ public class KeywordImpl implements Keyword {
 			throw new RuntimeException(t);
 		}
 	}
+
+	@GraphQLField
+	@JsonProperty
+	protected Long contentSpace;
+
+	@GraphQLField
+	@JsonProperty
+	protected Creator creator;
+
+	@GraphQLField
+	@JsonProperty
+	protected Date dateCreated;
+
+	@GraphQLField
+	@JsonProperty
+	protected Date dateModified;
+
+	@GraphQLField
+	@JsonProperty
+	protected Long id;
+
+	@GraphQLField
+	@JsonProperty
+	protected Number keywordUsageCount;
 
 	@GraphQLField
 	@JsonProperty

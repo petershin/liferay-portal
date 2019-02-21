@@ -45,8 +45,8 @@ import javax.ws.rs.core.Context;
 public abstract class BaseOrganizationResourceImpl
 	implements OrganizationResource {
 
-	@Override
 	@GET
+	@Override
 	@Path("/my-user-accounts/{my-user-account-id}/organizations")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
@@ -58,20 +58,8 @@ public abstract class BaseOrganizationResourceImpl
 		return Page.of(Collections.emptyList());
 	}
 
-	@Override
 	@GET
-	@Path("/organizations")
-	@Produces("application/json")
-	@RequiresScope("everything.read")
-	public Page<Organization> getOrganizationsPage(
-			@Context Pagination pagination)
-		throws Exception {
-
-		return Page.of(Collections.emptyList());
-	}
-
 	@Override
-	@GET
 	@Path("/organizations/{organization-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
@@ -82,8 +70,8 @@ public abstract class BaseOrganizationResourceImpl
 		return new OrganizationImpl();
 	}
 
-	@Override
 	@GET
+	@Override
 	@Path("/organizations/{organization-id}/organizations")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
@@ -95,8 +83,20 @@ public abstract class BaseOrganizationResourceImpl
 		return Page.of(Collections.emptyList());
 	}
 
-	@Override
 	@GET
+	@Override
+	@Path("/organizations")
+	@Produces("application/json")
+	@RequiresScope("everything.read")
+	public Page<Organization> getOrganizationsPage(
+			@Context Pagination pagination)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
+	}
+
+	@GET
+	@Override
 	@Path("/user-accounts/{user-account-id}/organizations")
 	@Produces("application/json")
 	@RequiresScope("everything.read")

@@ -40,6 +40,14 @@ public class WebUrlImpl implements WebUrl {
 		return id;
 	}
 
+	public String getUrl() {
+		return url;
+	}
+
+	public String getUrlType() {
+		return urlType;
+	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -54,14 +62,6 @@ public class WebUrlImpl implements WebUrl {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected Long id;
-
-	public String getUrl() {
-		return url;
-	}
-
 	public void setUrl(String url) {
 		this.url = url;
 	}
@@ -74,14 +74,6 @@ public class WebUrlImpl implements WebUrl {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected String url;
-
-	public String getUrlType() {
-		return urlType;
 	}
 
 	public void setUrlType(String urlType) {
@@ -99,6 +91,14 @@ public class WebUrlImpl implements WebUrl {
 			throw new RuntimeException(t);
 		}
 	}
+
+	@GraphQLField
+	@JsonProperty
+	protected Long id;
+
+	@GraphQLField
+	@JsonProperty
+	protected String url;
 
 	@GraphQLField
 	@JsonProperty

@@ -61,17 +61,12 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 	}
 
 	@Test
-	public void testGetContentSpaceBlogPostingImagesPage() throws Exception {
-		Assert.assertTrue(true);
-	}
-
-	@Test
-	public void testPostContentSpaceBlogPostingImage() throws Exception {
-		Assert.assertTrue(true);
-	}
-
-	@Test
 	public void testDeleteImageObject() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	@Test
+	public void testGetContentSpaceBlogPostingImagesPage() throws Exception {
 		Assert.assertTrue(true);
 	}
 
@@ -80,11 +75,49 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 		Assert.assertTrue(true);
 	}
 
+	@Test
+	public void testPostContentSpaceBlogPostingImage() throws Exception {
+		Assert.assertTrue(true);
+	}
+
 	protected void assertResponseCode(
 		int expectedResponseCode, Http.Response actualResponse) {
 
 		Assert.assertEquals(
 			expectedResponseCode, actualResponse.getResponseCode());
+	}
+
+	protected boolean invokeDeleteImageObject(Long imageObjectId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setDelete(true);
+
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/blog-posting-images/{image-object-id}", imageObjectId));
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), Boolean.class);
+	}
+
+	protected Http.Response invokeDeleteImageObjectResponse(Long imageObjectId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setDelete(true);
+
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/blog-posting-images/{image-object-id}", imageObjectId));
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
 	}
 
 	protected Page<BlogPostingImage> invokeGetContentSpaceBlogPostingImagesPage(
@@ -114,6 +147,35 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 				_toPath(
 					"/content-spaces/{content-space-id}/blog-posting-images",
 					contentSpaceId));
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	protected BlogPostingImage invokeGetImageObject(Long imageObjectId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/blog-posting-images/{image-object-id}", imageObjectId));
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), BlogPostingImageImpl.class);
+	}
+
+	protected Http.Response invokeGetImageObjectResponse(Long imageObjectId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/blog-posting-images/{image-object-id}", imageObjectId));
 
 		HttpUtil.URLtoString(options);
 
@@ -157,68 +219,6 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 		return options.getResponse();
 	}
 
-	protected boolean invokeDeleteImageObject(Long imageObjectId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setDelete(true);
-
-		options.setLocation(
-			_resourceURL +
-				_toPath(
-					"/blog-posting-images/{image-object-id}", imageObjectId));
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), Boolean.class);
-	}
-
-	protected Http.Response invokeDeleteImageObjectResponse(Long imageObjectId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setDelete(true);
-
-		options.setLocation(
-			_resourceURL +
-				_toPath(
-					"/blog-posting-images/{image-object-id}", imageObjectId));
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
-	protected BlogPostingImage invokeGetImageObject(Long imageObjectId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setLocation(
-			_resourceURL +
-				_toPath(
-					"/blog-posting-images/{image-object-id}", imageObjectId));
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), BlogPostingImageImpl.class);
-	}
-
-	protected Http.Response invokeGetImageObjectResponse(Long imageObjectId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setLocation(
-			_resourceURL +
-				_toPath(
-					"/blog-posting-images/{image-object-id}", imageObjectId));
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
 	protected BlogPostingImage randomBlogPostingImage() {
 		return new BlogPostingImageImpl() {
 			{
@@ -239,6 +239,26 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 			return contentUrl;
 		}
 
+		public String getEncodingFormat() {
+			return encodingFormat;
+		}
+
+		public String getFileExtension() {
+			return fileExtension;
+		}
+
+		public Long getId() {
+			return id;
+		}
+
+		public Number getSizeInBytes() {
+			return sizeInBytes;
+		}
+
+		public String getTitle() {
+			return title;
+		}
+
 		public void setContentUrl(String contentUrl) {
 			this.contentUrl = contentUrl;
 		}
@@ -253,13 +273,6 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 			catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
-		}
-
-		@JsonProperty
-		protected String contentUrl;
-
-		public String getEncodingFormat() {
-			return encodingFormat;
 		}
 
 		public void setEncodingFormat(String encodingFormat) {
@@ -278,13 +291,6 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected String encodingFormat;
-
-		public String getFileExtension() {
-			return fileExtension;
-		}
-
 		public void setFileExtension(String fileExtension) {
 			this.fileExtension = fileExtension;
 		}
@@ -301,13 +307,6 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected String fileExtension;
-
-		public Long getId() {
-			return id;
-		}
-
 		public void setId(Long id) {
 			this.id = id;
 		}
@@ -320,13 +319,6 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 			catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
-		}
-
-		@JsonProperty
-		protected Long id;
-
-		public Number getSizeInBytes() {
-			return sizeInBytes;
 		}
 
 		public void setSizeInBytes(Number sizeInBytes) {
@@ -345,13 +337,6 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected Number sizeInBytes;
-
-		public String getTitle() {
-			return title;
-		}
-
 		public void setTitle(String title) {
 			this.title = title;
 		}
@@ -367,6 +352,21 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 				throw new RuntimeException(t);
 			}
 		}
+
+		@JsonProperty
+		protected String contentUrl;
+
+		@JsonProperty
+		protected String encodingFormat;
+
+		@JsonProperty
+		protected String fileExtension;
+
+		@JsonProperty
+		protected Long id;
+
+		@JsonProperty
+		protected Number sizeInBytes;
 
 		@JsonProperty
 		protected String title;
@@ -395,12 +395,12 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 		return template.replaceAll("\\{.*\\}", String.valueOf(values[0]));
 	}
 
-	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {
+	private static final ObjectMapper _inputObjectMapper = new ObjectMapper() {
 		{
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
 		}
 	};
-	private final static ObjectMapper _outputObjectMapper = new ObjectMapper();
+	private static final ObjectMapper _outputObjectMapper = new ObjectMapper();
 
 	private URL _resourceURL;
 

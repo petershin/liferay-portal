@@ -46,6 +46,82 @@ public class BlogPostingImpl implements BlogPosting {
 		return aggregateRating;
 	}
 
+	public String getAlternativeHeadline() {
+		return alternativeHeadline;
+	}
+
+	public String getArticleBody() {
+		return articleBody;
+	}
+
+	public String getCaption() {
+		return caption;
+	}
+
+	public Categories[] getCategories() {
+		return categories;
+	}
+
+	public Long[] getCategoryIds() {
+		return categoryIds;
+	}
+
+	public Long getContentSpace() {
+		return contentSpace;
+	}
+
+	public Creator getCreator() {
+		return creator;
+	}
+
+	public Date getDateCreated() {
+		return dateCreated;
+	}
+
+	public Date getDateModified() {
+		return dateModified;
+	}
+
+	public Date getDatePublished() {
+		return datePublished;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public String getEncodingFormat() {
+		return encodingFormat;
+	}
+
+	public String getFriendlyUrlPath() {
+		return friendlyUrlPath;
+	}
+
+	public Boolean getHasComments() {
+		return hasComments;
+	}
+
+	public String getHeadline() {
+		return headline;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public Image getImage() {
+		return image;
+	}
+
+	public Long getImageId() {
+		return imageId;
+	}
+
+	public String[] getKeywords() {
+		return keywords;
+	}
+
 	public void setAggregateRating(AggregateRating aggregateRating) {
 		this.aggregateRating = aggregateRating;
 	}
@@ -61,14 +137,6 @@ public class BlogPostingImpl implements BlogPosting {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected AggregateRating aggregateRating;
-
-	public String getAlternativeHeadline() {
-		return alternativeHeadline;
 	}
 
 	public void setAlternativeHeadline(String alternativeHeadline) {
@@ -87,14 +155,6 @@ public class BlogPostingImpl implements BlogPosting {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected String alternativeHeadline;
-
-	public String getArticleBody() {
-		return articleBody;
-	}
-
 	public void setArticleBody(String articleBody) {
 		this.articleBody = articleBody;
 	}
@@ -109,14 +169,6 @@ public class BlogPostingImpl implements BlogPosting {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected String articleBody;
-
-	public String getCaption() {
-		return caption;
 	}
 
 	public void setCaption(String caption) {
@@ -135,14 +187,6 @@ public class BlogPostingImpl implements BlogPosting {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected String caption;
-
-	public Categories[] getCategories() {
-		return categories;
-	}
-
 	public void setCategories(Categories[] categories) {
 		this.categories = categories;
 	}
@@ -157,14 +201,6 @@ public class BlogPostingImpl implements BlogPosting {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Categories[] categories;
-
-	public Long[] getCategoryIds() {
-		return categoryIds;
 	}
 
 	public void setCategoryIds(Long[] categoryIds) {
@@ -183,14 +219,6 @@ public class BlogPostingImpl implements BlogPosting {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected Long[] categoryIds;
-
-	public Long getContentSpace() {
-		return contentSpace;
-	}
-
 	public void setContentSpace(Long contentSpace) {
 		this.contentSpace = contentSpace;
 	}
@@ -205,14 +233,6 @@ public class BlogPostingImpl implements BlogPosting {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Long contentSpace;
-
-	public Creator getCreator() {
-		return creator;
 	}
 
 	public void setCreator(Creator creator) {
@@ -231,14 +251,6 @@ public class BlogPostingImpl implements BlogPosting {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected Creator creator;
-
-	public Date getDateCreated() {
-		return dateCreated;
-	}
-
 	public void setDateCreated(Date dateCreated) {
 		this.dateCreated = dateCreated;
 	}
@@ -253,14 +265,6 @@ public class BlogPostingImpl implements BlogPosting {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Date dateCreated;
-
-	public Date getDateModified() {
-		return dateModified;
 	}
 
 	public void setDateModified(Date dateModified) {
@@ -279,14 +283,6 @@ public class BlogPostingImpl implements BlogPosting {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected Date dateModified;
-
-	public Date getDatePublished() {
-		return datePublished;
-	}
-
 	public void setDatePublished(Date datePublished) {
 		this.datePublished = datePublished;
 	}
@@ -301,14 +297,6 @@ public class BlogPostingImpl implements BlogPosting {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Date datePublished;
-
-	public String getDescription() {
-		return description;
 	}
 
 	public void setDescription(String description) {
@@ -327,14 +315,6 @@ public class BlogPostingImpl implements BlogPosting {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected String description;
-
-	public String getEncodingFormat() {
-		return encodingFormat;
-	}
-
 	public void setEncodingFormat(String encodingFormat) {
 		this.encodingFormat = encodingFormat;
 	}
@@ -349,14 +329,6 @@ public class BlogPostingImpl implements BlogPosting {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected String encodingFormat;
-
-	public String getFriendlyUrlPath() {
-		return friendlyUrlPath;
 	}
 
 	public void setFriendlyUrlPath(String friendlyUrlPath) {
@@ -375,14 +347,6 @@ public class BlogPostingImpl implements BlogPosting {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected String friendlyUrlPath;
-
-	public Boolean getHasComments() {
-		return hasComments;
-	}
-
 	public void setHasComments(Boolean hasComments) {
 		this.hasComments = hasComments;
 	}
@@ -397,14 +361,6 @@ public class BlogPostingImpl implements BlogPosting {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Boolean hasComments;
-
-	public String getHeadline() {
-		return headline;
 	}
 
 	public void setHeadline(String headline) {
@@ -423,14 +379,6 @@ public class BlogPostingImpl implements BlogPosting {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected String headline;
-
-	public Long getId() {
-		return id;
-	}
-
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -445,14 +393,6 @@ public class BlogPostingImpl implements BlogPosting {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected Long id;
-
-	public Image getImage() {
-		return image;
-	}
-
 	public void setImage(Image image) {
 		this.image = image;
 	}
@@ -465,14 +405,6 @@ public class BlogPostingImpl implements BlogPosting {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Image image;
-
-	public Long getImageId() {
-		return imageId;
 	}
 
 	public void setImageId(Long imageId) {
@@ -491,14 +423,6 @@ public class BlogPostingImpl implements BlogPosting {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected Long imageId;
-
-	public String[] getKeywords() {
-		return keywords;
-	}
-
 	public void setKeywords(String[] keywords) {
 		this.keywords = keywords;
 	}
@@ -514,6 +438,82 @@ public class BlogPostingImpl implements BlogPosting {
 			throw new RuntimeException(t);
 		}
 	}
+
+	@GraphQLField
+	@JsonProperty
+	protected AggregateRating aggregateRating;
+
+	@GraphQLField
+	@JsonProperty
+	protected String alternativeHeadline;
+
+	@GraphQLField
+	@JsonProperty
+	protected String articleBody;
+
+	@GraphQLField
+	@JsonProperty
+	protected String caption;
+
+	@GraphQLField
+	@JsonProperty
+	protected Categories[] categories;
+
+	@GraphQLField
+	@JsonProperty
+	protected Long[] categoryIds;
+
+	@GraphQLField
+	@JsonProperty
+	protected Long contentSpace;
+
+	@GraphQLField
+	@JsonProperty
+	protected Creator creator;
+
+	@GraphQLField
+	@JsonProperty
+	protected Date dateCreated;
+
+	@GraphQLField
+	@JsonProperty
+	protected Date dateModified;
+
+	@GraphQLField
+	@JsonProperty
+	protected Date datePublished;
+
+	@GraphQLField
+	@JsonProperty
+	protected String description;
+
+	@GraphQLField
+	@JsonProperty
+	protected String encodingFormat;
+
+	@GraphQLField
+	@JsonProperty
+	protected String friendlyUrlPath;
+
+	@GraphQLField
+	@JsonProperty
+	protected Boolean hasComments;
+
+	@GraphQLField
+	@JsonProperty
+	protected String headline;
+
+	@GraphQLField
+	@JsonProperty
+	protected Long id;
+
+	@GraphQLField
+	@JsonProperty
+	protected Image image;
+
+	@GraphQLField
+	@JsonProperty
+	protected Long imageId;
 
 	@GraphQLField
 	@JsonProperty

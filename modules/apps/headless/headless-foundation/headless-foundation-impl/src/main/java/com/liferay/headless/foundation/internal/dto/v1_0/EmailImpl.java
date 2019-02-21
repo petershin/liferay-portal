@@ -40,6 +40,14 @@ public class EmailImpl implements Email {
 		return email;
 	}
 
+	public Long getId() {
+		return id;
+	}
+
+	public String getType() {
+		return type;
+	}
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
@@ -56,14 +64,6 @@ public class EmailImpl implements Email {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected String email;
-
-	public Long getId() {
-		return id;
-	}
-
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -76,14 +76,6 @@ public class EmailImpl implements Email {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Long id;
-
-	public String getType() {
-		return type;
 	}
 
 	public void setType(String type) {
@@ -99,6 +91,14 @@ public class EmailImpl implements Email {
 			throw new RuntimeException(t);
 		}
 	}
+
+	@GraphQLField
+	@JsonProperty
+	protected String email;
+
+	@GraphQLField
+	@JsonProperty
+	protected Long id;
 
 	@GraphQLField
 	@JsonProperty

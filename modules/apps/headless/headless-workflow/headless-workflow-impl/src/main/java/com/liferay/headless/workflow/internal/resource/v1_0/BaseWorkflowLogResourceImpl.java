@@ -45,8 +45,8 @@ import javax.ws.rs.core.Context;
 public abstract class BaseWorkflowLogResourceImpl
 	implements WorkflowLogResource {
 
-	@Override
 	@GET
+	@Override
 	@Path("/workflow-logs/{workflow-log-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
@@ -57,8 +57,8 @@ public abstract class BaseWorkflowLogResourceImpl
 		return new WorkflowLogImpl();
 	}
 
-	@Override
 	@GET
+	@Override
 	@Path("/workflow-tasks/{workflow-task-id}/workflow-logs")
 	@Produces("application/json")
 	@RequiresScope("everything.read")

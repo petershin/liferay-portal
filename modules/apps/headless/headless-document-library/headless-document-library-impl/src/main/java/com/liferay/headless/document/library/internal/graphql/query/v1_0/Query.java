@@ -82,26 +82,6 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Comment> getDocumentCommentsPage(
-			@GraphQLName("document-id") Long documentId,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
-		throws Exception {
-
-		CommentResource commentResource = _getCommentResource();
-
-		commentResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
-
-		Page paginationPage = commentResource.getDocumentCommentsPage(
-			documentId, Pagination.of(pageSize, page));
-
-		return paginationPage.getItems();
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
 	public Collection<Document> getContentSpaceDocumentsPage(
 			@GraphQLName("content-space-id") Long contentSpaceId,
 			@GraphQLName("filter") Filter filter,
@@ -117,41 +97,6 @@ public class Query {
 
 		Page paginationPage = documentResource.getContentSpaceDocumentsPage(
 			contentSpaceId, filter, Pagination.of(pageSize, page), sorts);
-
-		return paginationPage.getItems();
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public Document getDocument(@GraphQLName("document-id") Long documentId)
-		throws Exception {
-
-		DocumentResource documentResource = _getDocumentResource();
-
-		documentResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
-
-		return documentResource.getDocument(documentId);
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public Collection<Document> getFolderDocumentsPage(
-			@GraphQLName("folder-id") Long folderId,
-			@GraphQLName("filter") Filter filter,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page, @GraphQLName("Sort[]") Sort[] sorts)
-		throws Exception {
-
-		DocumentResource documentResource = _getDocumentResource();
-
-		documentResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
-
-		Page paginationPage = documentResource.getFolderDocumentsPage(
-			folderId, filter, Pagination.of(pageSize, page), sorts);
 
 		return paginationPage.getItems();
 	}
@@ -178,6 +123,40 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
+	public Document getDocument(@GraphQLName("document-id") Long documentId)
+		throws Exception {
+
+		DocumentResource documentResource = _getDocumentResource();
+
+		documentResource.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
+
+		return documentResource.getDocument(documentId);
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Collection<Comment> getDocumentCommentsPage(
+			@GraphQLName("document-id") Long documentId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
+
+		CommentResource commentResource = _getCommentResource();
+
+		commentResource.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
+
+		Page paginationPage = commentResource.getDocumentCommentsPage(
+			documentId, Pagination.of(pageSize, page));
+
+		return paginationPage.getItems();
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
 	public Folder getFolder(@GraphQLName("folder-id") Long folderId)
 		throws Exception {
 
@@ -188,6 +167,27 @@ public class Query {
 				CompanyThreadLocal.getCompanyId()));
 
 		return folderResource.getFolder(folderId);
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Collection<Document> getFolderDocumentsPage(
+			@GraphQLName("folder-id") Long folderId,
+			@GraphQLName("filter") Filter filter,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page, @GraphQLName("Sort[]") Sort[] sorts)
+		throws Exception {
+
+		DocumentResource documentResource = _getDocumentResource();
+
+		documentResource.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
+
+		Page paginationPage = documentResource.getFolderDocumentsPage(
+			folderId, filter, Pagination.of(pageSize, page), sorts);
+
+		return paginationPage.getItems();
 	}
 
 	@GraphQLField
@@ -214,20 +214,18 @@ public class Query {
 		return _commentResourceServiceTracker.getService();
 	}
 
-	private static final ServiceTracker<CommentResource, CommentResource>
-		_commentResourceServiceTracker;
-
 	private static DocumentResource _getDocumentResource() {
 		return _documentResourceServiceTracker.getService();
 	}
-
-	private static final ServiceTracker<DocumentResource, DocumentResource>
-		_documentResourceServiceTracker;
 
 	private static FolderResource _getFolderResource() {
 		return _folderResourceServiceTracker.getService();
 	}
 
+	private static final ServiceTracker<CommentResource, CommentResource>
+		_commentResourceServiceTracker;
+	private static final ServiceTracker<DocumentResource, DocumentResource>
+		_documentResourceServiceTracker;
 	private static final ServiceTracker<FolderResource, FolderResource>
 		_folderResourceServiceTracker;
 

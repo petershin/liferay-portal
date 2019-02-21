@@ -27,19 +27,19 @@ public interface Services {
 
 	public HoursAvailable[] getHoursAvailable();
 
+	public Long getId();
+
+	public String getServiceType();
+
 	public void setHoursAvailable(HoursAvailable[] hoursAvailable);
 
 	public void setHoursAvailable(
 		UnsafeSupplier<HoursAvailable[], Throwable>
 			hoursAvailableUnsafeSupplier);
 
-	public Long getId();
-
 	public void setId(Long id);
 
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier);
-
-	public String getServiceType();
 
 	public void setServiceType(String serviceType);
 

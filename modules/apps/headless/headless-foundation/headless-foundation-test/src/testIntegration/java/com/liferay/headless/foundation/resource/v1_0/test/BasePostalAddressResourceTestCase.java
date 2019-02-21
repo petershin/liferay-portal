@@ -60,12 +60,12 @@ public abstract class BasePostalAddressResourceTestCase {
 	}
 
 	@Test
-	public void testGetGenericParentPostalAddressesPage() throws Exception {
+	public void testGetAddress() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testGetAddress() throws Exception {
+	public void testGetGenericParentPostalAddressesPage() throws Exception {
 		Assert.assertTrue(true);
 	}
 
@@ -74,6 +74,29 @@ public abstract class BasePostalAddressResourceTestCase {
 
 		Assert.assertEquals(
 			expectedResponseCode, actualResponse.getResponseCode());
+	}
+
+	protected PostalAddress invokeGetAddress(Long addressId) throws Exception {
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL + _toPath("/addresses/{address-id}", addressId));
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), PostalAddressImpl.class);
+	}
+
+	protected Http.Response invokeGetAddressResponse(Long addressId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL + _toPath("/addresses/{address-id}", addressId));
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
 	}
 
 	protected Page<PostalAddress> invokeGetGenericParentPostalAddressesPage(
@@ -97,29 +120,6 @@ public abstract class BasePostalAddressResourceTestCase {
 
 		options.setLocation(
 			_resourceURL + _toPath("/addresses", genericParentId));
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
-	protected PostalAddress invokeGetAddress(Long addressId) throws Exception {
-		Http.Options options = _createHttpOptions();
-
-		options.setLocation(
-			_resourceURL + _toPath("/addresses/{address-id}", addressId));
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), PostalAddressImpl.class);
-	}
-
-	protected Http.Response invokeGetAddressResponse(Long addressId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setLocation(
-			_resourceURL + _toPath("/addresses/{address-id}", addressId));
 
 		HttpUtil.URLtoString(options);
 
@@ -150,6 +150,38 @@ public abstract class BasePostalAddressResourceTestCase {
 			return addressCountry;
 		}
 
+		public String getAddressLocality() {
+			return addressLocality;
+		}
+
+		public String getAddressRegion() {
+			return addressRegion;
+		}
+
+		public String getAddressType() {
+			return addressType;
+		}
+
+		public Long getId() {
+			return id;
+		}
+
+		public String getPostalCode() {
+			return postalCode;
+		}
+
+		public String getStreetAddressLine1() {
+			return streetAddressLine1;
+		}
+
+		public String getStreetAddressLine2() {
+			return streetAddressLine2;
+		}
+
+		public String getStreetAddressLine3() {
+			return streetAddressLine3;
+		}
+
 		public void setAddressCountry(String addressCountry) {
 			this.addressCountry = addressCountry;
 		}
@@ -164,13 +196,6 @@ public abstract class BasePostalAddressResourceTestCase {
 			catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
-		}
-
-		@JsonProperty
-		protected String addressCountry;
-
-		public String getAddressLocality() {
-			return addressLocality;
 		}
 
 		public void setAddressLocality(String addressLocality) {
@@ -189,13 +214,6 @@ public abstract class BasePostalAddressResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected String addressLocality;
-
-		public String getAddressRegion() {
-			return addressRegion;
-		}
-
 		public void setAddressRegion(String addressRegion) {
 			this.addressRegion = addressRegion;
 		}
@@ -210,13 +228,6 @@ public abstract class BasePostalAddressResourceTestCase {
 			catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
-		}
-
-		@JsonProperty
-		protected String addressRegion;
-
-		public String getAddressType() {
-			return addressType;
 		}
 
 		public void setAddressType(String addressType) {
@@ -235,13 +246,6 @@ public abstract class BasePostalAddressResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected String addressType;
-
-		public Long getId() {
-			return id;
-		}
-
 		public void setId(Long id) {
 			this.id = id;
 		}
@@ -254,13 +258,6 @@ public abstract class BasePostalAddressResourceTestCase {
 			catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
-		}
-
-		@JsonProperty
-		protected Long id;
-
-		public String getPostalCode() {
-			return postalCode;
 		}
 
 		public void setPostalCode(String postalCode) {
@@ -277,13 +274,6 @@ public abstract class BasePostalAddressResourceTestCase {
 			catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
-		}
-
-		@JsonProperty
-		protected String postalCode;
-
-		public String getStreetAddressLine1() {
-			return streetAddressLine1;
 		}
 
 		public void setStreetAddressLine1(String streetAddressLine1) {
@@ -303,13 +293,6 @@ public abstract class BasePostalAddressResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected String streetAddressLine1;
-
-		public String getStreetAddressLine2() {
-			return streetAddressLine2;
-		}
-
 		public void setStreetAddressLine2(String streetAddressLine2) {
 			this.streetAddressLine2 = streetAddressLine2;
 		}
@@ -325,13 +308,6 @@ public abstract class BasePostalAddressResourceTestCase {
 			catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
-		}
-
-		@JsonProperty
-		protected String streetAddressLine2;
-
-		public String getStreetAddressLine3() {
-			return streetAddressLine3;
 		}
 
 		public void setStreetAddressLine3(String streetAddressLine3) {
@@ -350,6 +326,30 @@ public abstract class BasePostalAddressResourceTestCase {
 				throw new RuntimeException(t);
 			}
 		}
+
+		@JsonProperty
+		protected String addressCountry;
+
+		@JsonProperty
+		protected String addressLocality;
+
+		@JsonProperty
+		protected String addressRegion;
+
+		@JsonProperty
+		protected String addressType;
+
+		@JsonProperty
+		protected Long id;
+
+		@JsonProperty
+		protected String postalCode;
+
+		@JsonProperty
+		protected String streetAddressLine1;
+
+		@JsonProperty
+		protected String streetAddressLine2;
 
 		@JsonProperty
 		protected String streetAddressLine3;
@@ -378,12 +378,12 @@ public abstract class BasePostalAddressResourceTestCase {
 		return template.replaceAll("\\{.*\\}", String.valueOf(values[0]));
 	}
 
-	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {
+	private static final ObjectMapper _inputObjectMapper = new ObjectMapper() {
 		{
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
 		}
 	};
-	private final static ObjectMapper _outputObjectMapper = new ObjectMapper();
+	private static final ObjectMapper _outputObjectMapper = new ObjectMapper();
 
 	private URL _resourceURL;
 

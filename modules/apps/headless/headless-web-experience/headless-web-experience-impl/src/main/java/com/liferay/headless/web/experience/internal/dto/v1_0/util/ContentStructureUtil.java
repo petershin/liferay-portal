@@ -66,7 +66,6 @@ public class ContentStructureUtil {
 
 				setFields(
 					() -> {
-
 						List<DDMFormField> ddmFormFields =
 							ddmStructure.getDDMFormFields(true);
 
@@ -137,7 +136,6 @@ public class ContentStructureUtil {
 				setName(ddmFormField.getName());
 				setOptions(
 					() -> {
-
 						return Optional.ofNullable(
 							ddmFormField.getDDMFormFieldOptions()
 						).map(
@@ -150,7 +148,6 @@ public class ContentStructureUtil {
 							Stream::empty
 						).map(
 							entry -> new OptionsImpl() {
-
 								{
 									setLabel(
 										_toString(entry.getValue(), locale));

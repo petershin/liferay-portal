@@ -42,7 +42,6 @@ public class CreatorUtil {
 
 				setImage(
 					() -> {
-
 						if (user.getPortraitId() == 0) {
 							return null;
 						}
@@ -57,7 +56,6 @@ public class CreatorUtil {
 					});
 				setProfileURL(
 					() -> {
-
 						Group group = user.getGroup();
 
 						ThemeDisplay themeDisplay = new ThemeDisplay() {

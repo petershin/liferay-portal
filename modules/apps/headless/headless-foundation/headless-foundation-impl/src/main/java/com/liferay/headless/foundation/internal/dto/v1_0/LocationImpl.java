@@ -40,6 +40,14 @@ public class LocationImpl implements Location {
 		return addressCountry;
 	}
 
+	public String getAddressRegion() {
+		return addressRegion;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
 	public void setAddressCountry(String addressCountry) {
 		this.addressCountry = addressCountry;
 	}
@@ -54,14 +62,6 @@ public class LocationImpl implements Location {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected String addressCountry;
-
-	public String getAddressRegion() {
-		return addressRegion;
 	}
 
 	public void setAddressRegion(String addressRegion) {
@@ -80,14 +80,6 @@ public class LocationImpl implements Location {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected String addressRegion;
-
-	public Long getId() {
-		return id;
-	}
-
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -101,6 +93,14 @@ public class LocationImpl implements Location {
 			throw new RuntimeException(t);
 		}
 	}
+
+	@GraphQLField
+	@JsonProperty
+	protected String addressCountry;
+
+	@GraphQLField
+	@JsonProperty
+	protected String addressRegion;
 
 	@GraphQLField
 	@JsonProperty

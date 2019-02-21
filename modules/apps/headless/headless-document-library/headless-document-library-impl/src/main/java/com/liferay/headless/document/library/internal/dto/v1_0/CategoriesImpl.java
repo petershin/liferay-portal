@@ -40,6 +40,10 @@ public class CategoriesImpl implements Categories {
 		return categoryId;
 	}
 
+	public String getCategoryName() {
+		return categoryName;
+	}
+
 	public void setCategoryId(Long categoryId) {
 		this.categoryId = categoryId;
 	}
@@ -54,14 +58,6 @@ public class CategoriesImpl implements Categories {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Long categoryId;
-
-	public String getCategoryName() {
-		return categoryName;
 	}
 
 	public void setCategoryName(String categoryName) {
@@ -79,6 +75,10 @@ public class CategoriesImpl implements Categories {
 			throw new RuntimeException(t);
 		}
 	}
+
+	@GraphQLField
+	@JsonProperty
+	protected Long categoryId;
 
 	@GraphQLField
 	@JsonProperty

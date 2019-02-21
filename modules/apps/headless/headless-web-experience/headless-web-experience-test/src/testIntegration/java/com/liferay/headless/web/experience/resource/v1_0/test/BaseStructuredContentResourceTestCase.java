@@ -28,6 +28,7 @@ import com.liferay.headless.web.experience.dto.v1_0.RenderedContentsByTemplate;
 import com.liferay.headless.web.experience.dto.v1_0.StructuredContent;
 import com.liferay.headless.web.experience.dto.v1_0.Values;
 import com.liferay.petra.function.UnsafeSupplier;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -37,7 +38,6 @@ import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -73,6 +73,11 @@ public abstract class BaseStructuredContentResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteStructuredContent() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	@Test
 	public void testGetContentSpaceContentStructureStructuredContentsPage()
 		throws Exception {
 
@@ -81,16 +86,6 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 	@Test
 	public void testGetContentSpaceStructuredContentsPage() throws Exception {
-		Assert.assertTrue(true);
-	}
-
-	@Test
-	public void testPostContentSpaceStructuredContent() throws Exception {
-		Assert.assertTrue(true);
-	}
-
-	@Test
-	public void testDeleteStructuredContent() throws Exception {
 		Assert.assertTrue(true);
 	}
 
@@ -105,6 +100,11 @@ public abstract class BaseStructuredContentResourceTestCase {
 	}
 
 	@Test
+	public void testPostContentSpaceStructuredContent() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	@Test
 	public void testPutStructuredContent() throws Exception {
 		Assert.assertTrue(true);
 	}
@@ -114,6 +114,42 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 		Assert.assertEquals(
 			expectedResponseCode, actualResponse.getResponseCode());
+	}
+
+	protected boolean invokeDeleteStructuredContent(Long structuredContentId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setDelete(true);
+
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/structured-contents/{structured-content-id}",
+					structuredContentId));
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), Boolean.class);
+	}
+
+	protected Http.Response invokeDeleteStructuredContentResponse(
+			Long structuredContentId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setDelete(true);
+
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/structured-contents/{structured-content-id}",
+					structuredContentId));
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
 	}
 
 	protected Page<StructuredContent>
@@ -189,87 +225,6 @@ public abstract class BaseStructuredContentResourceTestCase {
 		return options.getResponse();
 	}
 
-	protected StructuredContent invokePostContentSpaceStructuredContent(
-			Long contentSpaceId, StructuredContent structuredContent)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			_inputObjectMapper.writeValueAsString(structuredContent),
-			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-
-		options.setLocation(
-			_resourceURL +
-				_toPath(
-					"/content-spaces/{content-space-id}/structured-contents",
-					contentSpaceId, structuredContent));
-
-		options.setPost(true);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), StructuredContentImpl.class);
-	}
-
-	protected Http.Response invokePostContentSpaceStructuredContentResponse(
-			Long contentSpaceId, StructuredContent structuredContent)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			_inputObjectMapper.writeValueAsString(structuredContent),
-			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-
-		options.setLocation(
-			_resourceURL +
-				_toPath(
-					"/content-spaces/{content-space-id}/structured-contents",
-					contentSpaceId, structuredContent));
-
-		options.setPost(true);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
-	protected boolean invokeDeleteStructuredContent(Long structuredContentId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setDelete(true);
-
-		options.setLocation(
-			_resourceURL +
-				_toPath(
-					"/structured-contents/{structured-content-id}",
-					structuredContentId));
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), Boolean.class);
-	}
-
-	protected Http.Response invokeDeleteStructuredContentResponse(
-			Long structuredContentId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setDelete(true);
-
-		options.setLocation(
-			_resourceURL +
-				_toPath(
-					"/structured-contents/{structured-content-id}",
-					structuredContentId));
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
 	protected StructuredContent invokeGetStructuredContent(
 			Long structuredContentId)
 		throws Exception {
@@ -330,6 +285,51 @@ public abstract class BaseStructuredContentResourceTestCase {
 				_toPath(
 					"/structured-contents/{structured-content-id}",
 					structuredContentId, structuredContent));
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	protected StructuredContent invokePostContentSpaceStructuredContent(
+			Long contentSpaceId, StructuredContent structuredContent)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(structuredContent),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/content-spaces/{content-space-id}/structured-contents",
+					contentSpaceId, structuredContent));
+
+		options.setPost(true);
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), StructuredContentImpl.class);
+	}
+
+	protected Http.Response invokePostContentSpaceStructuredContentResponse(
+			Long contentSpaceId, StructuredContent structuredContent)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(structuredContent),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/content-spaces/{content-space-id}/structured-contents",
+					contentSpaceId, structuredContent));
+
+		options.setPost(true);
 
 		HttpUtil.URLtoString(options);
 
@@ -405,6 +405,70 @@ public abstract class BaseStructuredContentResourceTestCase {
 			return aggregateRating;
 		}
 
+		public String[] getAvailableLanguages() {
+			return availableLanguages;
+		}
+
+		public Categories[] getCategories() {
+			return categories;
+		}
+
+		public Comment[] getComment() {
+			return comment;
+		}
+
+		public Long getContentSpace() {
+			return contentSpace;
+		}
+
+		public Long getContentStructureId() {
+			return contentStructureId;
+		}
+
+		public Creator getCreator() {
+			return creator;
+		}
+
+		public Date getDateCreated() {
+			return dateCreated;
+		}
+
+		public Date getDateModified() {
+			return dateModified;
+		}
+
+		public Date getDatePublished() {
+			return datePublished;
+		}
+
+		public String getDescription() {
+			return description;
+		}
+
+		public Long getId() {
+			return id;
+		}
+
+		public String[] getKeywords() {
+			return keywords;
+		}
+
+		public Date getLastReviewed() {
+			return lastReviewed;
+		}
+
+		public RenderedContentsByTemplate[] getRenderedContentsByTemplate() {
+			return renderedContentsByTemplate;
+		}
+
+		public String getTitle() {
+			return title;
+		}
+
+		public Values[] getValues() {
+			return values;
+		}
+
 		public void setAggregateRating(AggregateRating aggregateRating) {
 			this.aggregateRating = aggregateRating;
 		}
@@ -420,13 +484,6 @@ public abstract class BaseStructuredContentResourceTestCase {
 			catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
-		}
-
-		@JsonProperty
-		protected AggregateRating aggregateRating;
-
-		public String[] getAvailableLanguages() {
-			return availableLanguages;
 		}
 
 		public void setAvailableLanguages(String[] availableLanguages) {
@@ -446,13 +503,6 @@ public abstract class BaseStructuredContentResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected String[] availableLanguages;
-
-		public Categories[] getCategories() {
-			return categories;
-		}
-
 		public void setCategories(Categories[] categories) {
 			this.categories = categories;
 		}
@@ -467,13 +517,6 @@ public abstract class BaseStructuredContentResourceTestCase {
 			catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
-		}
-
-		@JsonProperty
-		protected Categories[] categories;
-
-		public Comment[] getComment() {
-			return comment;
 		}
 
 		public void setComment(Comment[] comment) {
@@ -492,13 +535,6 @@ public abstract class BaseStructuredContentResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected Comment[] comment;
-
-		public Long getContentSpace() {
-			return contentSpace;
-		}
-
 		public void setContentSpace(Long contentSpace) {
 			this.contentSpace = contentSpace;
 		}
@@ -513,13 +549,6 @@ public abstract class BaseStructuredContentResourceTestCase {
 			catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
-		}
-
-		@JsonProperty
-		protected Long contentSpace;
-
-		public Long getContentStructureId() {
-			return contentStructureId;
 		}
 
 		public void setContentStructureId(Long contentStructureId) {
@@ -538,13 +567,6 @@ public abstract class BaseStructuredContentResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected Long contentStructureId;
-
-		public Creator getCreator() {
-			return creator;
-		}
-
 		public void setCreator(Creator creator) {
 			this.creator = creator;
 		}
@@ -559,13 +581,6 @@ public abstract class BaseStructuredContentResourceTestCase {
 			catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
-		}
-
-		@JsonProperty
-		protected Creator creator;
-
-		public Date getDateCreated() {
-			return dateCreated;
 		}
 
 		public void setDateCreated(Date dateCreated) {
@@ -584,13 +599,6 @@ public abstract class BaseStructuredContentResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected Date dateCreated;
-
-		public Date getDateModified() {
-			return dateModified;
-		}
-
 		public void setDateModified(Date dateModified) {
 			this.dateModified = dateModified;
 		}
@@ -605,13 +613,6 @@ public abstract class BaseStructuredContentResourceTestCase {
 			catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
-		}
-
-		@JsonProperty
-		protected Date dateModified;
-
-		public Date getDatePublished() {
-			return datePublished;
 		}
 
 		public void setDatePublished(Date datePublished) {
@@ -630,13 +631,6 @@ public abstract class BaseStructuredContentResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected Date datePublished;
-
-		public String getDescription() {
-			return description;
-		}
-
 		public void setDescription(String description) {
 			this.description = description;
 		}
@@ -653,13 +647,6 @@ public abstract class BaseStructuredContentResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected String description;
-
-		public Long getId() {
-			return id;
-		}
-
 		public void setId(Long id) {
 			this.id = id;
 		}
@@ -672,13 +659,6 @@ public abstract class BaseStructuredContentResourceTestCase {
 			catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
-		}
-
-		@JsonProperty
-		protected Long id;
-
-		public String[] getKeywords() {
-			return keywords;
 		}
 
 		public void setKeywords(String[] keywords) {
@@ -697,13 +677,6 @@ public abstract class BaseStructuredContentResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected String[] keywords;
-
-		public Date getLastReviewed() {
-			return lastReviewed;
-		}
-
 		public void setLastReviewed(Date lastReviewed) {
 			this.lastReviewed = lastReviewed;
 		}
@@ -718,13 +691,6 @@ public abstract class BaseStructuredContentResourceTestCase {
 			catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
-		}
-
-		@JsonProperty
-		protected Date lastReviewed;
-
-		public RenderedContentsByTemplate[] getRenderedContentsByTemplate() {
-			return renderedContentsByTemplate;
 		}
 
 		public void setRenderedContentsByTemplate(
@@ -747,13 +713,6 @@ public abstract class BaseStructuredContentResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected RenderedContentsByTemplate[] renderedContentsByTemplate;
-
-		public String getTitle() {
-			return title;
-		}
-
 		public void setTitle(String title) {
 			this.title = title;
 		}
@@ -770,17 +729,6 @@ public abstract class BaseStructuredContentResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected String title;
-
-		public Values[] getValues() {
-			return values;
-		}
-
-		public void setValues(Values[] values) {
-			this.values = values;
-		}
-
 		@JsonIgnore
 		public void setValues(
 			UnsafeSupplier<Values[], Throwable> valuesUnsafeSupplier) {
@@ -792,6 +740,58 @@ public abstract class BaseStructuredContentResourceTestCase {
 				throw new RuntimeException(t);
 			}
 		}
+
+		public void setValues(Values[] values) {
+			this.values = values;
+		}
+
+		@JsonProperty
+		protected AggregateRating aggregateRating;
+
+		@JsonProperty
+		protected String[] availableLanguages;
+
+		@JsonProperty
+		protected Categories[] categories;
+
+		@JsonProperty
+		protected Comment[] comment;
+
+		@JsonProperty
+		protected Long contentSpace;
+
+		@JsonProperty
+		protected Long contentStructureId;
+
+		@JsonProperty
+		protected Creator creator;
+
+		@JsonProperty
+		protected Date dateCreated;
+
+		@JsonProperty
+		protected Date dateModified;
+
+		@JsonProperty
+		protected Date datePublished;
+
+		@JsonProperty
+		protected String description;
+
+		@JsonProperty
+		protected Long id;
+
+		@JsonProperty
+		protected String[] keywords;
+
+		@JsonProperty
+		protected Date lastReviewed;
+
+		@JsonProperty
+		protected RenderedContentsByTemplate[] renderedContentsByTemplate;
+
+		@JsonProperty
+		protected String title;
 
 		@JsonProperty
 		protected Values[] values;
@@ -820,12 +820,12 @@ public abstract class BaseStructuredContentResourceTestCase {
 		return template.replaceAll("\\{.*\\}", String.valueOf(values[0]));
 	}
 
-	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {
+	private static final ObjectMapper _inputObjectMapper = new ObjectMapper() {
 		{
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
 		}
 	};
-	private final static ObjectMapper _outputObjectMapper = new ObjectMapper();
+	private static final ObjectMapper _outputObjectMapper = new ObjectMapper();
 
 	private URL _resourceURL;
 

@@ -40,6 +40,26 @@ public class AdaptedImagesImpl implements AdaptedImages {
 		return contentUrl;
 	}
 
+	public Number getHeight() {
+		return height;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public String getResolutionName() {
+		return resolutionName;
+	}
+
+	public Number getSizeInBytes() {
+		return sizeInBytes;
+	}
+
+	public Number getWidth() {
+		return width;
+	}
+
 	public void setContentUrl(String contentUrl) {
 		this.contentUrl = contentUrl;
 	}
@@ -54,14 +74,6 @@ public class AdaptedImagesImpl implements AdaptedImages {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected String contentUrl;
-
-	public Number getHeight() {
-		return height;
 	}
 
 	public void setHeight(Number height) {
@@ -80,14 +92,6 @@ public class AdaptedImagesImpl implements AdaptedImages {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected Number height;
-
-	public Long getId() {
-		return id;
-	}
-
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -100,14 +104,6 @@ public class AdaptedImagesImpl implements AdaptedImages {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Long id;
-
-	public String getResolutionName() {
-		return resolutionName;
 	}
 
 	public void setResolutionName(String resolutionName) {
@@ -126,14 +122,6 @@ public class AdaptedImagesImpl implements AdaptedImages {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected String resolutionName;
-
-	public Number getSizeInBytes() {
-		return sizeInBytes;
-	}
-
 	public void setSizeInBytes(Number sizeInBytes) {
 		this.sizeInBytes = sizeInBytes;
 	}
@@ -148,14 +136,6 @@ public class AdaptedImagesImpl implements AdaptedImages {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Number sizeInBytes;
-
-	public Number getWidth() {
-		return width;
 	}
 
 	public void setWidth(Number width) {
@@ -173,6 +153,26 @@ public class AdaptedImagesImpl implements AdaptedImages {
 			throw new RuntimeException(t);
 		}
 	}
+
+	@GraphQLField
+	@JsonProperty
+	protected String contentUrl;
+
+	@GraphQLField
+	@JsonProperty
+	protected Number height;
+
+	@GraphQLField
+	@JsonProperty
+	protected Long id;
+
+	@GraphQLField
+	@JsonProperty
+	protected String resolutionName;
+
+	@GraphQLField
+	@JsonProperty
+	protected Number sizeInBytes;
 
 	@GraphQLField
 	@JsonProperty

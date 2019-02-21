@@ -63,13 +63,6 @@ public abstract class BaseStructuredContentImageResourceTestCase {
 	}
 
 	@Test
-	public void testGetStructuredContentStructuredContentImagesPage()
-		throws Exception {
-
-		Assert.assertTrue(true);
-	}
-
-	@Test
 	public void testDeleteStructuredContentContentDocument() throws Exception {
 		Assert.assertTrue(true);
 	}
@@ -79,46 +72,18 @@ public abstract class BaseStructuredContentImageResourceTestCase {
 		Assert.assertTrue(true);
 	}
 
+	@Test
+	public void testGetStructuredContentStructuredContentImagesPage()
+		throws Exception {
+
+		Assert.assertTrue(true);
+	}
+
 	protected void assertResponseCode(
 		int expectedResponseCode, Http.Response actualResponse) {
 
 		Assert.assertEquals(
 			expectedResponseCode, actualResponse.getResponseCode());
-	}
-
-	protected Page<StructuredContentImage>
-			invokeGetStructuredContentStructuredContentImagesPage(
-				Long structuredContentId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setLocation(
-			_resourceURL +
-				_toPath(
-					"/structured-contents/{structured-content-id}/structured-content-images",
-					structuredContentId));
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), Page.class);
-	}
-
-	protected Http.Response
-			invokeGetStructuredContentStructuredContentImagesPageResponse(
-				Long structuredContentId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setLocation(
-			_resourceURL +
-				_toPath(
-					"/structured-contents/{structured-content-id}/structured-content-images",
-					structuredContentId));
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
 	}
 
 	protected boolean invokeDeleteStructuredContentContentDocument(
@@ -192,6 +157,41 @@ public abstract class BaseStructuredContentImageResourceTestCase {
 		return options.getResponse();
 	}
 
+	protected Page<StructuredContentImage>
+			invokeGetStructuredContentStructuredContentImagesPage(
+				Long structuredContentId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/structured-contents/{structured-content-id}/structured-content-images",
+					structuredContentId));
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), Page.class);
+	}
+
+	protected Http.Response
+			invokeGetStructuredContentStructuredContentImagesPageResponse(
+				Long structuredContentId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/structured-contents/{structured-content-id}/structured-content-images",
+					structuredContentId));
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
 	protected StructuredContentImage randomStructuredContentImage() {
 		return new StructuredContentImageImpl() {
 			{
@@ -215,6 +215,38 @@ public abstract class BaseStructuredContentImageResourceTestCase {
 			return contentUrl;
 		}
 
+		public Creator getCreator() {
+			return creator;
+		}
+
+		public Date getDateCreated() {
+			return dateCreated;
+		}
+
+		public Date getDateModified() {
+			return dateModified;
+		}
+
+		public String getEncodingFormat() {
+			return encodingFormat;
+		}
+
+		public String getFileExtension() {
+			return fileExtension;
+		}
+
+		public Long getId() {
+			return id;
+		}
+
+		public Number getSizeInBytes() {
+			return sizeInBytes;
+		}
+
+		public String getTitle() {
+			return title;
+		}
+
 		public void setContentUrl(String contentUrl) {
 			this.contentUrl = contentUrl;
 		}
@@ -229,13 +261,6 @@ public abstract class BaseStructuredContentImageResourceTestCase {
 			catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
-		}
-
-		@JsonProperty
-		protected String contentUrl;
-
-		public Creator getCreator() {
-			return creator;
 		}
 
 		public void setCreator(Creator creator) {
@@ -254,13 +279,6 @@ public abstract class BaseStructuredContentImageResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected Creator creator;
-
-		public Date getDateCreated() {
-			return dateCreated;
-		}
-
 		public void setDateCreated(Date dateCreated) {
 			this.dateCreated = dateCreated;
 		}
@@ -275,13 +293,6 @@ public abstract class BaseStructuredContentImageResourceTestCase {
 			catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
-		}
-
-		@JsonProperty
-		protected Date dateCreated;
-
-		public Date getDateModified() {
-			return dateModified;
 		}
 
 		public void setDateModified(Date dateModified) {
@@ -300,13 +311,6 @@ public abstract class BaseStructuredContentImageResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected Date dateModified;
-
-		public String getEncodingFormat() {
-			return encodingFormat;
-		}
-
 		public void setEncodingFormat(String encodingFormat) {
 			this.encodingFormat = encodingFormat;
 		}
@@ -321,13 +325,6 @@ public abstract class BaseStructuredContentImageResourceTestCase {
 			catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
-		}
-
-		@JsonProperty
-		protected String encodingFormat;
-
-		public String getFileExtension() {
-			return fileExtension;
 		}
 
 		public void setFileExtension(String fileExtension) {
@@ -346,13 +343,6 @@ public abstract class BaseStructuredContentImageResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected String fileExtension;
-
-		public Long getId() {
-			return id;
-		}
-
 		public void setId(Long id) {
 			this.id = id;
 		}
@@ -365,13 +355,6 @@ public abstract class BaseStructuredContentImageResourceTestCase {
 			catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
-		}
-
-		@JsonProperty
-		protected Long id;
-
-		public Number getSizeInBytes() {
-			return sizeInBytes;
 		}
 
 		public void setSizeInBytes(Number sizeInBytes) {
@@ -390,13 +373,6 @@ public abstract class BaseStructuredContentImageResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected Number sizeInBytes;
-
-		public String getTitle() {
-			return title;
-		}
-
 		public void setTitle(String title) {
 			this.title = title;
 		}
@@ -412,6 +388,30 @@ public abstract class BaseStructuredContentImageResourceTestCase {
 				throw new RuntimeException(t);
 			}
 		}
+
+		@JsonProperty
+		protected String contentUrl;
+
+		@JsonProperty
+		protected Creator creator;
+
+		@JsonProperty
+		protected Date dateCreated;
+
+		@JsonProperty
+		protected Date dateModified;
+
+		@JsonProperty
+		protected String encodingFormat;
+
+		@JsonProperty
+		protected String fileExtension;
+
+		@JsonProperty
+		protected Long id;
+
+		@JsonProperty
+		protected Number sizeInBytes;
 
 		@JsonProperty
 		protected String title;
@@ -440,12 +440,12 @@ public abstract class BaseStructuredContentImageResourceTestCase {
 		return template.replaceAll("\\{.*\\}", String.valueOf(values[0]));
 	}
 
-	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {
+	private static final ObjectMapper _inputObjectMapper = new ObjectMapper() {
 		{
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
 		}
 	};
-	private final static ObjectMapper _outputObjectMapper = new ObjectMapper();
+	private static final ObjectMapper _outputObjectMapper = new ObjectMapper();
 
 	private URL _resourceURL;
 

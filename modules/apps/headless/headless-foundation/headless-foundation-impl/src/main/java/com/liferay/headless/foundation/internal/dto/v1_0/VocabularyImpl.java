@@ -43,6 +43,38 @@ public class VocabularyImpl implements Vocabulary {
 		return availableLanguages;
 	}
 
+	public Long getContentSpace() {
+		return contentSpace;
+	}
+
+	public Creator getCreator() {
+		return creator;
+	}
+
+	public Date getDateCreated() {
+		return dateCreated;
+	}
+
+	public Date getDateModified() {
+		return dateModified;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public Boolean getHasCategories() {
+		return hasCategories;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
 	public void setAvailableLanguages(String[] availableLanguages) {
 		this.availableLanguages = availableLanguages;
 	}
@@ -57,14 +89,6 @@ public class VocabularyImpl implements Vocabulary {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected String[] availableLanguages;
-
-	public Long getContentSpace() {
-		return contentSpace;
 	}
 
 	public void setContentSpace(Long contentSpace) {
@@ -83,14 +107,6 @@ public class VocabularyImpl implements Vocabulary {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected Long contentSpace;
-
-	public Creator getCreator() {
-		return creator;
-	}
-
 	public void setCreator(Creator creator) {
 		this.creator = creator;
 	}
@@ -105,14 +121,6 @@ public class VocabularyImpl implements Vocabulary {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Creator creator;
-
-	public Date getDateCreated() {
-		return dateCreated;
 	}
 
 	public void setDateCreated(Date dateCreated) {
@@ -131,14 +139,6 @@ public class VocabularyImpl implements Vocabulary {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected Date dateCreated;
-
-	public Date getDateModified() {
-		return dateModified;
-	}
-
 	public void setDateModified(Date dateModified) {
 		this.dateModified = dateModified;
 	}
@@ -153,14 +153,6 @@ public class VocabularyImpl implements Vocabulary {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Date dateModified;
-
-	public String getDescription() {
-		return description;
 	}
 
 	public void setDescription(String description) {
@@ -179,14 +171,6 @@ public class VocabularyImpl implements Vocabulary {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected String description;
-
-	public Boolean getHasCategories() {
-		return hasCategories;
-	}
-
 	public void setHasCategories(Boolean hasCategories) {
 		this.hasCategories = hasCategories;
 	}
@@ -203,14 +187,6 @@ public class VocabularyImpl implements Vocabulary {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected Boolean hasCategories;
-
-	public Long getId() {
-		return id;
-	}
-
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -223,14 +199,6 @@ public class VocabularyImpl implements Vocabulary {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Long id;
-
-	public String getName() {
-		return name;
 	}
 
 	public void setName(String name) {
@@ -246,6 +214,38 @@ public class VocabularyImpl implements Vocabulary {
 			throw new RuntimeException(t);
 		}
 	}
+
+	@GraphQLField
+	@JsonProperty
+	protected String[] availableLanguages;
+
+	@GraphQLField
+	@JsonProperty
+	protected Long contentSpace;
+
+	@GraphQLField
+	@JsonProperty
+	protected Creator creator;
+
+	@GraphQLField
+	@JsonProperty
+	protected Date dateCreated;
+
+	@GraphQLField
+	@JsonProperty
+	protected Date dateModified;
+
+	@GraphQLField
+	@JsonProperty
+	protected String description;
+
+	@GraphQLField
+	@JsonProperty
+	protected Boolean hasCategories;
+
+	@GraphQLField
+	@JsonProperty
+	protected Long id;
 
 	@GraphQLField
 	@JsonProperty

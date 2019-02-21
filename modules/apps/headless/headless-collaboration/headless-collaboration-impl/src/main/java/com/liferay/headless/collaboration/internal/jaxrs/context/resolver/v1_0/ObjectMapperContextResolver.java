@@ -77,7 +77,6 @@ public class ObjectMapperContextResolver
 					{
 						setAbstractTypes(
 							new SimpleAbstractTypeResolver() {
-
 								{
 									addMapping(
 										AggregateRating.class,
@@ -98,6 +97,7 @@ public class ObjectMapperContextResolver
 								}
 							});
 					}
+
 				});
 			setDateFormat(new ISO8601DateFormat());
 		}

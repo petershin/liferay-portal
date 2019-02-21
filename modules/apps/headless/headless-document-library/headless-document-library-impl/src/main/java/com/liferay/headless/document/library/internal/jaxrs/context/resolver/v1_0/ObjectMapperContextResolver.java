@@ -77,7 +77,6 @@ public class ObjectMapperContextResolver
 					{
 						setAbstractTypes(
 							new SimpleAbstractTypeResolver() {
-
 								{
 									addMapping(
 										AdaptedImages.class,
@@ -97,6 +96,7 @@ public class ObjectMapperContextResolver
 								}
 							});
 					}
+
 				});
 			setDateFormat(new ISO8601DateFormat());
 		}

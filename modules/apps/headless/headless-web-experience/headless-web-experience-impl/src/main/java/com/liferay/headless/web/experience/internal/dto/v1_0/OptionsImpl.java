@@ -40,6 +40,10 @@ public class OptionsImpl implements Options {
 		return label;
 	}
 
+	public String getValue() {
+		return value;
+	}
+
 	public void setLabel(String label) {
 		this.label = label;
 	}
@@ -54,14 +58,6 @@ public class OptionsImpl implements Options {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected String label;
-
-	public String getValue() {
-		return value;
 	}
 
 	public void setValue(String value) {
@@ -79,6 +75,10 @@ public class OptionsImpl implements Options {
 			throw new RuntimeException(t);
 		}
 	}
+
+	@GraphQLField
+	@JsonProperty
+	protected String label;
 
 	@GraphQLField
 	@JsonProperty

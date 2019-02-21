@@ -25,6 +25,7 @@ import com.liferay.headless.form.dto.v1_0.Form;
 import com.liferay.headless.form.dto.v1_0.FormRecord;
 import com.liferay.headless.form.dto.v1_0.Options;
 import com.liferay.petra.function.UnsafeSupplier;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -32,7 +33,6 @@ import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -67,17 +67,12 @@ public abstract class BaseFormRecordResourceTestCase {
 	}
 
 	@Test
-	public void testGetFormRecord() throws Exception {
-		Assert.assertTrue(true);
-	}
-
-	@Test
-	public void testPutFormRecord() throws Exception {
-		Assert.assertTrue(true);
-	}
-
-	@Test
 	public void testGetFormFormRecordsPage() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	@Test
+	public void testGetFormRecord() throws Exception {
 		Assert.assertTrue(true);
 	}
 
@@ -86,11 +81,43 @@ public abstract class BaseFormRecordResourceTestCase {
 		Assert.assertTrue(true);
 	}
 
+	@Test
+	public void testPutFormRecord() throws Exception {
+		Assert.assertTrue(true);
+	}
+
 	protected void assertResponseCode(
 		int expectedResponseCode, Http.Response actualResponse) {
 
 		Assert.assertEquals(
 			expectedResponseCode, actualResponse.getResponseCode());
+	}
+
+	protected Page<FormRecord> invokeGetFormFormRecordsPage(
+			Long formId, Pagination pagination)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL + _toPath("/forms/{form-id}/form-records", formId));
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), Page.class);
+	}
+
+	protected Http.Response invokeGetFormFormRecordsPageResponse(
+			Long formId, Pagination pagination)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL + _toPath("/forms/{form-id}/form-records", formId));
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
 	}
 
 	protected FormRecord invokeGetFormRecord(Long formRecordId)
@@ -114,6 +141,47 @@ public abstract class BaseFormRecordResourceTestCase {
 		options.setLocation(
 			_resourceURL +
 				_toPath("/form-records/{form-record-id}", formRecordId));
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	protected FormRecord invokePostFormFormRecord(
+			Long formId, FormRecord formRecord)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(formRecord),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+
+		options.setLocation(
+			_resourceURL +
+				_toPath("/forms/{form-id}/form-records", formId, formRecord));
+
+		options.setPost(true);
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), FormRecordImpl.class);
+	}
+
+	protected Http.Response invokePostFormFormRecordResponse(
+			Long formId, FormRecord formRecord)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(formRecord),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+
+		options.setLocation(
+			_resourceURL +
+				_toPath("/forms/{form-id}/form-records", formId, formRecord));
+
+		options.setPost(true);
 
 		HttpUtil.URLtoString(options);
 
@@ -165,74 +233,6 @@ public abstract class BaseFormRecordResourceTestCase {
 		return options.getResponse();
 	}
 
-	protected Page<FormRecord> invokeGetFormFormRecordsPage(
-			Long formId, Pagination pagination)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setLocation(
-			_resourceURL + _toPath("/forms/{form-id}/form-records", formId));
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), Page.class);
-	}
-
-	protected Http.Response invokeGetFormFormRecordsPageResponse(
-			Long formId, Pagination pagination)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setLocation(
-			_resourceURL + _toPath("/forms/{form-id}/form-records", formId));
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
-	protected FormRecord invokePostFormFormRecord(
-			Long formId, FormRecord formRecord)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			_inputObjectMapper.writeValueAsString(formRecord),
-			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-
-		options.setLocation(
-			_resourceURL +
-				_toPath("/forms/{form-id}/form-records", formId, formRecord));
-
-		options.setPost(true);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), FormRecordImpl.class);
-	}
-
-	protected Http.Response invokePostFormFormRecordResponse(
-			Long formId, FormRecord formRecord)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			_inputObjectMapper.writeValueAsString(formRecord),
-			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-
-		options.setLocation(
-			_resourceURL +
-				_toPath("/forms/{form-id}/form-records", formId, formRecord));
-
-		options.setPost(true);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
 	protected FormRecord randomFormRecord() {
 		return new FormRecordImpl() {
 			{
@@ -254,6 +254,38 @@ public abstract class BaseFormRecordResourceTestCase {
 			return creator;
 		}
 
+		public Date getDateCreated() {
+			return dateCreated;
+		}
+
+		public Date getDateModified() {
+			return dateModified;
+		}
+
+		public Date getDatePublished() {
+			return datePublished;
+		}
+
+		public Boolean getDraft() {
+			return draft;
+		}
+
+		public FieldValues[] getFieldValues() {
+			return fieldValues;
+		}
+
+		public Form getForm() {
+			return form;
+		}
+
+		public Long getFormId() {
+			return formId;
+		}
+
+		public Long getId() {
+			return id;
+		}
+
 		public void setCreator(Creator creator) {
 			this.creator = creator;
 		}
@@ -268,13 +300,6 @@ public abstract class BaseFormRecordResourceTestCase {
 			catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
-		}
-
-		@JsonProperty
-		protected Creator creator;
-
-		public Date getDateCreated() {
-			return dateCreated;
 		}
 
 		public void setDateCreated(Date dateCreated) {
@@ -293,13 +318,6 @@ public abstract class BaseFormRecordResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected Date dateCreated;
-
-		public Date getDateModified() {
-			return dateModified;
-		}
-
 		public void setDateModified(Date dateModified) {
 			this.dateModified = dateModified;
 		}
@@ -314,13 +332,6 @@ public abstract class BaseFormRecordResourceTestCase {
 			catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
-		}
-
-		@JsonProperty
-		protected Date dateModified;
-
-		public Date getDatePublished() {
-			return datePublished;
 		}
 
 		public void setDatePublished(Date datePublished) {
@@ -339,13 +350,6 @@ public abstract class BaseFormRecordResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected Date datePublished;
-
-		public Boolean getDraft() {
-			return draft;
-		}
-
 		public void setDraft(Boolean draft) {
 			this.draft = draft;
 		}
@@ -360,13 +364,6 @@ public abstract class BaseFormRecordResourceTestCase {
 			catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
-		}
-
-		@JsonProperty
-		protected Boolean draft;
-
-		public FieldValues[] getFieldValues() {
-			return fieldValues;
 		}
 
 		public void setFieldValues(FieldValues[] fieldValues) {
@@ -386,13 +383,6 @@ public abstract class BaseFormRecordResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected FieldValues[] fieldValues;
-
-		public Form getForm() {
-			return form;
-		}
-
 		public void setForm(Form form) {
 			this.form = form;
 		}
@@ -407,13 +397,6 @@ public abstract class BaseFormRecordResourceTestCase {
 			catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
-		}
-
-		@JsonProperty
-		protected Form form;
-
-		public Long getFormId() {
-			return formId;
 		}
 
 		public void setFormId(Long formId) {
@@ -432,13 +415,6 @@ public abstract class BaseFormRecordResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected Long formId;
-
-		public Long getId() {
-			return id;
-		}
-
 		public void setId(Long id) {
 			this.id = id;
 		}
@@ -452,6 +428,30 @@ public abstract class BaseFormRecordResourceTestCase {
 				throw new RuntimeException(t);
 			}
 		}
+
+		@JsonProperty
+		protected Creator creator;
+
+		@JsonProperty
+		protected Date dateCreated;
+
+		@JsonProperty
+		protected Date dateModified;
+
+		@JsonProperty
+		protected Date datePublished;
+
+		@JsonProperty
+		protected Boolean draft;
+
+		@JsonProperty
+		protected FieldValues[] fieldValues;
+
+		@JsonProperty
+		protected Form form;
+
+		@JsonProperty
+		protected Long formId;
 
 		@JsonProperty
 		protected Long id;
@@ -480,12 +480,12 @@ public abstract class BaseFormRecordResourceTestCase {
 		return template.replaceAll("\\{.*\\}", String.valueOf(values[0]));
 	}
 
-	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {
+	private static final ObjectMapper _inputObjectMapper = new ObjectMapper() {
 		{
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
 		}
 	};
-	private final static ObjectMapper _outputObjectMapper = new ObjectMapper();
+	private static final ObjectMapper _outputObjectMapper = new ObjectMapper();
 
 	private URL _resourceURL;
 

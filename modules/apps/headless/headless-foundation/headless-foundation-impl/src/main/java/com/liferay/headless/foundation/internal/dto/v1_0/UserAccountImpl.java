@@ -45,6 +45,86 @@ public class UserAccountImpl implements UserAccount {
 		return additionalName;
 	}
 
+	public String getAlternateName() {
+		return alternateName;
+	}
+
+	public Date getBirthDate() {
+		return birthDate;
+	}
+
+	public ContactInformation getContactInformation() {
+		return contactInformation;
+	}
+
+	public String getDashboardURL() {
+		return dashboardURL;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public String getFamilyName() {
+		return familyName;
+	}
+
+	public String getGivenName() {
+		return givenName;
+	}
+
+	public String getHonorificPrefix() {
+		return honorificPrefix;
+	}
+
+	public String getHonorificSuffix() {
+		return honorificSuffix;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public String getJobTitle() {
+		return jobTitle;
+	}
+
+	public Organization[] getMyOrganizations() {
+		return myOrganizations;
+	}
+
+	public Long[] getMyOrganizationsIds() {
+		return myOrganizationsIds;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public String getProfileURL() {
+		return profileURL;
+	}
+
+	public Role[] getRoles() {
+		return roles;
+	}
+
+	public Long[] getRolesIds() {
+		return rolesIds;
+	}
+
+	public String[] getTasksAssignedToMe() {
+		return tasksAssignedToMe;
+	}
+
+	public String[] getTasksAssignedToMyRoles() {
+		return tasksAssignedToMyRoles;
+	}
+
 	public void setAdditionalName(String additionalName) {
 		this.additionalName = additionalName;
 	}
@@ -59,14 +139,6 @@ public class UserAccountImpl implements UserAccount {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected String additionalName;
-
-	public String getAlternateName() {
-		return alternateName;
 	}
 
 	public void setAlternateName(String alternateName) {
@@ -85,14 +157,6 @@ public class UserAccountImpl implements UserAccount {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected String alternateName;
-
-	public Date getBirthDate() {
-		return birthDate;
-	}
-
 	public void setBirthDate(Date birthDate) {
 		this.birthDate = birthDate;
 	}
@@ -107,14 +171,6 @@ public class UserAccountImpl implements UserAccount {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Date birthDate;
-
-	public ContactInformation getContactInformation() {
-		return contactInformation;
 	}
 
 	public void setContactInformation(ContactInformation contactInformation) {
@@ -134,14 +190,6 @@ public class UserAccountImpl implements UserAccount {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected ContactInformation contactInformation;
-
-	public String getDashboardURL() {
-		return dashboardURL;
-	}
-
 	public void setDashboardURL(String dashboardURL) {
 		this.dashboardURL = dashboardURL;
 	}
@@ -156,14 +204,6 @@ public class UserAccountImpl implements UserAccount {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected String dashboardURL;
-
-	public String getEmail() {
-		return email;
 	}
 
 	public void setEmail(String email) {
@@ -182,14 +222,6 @@ public class UserAccountImpl implements UserAccount {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected String email;
-
-	public String getFamilyName() {
-		return familyName;
-	}
-
 	public void setFamilyName(String familyName) {
 		this.familyName = familyName;
 	}
@@ -204,14 +236,6 @@ public class UserAccountImpl implements UserAccount {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected String familyName;
-
-	public String getGivenName() {
-		return givenName;
 	}
 
 	public void setGivenName(String givenName) {
@@ -230,14 +254,6 @@ public class UserAccountImpl implements UserAccount {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected String givenName;
-
-	public String getHonorificPrefix() {
-		return honorificPrefix;
-	}
-
 	public void setHonorificPrefix(String honorificPrefix) {
 		this.honorificPrefix = honorificPrefix;
 	}
@@ -252,14 +268,6 @@ public class UserAccountImpl implements UserAccount {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected String honorificPrefix;
-
-	public String getHonorificSuffix() {
-		return honorificSuffix;
 	}
 
 	public void setHonorificSuffix(String honorificSuffix) {
@@ -278,14 +286,6 @@ public class UserAccountImpl implements UserAccount {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected String honorificSuffix;
-
-	public Long getId() {
-		return id;
-	}
-
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -298,14 +298,6 @@ public class UserAccountImpl implements UserAccount {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Long id;
-
-	public String getImage() {
-		return image;
 	}
 
 	public void setImage(String image) {
@@ -324,14 +316,6 @@ public class UserAccountImpl implements UserAccount {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected String image;
-
-	public String getJobTitle() {
-		return jobTitle;
-	}
-
 	public void setJobTitle(String jobTitle) {
 		this.jobTitle = jobTitle;
 	}
@@ -346,14 +330,6 @@ public class UserAccountImpl implements UserAccount {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected String jobTitle;
-
-	public Organization[] getMyOrganizations() {
-		return myOrganizations;
 	}
 
 	public void setMyOrganizations(Organization[] myOrganizations) {
@@ -373,14 +349,6 @@ public class UserAccountImpl implements UserAccount {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected Organization[] myOrganizations;
-
-	public Long[] getMyOrganizationsIds() {
-		return myOrganizationsIds;
-	}
-
 	public void setMyOrganizationsIds(Long[] myOrganizationsIds) {
 		this.myOrganizationsIds = myOrganizationsIds;
 	}
@@ -397,14 +365,6 @@ public class UserAccountImpl implements UserAccount {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected Long[] myOrganizationsIds;
-
-	public String getName() {
-		return name;
-	}
-
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -417,14 +377,6 @@ public class UserAccountImpl implements UserAccount {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected String name;
-
-	public String getProfileURL() {
-		return profileURL;
 	}
 
 	public void setProfileURL(String profileURL) {
@@ -443,14 +395,6 @@ public class UserAccountImpl implements UserAccount {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected String profileURL;
-
-	public Role[] getRoles() {
-		return roles;
-	}
-
 	public void setRoles(Role[] roles) {
 		this.roles = roles;
 	}
@@ -465,14 +409,6 @@ public class UserAccountImpl implements UserAccount {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Role[] roles;
-
-	public Long[] getRolesIds() {
-		return rolesIds;
 	}
 
 	public void setRolesIds(Long[] rolesIds) {
@@ -491,14 +427,6 @@ public class UserAccountImpl implements UserAccount {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected Long[] rolesIds;
-
-	public String[] getTasksAssignedToMe() {
-		return tasksAssignedToMe;
-	}
-
 	public void setTasksAssignedToMe(String[] tasksAssignedToMe) {
 		this.tasksAssignedToMe = tasksAssignedToMe;
 	}
@@ -513,14 +441,6 @@ public class UserAccountImpl implements UserAccount {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected String[] tasksAssignedToMe;
-
-	public String[] getTasksAssignedToMyRoles() {
-		return tasksAssignedToMyRoles;
 	}
 
 	public void setTasksAssignedToMyRoles(String[] tasksAssignedToMyRoles) {
@@ -539,6 +459,86 @@ public class UserAccountImpl implements UserAccount {
 			throw new RuntimeException(t);
 		}
 	}
+
+	@GraphQLField
+	@JsonProperty
+	protected String additionalName;
+
+	@GraphQLField
+	@JsonProperty
+	protected String alternateName;
+
+	@GraphQLField
+	@JsonProperty
+	protected Date birthDate;
+
+	@GraphQLField
+	@JsonProperty
+	protected ContactInformation contactInformation;
+
+	@GraphQLField
+	@JsonProperty
+	protected String dashboardURL;
+
+	@GraphQLField
+	@JsonProperty
+	protected String email;
+
+	@GraphQLField
+	@JsonProperty
+	protected String familyName;
+
+	@GraphQLField
+	@JsonProperty
+	protected String givenName;
+
+	@GraphQLField
+	@JsonProperty
+	protected String honorificPrefix;
+
+	@GraphQLField
+	@JsonProperty
+	protected String honorificSuffix;
+
+	@GraphQLField
+	@JsonProperty
+	protected Long id;
+
+	@GraphQLField
+	@JsonProperty
+	protected String image;
+
+	@GraphQLField
+	@JsonProperty
+	protected String jobTitle;
+
+	@GraphQLField
+	@JsonProperty
+	protected Organization[] myOrganizations;
+
+	@GraphQLField
+	@JsonProperty
+	protected Long[] myOrganizationsIds;
+
+	@GraphQLField
+	@JsonProperty
+	protected String name;
+
+	@GraphQLField
+	@JsonProperty
+	protected String profileURL;
+
+	@GraphQLField
+	@JsonProperty
+	protected Role[] roles;
+
+	@GraphQLField
+	@JsonProperty
+	protected Long[] rolesIds;
+
+	@GraphQLField
+	@JsonProperty
+	protected String[] tasksAssignedToMe;
 
 	@GraphQLField
 	@JsonProperty

@@ -29,52 +29,52 @@ public interface Folder {
 
 	public Date getDateCreated();
 
+	public Date getDateModified();
+
+	public String getDescription();
+
+	public Boolean getHasDocuments();
+
+	public Boolean getHasFolders();
+
+	public Long getId();
+
+	public String getName();
+
+	public Long getRepositoryId();
+
 	public void setDateCreated(Date dateCreated);
 
 	public void setDateCreated(
 		UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier);
-
-	public Date getDateModified();
 
 	public void setDateModified(Date dateModified);
 
 	public void setDateModified(
 		UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier);
 
-	public String getDescription();
-
 	public void setDescription(String description);
 
 	public void setDescription(
 		UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier);
-
-	public Boolean getHasDocuments();
 
 	public void setHasDocuments(Boolean hasDocuments);
 
 	public void setHasDocuments(
 		UnsafeSupplier<Boolean, Throwable> hasDocumentsUnsafeSupplier);
 
-	public Boolean getHasFolders();
-
 	public void setHasFolders(Boolean hasFolders);
 
 	public void setHasFolders(
 		UnsafeSupplier<Boolean, Throwable> hasFoldersUnsafeSupplier);
 
-	public Long getId();
-
 	public void setId(Long id);
 
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier);
 
-	public String getName();
-
 	public void setName(String name);
 
 	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier);
-
-	public Long getRepositoryId();
 
 	public void setRepositoryId(Long repositoryId);
 

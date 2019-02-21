@@ -92,7 +92,6 @@ public class CategoryResourceImpl
 
 		return _getCategoriesPage(
 			booleanQuery -> {
-
 				if (categoryId != null) {
 					BooleanFilter booleanFilter =
 						booleanQuery.getPreBooleanFilter();
@@ -120,7 +119,6 @@ public class CategoryResourceImpl
 
 		return _getCategoriesPage(
 			booleanQuery -> {
-
 				if (vocabularyId != null) {
 					BooleanFilter booleanFilter =
 						booleanQuery.getPreBooleanFilter();
@@ -210,7 +208,6 @@ public class CategoryResourceImpl
 			filter, _indexerRegistry.nullSafeGetIndexer(AssetCategory.class),
 			pagination, booleanQueryConsumer,
 			queryConfig -> {
-
 				queryConfig.setSelectedFieldNames(Field.ASSET_CATEGORY_ID);
 			},
 			searchContext -> {
@@ -261,7 +258,6 @@ public class CategoryResourceImpl
 
 						setName(
 							() -> {
-
 								AssetVocabulary assetVocabulary =
 									_assetVocabularyService.getVocabulary(
 										assetCategory.getVocabularyId());

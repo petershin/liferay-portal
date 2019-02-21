@@ -53,8 +53,20 @@ import javax.ws.rs.core.Context;
 public abstract class BaseStructuredContentResourceImpl
 	implements StructuredContentResource {
 
+	@DELETE
 	@Override
+	@Path("/structured-contents/{structured-content-id}")
+	@Produces("application/json")
+	@RequiresScope("everything.read")
+	public boolean deleteStructuredContent(
+			@PathParam("structured-content-id") Long structuredContentId)
+		throws Exception {
+
+		return false;
+	}
+
 	@GET
+	@Override
 	@Path("/content-structures/{content-structure-id}/structured-contents")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
@@ -69,8 +81,8 @@ public abstract class BaseStructuredContentResourceImpl
 		return Page.of(Collections.emptyList());
 	}
 
-	@Override
 	@GET
+	@Override
 	@Path("/content-spaces/{content-space-id}/structured-contents")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
@@ -83,34 +95,8 @@ public abstract class BaseStructuredContentResourceImpl
 		return Page.of(Collections.emptyList());
 	}
 
-	@Override
-	@Consumes("application/json")
-	@POST
-	@Path("/content-spaces/{content-space-id}/structured-contents")
-	@Produces("application/json")
-	@RequiresScope("everything.read")
-	public StructuredContent postContentSpaceStructuredContent(
-			@PathParam("content-space-id") Long contentSpaceId,
-			StructuredContent structuredContent)
-		throws Exception {
-
-		return new StructuredContentImpl();
-	}
-
-	@Override
-	@DELETE
-	@Path("/structured-contents/{structured-content-id}")
-	@Produces("application/json")
-	@RequiresScope("everything.read")
-	public boolean deleteStructuredContent(
-			@PathParam("structured-content-id") Long structuredContentId)
-		throws Exception {
-
-		return false;
-	}
-
-	@Override
 	@GET
+	@Override
 	@Path("/structured-contents/{structured-content-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
@@ -121,8 +107,8 @@ public abstract class BaseStructuredContentResourceImpl
 		return new StructuredContentImpl();
 	}
 
-	@Override
 	@Consumes("application/json")
+	@Override
 	@PATCH
 	@Path("/structured-contents/{structured-content-id}")
 	@Produces("application/json")
@@ -192,11 +178,25 @@ public abstract class BaseStructuredContentResourceImpl
 			structuredContentId, existingStructuredContent);
 	}
 
-	@Override
 	@Consumes("application/json")
-	@PUT
+	@Override
+	@Path("/content-spaces/{content-space-id}/structured-contents")
+	@POST
+	@Produces("application/json")
+	@RequiresScope("everything.read")
+	public StructuredContent postContentSpaceStructuredContent(
+			@PathParam("content-space-id") Long contentSpaceId,
+			StructuredContent structuredContent)
+		throws Exception {
+
+		return new StructuredContentImpl();
+	}
+
+	@Consumes("application/json")
+	@Override
 	@Path("/structured-contents/{structured-content-id}")
 	@Produces("application/json")
+	@PUT
 	@RequiresScope("everything.read")
 	public StructuredContent putStructuredContent(
 			@PathParam("structured-content-id") Long structuredContentId,

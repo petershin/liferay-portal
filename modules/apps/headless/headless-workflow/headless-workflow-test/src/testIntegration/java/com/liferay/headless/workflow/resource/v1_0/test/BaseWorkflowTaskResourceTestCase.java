@@ -23,6 +23,7 @@ import com.liferay.headless.workflow.dto.v1_0.ObjectReviewed;
 import com.liferay.headless.workflow.dto.v1_0.WorkflowLog;
 import com.liferay.headless.workflow.dto.v1_0.WorkflowTask;
 import com.liferay.petra.function.UnsafeSupplier;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -30,7 +31,6 @@ import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -71,12 +71,12 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 	}
 
 	@Test
-	public void testGetWorkflowTasksPage() throws Exception {
+	public void testGetWorkflowTask() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testGetWorkflowTask() throws Exception {
+	public void testGetWorkflowTasksPage() throws Exception {
 		Assert.assertTrue(true);
 	}
 
@@ -134,33 +134,6 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 		return options.getResponse();
 	}
 
-	protected Page<WorkflowTask> invokeGetWorkflowTasksPage(
-			Pagination pagination)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setLocation(
-			_resourceURL + _toPath("/workflow-tasks", pagination));
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), Page.class);
-	}
-
-	protected Http.Response invokeGetWorkflowTasksPageResponse(
-			Pagination pagination)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setLocation(
-			_resourceURL + _toPath("/workflow-tasks", pagination));
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
 	protected WorkflowTask invokeGetWorkflowTask(Long workflowTaskId)
 		throws Exception {
 
@@ -182,6 +155,33 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 		options.setLocation(
 			_resourceURL +
 				_toPath("/workflow-tasks/{workflow-task-id}", workflowTaskId));
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	protected Page<WorkflowTask> invokeGetWorkflowTasksPage(
+			Pagination pagination)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL + _toPath("/workflow-tasks", pagination));
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), Page.class);
+	}
+
+	protected Http.Response invokeGetWorkflowTasksPageResponse(
+			Pagination pagination)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL + _toPath("/workflow-tasks", pagination));
 
 		HttpUtil.URLtoString(options);
 
@@ -391,6 +391,50 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 			return completed;
 		}
 
+		public Date getDateCompleted() {
+			return dateCompleted;
+		}
+
+		public Date getDateCreated() {
+			return dateCreated;
+		}
+
+		public String getDefinitionName() {
+			return definitionName;
+		}
+
+		public String getDescription() {
+			return description;
+		}
+
+		public Date getDueDate() {
+			return dueDate;
+		}
+
+		public Long getId() {
+			return id;
+		}
+
+		public WorkflowLog[] getLogs() {
+			return logs;
+		}
+
+		public Long[] getLogsIds() {
+			return logsIds;
+		}
+
+		public String getName() {
+			return name;
+		}
+
+		public ObjectReviewed getObjectReviewed() {
+			return objectReviewed;
+		}
+
+		public String[] getTransitions() {
+			return transitions;
+		}
+
 		public void setCompleted(Boolean completed) {
 			this.completed = completed;
 		}
@@ -405,13 +449,6 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 			catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
-		}
-
-		@JsonProperty
-		protected Boolean completed;
-
-		public Date getDateCompleted() {
-			return dateCompleted;
 		}
 
 		public void setDateCompleted(Date dateCompleted) {
@@ -430,13 +467,6 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected Date dateCompleted;
-
-		public Date getDateCreated() {
-			return dateCreated;
-		}
-
 		public void setDateCreated(Date dateCreated) {
 			this.dateCreated = dateCreated;
 		}
@@ -451,13 +481,6 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 			catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
-		}
-
-		@JsonProperty
-		protected Date dateCreated;
-
-		public String getDefinitionName() {
-			return definitionName;
 		}
 
 		public void setDefinitionName(String definitionName) {
@@ -476,13 +499,6 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected String definitionName;
-
-		public String getDescription() {
-			return description;
-		}
-
 		public void setDescription(String description) {
 			this.description = description;
 		}
@@ -497,13 +513,6 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 			catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
-		}
-
-		@JsonProperty
-		protected String description;
-
-		public Date getDueDate() {
-			return dueDate;
 		}
 
 		public void setDueDate(Date dueDate) {
@@ -522,13 +531,6 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected Date dueDate;
-
-		public Long getId() {
-			return id;
-		}
-
 		public void setId(Long id) {
 			this.id = id;
 		}
@@ -543,17 +545,6 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected Long id;
-
-		public WorkflowLog[] getLogs() {
-			return logs;
-		}
-
-		public void setLogs(WorkflowLog[] logs) {
-			this.logs = logs;
-		}
-
 		@JsonIgnore
 		public void setLogs(
 			UnsafeSupplier<WorkflowLog[], Throwable> logsUnsafeSupplier) {
@@ -566,11 +557,8 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected WorkflowLog[] logs;
-
-		public Long[] getLogsIds() {
-			return logsIds;
+		public void setLogs(WorkflowLog[] logs) {
+			this.logs = logs;
 		}
 
 		public void setLogsIds(Long[] logsIds) {
@@ -589,13 +577,6 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected Long[] logsIds;
-
-		public String getName() {
-			return name;
-		}
-
 		public void setName(String name) {
 			this.name = name;
 		}
@@ -610,13 +591,6 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 			catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
-		}
-
-		@JsonProperty
-		protected String name;
-
-		public ObjectReviewed getObjectReviewed() {
-			return objectReviewed;
 		}
 
 		public void setObjectReviewed(ObjectReviewed objectReviewed) {
@@ -636,13 +610,6 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected ObjectReviewed objectReviewed;
-
-		public String[] getTransitions() {
-			return transitions;
-		}
-
 		public void setTransitions(String[] transitions) {
 			this.transitions = transitions;
 		}
@@ -658,6 +625,39 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 				throw new RuntimeException(t);
 			}
 		}
+
+		@JsonProperty
+		protected Boolean completed;
+
+		@JsonProperty
+		protected Date dateCompleted;
+
+		@JsonProperty
+		protected Date dateCreated;
+
+		@JsonProperty
+		protected String definitionName;
+
+		@JsonProperty
+		protected String description;
+
+		@JsonProperty
+		protected Date dueDate;
+
+		@JsonProperty
+		protected Long id;
+
+		@JsonProperty
+		protected WorkflowLog[] logs;
+
+		@JsonProperty
+		protected Long[] logsIds;
+
+		@JsonProperty
+		protected String name;
+
+		@JsonProperty
+		protected ObjectReviewed objectReviewed;
 
 		@JsonProperty
 		protected String[] transitions;
@@ -686,12 +686,12 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 		return template.replaceAll("\\{.*\\}", String.valueOf(values[0]));
 	}
 
-	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {
+	private static final ObjectMapper _inputObjectMapper = new ObjectMapper() {
 		{
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
 		}
 	};
-	private final static ObjectMapper _outputObjectMapper = new ObjectMapper();
+	private static final ObjectMapper _outputObjectMapper = new ObjectMapper();
 
 	private URL _resourceURL;
 

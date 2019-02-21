@@ -25,6 +25,7 @@ import com.liferay.headless.collaboration.dto.v1_0.Categories;
 import com.liferay.headless.collaboration.dto.v1_0.Creator;
 import com.liferay.headless.collaboration.dto.v1_0.Image;
 import com.liferay.petra.function.UnsafeSupplier;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -32,7 +33,6 @@ import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -78,22 +78,22 @@ public abstract class BaseBlogPostingResourceTestCase {
 	}
 
 	@Test
-	public void testPatchBlogPosting() throws Exception {
-		Assert.assertTrue(true);
-	}
-
-	@Test
-	public void testPutBlogPosting() throws Exception {
-		Assert.assertTrue(true);
-	}
-
-	@Test
 	public void testGetContentSpaceBlogPostingsPage() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
+	public void testPatchBlogPosting() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	@Test
 	public void testPostContentSpaceBlogPosting() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	@Test
+	public void testPutBlogPosting() throws Exception {
 		Assert.assertTrue(true);
 	}
 
@@ -162,84 +162,6 @@ public abstract class BaseBlogPostingResourceTestCase {
 		return options.getResponse();
 	}
 
-	protected BlogPosting invokePatchBlogPosting(
-			Long blogPostingId, BlogPosting blogPosting)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setLocation(
-			_resourceURL +
-				_toPath(
-					"/blog-postings/{blog-posting-id}", blogPostingId,
-					blogPosting));
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), BlogPostingImpl.class);
-	}
-
-	protected Http.Response invokePatchBlogPostingResponse(
-			Long blogPostingId, BlogPosting blogPosting)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setLocation(
-			_resourceURL +
-				_toPath(
-					"/blog-postings/{blog-posting-id}", blogPostingId,
-					blogPosting));
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
-	protected BlogPosting invokePutBlogPosting(
-			Long blogPostingId, BlogPosting blogPosting)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			_inputObjectMapper.writeValueAsString(blogPosting),
-			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-
-		options.setLocation(
-			_resourceURL +
-				_toPath(
-					"/blog-postings/{blog-posting-id}", blogPostingId,
-					blogPosting));
-
-		options.setPut(true);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), BlogPostingImpl.class);
-	}
-
-	protected Http.Response invokePutBlogPostingResponse(
-			Long blogPostingId, BlogPosting blogPosting)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			_inputObjectMapper.writeValueAsString(blogPosting),
-			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-
-		options.setLocation(
-			_resourceURL +
-				_toPath(
-					"/blog-postings/{blog-posting-id}", blogPostingId,
-					blogPosting));
-
-		options.setPut(true);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
 	protected Page<BlogPosting> invokeGetContentSpaceBlogPostingsPage(
 			Long contentSpaceId, Pagination pagination)
 		throws Exception {
@@ -267,6 +189,39 @@ public abstract class BaseBlogPostingResourceTestCase {
 				_toPath(
 					"/content-spaces/{content-space-id}/blog-postings",
 					contentSpaceId));
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	protected BlogPosting invokePatchBlogPosting(
+			Long blogPostingId, BlogPosting blogPosting)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/blog-postings/{blog-posting-id}", blogPostingId,
+					blogPosting));
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), BlogPostingImpl.class);
+	}
+
+	protected Http.Response invokePatchBlogPostingResponse(
+			Long blogPostingId, BlogPosting blogPosting)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/blog-postings/{blog-posting-id}", blogPostingId,
+					blogPosting));
 
 		HttpUtil.URLtoString(options);
 
@@ -318,6 +273,51 @@ public abstract class BaseBlogPostingResourceTestCase {
 		return options.getResponse();
 	}
 
+	protected BlogPosting invokePutBlogPosting(
+			Long blogPostingId, BlogPosting blogPosting)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(blogPosting),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/blog-postings/{blog-posting-id}", blogPostingId,
+					blogPosting));
+
+		options.setPut(true);
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), BlogPostingImpl.class);
+	}
+
+	protected Http.Response invokePutBlogPostingResponse(
+			Long blogPostingId, BlogPosting blogPosting)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(blogPosting),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/blog-postings/{blog-posting-id}", blogPostingId,
+					blogPosting));
+
+		options.setPut(true);
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
 	protected BlogPosting randomBlogPosting() {
 		return new BlogPostingImpl() {
 			{
@@ -347,6 +347,82 @@ public abstract class BaseBlogPostingResourceTestCase {
 			return aggregateRating;
 		}
 
+		public String getAlternativeHeadline() {
+			return alternativeHeadline;
+		}
+
+		public String getArticleBody() {
+			return articleBody;
+		}
+
+		public String getCaption() {
+			return caption;
+		}
+
+		public Categories[] getCategories() {
+			return categories;
+		}
+
+		public Long[] getCategoryIds() {
+			return categoryIds;
+		}
+
+		public Long getContentSpace() {
+			return contentSpace;
+		}
+
+		public Creator getCreator() {
+			return creator;
+		}
+
+		public Date getDateCreated() {
+			return dateCreated;
+		}
+
+		public Date getDateModified() {
+			return dateModified;
+		}
+
+		public Date getDatePublished() {
+			return datePublished;
+		}
+
+		public String getDescription() {
+			return description;
+		}
+
+		public String getEncodingFormat() {
+			return encodingFormat;
+		}
+
+		public String getFriendlyUrlPath() {
+			return friendlyUrlPath;
+		}
+
+		public Boolean getHasComments() {
+			return hasComments;
+		}
+
+		public String getHeadline() {
+			return headline;
+		}
+
+		public Long getId() {
+			return id;
+		}
+
+		public Image getImage() {
+			return image;
+		}
+
+		public Long getImageId() {
+			return imageId;
+		}
+
+		public String[] getKeywords() {
+			return keywords;
+		}
+
 		public void setAggregateRating(AggregateRating aggregateRating) {
 			this.aggregateRating = aggregateRating;
 		}
@@ -362,13 +438,6 @@ public abstract class BaseBlogPostingResourceTestCase {
 			catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
-		}
-
-		@JsonProperty
-		protected AggregateRating aggregateRating;
-
-		public String getAlternativeHeadline() {
-			return alternativeHeadline;
 		}
 
 		public void setAlternativeHeadline(String alternativeHeadline) {
@@ -388,13 +457,6 @@ public abstract class BaseBlogPostingResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected String alternativeHeadline;
-
-		public String getArticleBody() {
-			return articleBody;
-		}
-
 		public void setArticleBody(String articleBody) {
 			this.articleBody = articleBody;
 		}
@@ -409,13 +471,6 @@ public abstract class BaseBlogPostingResourceTestCase {
 			catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
-		}
-
-		@JsonProperty
-		protected String articleBody;
-
-		public String getCaption() {
-			return caption;
 		}
 
 		public void setCaption(String caption) {
@@ -434,13 +489,6 @@ public abstract class BaseBlogPostingResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected String caption;
-
-		public Categories[] getCategories() {
-			return categories;
-		}
-
 		public void setCategories(Categories[] categories) {
 			this.categories = categories;
 		}
@@ -455,13 +503,6 @@ public abstract class BaseBlogPostingResourceTestCase {
 			catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
-		}
-
-		@JsonProperty
-		protected Categories[] categories;
-
-		public Long[] getCategoryIds() {
-			return categoryIds;
 		}
 
 		public void setCategoryIds(Long[] categoryIds) {
@@ -480,13 +521,6 @@ public abstract class BaseBlogPostingResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected Long[] categoryIds;
-
-		public Long getContentSpace() {
-			return contentSpace;
-		}
-
 		public void setContentSpace(Long contentSpace) {
 			this.contentSpace = contentSpace;
 		}
@@ -501,13 +535,6 @@ public abstract class BaseBlogPostingResourceTestCase {
 			catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
-		}
-
-		@JsonProperty
-		protected Long contentSpace;
-
-		public Creator getCreator() {
-			return creator;
 		}
 
 		public void setCreator(Creator creator) {
@@ -526,13 +553,6 @@ public abstract class BaseBlogPostingResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected Creator creator;
-
-		public Date getDateCreated() {
-			return dateCreated;
-		}
-
 		public void setDateCreated(Date dateCreated) {
 			this.dateCreated = dateCreated;
 		}
@@ -547,13 +567,6 @@ public abstract class BaseBlogPostingResourceTestCase {
 			catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
-		}
-
-		@JsonProperty
-		protected Date dateCreated;
-
-		public Date getDateModified() {
-			return dateModified;
 		}
 
 		public void setDateModified(Date dateModified) {
@@ -572,13 +585,6 @@ public abstract class BaseBlogPostingResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected Date dateModified;
-
-		public Date getDatePublished() {
-			return datePublished;
-		}
-
 		public void setDatePublished(Date datePublished) {
 			this.datePublished = datePublished;
 		}
@@ -593,13 +599,6 @@ public abstract class BaseBlogPostingResourceTestCase {
 			catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
-		}
-
-		@JsonProperty
-		protected Date datePublished;
-
-		public String getDescription() {
-			return description;
 		}
 
 		public void setDescription(String description) {
@@ -618,13 +617,6 @@ public abstract class BaseBlogPostingResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected String description;
-
-		public String getEncodingFormat() {
-			return encodingFormat;
-		}
-
 		public void setEncodingFormat(String encodingFormat) {
 			this.encodingFormat = encodingFormat;
 		}
@@ -639,13 +631,6 @@ public abstract class BaseBlogPostingResourceTestCase {
 			catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
-		}
-
-		@JsonProperty
-		protected String encodingFormat;
-
-		public String getFriendlyUrlPath() {
-			return friendlyUrlPath;
 		}
 
 		public void setFriendlyUrlPath(String friendlyUrlPath) {
@@ -664,13 +649,6 @@ public abstract class BaseBlogPostingResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected String friendlyUrlPath;
-
-		public Boolean getHasComments() {
-			return hasComments;
-		}
-
 		public void setHasComments(Boolean hasComments) {
 			this.hasComments = hasComments;
 		}
@@ -685,13 +663,6 @@ public abstract class BaseBlogPostingResourceTestCase {
 			catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
-		}
-
-		@JsonProperty
-		protected Boolean hasComments;
-
-		public String getHeadline() {
-			return headline;
 		}
 
 		public void setHeadline(String headline) {
@@ -710,13 +681,6 @@ public abstract class BaseBlogPostingResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected String headline;
-
-		public Long getId() {
-			return id;
-		}
-
 		public void setId(Long id) {
 			this.id = id;
 		}
@@ -729,13 +693,6 @@ public abstract class BaseBlogPostingResourceTestCase {
 			catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
-		}
-
-		@JsonProperty
-		protected Long id;
-
-		public Image getImage() {
-			return image;
 		}
 
 		public void setImage(Image image) {
@@ -754,13 +711,6 @@ public abstract class BaseBlogPostingResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected Image image;
-
-		public Long getImageId() {
-			return imageId;
-		}
-
 		public void setImageId(Long imageId) {
 			this.imageId = imageId;
 		}
@@ -775,13 +725,6 @@ public abstract class BaseBlogPostingResourceTestCase {
 			catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
-		}
-
-		@JsonProperty
-		protected Long imageId;
-
-		public String[] getKeywords() {
-			return keywords;
 		}
 
 		public void setKeywords(String[] keywords) {
@@ -799,6 +742,63 @@ public abstract class BaseBlogPostingResourceTestCase {
 				throw new RuntimeException(t);
 			}
 		}
+
+		@JsonProperty
+		protected AggregateRating aggregateRating;
+
+		@JsonProperty
+		protected String alternativeHeadline;
+
+		@JsonProperty
+		protected String articleBody;
+
+		@JsonProperty
+		protected String caption;
+
+		@JsonProperty
+		protected Categories[] categories;
+
+		@JsonProperty
+		protected Long[] categoryIds;
+
+		@JsonProperty
+		protected Long contentSpace;
+
+		@JsonProperty
+		protected Creator creator;
+
+		@JsonProperty
+		protected Date dateCreated;
+
+		@JsonProperty
+		protected Date dateModified;
+
+		@JsonProperty
+		protected Date datePublished;
+
+		@JsonProperty
+		protected String description;
+
+		@JsonProperty
+		protected String encodingFormat;
+
+		@JsonProperty
+		protected String friendlyUrlPath;
+
+		@JsonProperty
+		protected Boolean hasComments;
+
+		@JsonProperty
+		protected String headline;
+
+		@JsonProperty
+		protected Long id;
+
+		@JsonProperty
+		protected Image image;
+
+		@JsonProperty
+		protected Long imageId;
 
 		@JsonProperty
 		protected String[] keywords;
@@ -827,12 +827,12 @@ public abstract class BaseBlogPostingResourceTestCase {
 		return template.replaceAll("\\{.*\\}", String.valueOf(values[0]));
 	}
 
-	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {
+	private static final ObjectMapper _inputObjectMapper = new ObjectMapper() {
 		{
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
 		}
 	};
-	private final static ObjectMapper _outputObjectMapper = new ObjectMapper();
+	private static final ObjectMapper _outputObjectMapper = new ObjectMapper();
 
 	private URL _resourceURL;
 

@@ -44,6 +44,38 @@ public class ContentStructureImpl implements ContentStructure {
 		return availableLanguages;
 	}
 
+	public Long getContentSpace() {
+		return contentSpace;
+	}
+
+	public Creator getCreator() {
+		return creator;
+	}
+
+	public Date getDateCreated() {
+		return dateCreated;
+	}
+
+	public Date getDateModified() {
+		return dateModified;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public Fields[] getFields() {
+		return fields;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
 	public void setAvailableLanguages(String[] availableLanguages) {
 		this.availableLanguages = availableLanguages;
 	}
@@ -58,14 +90,6 @@ public class ContentStructureImpl implements ContentStructure {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected String[] availableLanguages;
-
-	public Long getContentSpace() {
-		return contentSpace;
 	}
 
 	public void setContentSpace(Long contentSpace) {
@@ -84,14 +108,6 @@ public class ContentStructureImpl implements ContentStructure {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected Long contentSpace;
-
-	public Creator getCreator() {
-		return creator;
-	}
-
 	public void setCreator(Creator creator) {
 		this.creator = creator;
 	}
@@ -106,14 +122,6 @@ public class ContentStructureImpl implements ContentStructure {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Creator creator;
-
-	public Date getDateCreated() {
-		return dateCreated;
 	}
 
 	public void setDateCreated(Date dateCreated) {
@@ -132,14 +140,6 @@ public class ContentStructureImpl implements ContentStructure {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected Date dateCreated;
-
-	public Date getDateModified() {
-		return dateModified;
-	}
-
 	public void setDateModified(Date dateModified) {
 		this.dateModified = dateModified;
 	}
@@ -154,14 +154,6 @@ public class ContentStructureImpl implements ContentStructure {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Date dateModified;
-
-	public String getDescription() {
-		return description;
 	}
 
 	public void setDescription(String description) {
@@ -180,14 +172,6 @@ public class ContentStructureImpl implements ContentStructure {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected String description;
-
-	public Fields[] getFields() {
-		return fields;
-	}
-
 	public void setFields(Fields[] fields) {
 		this.fields = fields;
 	}
@@ -204,14 +188,6 @@ public class ContentStructureImpl implements ContentStructure {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected Fields[] fields;
-
-	public Long getId() {
-		return id;
-	}
-
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -224,14 +200,6 @@ public class ContentStructureImpl implements ContentStructure {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Long id;
-
-	public String getName() {
-		return name;
 	}
 
 	public void setName(String name) {
@@ -247,6 +215,38 @@ public class ContentStructureImpl implements ContentStructure {
 			throw new RuntimeException(t);
 		}
 	}
+
+	@GraphQLField
+	@JsonProperty
+	protected String[] availableLanguages;
+
+	@GraphQLField
+	@JsonProperty
+	protected Long contentSpace;
+
+	@GraphQLField
+	@JsonProperty
+	protected Creator creator;
+
+	@GraphQLField
+	@JsonProperty
+	protected Date dateCreated;
+
+	@GraphQLField
+	@JsonProperty
+	protected Date dateModified;
+
+	@GraphQLField
+	@JsonProperty
+	protected String description;
+
+	@GraphQLField
+	@JsonProperty
+	protected Fields[] fields;
+
+	@GraphQLField
+	@JsonProperty
+	protected Long id;
 
 	@GraphQLField
 	@JsonProperty

@@ -143,6 +143,18 @@ public abstract class BasePhoneResourceTestCase {
 			return extension;
 		}
 
+		public Long getId() {
+			return id;
+		}
+
+		public String getPhoneNumber() {
+			return phoneNumber;
+		}
+
+		public String getPhoneType() {
+			return phoneType;
+		}
+
 		public void setExtension(String extension) {
 			this.extension = extension;
 		}
@@ -159,13 +171,6 @@ public abstract class BasePhoneResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected String extension;
-
-		public Long getId() {
-			return id;
-		}
-
 		public void setId(Long id) {
 			this.id = id;
 		}
@@ -178,13 +183,6 @@ public abstract class BasePhoneResourceTestCase {
 			catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
-		}
-
-		@JsonProperty
-		protected Long id;
-
-		public String getPhoneNumber() {
-			return phoneNumber;
 		}
 
 		public void setPhoneNumber(String phoneNumber) {
@@ -203,13 +201,6 @@ public abstract class BasePhoneResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected String phoneNumber;
-
-		public String getPhoneType() {
-			return phoneType;
-		}
-
 		public void setPhoneType(String phoneType) {
 			this.phoneType = phoneType;
 		}
@@ -225,6 +216,15 @@ public abstract class BasePhoneResourceTestCase {
 				throw new RuntimeException(t);
 			}
 		}
+
+		@JsonProperty
+		protected String extension;
+
+		@JsonProperty
+		protected Long id;
+
+		@JsonProperty
+		protected String phoneNumber;
 
 		@JsonProperty
 		protected String phoneType;
@@ -253,12 +253,12 @@ public abstract class BasePhoneResourceTestCase {
 		return template.replaceAll("\\{.*\\}", String.valueOf(values[0]));
 	}
 
-	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {
+	private static final ObjectMapper _inputObjectMapper = new ObjectMapper() {
 		{
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
 		}
 	};
-	private final static ObjectMapper _outputObjectMapper = new ObjectMapper();
+	private static final ObjectMapper _outputObjectMapper = new ObjectMapper();
 
 	private URL _resourceURL;
 

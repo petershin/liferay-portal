@@ -153,6 +153,26 @@ public abstract class BaseFormDocumentResourceTestCase {
 			return contentUrl;
 		}
 
+		public String getEncodingFormat() {
+			return encodingFormat;
+		}
+
+		public String getFileExtension() {
+			return fileExtension;
+		}
+
+		public Long getId() {
+			return id;
+		}
+
+		public Number getSizeInBytes() {
+			return sizeInBytes;
+		}
+
+		public String getTitle() {
+			return title;
+		}
+
 		public void setContentUrl(String contentUrl) {
 			this.contentUrl = contentUrl;
 		}
@@ -167,13 +187,6 @@ public abstract class BaseFormDocumentResourceTestCase {
 			catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
-		}
-
-		@JsonProperty
-		protected String contentUrl;
-
-		public String getEncodingFormat() {
-			return encodingFormat;
 		}
 
 		public void setEncodingFormat(String encodingFormat) {
@@ -192,13 +205,6 @@ public abstract class BaseFormDocumentResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected String encodingFormat;
-
-		public String getFileExtension() {
-			return fileExtension;
-		}
-
 		public void setFileExtension(String fileExtension) {
 			this.fileExtension = fileExtension;
 		}
@@ -215,13 +221,6 @@ public abstract class BaseFormDocumentResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected String fileExtension;
-
-		public Long getId() {
-			return id;
-		}
-
 		public void setId(Long id) {
 			this.id = id;
 		}
@@ -234,13 +233,6 @@ public abstract class BaseFormDocumentResourceTestCase {
 			catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
-		}
-
-		@JsonProperty
-		protected Long id;
-
-		public Number getSizeInBytes() {
-			return sizeInBytes;
 		}
 
 		public void setSizeInBytes(Number sizeInBytes) {
@@ -259,13 +251,6 @@ public abstract class BaseFormDocumentResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected Number sizeInBytes;
-
-		public String getTitle() {
-			return title;
-		}
-
 		public void setTitle(String title) {
 			this.title = title;
 		}
@@ -281,6 +266,21 @@ public abstract class BaseFormDocumentResourceTestCase {
 				throw new RuntimeException(t);
 			}
 		}
+
+		@JsonProperty
+		protected String contentUrl;
+
+		@JsonProperty
+		protected String encodingFormat;
+
+		@JsonProperty
+		protected String fileExtension;
+
+		@JsonProperty
+		protected Long id;
+
+		@JsonProperty
+		protected Number sizeInBytes;
 
 		@JsonProperty
 		protected String title;
@@ -309,12 +309,12 @@ public abstract class BaseFormDocumentResourceTestCase {
 		return template.replaceAll("\\{.*\\}", String.valueOf(values[0]));
 	}
 
-	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {
+	private static final ObjectMapper _inputObjectMapper = new ObjectMapper() {
 		{
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
 		}
 	};
-	private final static ObjectMapper _outputObjectMapper = new ObjectMapper();
+	private static final ObjectMapper _outputObjectMapper = new ObjectMapper();
 
 	private URL _resourceURL;
 

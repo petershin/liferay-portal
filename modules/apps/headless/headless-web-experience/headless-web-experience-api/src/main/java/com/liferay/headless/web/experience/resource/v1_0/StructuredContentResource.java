@@ -34,6 +34,9 @@ import javax.annotation.Generated;
 @Generated("")
 public interface StructuredContentResource {
 
+	public boolean deleteStructuredContent(Long structuredContentId)
+		throws Exception;
+
 	public Page<StructuredContent>
 			getContentSpaceContentStructureStructuredContentsPage(
 				Long contentSpaceId, Long contentStructureId, Filter filter,
@@ -45,18 +48,15 @@ public interface StructuredContentResource {
 			Sort[] sorts)
 		throws Exception;
 
-	public StructuredContent postContentSpaceStructuredContent(
-			Long contentSpaceId, StructuredContent structuredContent)
-		throws Exception;
-
-	public boolean deleteStructuredContent(Long structuredContentId)
-		throws Exception;
-
 	public StructuredContent getStructuredContent(Long structuredContentId)
 		throws Exception;
 
 	public StructuredContent patchStructuredContent(
 			Long structuredContentId, StructuredContent structuredContent)
+		throws Exception;
+
+	public StructuredContent postContentSpaceStructuredContent(
+			Long contentSpaceId, StructuredContent structuredContent)
 		throws Exception;
 
 	public StructuredContent putStructuredContent(

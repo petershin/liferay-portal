@@ -98,7 +98,6 @@ public class DocumentResourceImpl
 
 		return _getDocumentsPage(
 			booleanQuery -> {
-
 				if (contentSpaceId != null) {
 					BooleanFilter booleanFilter =
 						booleanQuery.getPreBooleanFilter();
@@ -131,7 +130,6 @@ public class DocumentResourceImpl
 
 		return _getDocumentsPage(
 			booleanQuery -> {
-
 				if (folderId != null) {
 					BooleanFilter booleanFilter =
 						booleanQuery.getPreBooleanFilter();
@@ -185,7 +183,6 @@ public class DocumentResourceImpl
 
 		return stream.map(
 			assetCategory -> new CategoriesImpl() {
-
 				{
 					setCategoryId(assetCategory.getCategoryId());
 					setCategoryName(assetCategory.getName());
@@ -207,7 +204,6 @@ public class DocumentResourceImpl
 			filter, _indexerRegistry.nullSafeGetIndexer(DLFileEntry.class),
 			pagination, booleanQueryConsumer,
 			queryConfig -> {
-
 				queryConfig.setSelectedFieldNames(Field.ENTRY_CLASS_PK);
 			},
 			searchContext -> {

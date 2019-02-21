@@ -50,8 +50,19 @@ import javax.ws.rs.core.Context;
 @Path("/v1.0")
 public abstract class BaseKeywordResourceImpl implements KeywordResource {
 
+	@DELETE
 	@Override
+	@Path("/keywords/{keyword-id}")
+	@Produces("application/json")
+	@RequiresScope("everything.read")
+	public boolean deleteKeyword(@PathParam("keyword-id") Long keywordId)
+		throws Exception {
+
+		return false;
+	}
+
 	@GET
+	@Override
 	@Path("/content-spaces/{content-space-id}/keywords")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
@@ -64,32 +75,8 @@ public abstract class BaseKeywordResourceImpl implements KeywordResource {
 		return Page.of(Collections.emptyList());
 	}
 
-	@Override
-	@Consumes("application/json")
-	@POST
-	@Path("/content-spaces/{content-space-id}/keywords")
-	@Produces("application/json")
-	@RequiresScope("everything.read")
-	public Keyword postContentSpaceKeyword(
-			@PathParam("content-space-id") Long contentSpaceId, Keyword keyword)
-		throws Exception {
-
-		return new KeywordImpl();
-	}
-
-	@Override
-	@DELETE
-	@Path("/keywords/{keyword-id}")
-	@Produces("application/json")
-	@RequiresScope("everything.read")
-	public boolean deleteKeyword(@PathParam("keyword-id") Long keywordId)
-		throws Exception {
-
-		return false;
-	}
-
-	@Override
 	@GET
+	@Override
 	@Path("/keywords/{keyword-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
@@ -99,11 +86,24 @@ public abstract class BaseKeywordResourceImpl implements KeywordResource {
 		return new KeywordImpl();
 	}
 
-	@Override
 	@Consumes("application/json")
-	@PUT
+	@Override
+	@Path("/content-spaces/{content-space-id}/keywords")
+	@POST
+	@Produces("application/json")
+	@RequiresScope("everything.read")
+	public Keyword postContentSpaceKeyword(
+			@PathParam("content-space-id") Long contentSpaceId, Keyword keyword)
+		throws Exception {
+
+		return new KeywordImpl();
+	}
+
+	@Consumes("application/json")
+	@Override
 	@Path("/keywords/{keyword-id}")
 	@Produces("application/json")
+	@PUT
 	@RequiresScope("everything.read")
 	public Keyword putKeyword(
 			@PathParam("keyword-id") Long keywordId, Keyword keyword)

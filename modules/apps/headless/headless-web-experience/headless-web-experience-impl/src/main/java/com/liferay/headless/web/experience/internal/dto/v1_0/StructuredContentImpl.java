@@ -48,6 +48,70 @@ public class StructuredContentImpl implements StructuredContent {
 		return aggregateRating;
 	}
 
+	public String[] getAvailableLanguages() {
+		return availableLanguages;
+	}
+
+	public Categories[] getCategories() {
+		return categories;
+	}
+
+	public Comment[] getComment() {
+		return comment;
+	}
+
+	public Long getContentSpace() {
+		return contentSpace;
+	}
+
+	public Long getContentStructureId() {
+		return contentStructureId;
+	}
+
+	public Creator getCreator() {
+		return creator;
+	}
+
+	public Date getDateCreated() {
+		return dateCreated;
+	}
+
+	public Date getDateModified() {
+		return dateModified;
+	}
+
+	public Date getDatePublished() {
+		return datePublished;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public String[] getKeywords() {
+		return keywords;
+	}
+
+	public Date getLastReviewed() {
+		return lastReviewed;
+	}
+
+	public RenderedContentsByTemplate[] getRenderedContentsByTemplate() {
+		return renderedContentsByTemplate;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public Values[] getValues() {
+		return values;
+	}
+
 	public void setAggregateRating(AggregateRating aggregateRating) {
 		this.aggregateRating = aggregateRating;
 	}
@@ -63,14 +127,6 @@ public class StructuredContentImpl implements StructuredContent {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected AggregateRating aggregateRating;
-
-	public String[] getAvailableLanguages() {
-		return availableLanguages;
 	}
 
 	public void setAvailableLanguages(String[] availableLanguages) {
@@ -89,14 +145,6 @@ public class StructuredContentImpl implements StructuredContent {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected String[] availableLanguages;
-
-	public Categories[] getCategories() {
-		return categories;
-	}
-
 	public void setCategories(Categories[] categories) {
 		this.categories = categories;
 	}
@@ -111,14 +159,6 @@ public class StructuredContentImpl implements StructuredContent {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Categories[] categories;
-
-	public Comment[] getComment() {
-		return comment;
 	}
 
 	public void setComment(Comment[] comment) {
@@ -137,14 +177,6 @@ public class StructuredContentImpl implements StructuredContent {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected Comment[] comment;
-
-	public Long getContentSpace() {
-		return contentSpace;
-	}
-
 	public void setContentSpace(Long contentSpace) {
 		this.contentSpace = contentSpace;
 	}
@@ -159,14 +191,6 @@ public class StructuredContentImpl implements StructuredContent {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Long contentSpace;
-
-	public Long getContentStructureId() {
-		return contentStructureId;
 	}
 
 	public void setContentStructureId(Long contentStructureId) {
@@ -185,14 +209,6 @@ public class StructuredContentImpl implements StructuredContent {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected Long contentStructureId;
-
-	public Creator getCreator() {
-		return creator;
-	}
-
 	public void setCreator(Creator creator) {
 		this.creator = creator;
 	}
@@ -207,14 +223,6 @@ public class StructuredContentImpl implements StructuredContent {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Creator creator;
-
-	public Date getDateCreated() {
-		return dateCreated;
 	}
 
 	public void setDateCreated(Date dateCreated) {
@@ -233,14 +241,6 @@ public class StructuredContentImpl implements StructuredContent {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected Date dateCreated;
-
-	public Date getDateModified() {
-		return dateModified;
-	}
-
 	public void setDateModified(Date dateModified) {
 		this.dateModified = dateModified;
 	}
@@ -255,14 +255,6 @@ public class StructuredContentImpl implements StructuredContent {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Date dateModified;
-
-	public Date getDatePublished() {
-		return datePublished;
 	}
 
 	public void setDatePublished(Date datePublished) {
@@ -281,14 +273,6 @@ public class StructuredContentImpl implements StructuredContent {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected Date datePublished;
-
-	public String getDescription() {
-		return description;
-	}
-
 	public void setDescription(String description) {
 		this.description = description;
 	}
@@ -305,14 +289,6 @@ public class StructuredContentImpl implements StructuredContent {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected String description;
-
-	public Long getId() {
-		return id;
-	}
-
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -325,14 +301,6 @@ public class StructuredContentImpl implements StructuredContent {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Long id;
-
-	public String[] getKeywords() {
-		return keywords;
 	}
 
 	public void setKeywords(String[] keywords) {
@@ -351,14 +319,6 @@ public class StructuredContentImpl implements StructuredContent {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected String[] keywords;
-
-	public Date getLastReviewed() {
-		return lastReviewed;
-	}
-
 	public void setLastReviewed(Date lastReviewed) {
 		this.lastReviewed = lastReviewed;
 	}
@@ -373,14 +333,6 @@ public class StructuredContentImpl implements StructuredContent {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Date lastReviewed;
-
-	public RenderedContentsByTemplate[] getRenderedContentsByTemplate() {
-		return renderedContentsByTemplate;
 	}
 
 	public void setRenderedContentsByTemplate(
@@ -403,14 +355,6 @@ public class StructuredContentImpl implements StructuredContent {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected RenderedContentsByTemplate[] renderedContentsByTemplate;
-
-	public String getTitle() {
-		return title;
-	}
-
 	public void setTitle(String title) {
 		this.title = title;
 	}
@@ -427,18 +371,6 @@ public class StructuredContentImpl implements StructuredContent {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected String title;
-
-	public Values[] getValues() {
-		return values;
-	}
-
-	public void setValues(Values[] values) {
-		this.values = values;
-	}
-
 	@JsonIgnore
 	public void setValues(
 		UnsafeSupplier<Values[], Throwable> valuesUnsafeSupplier) {
@@ -450,6 +382,74 @@ public class StructuredContentImpl implements StructuredContent {
 			throw new RuntimeException(t);
 		}
 	}
+
+	public void setValues(Values[] values) {
+		this.values = values;
+	}
+
+	@GraphQLField
+	@JsonProperty
+	protected AggregateRating aggregateRating;
+
+	@GraphQLField
+	@JsonProperty
+	protected String[] availableLanguages;
+
+	@GraphQLField
+	@JsonProperty
+	protected Categories[] categories;
+
+	@GraphQLField
+	@JsonProperty
+	protected Comment[] comment;
+
+	@GraphQLField
+	@JsonProperty
+	protected Long contentSpace;
+
+	@GraphQLField
+	@JsonProperty
+	protected Long contentStructureId;
+
+	@GraphQLField
+	@JsonProperty
+	protected Creator creator;
+
+	@GraphQLField
+	@JsonProperty
+	protected Date dateCreated;
+
+	@GraphQLField
+	@JsonProperty
+	protected Date dateModified;
+
+	@GraphQLField
+	@JsonProperty
+	protected Date datePublished;
+
+	@GraphQLField
+	@JsonProperty
+	protected String description;
+
+	@GraphQLField
+	@JsonProperty
+	protected Long id;
+
+	@GraphQLField
+	@JsonProperty
+	protected String[] keywords;
+
+	@GraphQLField
+	@JsonProperty
+	protected Date lastReviewed;
+
+	@GraphQLField
+	@JsonProperty
+	protected RenderedContentsByTemplate[] renderedContentsByTemplate;
+
+	@GraphQLField
+	@JsonProperty
+	protected String title;
 
 	@GraphQLField
 	@JsonProperty

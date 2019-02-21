@@ -43,6 +43,46 @@ public class WorkflowLogImpl implements WorkflowLog {
 		return auditPerson;
 	}
 
+	public String getCommentLog() {
+		return commentLog;
+	}
+
+	public Date getDateCreated() {
+		return dateCreated;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public String getPerson() {
+		return person;
+	}
+
+	public String getPreviousPerson() {
+		return previousPerson;
+	}
+
+	public String getPreviousState() {
+		return previousState;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public WorkflowTask getTask() {
+		return task;
+	}
+
+	public Long getTaskId() {
+		return taskId;
+	}
+
+	public String getType() {
+		return type;
+	}
+
 	public void setAuditPerson(String auditPerson) {
 		this.auditPerson = auditPerson;
 	}
@@ -57,14 +97,6 @@ public class WorkflowLogImpl implements WorkflowLog {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected String auditPerson;
-
-	public String getCommentLog() {
-		return commentLog;
 	}
 
 	public void setCommentLog(String commentLog) {
@@ -83,14 +115,6 @@ public class WorkflowLogImpl implements WorkflowLog {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected String commentLog;
-
-	public Date getDateCreated() {
-		return dateCreated;
-	}
-
 	public void setDateCreated(Date dateCreated) {
 		this.dateCreated = dateCreated;
 	}
@@ -107,14 +131,6 @@ public class WorkflowLogImpl implements WorkflowLog {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected Date dateCreated;
-
-	public Long getId() {
-		return id;
-	}
-
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -127,14 +143,6 @@ public class WorkflowLogImpl implements WorkflowLog {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Long id;
-
-	public String getPerson() {
-		return person;
 	}
 
 	public void setPerson(String person) {
@@ -153,14 +161,6 @@ public class WorkflowLogImpl implements WorkflowLog {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected String person;
-
-	public String getPreviousPerson() {
-		return previousPerson;
-	}
-
 	public void setPreviousPerson(String previousPerson) {
 		this.previousPerson = previousPerson;
 	}
@@ -175,14 +175,6 @@ public class WorkflowLogImpl implements WorkflowLog {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected String previousPerson;
-
-	public String getPreviousState() {
-		return previousState;
 	}
 
 	public void setPreviousState(String previousState) {
@@ -201,14 +193,6 @@ public class WorkflowLogImpl implements WorkflowLog {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected String previousState;
-
-	public String getState() {
-		return state;
-	}
-
 	public void setState(String state) {
 		this.state = state;
 	}
@@ -225,18 +209,6 @@ public class WorkflowLogImpl implements WorkflowLog {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected String state;
-
-	public WorkflowTask getTask() {
-		return task;
-	}
-
-	public void setTask(WorkflowTask task) {
-		this.task = task;
-	}
-
 	@JsonIgnore
 	public void setTask(
 		UnsafeSupplier<WorkflowTask, Throwable> taskUnsafeSupplier) {
@@ -249,12 +221,8 @@ public class WorkflowLogImpl implements WorkflowLog {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected WorkflowTask task;
-
-	public Long getTaskId() {
-		return taskId;
+	public void setTask(WorkflowTask task) {
+		this.task = task;
 	}
 
 	public void setTaskId(Long taskId) {
@@ -273,14 +241,6 @@ public class WorkflowLogImpl implements WorkflowLog {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected Long taskId;
-
-	public String getType() {
-		return type;
-	}
-
 	public void setType(String type) {
 		this.type = type;
 	}
@@ -294,6 +254,46 @@ public class WorkflowLogImpl implements WorkflowLog {
 			throw new RuntimeException(t);
 		}
 	}
+
+	@GraphQLField
+	@JsonProperty
+	protected String auditPerson;
+
+	@GraphQLField
+	@JsonProperty
+	protected String commentLog;
+
+	@GraphQLField
+	@JsonProperty
+	protected Date dateCreated;
+
+	@GraphQLField
+	@JsonProperty
+	protected Long id;
+
+	@GraphQLField
+	@JsonProperty
+	protected String person;
+
+	@GraphQLField
+	@JsonProperty
+	protected String previousPerson;
+
+	@GraphQLField
+	@JsonProperty
+	protected String previousState;
+
+	@GraphQLField
+	@JsonProperty
+	protected String state;
+
+	@GraphQLField
+	@JsonProperty
+	protected WorkflowTask task;
+
+	@GraphQLField
+	@JsonProperty
+	protected Long taskId;
 
 	@GraphQLField
 	@JsonProperty

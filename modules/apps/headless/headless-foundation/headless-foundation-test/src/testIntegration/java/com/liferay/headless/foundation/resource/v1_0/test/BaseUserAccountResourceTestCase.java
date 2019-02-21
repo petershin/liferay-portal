@@ -24,6 +24,7 @@ import com.liferay.headless.foundation.dto.v1_0.Organization;
 import com.liferay.headless.foundation.dto.v1_0.Role;
 import com.liferay.headless.foundation.dto.v1_0.UserAccount;
 import com.liferay.petra.function.UnsafeSupplier;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -31,7 +32,6 @@ import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -67,6 +67,11 @@ public abstract class BaseUserAccountResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteUserAccount() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	@Test
 	public void testGetMyUserAccount() throws Exception {
 		Assert.assertTrue(true);
 	}
@@ -77,7 +82,17 @@ public abstract class BaseUserAccountResourceTestCase {
 	}
 
 	@Test
+	public void testGetUserAccount() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	@Test
 	public void testGetUserAccountsPage() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	@Test
+	public void testGetWebSiteUserAccountsPage() throws Exception {
 		Assert.assertTrue(true);
 	}
 
@@ -87,22 +102,7 @@ public abstract class BaseUserAccountResourceTestCase {
 	}
 
 	@Test
-	public void testDeleteUserAccount() throws Exception {
-		Assert.assertTrue(true);
-	}
-
-	@Test
-	public void testGetUserAccount() throws Exception {
-		Assert.assertTrue(true);
-	}
-
-	@Test
 	public void testPutUserAccount() throws Exception {
-		Assert.assertTrue(true);
-	}
-
-	@Test
-	public void testGetWebSiteUserAccountsPage() throws Exception {
 		Assert.assertTrue(true);
 	}
 
@@ -111,6 +111,37 @@ public abstract class BaseUserAccountResourceTestCase {
 
 		Assert.assertEquals(
 			expectedResponseCode, actualResponse.getResponseCode());
+	}
+
+	protected boolean invokeDeleteUserAccount(Long userAccountId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setDelete(true);
+
+		options.setLocation(
+			_resourceURL +
+				_toPath("/user-accounts/{user-account-id}", userAccountId));
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), Boolean.class);
+	}
+
+	protected Http.Response invokeDeleteUserAccountResponse(Long userAccountId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setDelete(true);
+
+		options.setLocation(
+			_resourceURL +
+				_toPath("/user-accounts/{user-account-id}", userAccountId));
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
 	}
 
 	protected UserAccount invokeGetMyUserAccount(Long myUserAccountId)
@@ -175,6 +206,33 @@ public abstract class BaseUserAccountResourceTestCase {
 		return options.getResponse();
 	}
 
+	protected UserAccount invokeGetUserAccount(Long userAccountId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL +
+				_toPath("/user-accounts/{user-account-id}", userAccountId));
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), UserAccountImpl.class);
+	}
+
+	protected Http.Response invokeGetUserAccountResponse(Long userAccountId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL +
+				_toPath("/user-accounts/{user-account-id}", userAccountId));
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
 	protected Page<UserAccount> invokeGetUserAccountsPage(
 			String fullnamequery, Pagination pagination)
 		throws Exception {
@@ -196,6 +254,35 @@ public abstract class BaseUserAccountResourceTestCase {
 
 		options.setLocation(
 			_resourceURL + _toPath("/user-accounts", fullnamequery));
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	protected Page<UserAccount> invokeGetWebSiteUserAccountsPage(
+			Long webSiteId, Pagination pagination)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL +
+				_toPath("/web-sites/{web-site-id}/user-accounts", webSiteId));
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), Page.class);
+	}
+
+	protected Http.Response invokeGetWebSiteUserAccountsPageResponse(
+			Long webSiteId, Pagination pagination)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL +
+				_toPath("/web-sites/{web-site-id}/user-accounts", webSiteId));
 
 		HttpUtil.URLtoString(options);
 
@@ -226,64 +313,6 @@ public abstract class BaseUserAccountResourceTestCase {
 			_resourceURL + _toPath("/user-accounts", userAccount));
 
 		options.setPost(true);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
-	protected boolean invokeDeleteUserAccount(Long userAccountId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setDelete(true);
-
-		options.setLocation(
-			_resourceURL +
-				_toPath("/user-accounts/{user-account-id}", userAccountId));
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), Boolean.class);
-	}
-
-	protected Http.Response invokeDeleteUserAccountResponse(Long userAccountId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setDelete(true);
-
-		options.setLocation(
-			_resourceURL +
-				_toPath("/user-accounts/{user-account-id}", userAccountId));
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
-	protected UserAccount invokeGetUserAccount(Long userAccountId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setLocation(
-			_resourceURL +
-				_toPath("/user-accounts/{user-account-id}", userAccountId));
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), UserAccountImpl.class);
-	}
-
-	protected Http.Response invokeGetUserAccountResponse(Long userAccountId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setLocation(
-			_resourceURL +
-				_toPath("/user-accounts/{user-account-id}", userAccountId));
 
 		HttpUtil.URLtoString(options);
 
@@ -335,35 +364,6 @@ public abstract class BaseUserAccountResourceTestCase {
 		return options.getResponse();
 	}
 
-	protected Page<UserAccount> invokeGetWebSiteUserAccountsPage(
-			Long webSiteId, Pagination pagination)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setLocation(
-			_resourceURL +
-				_toPath("/web-sites/{web-site-id}/user-accounts", webSiteId));
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), Page.class);
-	}
-
-	protected Http.Response invokeGetWebSiteUserAccountsPageResponse(
-			Long webSiteId, Pagination pagination)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setLocation(
-			_resourceURL +
-				_toPath("/web-sites/{web-site-id}/user-accounts", webSiteId));
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
 	protected UserAccount randomUserAccount() {
 		return new UserAccountImpl() {
 			{
@@ -393,6 +393,86 @@ public abstract class BaseUserAccountResourceTestCase {
 			return additionalName;
 		}
 
+		public String getAlternateName() {
+			return alternateName;
+		}
+
+		public Date getBirthDate() {
+			return birthDate;
+		}
+
+		public ContactInformation getContactInformation() {
+			return contactInformation;
+		}
+
+		public String getDashboardURL() {
+			return dashboardURL;
+		}
+
+		public String getEmail() {
+			return email;
+		}
+
+		public String getFamilyName() {
+			return familyName;
+		}
+
+		public String getGivenName() {
+			return givenName;
+		}
+
+		public String getHonorificPrefix() {
+			return honorificPrefix;
+		}
+
+		public String getHonorificSuffix() {
+			return honorificSuffix;
+		}
+
+		public Long getId() {
+			return id;
+		}
+
+		public String getImage() {
+			return image;
+		}
+
+		public String getJobTitle() {
+			return jobTitle;
+		}
+
+		public Organization[] getMyOrganizations() {
+			return myOrganizations;
+		}
+
+		public Long[] getMyOrganizationsIds() {
+			return myOrganizationsIds;
+		}
+
+		public String getName() {
+			return name;
+		}
+
+		public String getProfileURL() {
+			return profileURL;
+		}
+
+		public Role[] getRoles() {
+			return roles;
+		}
+
+		public Long[] getRolesIds() {
+			return rolesIds;
+		}
+
+		public String[] getTasksAssignedToMe() {
+			return tasksAssignedToMe;
+		}
+
+		public String[] getTasksAssignedToMyRoles() {
+			return tasksAssignedToMyRoles;
+		}
+
 		public void setAdditionalName(String additionalName) {
 			this.additionalName = additionalName;
 		}
@@ -407,13 +487,6 @@ public abstract class BaseUserAccountResourceTestCase {
 			catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
-		}
-
-		@JsonProperty
-		protected String additionalName;
-
-		public String getAlternateName() {
-			return alternateName;
 		}
 
 		public void setAlternateName(String alternateName) {
@@ -432,13 +505,6 @@ public abstract class BaseUserAccountResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected String alternateName;
-
-		public Date getBirthDate() {
-			return birthDate;
-		}
-
 		public void setBirthDate(Date birthDate) {
 			this.birthDate = birthDate;
 		}
@@ -453,13 +519,6 @@ public abstract class BaseUserAccountResourceTestCase {
 			catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
-		}
-
-		@JsonProperty
-		protected Date birthDate;
-
-		public ContactInformation getContactInformation() {
-			return contactInformation;
 		}
 
 		public void setContactInformation(
@@ -481,13 +540,6 @@ public abstract class BaseUserAccountResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected ContactInformation contactInformation;
-
-		public String getDashboardURL() {
-			return dashboardURL;
-		}
-
 		public void setDashboardURL(String dashboardURL) {
 			this.dashboardURL = dashboardURL;
 		}
@@ -502,13 +554,6 @@ public abstract class BaseUserAccountResourceTestCase {
 			catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
-		}
-
-		@JsonProperty
-		protected String dashboardURL;
-
-		public String getEmail() {
-			return email;
 		}
 
 		public void setEmail(String email) {
@@ -527,13 +572,6 @@ public abstract class BaseUserAccountResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected String email;
-
-		public String getFamilyName() {
-			return familyName;
-		}
-
 		public void setFamilyName(String familyName) {
 			this.familyName = familyName;
 		}
@@ -548,13 +586,6 @@ public abstract class BaseUserAccountResourceTestCase {
 			catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
-		}
-
-		@JsonProperty
-		protected String familyName;
-
-		public String getGivenName() {
-			return givenName;
 		}
 
 		public void setGivenName(String givenName) {
@@ -573,13 +604,6 @@ public abstract class BaseUserAccountResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected String givenName;
-
-		public String getHonorificPrefix() {
-			return honorificPrefix;
-		}
-
 		public void setHonorificPrefix(String honorificPrefix) {
 			this.honorificPrefix = honorificPrefix;
 		}
@@ -594,13 +618,6 @@ public abstract class BaseUserAccountResourceTestCase {
 			catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
-		}
-
-		@JsonProperty
-		protected String honorificPrefix;
-
-		public String getHonorificSuffix() {
-			return honorificSuffix;
 		}
 
 		public void setHonorificSuffix(String honorificSuffix) {
@@ -619,13 +636,6 @@ public abstract class BaseUserAccountResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected String honorificSuffix;
-
-		public Long getId() {
-			return id;
-		}
-
 		public void setId(Long id) {
 			this.id = id;
 		}
@@ -638,13 +648,6 @@ public abstract class BaseUserAccountResourceTestCase {
 			catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
-		}
-
-		@JsonProperty
-		protected Long id;
-
-		public String getImage() {
-			return image;
 		}
 
 		public void setImage(String image) {
@@ -663,13 +666,6 @@ public abstract class BaseUserAccountResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected String image;
-
-		public String getJobTitle() {
-			return jobTitle;
-		}
-
 		public void setJobTitle(String jobTitle) {
 			this.jobTitle = jobTitle;
 		}
@@ -684,13 +680,6 @@ public abstract class BaseUserAccountResourceTestCase {
 			catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
-		}
-
-		@JsonProperty
-		protected String jobTitle;
-
-		public Organization[] getMyOrganizations() {
-			return myOrganizations;
 		}
 
 		public void setMyOrganizations(Organization[] myOrganizations) {
@@ -710,13 +699,6 @@ public abstract class BaseUserAccountResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected Organization[] myOrganizations;
-
-		public Long[] getMyOrganizationsIds() {
-			return myOrganizationsIds;
-		}
-
 		public void setMyOrganizationsIds(Long[] myOrganizationsIds) {
 			this.myOrganizationsIds = myOrganizationsIds;
 		}
@@ -732,13 +714,6 @@ public abstract class BaseUserAccountResourceTestCase {
 			catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
-		}
-
-		@JsonProperty
-		protected Long[] myOrganizationsIds;
-
-		public String getName() {
-			return name;
 		}
 
 		public void setName(String name) {
@@ -757,13 +732,6 @@ public abstract class BaseUserAccountResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected String name;
-
-		public String getProfileURL() {
-			return profileURL;
-		}
-
 		public void setProfileURL(String profileURL) {
 			this.profileURL = profileURL;
 		}
@@ -778,13 +746,6 @@ public abstract class BaseUserAccountResourceTestCase {
 			catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
-		}
-
-		@JsonProperty
-		protected String profileURL;
-
-		public Role[] getRoles() {
-			return roles;
 		}
 
 		public void setRoles(Role[] roles) {
@@ -803,13 +764,6 @@ public abstract class BaseUserAccountResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected Role[] roles;
-
-		public Long[] getRolesIds() {
-			return rolesIds;
-		}
-
 		public void setRolesIds(Long[] rolesIds) {
 			this.rolesIds = rolesIds;
 		}
@@ -824,13 +778,6 @@ public abstract class BaseUserAccountResourceTestCase {
 			catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
-		}
-
-		@JsonProperty
-		protected Long[] rolesIds;
-
-		public String[] getTasksAssignedToMe() {
-			return tasksAssignedToMe;
 		}
 
 		public void setTasksAssignedToMe(String[] tasksAssignedToMe) {
@@ -850,13 +797,6 @@ public abstract class BaseUserAccountResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected String[] tasksAssignedToMe;
-
-		public String[] getTasksAssignedToMyRoles() {
-			return tasksAssignedToMyRoles;
-		}
-
 		public void setTasksAssignedToMyRoles(String[] tasksAssignedToMyRoles) {
 			this.tasksAssignedToMyRoles = tasksAssignedToMyRoles;
 		}
@@ -874,6 +814,66 @@ public abstract class BaseUserAccountResourceTestCase {
 				throw new RuntimeException(t);
 			}
 		}
+
+		@JsonProperty
+		protected String additionalName;
+
+		@JsonProperty
+		protected String alternateName;
+
+		@JsonProperty
+		protected Date birthDate;
+
+		@JsonProperty
+		protected ContactInformation contactInformation;
+
+		@JsonProperty
+		protected String dashboardURL;
+
+		@JsonProperty
+		protected String email;
+
+		@JsonProperty
+		protected String familyName;
+
+		@JsonProperty
+		protected String givenName;
+
+		@JsonProperty
+		protected String honorificPrefix;
+
+		@JsonProperty
+		protected String honorificSuffix;
+
+		@JsonProperty
+		protected Long id;
+
+		@JsonProperty
+		protected String image;
+
+		@JsonProperty
+		protected String jobTitle;
+
+		@JsonProperty
+		protected Organization[] myOrganizations;
+
+		@JsonProperty
+		protected Long[] myOrganizationsIds;
+
+		@JsonProperty
+		protected String name;
+
+		@JsonProperty
+		protected String profileURL;
+
+		@JsonProperty
+		protected Role[] roles;
+
+		@JsonProperty
+		protected Long[] rolesIds;
+
+		@JsonProperty
+		protected String[] tasksAssignedToMe;
 
 		@JsonProperty
 		protected String[] tasksAssignedToMyRoles;
@@ -902,12 +902,12 @@ public abstract class BaseUserAccountResourceTestCase {
 		return template.replaceAll("\\{.*\\}", String.valueOf(values[0]));
 	}
 
-	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {
+	private static final ObjectMapper _inputObjectMapper = new ObjectMapper() {
 		{
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
 		}
 	};
-	private final static ObjectMapper _outputObjectMapper = new ObjectMapper();
+	private static final ObjectMapper _outputObjectMapper = new ObjectMapper();
 
 	private URL _resourceURL;
 

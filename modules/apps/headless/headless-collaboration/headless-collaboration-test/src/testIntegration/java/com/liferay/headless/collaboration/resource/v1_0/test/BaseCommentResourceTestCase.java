@@ -127,19 +127,6 @@ public abstract class BaseCommentResourceTestCase {
 			HttpUtil.URLtoString(options), CommentImpl.class);
 	}
 
-	protected Http.Response invokeGetCommentResponse(Long commentId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setLocation(
-			_resourceURL + _toPath("/comments/{comment-id}", commentId));
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
 	protected Page<Comment> invokeGetCommentCommentsPage(
 			Long commentId, Pagination pagination)
 		throws Exception {
@@ -169,6 +156,19 @@ public abstract class BaseCommentResourceTestCase {
 		return options.getResponse();
 	}
 
+	protected Http.Response invokeGetCommentResponse(Long commentId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL + _toPath("/comments/{comment-id}", commentId));
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
 	protected Comment randomComment() {
 		return new CommentImpl() {
 			{
@@ -189,6 +189,30 @@ public abstract class BaseCommentResourceTestCase {
 			return comments;
 		}
 
+		public Creator getCreator() {
+			return creator;
+		}
+
+		public Date getDateCreated() {
+			return dateCreated;
+		}
+
+		public Date getDateModified() {
+			return dateModified;
+		}
+
+		public Boolean getHasComments() {
+			return hasComments;
+		}
+
+		public Long getId() {
+			return id;
+		}
+
+		public String getText() {
+			return text;
+		}
+
 		public void setComments(Comment[] comments) {
 			this.comments = comments;
 		}
@@ -203,13 +227,6 @@ public abstract class BaseCommentResourceTestCase {
 			catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
-		}
-
-		@JsonProperty
-		protected Comment[] comments;
-
-		public Creator getCreator() {
-			return creator;
 		}
 
 		public void setCreator(Creator creator) {
@@ -228,13 +245,6 @@ public abstract class BaseCommentResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected Creator creator;
-
-		public Date getDateCreated() {
-			return dateCreated;
-		}
-
 		public void setDateCreated(Date dateCreated) {
 			this.dateCreated = dateCreated;
 		}
@@ -249,13 +259,6 @@ public abstract class BaseCommentResourceTestCase {
 			catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
-		}
-
-		@JsonProperty
-		protected Date dateCreated;
-
-		public Date getDateModified() {
-			return dateModified;
 		}
 
 		public void setDateModified(Date dateModified) {
@@ -274,13 +277,6 @@ public abstract class BaseCommentResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected Date dateModified;
-
-		public Boolean getHasComments() {
-			return hasComments;
-		}
-
 		public void setHasComments(Boolean hasComments) {
 			this.hasComments = hasComments;
 		}
@@ -297,13 +293,6 @@ public abstract class BaseCommentResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected Boolean hasComments;
-
-		public Long getId() {
-			return id;
-		}
-
 		public void setId(Long id) {
 			this.id = id;
 		}
@@ -316,13 +305,6 @@ public abstract class BaseCommentResourceTestCase {
 			catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
-		}
-
-		@JsonProperty
-		protected Long id;
-
-		public String getText() {
-			return text;
 		}
 
 		public void setText(String text) {
@@ -340,6 +322,24 @@ public abstract class BaseCommentResourceTestCase {
 				throw new RuntimeException(t);
 			}
 		}
+
+		@JsonProperty
+		protected Comment[] comments;
+
+		@JsonProperty
+		protected Creator creator;
+
+		@JsonProperty
+		protected Date dateCreated;
+
+		@JsonProperty
+		protected Date dateModified;
+
+		@JsonProperty
+		protected Boolean hasComments;
+
+		@JsonProperty
+		protected Long id;
 
 		@JsonProperty
 		protected String text;
@@ -368,12 +368,12 @@ public abstract class BaseCommentResourceTestCase {
 		return template.replaceAll("\\{.*\\}", String.valueOf(values[0]));
 	}
 
-	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {
+	private static final ObjectMapper _inputObjectMapper = new ObjectMapper() {
 		{
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
 		}
 	};
-	private final static ObjectMapper _outputObjectMapper = new ObjectMapper();
+	private static final ObjectMapper _outputObjectMapper = new ObjectMapper();
 
 	private URL _resourceURL;
 

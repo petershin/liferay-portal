@@ -69,17 +69,17 @@ public abstract class BaseOrganizationResourceTestCase {
 	}
 
 	@Test
-	public void testGetOrganizationsPage() throws Exception {
-		Assert.assertTrue(true);
-	}
-
-	@Test
 	public void testGetOrganization() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
 	public void testGetOrganizationOrganizationsPage() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	@Test
+	public void testGetOrganizationsPage() throws Exception {
 		Assert.assertTrue(true);
 	}
 
@@ -128,33 +128,6 @@ public abstract class BaseOrganizationResourceTestCase {
 		return options.getResponse();
 	}
 
-	protected Page<Organization> invokeGetOrganizationsPage(
-			Pagination pagination)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setLocation(
-			_resourceURL + _toPath("/organizations", pagination));
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), Page.class);
-	}
-
-	protected Http.Response invokeGetOrganizationsPageResponse(
-			Pagination pagination)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setLocation(
-			_resourceURL + _toPath("/organizations", pagination));
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
 	protected Organization invokeGetOrganization(Long organizationId)
 		throws Exception {
 
@@ -166,20 +139,6 @@ public abstract class BaseOrganizationResourceTestCase {
 
 		return _outputObjectMapper.readValue(
 			HttpUtil.URLtoString(options), OrganizationImpl.class);
-	}
-
-	protected Http.Response invokeGetOrganizationResponse(Long organizationId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setLocation(
-			_resourceURL +
-				_toPath("/organizations/{organization-id}", organizationId));
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
 	}
 
 	protected Page<Organization> invokeGetOrganizationOrganizationsPage(
@@ -209,6 +168,47 @@ public abstract class BaseOrganizationResourceTestCase {
 				_toPath(
 					"/organizations/{organization-id}/organizations",
 					organizationId));
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	protected Http.Response invokeGetOrganizationResponse(Long organizationId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL +
+				_toPath("/organizations/{organization-id}", organizationId));
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	protected Page<Organization> invokeGetOrganizationsPage(
+			Pagination pagination)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL + _toPath("/organizations", pagination));
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), Page.class);
+	}
+
+	protected Http.Response invokeGetOrganizationsPageResponse(
+			Pagination pagination)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL + _toPath("/organizations", pagination));
 
 		HttpUtil.URLtoString(options);
 
@@ -268,6 +268,54 @@ public abstract class BaseOrganizationResourceTestCase {
 			return comment;
 		}
 
+		public ContactInformation getContactInformation() {
+			return contactInformation;
+		}
+
+		public Long getId() {
+			return id;
+		}
+
+		public Location getLocation() {
+			return location;
+		}
+
+		public String getLogo() {
+			return logo;
+		}
+
+		public UserAccount[] getMembers() {
+			return members;
+		}
+
+		public Long[] getMembersIds() {
+			return membersIds;
+		}
+
+		public String getName() {
+			return name;
+		}
+
+		public Organization getParentOrganization() {
+			return parentOrganization;
+		}
+
+		public Long getParentOrganizationId() {
+			return parentOrganizationId;
+		}
+
+		public Services[] getServices() {
+			return services;
+		}
+
+		public Organization[] getSubOrganization() {
+			return subOrganization;
+		}
+
+		public Long[] getSubOrganizationIds() {
+			return subOrganizationIds;
+		}
+
 		public void setComment(String comment) {
 			this.comment = comment;
 		}
@@ -282,13 +330,6 @@ public abstract class BaseOrganizationResourceTestCase {
 			catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
-		}
-
-		@JsonProperty
-		protected String comment;
-
-		public ContactInformation getContactInformation() {
-			return contactInformation;
 		}
 
 		public void setContactInformation(
@@ -310,13 +351,6 @@ public abstract class BaseOrganizationResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected ContactInformation contactInformation;
-
-		public Long getId() {
-			return id;
-		}
-
 		public void setId(Long id) {
 			this.id = id;
 		}
@@ -329,13 +363,6 @@ public abstract class BaseOrganizationResourceTestCase {
 			catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
-		}
-
-		@JsonProperty
-		protected Long id;
-
-		public Location getLocation() {
-			return location;
 		}
 
 		public void setLocation(Location location) {
@@ -354,13 +381,6 @@ public abstract class BaseOrganizationResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected Location location;
-
-		public String getLogo() {
-			return logo;
-		}
-
 		public void setLogo(String logo) {
 			this.logo = logo;
 		}
@@ -377,17 +397,6 @@ public abstract class BaseOrganizationResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected String logo;
-
-		public UserAccount[] getMembers() {
-			return members;
-		}
-
-		public void setMembers(UserAccount[] members) {
-			this.members = members;
-		}
-
 		@JsonIgnore
 		public void setMembers(
 			UnsafeSupplier<UserAccount[], Throwable> membersUnsafeSupplier) {
@@ -400,11 +409,8 @@ public abstract class BaseOrganizationResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected UserAccount[] members;
-
-		public Long[] getMembersIds() {
-			return membersIds;
+		public void setMembers(UserAccount[] members) {
+			this.members = members;
 		}
 
 		public void setMembersIds(Long[] membersIds) {
@@ -423,13 +429,6 @@ public abstract class BaseOrganizationResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected Long[] membersIds;
-
-		public String getName() {
-			return name;
-		}
-
 		public void setName(String name) {
 			this.name = name;
 		}
@@ -444,13 +443,6 @@ public abstract class BaseOrganizationResourceTestCase {
 			catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
-		}
-
-		@JsonProperty
-		protected String name;
-
-		public Organization getParentOrganization() {
-			return parentOrganization;
 		}
 
 		public void setParentOrganization(Organization parentOrganization) {
@@ -470,13 +462,6 @@ public abstract class BaseOrganizationResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected Organization parentOrganization;
-
-		public Long getParentOrganizationId() {
-			return parentOrganizationId;
-		}
-
 		public void setParentOrganizationId(Long parentOrganizationId) {
 			this.parentOrganizationId = parentOrganizationId;
 		}
@@ -494,13 +479,6 @@ public abstract class BaseOrganizationResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected Long parentOrganizationId;
-
-		public Services[] getServices() {
-			return services;
-		}
-
 		public void setServices(Services[] services) {
 			this.services = services;
 		}
@@ -515,13 +493,6 @@ public abstract class BaseOrganizationResourceTestCase {
 			catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
-		}
-
-		@JsonProperty
-		protected Services[] services;
-
-		public Organization[] getSubOrganization() {
-			return subOrganization;
 		}
 
 		public void setSubOrganization(Organization[] subOrganization) {
@@ -541,13 +512,6 @@ public abstract class BaseOrganizationResourceTestCase {
 			}
 		}
 
-		@JsonProperty
-		protected Organization[] subOrganization;
-
-		public Long[] getSubOrganizationIds() {
-			return subOrganizationIds;
-		}
-
 		public void setSubOrganizationIds(Long[] subOrganizationIds) {
 			this.subOrganizationIds = subOrganizationIds;
 		}
@@ -564,6 +528,42 @@ public abstract class BaseOrganizationResourceTestCase {
 				throw new RuntimeException(t);
 			}
 		}
+
+		@JsonProperty
+		protected String comment;
+
+		@JsonProperty
+		protected ContactInformation contactInformation;
+
+		@JsonProperty
+		protected Long id;
+
+		@JsonProperty
+		protected Location location;
+
+		@JsonProperty
+		protected String logo;
+
+		@JsonProperty
+		protected UserAccount[] members;
+
+		@JsonProperty
+		protected Long[] membersIds;
+
+		@JsonProperty
+		protected String name;
+
+		@JsonProperty
+		protected Organization parentOrganization;
+
+		@JsonProperty
+		protected Long parentOrganizationId;
+
+		@JsonProperty
+		protected Services[] services;
+
+		@JsonProperty
+		protected Organization[] subOrganization;
 
 		@JsonProperty
 		protected Long[] subOrganizationIds;
@@ -592,12 +592,12 @@ public abstract class BaseOrganizationResourceTestCase {
 		return template.replaceAll("\\{.*\\}", String.valueOf(values[0]));
 	}
 
-	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {
+	private static final ObjectMapper _inputObjectMapper = new ObjectMapper() {
 		{
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
 		}
 	};
-	private final static ObjectMapper _outputObjectMapper = new ObjectMapper();
+	private static final ObjectMapper _outputObjectMapper = new ObjectMapper();
 
 	private URL _resourceURL;
 

@@ -43,6 +43,106 @@ public class FieldsImpl implements Fields {
 		return autocomplete;
 	}
 
+	public String getDataSourceType() {
+		return dataSourceType;
+	}
+
+	public String getDataType() {
+		return dataType;
+	}
+
+	public String getDisplayStyle() {
+		return displayStyle;
+	}
+
+	public Grid getGrid() {
+		return grid;
+	}
+
+	public Boolean getHasFormRules() {
+		return hasFormRules;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public Boolean getImmutable() {
+		return immutable;
+	}
+
+	public Boolean getInline() {
+		return inline;
+	}
+
+	public String getInputControl() {
+		return inputControl;
+	}
+
+	public String getLabel() {
+		return label;
+	}
+
+	public Boolean getLocalizable() {
+		return localizable;
+	}
+
+	public Boolean getMultiple() {
+		return multiple;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public Options getOptions() {
+		return options;
+	}
+
+	public String getPlaceholder() {
+		return placeholder;
+	}
+
+	public String getPredefinedValue() {
+		return predefinedValue;
+	}
+
+	public Boolean getReadOnly() {
+		return readOnly;
+	}
+
+	public Boolean getRepeatable() {
+		return repeatable;
+	}
+
+	public Boolean getRequired() {
+		return required;
+	}
+
+	public Boolean getShowAsSwitcher() {
+		return showAsSwitcher;
+	}
+
+	public Boolean getShowLabel() {
+		return showLabel;
+	}
+
+	public String getStyle() {
+		return style;
+	}
+
+	public String getText() {
+		return text;
+	}
+
+	public String getTooltip() {
+		return tooltip;
+	}
+
+	public Validation getValidation() {
+		return validation;
+	}
+
 	public void setAutocomplete(Boolean autocomplete) {
 		this.autocomplete = autocomplete;
 	}
@@ -57,14 +157,6 @@ public class FieldsImpl implements Fields {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Boolean autocomplete;
-
-	public String getDataSourceType() {
-		return dataSourceType;
 	}
 
 	public void setDataSourceType(String dataSourceType) {
@@ -83,14 +175,6 @@ public class FieldsImpl implements Fields {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected String dataSourceType;
-
-	public String getDataType() {
-		return dataType;
-	}
-
 	public void setDataType(String dataType) {
 		this.dataType = dataType;
 	}
@@ -105,14 +189,6 @@ public class FieldsImpl implements Fields {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected String dataType;
-
-	public String getDisplayStyle() {
-		return displayStyle;
 	}
 
 	public void setDisplayStyle(String displayStyle) {
@@ -131,14 +207,6 @@ public class FieldsImpl implements Fields {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected String displayStyle;
-
-	public Grid getGrid() {
-		return grid;
-	}
-
 	public void setGrid(Grid grid) {
 		this.grid = grid;
 	}
@@ -151,14 +219,6 @@ public class FieldsImpl implements Fields {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Grid grid;
-
-	public Boolean getHasFormRules() {
-		return hasFormRules;
 	}
 
 	public void setHasFormRules(Boolean hasFormRules) {
@@ -177,14 +237,6 @@ public class FieldsImpl implements Fields {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected Boolean hasFormRules;
-
-	public Long getId() {
-		return id;
-	}
-
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -197,14 +249,6 @@ public class FieldsImpl implements Fields {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Long id;
-
-	public Boolean getImmutable() {
-		return immutable;
 	}
 
 	public void setImmutable(Boolean immutable) {
@@ -223,14 +267,6 @@ public class FieldsImpl implements Fields {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected Boolean immutable;
-
-	public Boolean getInline() {
-		return inline;
-	}
-
 	public void setInline(Boolean inline) {
 		this.inline = inline;
 	}
@@ -245,14 +281,6 @@ public class FieldsImpl implements Fields {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Boolean inline;
-
-	public String getInputControl() {
-		return inputControl;
 	}
 
 	public void setInputControl(String inputControl) {
@@ -271,14 +299,6 @@ public class FieldsImpl implements Fields {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected String inputControl;
-
-	public String getLabel() {
-		return label;
-	}
-
 	public void setLabel(String label) {
 		this.label = label;
 	}
@@ -293,14 +313,6 @@ public class FieldsImpl implements Fields {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected String label;
-
-	public Boolean getLocalizable() {
-		return localizable;
 	}
 
 	public void setLocalizable(Boolean localizable) {
@@ -319,14 +331,6 @@ public class FieldsImpl implements Fields {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected Boolean localizable;
-
-	public Boolean getMultiple() {
-		return multiple;
-	}
-
 	public void setMultiple(Boolean multiple) {
 		this.multiple = multiple;
 	}
@@ -343,14 +347,6 @@ public class FieldsImpl implements Fields {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected Boolean multiple;
-
-	public String getName() {
-		return name;
-	}
-
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -363,14 +359,6 @@ public class FieldsImpl implements Fields {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected String name;
-
-	public Options getOptions() {
-		return options;
 	}
 
 	public void setOptions(Options options) {
@@ -389,14 +377,6 @@ public class FieldsImpl implements Fields {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected Options options;
-
-	public String getPlaceholder() {
-		return placeholder;
-	}
-
 	public void setPlaceholder(String placeholder) {
 		this.placeholder = placeholder;
 	}
@@ -411,14 +391,6 @@ public class FieldsImpl implements Fields {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected String placeholder;
-
-	public String getPredefinedValue() {
-		return predefinedValue;
 	}
 
 	public void setPredefinedValue(String predefinedValue) {
@@ -437,14 +409,6 @@ public class FieldsImpl implements Fields {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected String predefinedValue;
-
-	public Boolean getReadOnly() {
-		return readOnly;
-	}
-
 	public void setReadOnly(Boolean readOnly) {
 		this.readOnly = readOnly;
 	}
@@ -459,14 +423,6 @@ public class FieldsImpl implements Fields {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Boolean readOnly;
-
-	public Boolean getRepeatable() {
-		return repeatable;
 	}
 
 	public void setRepeatable(Boolean repeatable) {
@@ -485,14 +441,6 @@ public class FieldsImpl implements Fields {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected Boolean repeatable;
-
-	public Boolean getRequired() {
-		return required;
-	}
-
 	public void setRequired(Boolean required) {
 		this.required = required;
 	}
@@ -507,14 +455,6 @@ public class FieldsImpl implements Fields {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Boolean required;
-
-	public Boolean getShowAsSwitcher() {
-		return showAsSwitcher;
 	}
 
 	public void setShowAsSwitcher(Boolean showAsSwitcher) {
@@ -533,14 +473,6 @@ public class FieldsImpl implements Fields {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected Boolean showAsSwitcher;
-
-	public Boolean getShowLabel() {
-		return showLabel;
-	}
-
 	public void setShowLabel(Boolean showLabel) {
 		this.showLabel = showLabel;
 	}
@@ -555,14 +487,6 @@ public class FieldsImpl implements Fields {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Boolean showLabel;
-
-	public String getStyle() {
-		return style;
 	}
 
 	public void setStyle(String style) {
@@ -581,14 +505,6 @@ public class FieldsImpl implements Fields {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected String style;
-
-	public String getText() {
-		return text;
-	}
-
 	public void setText(String text) {
 		this.text = text;
 	}
@@ -601,14 +517,6 @@ public class FieldsImpl implements Fields {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected String text;
-
-	public String getTooltip() {
-		return tooltip;
 	}
 
 	public void setTooltip(String tooltip) {
@@ -627,18 +535,6 @@ public class FieldsImpl implements Fields {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected String tooltip;
-
-	public Validation getValidation() {
-		return validation;
-	}
-
-	public void setValidation(Validation validation) {
-		this.validation = validation;
-	}
-
 	@JsonIgnore
 	public void setValidation(
 		UnsafeSupplier<Validation, Throwable> validationUnsafeSupplier) {
@@ -650,6 +546,110 @@ public class FieldsImpl implements Fields {
 			throw new RuntimeException(t);
 		}
 	}
+
+	public void setValidation(Validation validation) {
+		this.validation = validation;
+	}
+
+	@GraphQLField
+	@JsonProperty
+	protected Boolean autocomplete;
+
+	@GraphQLField
+	@JsonProperty
+	protected String dataSourceType;
+
+	@GraphQLField
+	@JsonProperty
+	protected String dataType;
+
+	@GraphQLField
+	@JsonProperty
+	protected String displayStyle;
+
+	@GraphQLField
+	@JsonProperty
+	protected Grid grid;
+
+	@GraphQLField
+	@JsonProperty
+	protected Boolean hasFormRules;
+
+	@GraphQLField
+	@JsonProperty
+	protected Long id;
+
+	@GraphQLField
+	@JsonProperty
+	protected Boolean immutable;
+
+	@GraphQLField
+	@JsonProperty
+	protected Boolean inline;
+
+	@GraphQLField
+	@JsonProperty
+	protected String inputControl;
+
+	@GraphQLField
+	@JsonProperty
+	protected String label;
+
+	@GraphQLField
+	@JsonProperty
+	protected Boolean localizable;
+
+	@GraphQLField
+	@JsonProperty
+	protected Boolean multiple;
+
+	@GraphQLField
+	@JsonProperty
+	protected String name;
+
+	@GraphQLField
+	@JsonProperty
+	protected Options options;
+
+	@GraphQLField
+	@JsonProperty
+	protected String placeholder;
+
+	@GraphQLField
+	@JsonProperty
+	protected String predefinedValue;
+
+	@GraphQLField
+	@JsonProperty
+	protected Boolean readOnly;
+
+	@GraphQLField
+	@JsonProperty
+	protected Boolean repeatable;
+
+	@GraphQLField
+	@JsonProperty
+	protected Boolean required;
+
+	@GraphQLField
+	@JsonProperty
+	protected Boolean showAsSwitcher;
+
+	@GraphQLField
+	@JsonProperty
+	protected Boolean showLabel;
+
+	@GraphQLField
+	@JsonProperty
+	protected String style;
+
+	@GraphQLField
+	@JsonProperty
+	protected String text;
+
+	@GraphQLField
+	@JsonProperty
+	protected String tooltip;
 
 	@GraphQLField
 	@JsonProperty

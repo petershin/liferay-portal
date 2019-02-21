@@ -42,6 +42,34 @@ public class FolderImpl implements Folder {
 		return dateCreated;
 	}
 
+	public Date getDateModified() {
+		return dateModified;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public Boolean getHasDocuments() {
+		return hasDocuments;
+	}
+
+	public Boolean getHasFolders() {
+		return hasFolders;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public Long getRepositoryId() {
+		return repositoryId;
+	}
+
 	public void setDateCreated(Date dateCreated) {
 		this.dateCreated = dateCreated;
 	}
@@ -56,14 +84,6 @@ public class FolderImpl implements Folder {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Date dateCreated;
-
-	public Date getDateModified() {
-		return dateModified;
 	}
 
 	public void setDateModified(Date dateModified) {
@@ -82,14 +102,6 @@ public class FolderImpl implements Folder {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected Date dateModified;
-
-	public String getDescription() {
-		return description;
-	}
-
 	public void setDescription(String description) {
 		this.description = description;
 	}
@@ -104,14 +116,6 @@ public class FolderImpl implements Folder {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected String description;
-
-	public Boolean getHasDocuments() {
-		return hasDocuments;
 	}
 
 	public void setHasDocuments(Boolean hasDocuments) {
@@ -130,14 +134,6 @@ public class FolderImpl implements Folder {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected Boolean hasDocuments;
-
-	public Boolean getHasFolders() {
-		return hasFolders;
-	}
-
 	public void setHasFolders(Boolean hasFolders) {
 		this.hasFolders = hasFolders;
 	}
@@ -154,14 +150,6 @@ public class FolderImpl implements Folder {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected Boolean hasFolders;
-
-	public Long getId() {
-		return id;
-	}
-
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -176,14 +164,6 @@ public class FolderImpl implements Folder {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected Long id;
-
-	public String getName() {
-		return name;
-	}
-
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -196,14 +176,6 @@ public class FolderImpl implements Folder {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected String name;
-
-	public Long getRepositoryId() {
-		return repositoryId;
 	}
 
 	public void setRepositoryId(Long repositoryId) {
@@ -221,6 +193,34 @@ public class FolderImpl implements Folder {
 			throw new RuntimeException(t);
 		}
 	}
+
+	@GraphQLField
+	@JsonProperty
+	protected Date dateCreated;
+
+	@GraphQLField
+	@JsonProperty
+	protected Date dateModified;
+
+	@GraphQLField
+	@JsonProperty
+	protected String description;
+
+	@GraphQLField
+	@JsonProperty
+	protected Boolean hasDocuments;
+
+	@GraphQLField
+	@JsonProperty
+	protected Boolean hasFolders;
+
+	@GraphQLField
+	@JsonProperty
+	protected Long id;
+
+	@GraphQLField
+	@JsonProperty
+	protected String name;
 
 	@GraphQLField
 	@JsonProperty

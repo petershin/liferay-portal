@@ -35,6 +35,37 @@ import org.osgi.util.tracker.ServiceTracker;
 @Generated("")
 public class Mutation {
 
+	@GraphQLInvokeDetached
+	public boolean deleteStructuredContent(
+			@GraphQLName("structured-content-id") Long structuredContentId)
+		throws Exception {
+
+		return _getStructuredContentResource().deleteStructuredContent(
+			structuredContentId);
+	}
+
+	@GraphQLInvokeDetached
+	public boolean deleteStructuredContentContentDocument(
+			@GraphQLName("structured-content-id") Long structuredContentId,
+			@GraphQLName("content-document-id") Long contentDocumentId)
+		throws Exception {
+
+		return _getStructuredContentImageResource().
+			deleteStructuredContentContentDocument(
+				structuredContentId, contentDocumentId);
+	}
+
+	@GraphQLInvokeDetached
+	public StructuredContent patchStructuredContent(
+			@GraphQLName("structured-content-id") Long structuredContentId,
+			@GraphQLName("StructuredContent") StructuredContent
+				structuredContent)
+		throws Exception {
+
+		return _getStructuredContentResource().patchStructuredContent(
+			structuredContentId, structuredContent);
+	}
+
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public StructuredContent postContentSpaceStructuredContent(
@@ -49,26 +80,6 @@ public class Mutation {
 	}
 
 	@GraphQLInvokeDetached
-	public boolean deleteStructuredContent(
-			@GraphQLName("structured-content-id") Long structuredContentId)
-		throws Exception {
-
-		return _getStructuredContentResource().deleteStructuredContent(
-			structuredContentId);
-	}
-
-	@GraphQLInvokeDetached
-	public StructuredContent patchStructuredContent(
-			@GraphQLName("structured-content-id") Long structuredContentId,
-			@GraphQLName("StructuredContent") StructuredContent
-				structuredContent)
-		throws Exception {
-
-		return _getStructuredContentResource().patchStructuredContent(
-			structuredContentId, structuredContent);
-	}
-
-	@GraphQLInvokeDetached
 	public StructuredContent putStructuredContent(
 			@GraphQLName("structured-content-id") Long structuredContentId,
 			@GraphQLName("StructuredContent") StructuredContent
@@ -79,15 +90,10 @@ public class Mutation {
 			structuredContentId, structuredContent);
 	}
 
-	@GraphQLInvokeDetached
-	public boolean deleteStructuredContentContentDocument(
-			@GraphQLName("structured-content-id") Long structuredContentId,
-			@GraphQLName("content-document-id") Long contentDocumentId)
-		throws Exception {
+	private static StructuredContentImageResource
+		_getStructuredContentImageResource() {
 
-		return _getStructuredContentImageResource().
-			deleteStructuredContentContentDocument(
-				structuredContentId, contentDocumentId);
+		return _structuredContentImageResourceServiceTracker.getService();
 	}
 
 	private static StructuredContentResource _getStructuredContentResource() {
@@ -95,18 +101,11 @@ public class Mutation {
 	}
 
 	private static final ServiceTracker
-		<StructuredContentResource, StructuredContentResource>
-			_structuredContentResourceServiceTracker;
-
-	private static StructuredContentImageResource
-		_getStructuredContentImageResource() {
-
-		return _structuredContentImageResourceServiceTracker.getService();
-	}
-
-	private static final ServiceTracker
 		<StructuredContentImageResource, StructuredContentImageResource>
 			_structuredContentImageResourceServiceTracker;
+	private static final ServiceTracker
+		<StructuredContentResource, StructuredContentResource>
+			_structuredContentResourceServiceTracker;
 
 	static {
 		Bundle bundle = FrameworkUtil.getBundle(Mutation.class);

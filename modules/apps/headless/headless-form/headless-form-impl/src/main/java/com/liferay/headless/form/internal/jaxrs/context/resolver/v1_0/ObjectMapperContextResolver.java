@@ -90,7 +90,6 @@ public class ObjectMapperContextResolver
 					{
 						setAbstractTypes(
 							new SimpleAbstractTypeResolver() {
-
 								{
 									addMapping(
 										Columns.class, ColumnsImpl.class);
@@ -123,6 +122,7 @@ public class ObjectMapperContextResolver
 								}
 							});
 					}
+
 				});
 			setDateFormat(new ISO8601DateFormat());
 		}

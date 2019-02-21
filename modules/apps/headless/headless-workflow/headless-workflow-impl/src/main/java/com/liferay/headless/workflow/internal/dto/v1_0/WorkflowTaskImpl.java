@@ -44,6 +44,50 @@ public class WorkflowTaskImpl implements WorkflowTask {
 		return completed;
 	}
 
+	public Date getDateCompleted() {
+		return dateCompleted;
+	}
+
+	public Date getDateCreated() {
+		return dateCreated;
+	}
+
+	public String getDefinitionName() {
+		return definitionName;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public Date getDueDate() {
+		return dueDate;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public WorkflowLog[] getLogs() {
+		return logs;
+	}
+
+	public Long[] getLogsIds() {
+		return logsIds;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public ObjectReviewed getObjectReviewed() {
+		return objectReviewed;
+	}
+
+	public String[] getTransitions() {
+		return transitions;
+	}
+
 	public void setCompleted(Boolean completed) {
 		this.completed = completed;
 	}
@@ -58,14 +102,6 @@ public class WorkflowTaskImpl implements WorkflowTask {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Boolean completed;
-
-	public Date getDateCompleted() {
-		return dateCompleted;
 	}
 
 	public void setDateCompleted(Date dateCompleted) {
@@ -84,14 +120,6 @@ public class WorkflowTaskImpl implements WorkflowTask {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected Date dateCompleted;
-
-	public Date getDateCreated() {
-		return dateCreated;
-	}
-
 	public void setDateCreated(Date dateCreated) {
 		this.dateCreated = dateCreated;
 	}
@@ -106,14 +134,6 @@ public class WorkflowTaskImpl implements WorkflowTask {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Date dateCreated;
-
-	public String getDefinitionName() {
-		return definitionName;
 	}
 
 	public void setDefinitionName(String definitionName) {
@@ -132,14 +152,6 @@ public class WorkflowTaskImpl implements WorkflowTask {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected String definitionName;
-
-	public String getDescription() {
-		return description;
-	}
-
 	public void setDescription(String description) {
 		this.description = description;
 	}
@@ -154,14 +166,6 @@ public class WorkflowTaskImpl implements WorkflowTask {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected String description;
-
-	public Date getDueDate() {
-		return dueDate;
 	}
 
 	public void setDueDate(Date dueDate) {
@@ -180,14 +184,6 @@ public class WorkflowTaskImpl implements WorkflowTask {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected Date dueDate;
-
-	public Long getId() {
-		return id;
-	}
-
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -202,18 +198,6 @@ public class WorkflowTaskImpl implements WorkflowTask {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected Long id;
-
-	public WorkflowLog[] getLogs() {
-		return logs;
-	}
-
-	public void setLogs(WorkflowLog[] logs) {
-		this.logs = logs;
-	}
-
 	@JsonIgnore
 	public void setLogs(
 		UnsafeSupplier<WorkflowLog[], Throwable> logsUnsafeSupplier) {
@@ -226,12 +210,8 @@ public class WorkflowTaskImpl implements WorkflowTask {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected WorkflowLog[] logs;
-
-	public Long[] getLogsIds() {
-		return logsIds;
+	public void setLogs(WorkflowLog[] logs) {
+		this.logs = logs;
 	}
 
 	public void setLogsIds(Long[] logsIds) {
@@ -250,14 +230,6 @@ public class WorkflowTaskImpl implements WorkflowTask {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected Long[] logsIds;
-
-	public String getName() {
-		return name;
-	}
-
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -270,14 +242,6 @@ public class WorkflowTaskImpl implements WorkflowTask {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected String name;
-
-	public ObjectReviewed getObjectReviewed() {
-		return objectReviewed;
 	}
 
 	public void setObjectReviewed(ObjectReviewed objectReviewed) {
@@ -297,14 +261,6 @@ public class WorkflowTaskImpl implements WorkflowTask {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected ObjectReviewed objectReviewed;
-
-	public String[] getTransitions() {
-		return transitions;
-	}
-
 	public void setTransitions(String[] transitions) {
 		this.transitions = transitions;
 	}
@@ -320,6 +276,50 @@ public class WorkflowTaskImpl implements WorkflowTask {
 			throw new RuntimeException(t);
 		}
 	}
+
+	@GraphQLField
+	@JsonProperty
+	protected Boolean completed;
+
+	@GraphQLField
+	@JsonProperty
+	protected Date dateCompleted;
+
+	@GraphQLField
+	@JsonProperty
+	protected Date dateCreated;
+
+	@GraphQLField
+	@JsonProperty
+	protected String definitionName;
+
+	@GraphQLField
+	@JsonProperty
+	protected String description;
+
+	@GraphQLField
+	@JsonProperty
+	protected Date dueDate;
+
+	@GraphQLField
+	@JsonProperty
+	protected Long id;
+
+	@GraphQLField
+	@JsonProperty
+	protected WorkflowLog[] logs;
+
+	@GraphQLField
+	@JsonProperty
+	protected Long[] logsIds;
+
+	@GraphQLField
+	@JsonProperty
+	protected String name;
+
+	@GraphQLField
+	@JsonProperty
+	protected ObjectReviewed objectReviewed;
 
 	@GraphQLField
 	@JsonProperty

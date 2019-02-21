@@ -41,6 +41,14 @@ public class RenderedContentsByTemplateImpl
 		return id;
 	}
 
+	public String getRenderedContent() {
+		return renderedContent;
+	}
+
+	public String getTemplate() {
+		return template;
+	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -53,14 +61,6 @@ public class RenderedContentsByTemplateImpl
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Long id;
-
-	public String getRenderedContent() {
-		return renderedContent;
 	}
 
 	public void setRenderedContent(String renderedContent) {
@@ -79,14 +79,6 @@ public class RenderedContentsByTemplateImpl
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected String renderedContent;
-
-	public String getTemplate() {
-		return template;
-	}
-
 	public void setTemplate(String template) {
 		this.template = template;
 	}
@@ -102,6 +94,14 @@ public class RenderedContentsByTemplateImpl
 			throw new RuntimeException(t);
 		}
 	}
+
+	@GraphQLField
+	@JsonProperty
+	protected Long id;
+
+	@GraphQLField
+	@JsonProperty
+	protected String renderedContent;
 
 	@GraphQLField
 	@JsonProperty

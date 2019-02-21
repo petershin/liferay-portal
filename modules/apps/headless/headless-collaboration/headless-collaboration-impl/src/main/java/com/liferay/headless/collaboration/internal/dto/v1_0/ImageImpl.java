@@ -40,6 +40,14 @@ public class ImageImpl implements Image {
 		return contentUrl;
 	}
 
+	public Long getImageId() {
+		return imageId;
+	}
+
+	public String getName() {
+		return name;
+	}
+
 	public void setContentUrl(String contentUrl) {
 		this.contentUrl = contentUrl;
 	}
@@ -54,14 +62,6 @@ public class ImageImpl implements Image {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected String contentUrl;
-
-	public Long getImageId() {
-		return imageId;
 	}
 
 	public void setImageId(Long imageId) {
@@ -80,14 +80,6 @@ public class ImageImpl implements Image {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected Long imageId;
-
-	public String getName() {
-		return name;
-	}
-
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -101,6 +93,14 @@ public class ImageImpl implements Image {
 			throw new RuntimeException(t);
 		}
 	}
+
+	@GraphQLField
+	@JsonProperty
+	protected String contentUrl;
+
+	@GraphQLField
+	@JsonProperty
+	protected Long imageId;
 
 	@GraphQLField
 	@JsonProperty
