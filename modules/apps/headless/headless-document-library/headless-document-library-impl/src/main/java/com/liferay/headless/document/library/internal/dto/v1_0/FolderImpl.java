@@ -39,216 +39,187 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class FolderImpl implements Folder {
 
 	public Date getDateCreated() {
-			return dateCreated;
+		return dateCreated;
 	}
 
-	public void setDateCreated(
-			Date dateCreated) {
-
-			this.dateCreated = dateCreated;
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
 	}
 
 	@JsonIgnore
 	public void setDateCreated(
-			UnsafeSupplier<Date, Throwable>
-				dateCreatedUnsafeSupplier) {
+		UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
 
-			try {
-				dateCreated =
-					dateCreatedUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
+		try {
+			dateCreated = dateCreatedUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected Date dateCreated;
+
 	public Date getDateModified() {
-			return dateModified;
+		return dateModified;
 	}
 
-	public void setDateModified(
-			Date dateModified) {
-
-			this.dateModified = dateModified;
+	public void setDateModified(Date dateModified) {
+		this.dateModified = dateModified;
 	}
 
 	@JsonIgnore
 	public void setDateModified(
-			UnsafeSupplier<Date, Throwable>
-				dateModifiedUnsafeSupplier) {
+		UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
 
-			try {
-				dateModified =
-					dateModifiedUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
+		try {
+			dateModified = dateModifiedUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected Date dateModified;
+
 	public String getDescription() {
-			return description;
+		return description;
 	}
 
-	public void setDescription(
-			String description) {
-
-			this.description = description;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	@JsonIgnore
 	public void setDescription(
-			UnsafeSupplier<String, Throwable>
-				descriptionUnsafeSupplier) {
+		UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier) {
 
-			try {
-				description =
-					descriptionUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
+		try {
+			description = descriptionUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected String description;
+
 	public Boolean getHasDocuments() {
-			return hasDocuments;
+		return hasDocuments;
 	}
 
-	public void setHasDocuments(
-			Boolean hasDocuments) {
-
-			this.hasDocuments = hasDocuments;
+	public void setHasDocuments(Boolean hasDocuments) {
+		this.hasDocuments = hasDocuments;
 	}
 
 	@JsonIgnore
 	public void setHasDocuments(
-			UnsafeSupplier<Boolean, Throwable>
-				hasDocumentsUnsafeSupplier) {
+		UnsafeSupplier<Boolean, Throwable> hasDocumentsUnsafeSupplier) {
 
-			try {
-				hasDocuments =
-					hasDocumentsUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
+		try {
+			hasDocuments = hasDocumentsUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected Boolean hasDocuments;
+
 	public Boolean getHasFolders() {
-			return hasFolders;
+		return hasFolders;
 	}
 
-	public void setHasFolders(
-			Boolean hasFolders) {
-
-			this.hasFolders = hasFolders;
+	public void setHasFolders(Boolean hasFolders) {
+		this.hasFolders = hasFolders;
 	}
 
 	@JsonIgnore
 	public void setHasFolders(
-			UnsafeSupplier<Boolean, Throwable>
-				hasFoldersUnsafeSupplier) {
+		UnsafeSupplier<Boolean, Throwable> hasFoldersUnsafeSupplier) {
 
-			try {
-				hasFolders =
-					hasFoldersUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
+		try {
+			hasFolders = hasFoldersUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected Boolean hasFolders;
+
 	public Long getId() {
-			return id;
+		return id;
 	}
 
-	public void setId(
-			Long id) {
-
-			this.id = id;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	@JsonIgnore
-	public void setId(
-			UnsafeSupplier<Long, Throwable>
-				idUnsafeSupplier) {
-
-			try {
-				id =
-					idUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
+	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+		try {
+			id = idUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected Long id;
+
 	public String getName() {
-			return name;
+		return name;
 	}
 
-	public void setName(
-			String name) {
-
-			this.name = name;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	@JsonIgnore
-	public void setName(
-			UnsafeSupplier<String, Throwable>
-				nameUnsafeSupplier) {
-
-			try {
-				name =
-					nameUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
+	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
+		try {
+			name = nameUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected String name;
+
 	public Long getRepositoryId() {
-			return repositoryId;
+		return repositoryId;
 	}
 
-	public void setRepositoryId(
-			Long repositoryId) {
-
-			this.repositoryId = repositoryId;
+	public void setRepositoryId(Long repositoryId) {
+		this.repositoryId = repositoryId;
 	}
 
 	@JsonIgnore
 	public void setRepositoryId(
-			UnsafeSupplier<Long, Throwable>
-				repositoryIdUnsafeSupplier) {
+		UnsafeSupplier<Long, Throwable> repositoryIdUnsafeSupplier) {
 
-			try {
-				repositoryId =
-					repositoryIdUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
+		try {
+			repositoryId = repositoryIdUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField

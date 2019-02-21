@@ -64,79 +64,95 @@ public abstract class BaseWorkflowLogResourceTestCase {
 
 	@Test
 	public void testGetWorkflowLog() throws Exception {
-			Assert.assertTrue(true);
+		Assert.assertTrue(true);
 	}
+
 	@Test
 	public void testGetWorkflowTaskWorkflowLogsPage() throws Exception {
-			Assert.assertTrue(true);
+		Assert.assertTrue(true);
 	}
 
-	protected void assertResponseCode(int expectedResponseCode, Http.Response actualResponse) {
-		Assert.assertEquals(expectedResponseCode, actualResponse.getResponseCode());
+	protected void assertResponseCode(
+		int expectedResponseCode, Http.Response actualResponse) {
+
+		Assert.assertEquals(
+			expectedResponseCode, actualResponse.getResponseCode());
 	}
 
-	protected WorkflowLog invokeGetWorkflowLog(
-				Long workflowLogId)
-			throws Exception {
+	protected WorkflowLog invokeGetWorkflowLog(Long workflowLogId)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/workflow-logs/{workflow-log-id}", workflowLogId));
+		options.setLocation(
+			_resourceURL +
+				_toPath("/workflow-logs/{workflow-log-id}", workflowLogId));
 
-				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), WorkflowLogImpl.class);
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), WorkflowLogImpl.class);
 	}
 
-	protected Http.Response invokeGetWorkflowLogResponse(
-				Long workflowLogId)
-			throws Exception {
+	protected Http.Response invokeGetWorkflowLogResponse(Long workflowLogId)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/workflow-logs/{workflow-log-id}", workflowLogId));
+		options.setLocation(
+			_resourceURL +
+				_toPath("/workflow-logs/{workflow-log-id}", workflowLogId));
 
-			HttpUtil.URLtoString(options);
+		HttpUtil.URLtoString(options);
 
-			return options.getResponse();
+		return options.getResponse();
 	}
+
 	protected Page<WorkflowLog> invokeGetWorkflowTaskWorkflowLogsPage(
-				Long workflowTaskId,Pagination pagination)
-			throws Exception {
+			Long workflowTaskId, Pagination pagination)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/workflow-tasks/{workflow-task-id}/workflow-logs", workflowTaskId));
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/workflow-tasks/{workflow-task-id}/workflow-logs",
+					workflowTaskId));
 
-				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), Page.class);
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), Page.class);
 	}
 
 	protected Http.Response invokeGetWorkflowTaskWorkflowLogsPageResponse(
-				Long workflowTaskId,Pagination pagination)
-			throws Exception {
+			Long workflowTaskId, Pagination pagination)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/workflow-tasks/{workflow-task-id}/workflow-logs", workflowTaskId));
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/workflow-tasks/{workflow-task-id}/workflow-logs",
+					workflowTaskId));
 
-			HttpUtil.URLtoString(options);
+		HttpUtil.URLtoString(options);
 
-			return options.getResponse();
+		return options.getResponse();
 	}
 
 	protected WorkflowLog randomWorkflowLog() {
 		return new WorkflowLogImpl() {
 			{
-
-						auditPerson = RandomTestUtil.randomString();
-						commentLog = RandomTestUtil.randomString();
-						dateCreated = RandomTestUtil.nextDate();
-						id = RandomTestUtil.randomLong();
-						person = RandomTestUtil.randomString();
-						previousPerson = RandomTestUtil.randomString();
-						previousState = RandomTestUtil.randomString();
-						state = RandomTestUtil.randomString();
-						taskId = RandomTestUtil.randomLong();
-						type = RandomTestUtil.randomString();
-	}
+				auditPerson = RandomTestUtil.randomString();
+				commentLog = RandomTestUtil.randomString();
+				dateCreated = RandomTestUtil.nextDate();
+				id = RandomTestUtil.randomLong();
+				person = RandomTestUtil.randomString();
+				previousPerson = RandomTestUtil.randomString();
+				previousState = RandomTestUtil.randomString();
+				state = RandomTestUtil.randomString();
+				taskId = RandomTestUtil.randomLong();
+				type = RandomTestUtil.randomString();
+			}
 		};
 	}
 
@@ -144,248 +160,256 @@ public abstract class BaseWorkflowLogResourceTestCase {
 
 	protected static class WorkflowLogImpl implements WorkflowLog {
 
-	public String getAuditPerson() {
-				return auditPerson;
-	}
+		public String getAuditPerson() {
+			return auditPerson;
+		}
 
-	public void setAuditPerson(String auditPerson) {
-				this.auditPerson = auditPerson;
-	}
+		public void setAuditPerson(String auditPerson) {
+			this.auditPerson = auditPerson;
+		}
 
-	@JsonIgnore
-	public void setAuditPerson(
-				UnsafeSupplier<String, Throwable> auditPersonUnsafeSupplier) {
+		@JsonIgnore
+		public void setAuditPerson(
+			UnsafeSupplier<String, Throwable> auditPersonUnsafeSupplier) {
 
-				try {
-					auditPerson = auditPersonUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+			try {
+				auditPerson = auditPersonUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-	@JsonProperty
-	protected String auditPerson;
-	public String getCommentLog() {
-				return commentLog;
-	}
+		@JsonProperty
+		protected String auditPerson;
 
-	public void setCommentLog(String commentLog) {
-				this.commentLog = commentLog;
-	}
+		public String getCommentLog() {
+			return commentLog;
+		}
 
-	@JsonIgnore
-	public void setCommentLog(
-				UnsafeSupplier<String, Throwable> commentLogUnsafeSupplier) {
+		public void setCommentLog(String commentLog) {
+			this.commentLog = commentLog;
+		}
 
-				try {
-					commentLog = commentLogUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		@JsonIgnore
+		public void setCommentLog(
+			UnsafeSupplier<String, Throwable> commentLogUnsafeSupplier) {
 
-	@JsonProperty
-	protected String commentLog;
-	public Date getDateCreated() {
-				return dateCreated;
-	}
+			try {
+				commentLog = commentLogUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-	public void setDateCreated(Date dateCreated) {
-				this.dateCreated = dateCreated;
-	}
+		@JsonProperty
+		protected String commentLog;
 
-	@JsonIgnore
-	public void setDateCreated(
-				UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
+		public Date getDateCreated() {
+			return dateCreated;
+		}
 
-				try {
-					dateCreated = dateCreatedUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		public void setDateCreated(Date dateCreated) {
+			this.dateCreated = dateCreated;
+		}
 
-	@JsonProperty
-	protected Date dateCreated;
-	public Long getId() {
-				return id;
-	}
+		@JsonIgnore
+		public void setDateCreated(
+			UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
 
-	public void setId(Long id) {
-				this.id = id;
-	}
+			try {
+				dateCreated = dateCreatedUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-	@JsonIgnore
-	public void setId(
-				UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+		@JsonProperty
+		protected Date dateCreated;
 
-				try {
-					id = idUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		public Long getId() {
+			return id;
+		}
 
-	@JsonProperty
-	protected Long id;
-	public String getPerson() {
-				return person;
-	}
+		public void setId(Long id) {
+			this.id = id;
+		}
 
-	public void setPerson(String person) {
-				this.person = person;
-	}
+		@JsonIgnore
+		public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+			try {
+				id = idUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-	@JsonIgnore
-	public void setPerson(
-				UnsafeSupplier<String, Throwable> personUnsafeSupplier) {
+		@JsonProperty
+		protected Long id;
 
-				try {
-					person = personUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		public String getPerson() {
+			return person;
+		}
 
-	@JsonProperty
-	protected String person;
-	public String getPreviousPerson() {
-				return previousPerson;
-	}
+		public void setPerson(String person) {
+			this.person = person;
+		}
 
-	public void setPreviousPerson(String previousPerson) {
-				this.previousPerson = previousPerson;
-	}
+		@JsonIgnore
+		public void setPerson(
+			UnsafeSupplier<String, Throwable> personUnsafeSupplier) {
 
-	@JsonIgnore
-	public void setPreviousPerson(
-				UnsafeSupplier<String, Throwable> previousPersonUnsafeSupplier) {
+			try {
+				person = personUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-				try {
-					previousPerson = previousPersonUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		@JsonProperty
+		protected String person;
 
-	@JsonProperty
-	protected String previousPerson;
-	public String getPreviousState() {
-				return previousState;
-	}
+		public String getPreviousPerson() {
+			return previousPerson;
+		}
 
-	public void setPreviousState(String previousState) {
-				this.previousState = previousState;
-	}
+		public void setPreviousPerson(String previousPerson) {
+			this.previousPerson = previousPerson;
+		}
 
-	@JsonIgnore
-	public void setPreviousState(
-				UnsafeSupplier<String, Throwable> previousStateUnsafeSupplier) {
+		@JsonIgnore
+		public void setPreviousPerson(
+			UnsafeSupplier<String, Throwable> previousPersonUnsafeSupplier) {
 
-				try {
-					previousState = previousStateUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+			try {
+				previousPerson = previousPersonUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-	@JsonProperty
-	protected String previousState;
-	public String getState() {
-				return state;
-	}
+		@JsonProperty
+		protected String previousPerson;
 
-	public void setState(String state) {
-				this.state = state;
-	}
+		public String getPreviousState() {
+			return previousState;
+		}
 
-	@JsonIgnore
-	public void setState(
-				UnsafeSupplier<String, Throwable> stateUnsafeSupplier) {
+		public void setPreviousState(String previousState) {
+			this.previousState = previousState;
+		}
 
-				try {
-					state = stateUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		@JsonIgnore
+		public void setPreviousState(
+			UnsafeSupplier<String, Throwable> previousStateUnsafeSupplier) {
 
-	@JsonProperty
-	protected String state;
-	public WorkflowTask getTask() {
-				return task;
-	}
+			try {
+				previousState = previousStateUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-	public void setTask(WorkflowTask task) {
-				this.task = task;
-	}
+		@JsonProperty
+		protected String previousState;
 
-	@JsonIgnore
-	public void setTask(
-				UnsafeSupplier<WorkflowTask, Throwable> taskUnsafeSupplier) {
+		public String getState() {
+			return state;
+		}
 
-				try {
-					task = taskUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		public void setState(String state) {
+			this.state = state;
+		}
 
-	@JsonProperty
-	protected WorkflowTask task;
-	public Long getTaskId() {
-				return taskId;
-	}
+		@JsonIgnore
+		public void setState(
+			UnsafeSupplier<String, Throwable> stateUnsafeSupplier) {
 
-	public void setTaskId(Long taskId) {
-				this.taskId = taskId;
-	}
+			try {
+				state = stateUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-	@JsonIgnore
-	public void setTaskId(
-				UnsafeSupplier<Long, Throwable> taskIdUnsafeSupplier) {
+		@JsonProperty
+		protected String state;
 
-				try {
-					taskId = taskIdUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		public WorkflowTask getTask() {
+			return task;
+		}
 
-	@JsonProperty
-	protected Long taskId;
-	public String getType() {
-				return type;
-	}
+		public void setTask(WorkflowTask task) {
+			this.task = task;
+		}
 
-	public void setType(String type) {
-				this.type = type;
-	}
+		@JsonIgnore
+		public void setTask(
+			UnsafeSupplier<WorkflowTask, Throwable> taskUnsafeSupplier) {
 
-	@JsonIgnore
-	public void setType(
-				UnsafeSupplier<String, Throwable> typeUnsafeSupplier) {
+			try {
+				task = taskUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-				try {
-					type = typeUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		@JsonProperty
+		protected WorkflowTask task;
 
-	@JsonProperty
-	protected String type;
+		public Long getTaskId() {
+			return taskId;
+		}
+
+		public void setTaskId(Long taskId) {
+			this.taskId = taskId;
+		}
+
+		@JsonIgnore
+		public void setTaskId(
+			UnsafeSupplier<Long, Throwable> taskIdUnsafeSupplier) {
+
+			try {
+				taskId = taskIdUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
+
+		@JsonProperty
+		protected Long taskId;
+
+		public String getType() {
+			return type;
+		}
+
+		public void setType(String type) {
+			this.type = type;
+		}
+
+		@JsonIgnore
+		public void setType(
+			UnsafeSupplier<String, Throwable> typeUnsafeSupplier) {
+
+			try {
+				type = typeUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
+
+		@JsonProperty
+		protected String type;
 
 	}
 
@@ -396,9 +420,11 @@ public abstract class BaseWorkflowLogResourceTestCase {
 
 		String userNameAndPassword = "test@liferay.com:test";
 
-		String encodedUserNameAndPassword = Base64.encode(userNameAndPassword.getBytes());
+		String encodedUserNameAndPassword = Base64.encode(
+			userNameAndPassword.getBytes());
 
-		options.addHeader("Authorization", "Basic " + encodedUserNameAndPassword);
+		options.addHeader(
+			"Authorization", "Basic " + encodedUserNameAndPassword);
 
 		options.addHeader("Content-Type", "application/json");
 
@@ -412,7 +438,7 @@ public abstract class BaseWorkflowLogResourceTestCase {
 	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {
 		{
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
-	}
+		}
 	};
 	private final static ObjectMapper _outputObjectMapper = new ObjectMapper();
 

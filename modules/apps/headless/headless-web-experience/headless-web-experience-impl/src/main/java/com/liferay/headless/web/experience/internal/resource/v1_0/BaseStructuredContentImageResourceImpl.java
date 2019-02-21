@@ -42,47 +42,61 @@ import javax.ws.rs.core.Context;
  */
 @Generated("")
 @Path("/v1.0")
-public abstract class BaseStructuredContentImageResourceImpl implements StructuredContentImageResource {
+public abstract class BaseStructuredContentImageResourceImpl
+	implements StructuredContentImageResource {
 
 	@Override
 	@GET
-	@Path("/structured-contents/{structured-content-id}/structured-content-images")
+	@Path(
+		"/structured-contents/{structured-content-id}/structured-content-images"
+	)
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<StructuredContentImage> getStructuredContentStructuredContentImagesPage(
-	@PathParam("structured-content-id") Long structuredContentId)
-			throws Exception {
+	public Page<StructuredContentImage>
+			getStructuredContentStructuredContentImagesPage(
+				@PathParam("structured-content-id") Long structuredContentId)
+		throws Exception {
 
-				return Page.of(Collections.emptyList());
+		return Page.of(Collections.emptyList());
 	}
+
 	@Override
 	@DELETE
-	@Path("/structured-contents/{structured-content-id}/structured-content-images/{content-document-id}")
+	@Path(
+		"/structured-contents/{structured-content-id}/structured-content-images/{content-document-id}"
+	)
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	public boolean deleteStructuredContentContentDocument(
-	@PathParam("structured-content-id") Long structuredContentId,@PathParam("content-document-id") Long contentDocumentId)
-			throws Exception {
+			@PathParam("structured-content-id") Long structuredContentId,
+			@PathParam("content-document-id") Long contentDocumentId)
+		throws Exception {
 
-				return false;
+		return false;
 	}
+
 	@Override
 	@GET
-	@Path("/structured-contents/{structured-content-id}/structured-content-images/{content-document-id}")
+	@Path(
+		"/structured-contents/{structured-content-id}/structured-content-images/{content-document-id}"
+	)
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	public StructuredContentImage getStructuredContentContentDocument(
-	@PathParam("structured-content-id") Long structuredContentId,@PathParam("content-document-id") Long contentDocumentId)
-			throws Exception {
+			@PathParam("structured-content-id") Long structuredContentId,
+			@PathParam("content-document-id") Long contentDocumentId)
+		throws Exception {
 
-				return new StructuredContentImageImpl();
+		return new StructuredContentImageImpl();
 	}
 
 	public void setContextCompany(Company contextCompany) {
 		this.contextCompany = contextCompany;
 	}
 
-	protected <T, R> List<R> transform(List<T> list, UnsafeFunction<T, R, Throwable> unsafeFunction) {
+	protected <T, R> List<R> transform(
+		List<T> list, UnsafeFunction<T, R, Throwable> unsafeFunction) {
+
 		return TransformUtil.transform(list, unsafeFunction);
 	}
 

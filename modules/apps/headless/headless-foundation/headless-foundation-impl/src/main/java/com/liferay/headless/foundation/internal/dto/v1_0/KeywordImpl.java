@@ -40,189 +40,163 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class KeywordImpl implements Keyword {
 
 	public Long getContentSpace() {
-			return contentSpace;
+		return contentSpace;
 	}
 
-	public void setContentSpace(
-			Long contentSpace) {
-
-			this.contentSpace = contentSpace;
+	public void setContentSpace(Long contentSpace) {
+		this.contentSpace = contentSpace;
 	}
 
 	@JsonIgnore
 	public void setContentSpace(
-			UnsafeSupplier<Long, Throwable>
-				contentSpaceUnsafeSupplier) {
+		UnsafeSupplier<Long, Throwable> contentSpaceUnsafeSupplier) {
 
-			try {
-				contentSpace =
-					contentSpaceUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
+		try {
+			contentSpace = contentSpaceUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected Long contentSpace;
+
 	public Creator getCreator() {
-			return creator;
+		return creator;
 	}
 
-	public void setCreator(
-			Creator creator) {
-
-			this.creator = creator;
+	public void setCreator(Creator creator) {
+		this.creator = creator;
 	}
 
 	@JsonIgnore
 	public void setCreator(
-			UnsafeSupplier<Creator, Throwable>
-				creatorUnsafeSupplier) {
+		UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
 
-			try {
-				creator =
-					creatorUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
+		try {
+			creator = creatorUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected Creator creator;
+
 	public Date getDateCreated() {
-			return dateCreated;
+		return dateCreated;
 	}
 
-	public void setDateCreated(
-			Date dateCreated) {
-
-			this.dateCreated = dateCreated;
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
 	}
 
 	@JsonIgnore
 	public void setDateCreated(
-			UnsafeSupplier<Date, Throwable>
-				dateCreatedUnsafeSupplier) {
+		UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
 
-			try {
-				dateCreated =
-					dateCreatedUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
+		try {
+			dateCreated = dateCreatedUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected Date dateCreated;
+
 	public Date getDateModified() {
-			return dateModified;
+		return dateModified;
 	}
 
-	public void setDateModified(
-			Date dateModified) {
-
-			this.dateModified = dateModified;
+	public void setDateModified(Date dateModified) {
+		this.dateModified = dateModified;
 	}
 
 	@JsonIgnore
 	public void setDateModified(
-			UnsafeSupplier<Date, Throwable>
-				dateModifiedUnsafeSupplier) {
+		UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
 
-			try {
-				dateModified =
-					dateModifiedUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
+		try {
+			dateModified = dateModifiedUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected Date dateModified;
+
 	public Long getId() {
-			return id;
+		return id;
 	}
 
-	public void setId(
-			Long id) {
-
-			this.id = id;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	@JsonIgnore
-	public void setId(
-			UnsafeSupplier<Long, Throwable>
-				idUnsafeSupplier) {
-
-			try {
-				id =
-					idUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
+	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+		try {
+			id = idUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected Long id;
+
 	public Number getKeywordUsageCount() {
-			return keywordUsageCount;
+		return keywordUsageCount;
 	}
 
-	public void setKeywordUsageCount(
-			Number keywordUsageCount) {
-
-			this.keywordUsageCount = keywordUsageCount;
+	public void setKeywordUsageCount(Number keywordUsageCount) {
+		this.keywordUsageCount = keywordUsageCount;
 	}
 
 	@JsonIgnore
 	public void setKeywordUsageCount(
-			UnsafeSupplier<Number, Throwable>
-				keywordUsageCountUnsafeSupplier) {
+		UnsafeSupplier<Number, Throwable> keywordUsageCountUnsafeSupplier) {
 
-			try {
-				keywordUsageCount =
-					keywordUsageCountUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
+		try {
+			keywordUsageCount = keywordUsageCountUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected Number keywordUsageCount;
+
 	public String getName() {
-			return name;
+		return name;
 	}
 
-	public void setName(
-			String name) {
-
-			this.name = name;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	@JsonIgnore
-	public void setName(
-			UnsafeSupplier<String, Throwable>
-				nameUnsafeSupplier) {
-
-			try {
-				name =
-					nameUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
+	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
+		try {
+			name = nameUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField

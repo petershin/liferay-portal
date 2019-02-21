@@ -37,108 +37,95 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class AggregateRatingImpl implements AggregateRating {
 
 	public Number getBestRating() {
-			return bestRating;
+		return bestRating;
 	}
 
-	public void setBestRating(
-			Number bestRating) {
-
-			this.bestRating = bestRating;
+	public void setBestRating(Number bestRating) {
+		this.bestRating = bestRating;
 	}
 
 	@JsonIgnore
 	public void setBestRating(
-			UnsafeSupplier<Number, Throwable>
-				bestRatingUnsafeSupplier) {
+		UnsafeSupplier<Number, Throwable> bestRatingUnsafeSupplier) {
 
-			try {
-				bestRating =
-					bestRatingUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
+		try {
+			bestRating = bestRatingUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected Number bestRating;
+
 	public Number getRatingCount() {
-			return ratingCount;
+		return ratingCount;
 	}
 
-	public void setRatingCount(
-			Number ratingCount) {
-
-			this.ratingCount = ratingCount;
+	public void setRatingCount(Number ratingCount) {
+		this.ratingCount = ratingCount;
 	}
 
 	@JsonIgnore
 	public void setRatingCount(
-			UnsafeSupplier<Number, Throwable>
-				ratingCountUnsafeSupplier) {
+		UnsafeSupplier<Number, Throwable> ratingCountUnsafeSupplier) {
 
-			try {
-				ratingCount =
-					ratingCountUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
+		try {
+			ratingCount = ratingCountUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected Number ratingCount;
+
 	public Number getRatingValue() {
-			return ratingValue;
+		return ratingValue;
 	}
 
-	public void setRatingValue(
-			Number ratingValue) {
-
-			this.ratingValue = ratingValue;
+	public void setRatingValue(Number ratingValue) {
+		this.ratingValue = ratingValue;
 	}
 
 	@JsonIgnore
 	public void setRatingValue(
-			UnsafeSupplier<Number, Throwable>
-				ratingValueUnsafeSupplier) {
+		UnsafeSupplier<Number, Throwable> ratingValueUnsafeSupplier) {
 
-			try {
-				ratingValue =
-					ratingValueUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
+		try {
+			ratingValue = ratingValueUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected Number ratingValue;
+
 	public Number getWorstRating() {
-			return worstRating;
+		return worstRating;
 	}
 
-	public void setWorstRating(
-			Number worstRating) {
-
-			this.worstRating = worstRating;
+	public void setWorstRating(Number worstRating) {
+		this.worstRating = worstRating;
 	}
 
 	@JsonIgnore
 	public void setWorstRating(
-			UnsafeSupplier<Number, Throwable>
-				worstRatingUnsafeSupplier) {
+		UnsafeSupplier<Number, Throwable> worstRatingUnsafeSupplier) {
 
-			try {
-				worstRating =
-					worstRatingUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
+		try {
+			worstRating = worstRatingUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField

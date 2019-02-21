@@ -50,28 +50,31 @@ public abstract class BaseEmailResourceImpl implements EmailResource {
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	public Page<Email> getGenericParentEmailsPage(
-	@PathParam("generic-parent-id") Object genericParentId,@Context Pagination pagination)
-			throws Exception {
+			@PathParam("generic-parent-id") Object genericParentId,
+			@Context Pagination pagination)
+		throws Exception {
 
-				return Page.of(Collections.emptyList());
+		return Page.of(Collections.emptyList());
 	}
+
 	@Override
 	@GET
 	@Path("/emails/{email-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Email getEmail(
-	@PathParam("email-id") Long emailId)
-			throws Exception {
+	public Email getEmail(@PathParam("email-id") Long emailId)
+		throws Exception {
 
-				return new EmailImpl();
+		return new EmailImpl();
 	}
 
 	public void setContextCompany(Company contextCompany) {
 		this.contextCompany = contextCompany;
 	}
 
-	protected <T, R> List<R> transform(List<T> list, UnsafeFunction<T, R, Throwable> unsafeFunction) {
+	protected <T, R> List<R> transform(
+		List<T> list, UnsafeFunction<T, R, Throwable> unsafeFunction) {
+
 		return TransformUtil.transform(list, unsafeFunction);
 	}
 

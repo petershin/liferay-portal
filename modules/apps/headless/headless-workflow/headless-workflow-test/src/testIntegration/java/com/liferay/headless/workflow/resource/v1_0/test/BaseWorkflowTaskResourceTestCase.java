@@ -67,244 +67,319 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 
 	@Test
 	public void testGetRoleWorkflowTasksPage() throws Exception {
-			Assert.assertTrue(true);
-	}
-	@Test
-	public void testGetWorkflowTasksPage() throws Exception {
-			Assert.assertTrue(true);
-	}
-	@Test
-	public void testGetWorkflowTask() throws Exception {
-			Assert.assertTrue(true);
-	}
-	@Test
-	public void testPostWorkflowTaskAssignToMe() throws Exception {
-			Assert.assertTrue(true);
-	}
-	@Test
-	public void testPostWorkflowTaskAssignToUser() throws Exception {
-			Assert.assertTrue(true);
-	}
-	@Test
-	public void testPostWorkflowTaskChangeTransition() throws Exception {
-			Assert.assertTrue(true);
-	}
-	@Test
-	public void testPostWorkflowTaskUpdateDueDate() throws Exception {
-			Assert.assertTrue(true);
+		Assert.assertTrue(true);
 	}
 
-	protected void assertResponseCode(int expectedResponseCode, Http.Response actualResponse) {
-		Assert.assertEquals(expectedResponseCode, actualResponse.getResponseCode());
+	@Test
+	public void testGetWorkflowTasksPage() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	@Test
+	public void testGetWorkflowTask() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	@Test
+	public void testPostWorkflowTaskAssignToMe() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	@Test
+	public void testPostWorkflowTaskAssignToUser() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	@Test
+	public void testPostWorkflowTaskChangeTransition() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	@Test
+	public void testPostWorkflowTaskUpdateDueDate() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	protected void assertResponseCode(
+		int expectedResponseCode, Http.Response actualResponse) {
+
+		Assert.assertEquals(
+			expectedResponseCode, actualResponse.getResponseCode());
 	}
 
 	protected Page<WorkflowTask> invokeGetRoleWorkflowTasksPage(
-				Long roleId,Pagination pagination)
-			throws Exception {
+			Long roleId, Pagination pagination)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/roles/{role-id}/workflow-tasks", roleId));
+		options.setLocation(
+			_resourceURL + _toPath("/roles/{role-id}/workflow-tasks", roleId));
 
-				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), Page.class);
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), Page.class);
 	}
 
 	protected Http.Response invokeGetRoleWorkflowTasksPageResponse(
-				Long roleId,Pagination pagination)
-			throws Exception {
+			Long roleId, Pagination pagination)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/roles/{role-id}/workflow-tasks", roleId));
+		options.setLocation(
+			_resourceURL + _toPath("/roles/{role-id}/workflow-tasks", roleId));
 
-			HttpUtil.URLtoString(options);
+		HttpUtil.URLtoString(options);
 
-			return options.getResponse();
+		return options.getResponse();
 	}
+
 	protected Page<WorkflowTask> invokeGetWorkflowTasksPage(
-				Pagination pagination)
-			throws Exception {
+			Pagination pagination)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/workflow-tasks", pagination));
+		options.setLocation(
+			_resourceURL + _toPath("/workflow-tasks", pagination));
 
-				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), Page.class);
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), Page.class);
 	}
 
 	protected Http.Response invokeGetWorkflowTasksPageResponse(
-				Pagination pagination)
-			throws Exception {
+			Pagination pagination)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/workflow-tasks", pagination));
+		options.setLocation(
+			_resourceURL + _toPath("/workflow-tasks", pagination));
 
-			HttpUtil.URLtoString(options);
+		HttpUtil.URLtoString(options);
 
-			return options.getResponse();
-	}
-	protected WorkflowTask invokeGetWorkflowTask(
-				Long workflowTaskId)
-			throws Exception {
-
-			Http.Options options = _createHttpOptions();
-
-			options.setLocation(_resourceURL + _toPath("/workflow-tasks/{workflow-task-id}", workflowTaskId));
-
-				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), WorkflowTaskImpl.class);
+		return options.getResponse();
 	}
 
-	protected Http.Response invokeGetWorkflowTaskResponse(
-				Long workflowTaskId)
-			throws Exception {
+	protected WorkflowTask invokeGetWorkflowTask(Long workflowTaskId)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/workflow-tasks/{workflow-task-id}", workflowTaskId));
+		options.setLocation(
+			_resourceURL +
+				_toPath("/workflow-tasks/{workflow-task-id}", workflowTaskId));
 
-			HttpUtil.URLtoString(options);
-
-			return options.getResponse();
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), WorkflowTaskImpl.class);
 	}
+
+	protected Http.Response invokeGetWorkflowTaskResponse(Long workflowTaskId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL +
+				_toPath("/workflow-tasks/{workflow-task-id}", workflowTaskId));
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
 	protected WorkflowTask invokePostWorkflowTaskAssignToMe(
-				Long workflowTaskId,WorkflowTask workflowTask)
-			throws Exception {
+			Long workflowTaskId, WorkflowTask workflowTask)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-				options.setBody(_inputObjectMapper.writeValueAsString(workflowTask), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(workflowTask),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-			options.setLocation(_resourceURL + _toPath("/workflow-tasks/{workflow-task-id}/assign-to-me", workflowTaskId,workflowTask));
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/workflow-tasks/{workflow-task-id}/assign-to-me",
+					workflowTaskId, workflowTask));
 
-				options.setPost(true);
+		options.setPost(true);
 
-				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), WorkflowTaskImpl.class);
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), WorkflowTaskImpl.class);
 	}
 
 	protected Http.Response invokePostWorkflowTaskAssignToMeResponse(
-				Long workflowTaskId,WorkflowTask workflowTask)
-			throws Exception {
+			Long workflowTaskId, WorkflowTask workflowTask)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-				options.setBody(_inputObjectMapper.writeValueAsString(workflowTask), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(workflowTask),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-			options.setLocation(_resourceURL + _toPath("/workflow-tasks/{workflow-task-id}/assign-to-me", workflowTaskId,workflowTask));
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/workflow-tasks/{workflow-task-id}/assign-to-me",
+					workflowTaskId, workflowTask));
 
-				options.setPost(true);
+		options.setPost(true);
 
-			HttpUtil.URLtoString(options);
+		HttpUtil.URLtoString(options);
 
-			return options.getResponse();
+		return options.getResponse();
 	}
+
 	protected WorkflowTask invokePostWorkflowTaskAssignToUser(
-				Long workflowTaskId,WorkflowTask workflowTask)
-			throws Exception {
+			Long workflowTaskId, WorkflowTask workflowTask)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-				options.setBody(_inputObjectMapper.writeValueAsString(workflowTask), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(workflowTask),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-			options.setLocation(_resourceURL + _toPath("/workflow-tasks/{workflow-task-id}/assign-to-user", workflowTaskId,workflowTask));
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/workflow-tasks/{workflow-task-id}/assign-to-user",
+					workflowTaskId, workflowTask));
 
-				options.setPost(true);
+		options.setPost(true);
 
-				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), WorkflowTaskImpl.class);
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), WorkflowTaskImpl.class);
 	}
 
 	protected Http.Response invokePostWorkflowTaskAssignToUserResponse(
-				Long workflowTaskId,WorkflowTask workflowTask)
-			throws Exception {
+			Long workflowTaskId, WorkflowTask workflowTask)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-				options.setBody(_inputObjectMapper.writeValueAsString(workflowTask), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(workflowTask),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-			options.setLocation(_resourceURL + _toPath("/workflow-tasks/{workflow-task-id}/assign-to-user", workflowTaskId,workflowTask));
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/workflow-tasks/{workflow-task-id}/assign-to-user",
+					workflowTaskId, workflowTask));
 
-				options.setPost(true);
+		options.setPost(true);
 
-			HttpUtil.URLtoString(options);
+		HttpUtil.URLtoString(options);
 
-			return options.getResponse();
+		return options.getResponse();
 	}
+
 	protected WorkflowTask invokePostWorkflowTaskChangeTransition(
-				Long workflowTaskId,WorkflowTask workflowTask)
-			throws Exception {
+			Long workflowTaskId, WorkflowTask workflowTask)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-				options.setBody(_inputObjectMapper.writeValueAsString(workflowTask), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(workflowTask),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-			options.setLocation(_resourceURL + _toPath("/workflow-tasks/{workflow-task-id}/change-transition", workflowTaskId,workflowTask));
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/workflow-tasks/{workflow-task-id}/change-transition",
+					workflowTaskId, workflowTask));
 
-				options.setPost(true);
+		options.setPost(true);
 
-				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), WorkflowTaskImpl.class);
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), WorkflowTaskImpl.class);
 	}
 
 	protected Http.Response invokePostWorkflowTaskChangeTransitionResponse(
-				Long workflowTaskId,WorkflowTask workflowTask)
-			throws Exception {
+			Long workflowTaskId, WorkflowTask workflowTask)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-				options.setBody(_inputObjectMapper.writeValueAsString(workflowTask), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(workflowTask),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-			options.setLocation(_resourceURL + _toPath("/workflow-tasks/{workflow-task-id}/change-transition", workflowTaskId,workflowTask));
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/workflow-tasks/{workflow-task-id}/change-transition",
+					workflowTaskId, workflowTask));
 
-				options.setPost(true);
+		options.setPost(true);
 
-			HttpUtil.URLtoString(options);
+		HttpUtil.URLtoString(options);
 
-			return options.getResponse();
+		return options.getResponse();
 	}
+
 	protected WorkflowTask invokePostWorkflowTaskUpdateDueDate(
-				Long workflowTaskId,WorkflowTask workflowTask)
-			throws Exception {
+			Long workflowTaskId, WorkflowTask workflowTask)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-				options.setBody(_inputObjectMapper.writeValueAsString(workflowTask), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(workflowTask),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-			options.setLocation(_resourceURL + _toPath("/workflow-tasks/{workflow-task-id}/update-due-date", workflowTaskId,workflowTask));
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/workflow-tasks/{workflow-task-id}/update-due-date",
+					workflowTaskId, workflowTask));
 
-				options.setPost(true);
+		options.setPost(true);
 
-				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), WorkflowTaskImpl.class);
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), WorkflowTaskImpl.class);
 	}
 
 	protected Http.Response invokePostWorkflowTaskUpdateDueDateResponse(
-				Long workflowTaskId,WorkflowTask workflowTask)
-			throws Exception {
+			Long workflowTaskId, WorkflowTask workflowTask)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-				options.setBody(_inputObjectMapper.writeValueAsString(workflowTask), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(workflowTask),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-			options.setLocation(_resourceURL + _toPath("/workflow-tasks/{workflow-task-id}/update-due-date", workflowTaskId,workflowTask));
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/workflow-tasks/{workflow-task-id}/update-due-date",
+					workflowTaskId, workflowTask));
 
-				options.setPost(true);
+		options.setPost(true);
 
-			HttpUtil.URLtoString(options);
+		HttpUtil.URLtoString(options);
 
-			return options.getResponse();
+		return options.getResponse();
 	}
 
 	protected WorkflowTask randomWorkflowTask() {
 		return new WorkflowTaskImpl() {
 			{
-
-						completed = RandomTestUtil.randomBoolean();
-						dateCompleted = RandomTestUtil.nextDate();
-						dateCreated = RandomTestUtil.nextDate();
-						definitionName = RandomTestUtil.randomString();
-						description = RandomTestUtil.randomString();
-						dueDate = RandomTestUtil.nextDate();
-						id = RandomTestUtil.randomLong();
-						name = RandomTestUtil.randomString();
-	}
+				completed = RandomTestUtil.randomBoolean();
+				dateCompleted = RandomTestUtil.nextDate();
+				dateCreated = RandomTestUtil.nextDate();
+				definitionName = RandomTestUtil.randomString();
+				description = RandomTestUtil.randomString();
+				dueDate = RandomTestUtil.nextDate();
+				id = RandomTestUtil.randomLong();
+				name = RandomTestUtil.randomString();
+			}
 		};
 	}
 
@@ -312,270 +387,280 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 
 	protected static class WorkflowTaskImpl implements WorkflowTask {
 
-	public Boolean getCompleted() {
-				return completed;
-	}
+		public Boolean getCompleted() {
+			return completed;
+		}
 
-	public void setCompleted(Boolean completed) {
-				this.completed = completed;
-	}
+		public void setCompleted(Boolean completed) {
+			this.completed = completed;
+		}
 
-	@JsonIgnore
-	public void setCompleted(
-				UnsafeSupplier<Boolean, Throwable> completedUnsafeSupplier) {
+		@JsonIgnore
+		public void setCompleted(
+			UnsafeSupplier<Boolean, Throwable> completedUnsafeSupplier) {
 
-				try {
-					completed = completedUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+			try {
+				completed = completedUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-	@JsonProperty
-	protected Boolean completed;
-	public Date getDateCompleted() {
-				return dateCompleted;
-	}
+		@JsonProperty
+		protected Boolean completed;
 
-	public void setDateCompleted(Date dateCompleted) {
-				this.dateCompleted = dateCompleted;
-	}
+		public Date getDateCompleted() {
+			return dateCompleted;
+		}
 
-	@JsonIgnore
-	public void setDateCompleted(
-				UnsafeSupplier<Date, Throwable> dateCompletedUnsafeSupplier) {
+		public void setDateCompleted(Date dateCompleted) {
+			this.dateCompleted = dateCompleted;
+		}
 
-				try {
-					dateCompleted = dateCompletedUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		@JsonIgnore
+		public void setDateCompleted(
+			UnsafeSupplier<Date, Throwable> dateCompletedUnsafeSupplier) {
 
-	@JsonProperty
-	protected Date dateCompleted;
-	public Date getDateCreated() {
-				return dateCreated;
-	}
+			try {
+				dateCompleted = dateCompletedUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-	public void setDateCreated(Date dateCreated) {
-				this.dateCreated = dateCreated;
-	}
+		@JsonProperty
+		protected Date dateCompleted;
 
-	@JsonIgnore
-	public void setDateCreated(
-				UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
+		public Date getDateCreated() {
+			return dateCreated;
+		}
 
-				try {
-					dateCreated = dateCreatedUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		public void setDateCreated(Date dateCreated) {
+			this.dateCreated = dateCreated;
+		}
 
-	@JsonProperty
-	protected Date dateCreated;
-	public String getDefinitionName() {
-				return definitionName;
-	}
+		@JsonIgnore
+		public void setDateCreated(
+			UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
 
-	public void setDefinitionName(String definitionName) {
-				this.definitionName = definitionName;
-	}
+			try {
+				dateCreated = dateCreatedUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-	@JsonIgnore
-	public void setDefinitionName(
-				UnsafeSupplier<String, Throwable> definitionNameUnsafeSupplier) {
+		@JsonProperty
+		protected Date dateCreated;
 
-				try {
-					definitionName = definitionNameUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		public String getDefinitionName() {
+			return definitionName;
+		}
 
-	@JsonProperty
-	protected String definitionName;
-	public String getDescription() {
-				return description;
-	}
+		public void setDefinitionName(String definitionName) {
+			this.definitionName = definitionName;
+		}
 
-	public void setDescription(String description) {
-				this.description = description;
-	}
+		@JsonIgnore
+		public void setDefinitionName(
+			UnsafeSupplier<String, Throwable> definitionNameUnsafeSupplier) {
 
-	@JsonIgnore
-	public void setDescription(
-				UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier) {
+			try {
+				definitionName = definitionNameUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-				try {
-					description = descriptionUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		@JsonProperty
+		protected String definitionName;
 
-	@JsonProperty
-	protected String description;
-	public Date getDueDate() {
-				return dueDate;
-	}
+		public String getDescription() {
+			return description;
+		}
 
-	public void setDueDate(Date dueDate) {
-				this.dueDate = dueDate;
-	}
+		public void setDescription(String description) {
+			this.description = description;
+		}
 
-	@JsonIgnore
-	public void setDueDate(
-				UnsafeSupplier<Date, Throwable> dueDateUnsafeSupplier) {
+		@JsonIgnore
+		public void setDescription(
+			UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier) {
 
-				try {
-					dueDate = dueDateUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+			try {
+				description = descriptionUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-	@JsonProperty
-	protected Date dueDate;
-	public Long getId() {
-				return id;
-	}
+		@JsonProperty
+		protected String description;
 
-	public void setId(Long id) {
-				this.id = id;
-	}
+		public Date getDueDate() {
+			return dueDate;
+		}
 
-	@JsonIgnore
-	public void setId(
-				UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+		public void setDueDate(Date dueDate) {
+			this.dueDate = dueDate;
+		}
 
-				try {
-					id = idUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		@JsonIgnore
+		public void setDueDate(
+			UnsafeSupplier<Date, Throwable> dueDateUnsafeSupplier) {
 
-	@JsonProperty
-	protected Long id;
-	public WorkflowLog[] getLogs() {
-				return logs;
-	}
+			try {
+				dueDate = dueDateUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-	public void setLogs(WorkflowLog[] logs) {
-				this.logs = logs;
-	}
+		@JsonProperty
+		protected Date dueDate;
 
-	@JsonIgnore
-	public void setLogs(
-				UnsafeSupplier<WorkflowLog[], Throwable> logsUnsafeSupplier) {
+		public Long getId() {
+			return id;
+		}
 
-				try {
-					logs = logsUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		public void setId(Long id) {
+			this.id = id;
+		}
 
-	@JsonProperty
-	protected WorkflowLog[] logs;
-	public Long[] getLogsIds() {
-				return logsIds;
-	}
+		@JsonIgnore
+		public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+			try {
+				id = idUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-	public void setLogsIds(Long[] logsIds) {
-				this.logsIds = logsIds;
-	}
+		@JsonProperty
+		protected Long id;
 
-	@JsonIgnore
-	public void setLogsIds(
-				UnsafeSupplier<Long[], Throwable> logsIdsUnsafeSupplier) {
+		public WorkflowLog[] getLogs() {
+			return logs;
+		}
 
-				try {
-					logsIds = logsIdsUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		public void setLogs(WorkflowLog[] logs) {
+			this.logs = logs;
+		}
 
-	@JsonProperty
-	protected Long[] logsIds;
-	public String getName() {
-				return name;
-	}
+		@JsonIgnore
+		public void setLogs(
+			UnsafeSupplier<WorkflowLog[], Throwable> logsUnsafeSupplier) {
 
-	public void setName(String name) {
-				this.name = name;
-	}
+			try {
+				logs = logsUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-	@JsonIgnore
-	public void setName(
-				UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
+		@JsonProperty
+		protected WorkflowLog[] logs;
 
-				try {
-					name = nameUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		public Long[] getLogsIds() {
+			return logsIds;
+		}
 
-	@JsonProperty
-	protected String name;
-	public ObjectReviewed getObjectReviewed() {
-				return objectReviewed;
-	}
+		public void setLogsIds(Long[] logsIds) {
+			this.logsIds = logsIds;
+		}
 
-	public void setObjectReviewed(ObjectReviewed objectReviewed) {
-				this.objectReviewed = objectReviewed;
-	}
+		@JsonIgnore
+		public void setLogsIds(
+			UnsafeSupplier<Long[], Throwable> logsIdsUnsafeSupplier) {
 
-	@JsonIgnore
-	public void setObjectReviewed(
-				UnsafeSupplier<ObjectReviewed, Throwable> objectReviewedUnsafeSupplier) {
+			try {
+				logsIds = logsIdsUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-				try {
-					objectReviewed = objectReviewedUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		@JsonProperty
+		protected Long[] logsIds;
 
-	@JsonProperty
-	protected ObjectReviewed objectReviewed;
-	public String[] getTransitions() {
-				return transitions;
-	}
+		public String getName() {
+			return name;
+		}
 
-	public void setTransitions(String[] transitions) {
-				this.transitions = transitions;
-	}
+		public void setName(String name) {
+			this.name = name;
+		}
 
-	@JsonIgnore
-	public void setTransitions(
-				UnsafeSupplier<String[], Throwable> transitionsUnsafeSupplier) {
+		@JsonIgnore
+		public void setName(
+			UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
 
-				try {
-					transitions = transitionsUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+			try {
+				name = nameUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-	@JsonProperty
-	protected String[] transitions;
+		@JsonProperty
+		protected String name;
+
+		public ObjectReviewed getObjectReviewed() {
+			return objectReviewed;
+		}
+
+		public void setObjectReviewed(ObjectReviewed objectReviewed) {
+			this.objectReviewed = objectReviewed;
+		}
+
+		@JsonIgnore
+		public void setObjectReviewed(
+			UnsafeSupplier<ObjectReviewed, Throwable>
+				objectReviewedUnsafeSupplier) {
+
+			try {
+				objectReviewed = objectReviewedUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
+
+		@JsonProperty
+		protected ObjectReviewed objectReviewed;
+
+		public String[] getTransitions() {
+			return transitions;
+		}
+
+		public void setTransitions(String[] transitions) {
+			this.transitions = transitions;
+		}
+
+		@JsonIgnore
+		public void setTransitions(
+			UnsafeSupplier<String[], Throwable> transitionsUnsafeSupplier) {
+
+			try {
+				transitions = transitionsUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
+
+		@JsonProperty
+		protected String[] transitions;
 
 	}
 
@@ -586,9 +671,11 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 
 		String userNameAndPassword = "test@liferay.com:test";
 
-		String encodedUserNameAndPassword = Base64.encode(userNameAndPassword.getBytes());
+		String encodedUserNameAndPassword = Base64.encode(
+			userNameAndPassword.getBytes());
 
-		options.addHeader("Authorization", "Basic " + encodedUserNameAndPassword);
+		options.addHeader(
+			"Authorization", "Basic " + encodedUserNameAndPassword);
 
 		options.addHeader("Content-Type", "application/json");
 
@@ -602,7 +689,7 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {
 		{
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
-	}
+		}
 	};
 	private final static ObjectMapper _outputObjectMapper = new ObjectMapper();
 

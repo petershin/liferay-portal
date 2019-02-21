@@ -27,27 +27,22 @@ public interface RenderedContentsByTemplate {
 
 	public Long getId();
 
-	public void setId(
-			Long id);
+	public void setId(Long id);
 
-	public void setId(
-			UnsafeSupplier<Long, Throwable>
-				idUnsafeSupplier);
+	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier);
+
 	public String getRenderedContent();
 
-	public void setRenderedContent(
-			String renderedContent);
+	public void setRenderedContent(String renderedContent);
 
 	public void setRenderedContent(
-			UnsafeSupplier<String, Throwable>
-				renderedContentUnsafeSupplier);
+		UnsafeSupplier<String, Throwable> renderedContentUnsafeSupplier);
+
 	public String getTemplate();
 
-	public void setTemplate(
-			String template);
+	public void setTemplate(String template);
 
 	public void setTemplate(
-			UnsafeSupplier<String, Throwable>
-				templateUnsafeSupplier);
+		UnsafeSupplier<String, Throwable> templateUnsafeSupplier);
 
 }

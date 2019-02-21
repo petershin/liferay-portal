@@ -37,108 +37,93 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class PhoneImpl implements Phone {
 
 	public String getExtension() {
-			return extension;
+		return extension;
 	}
 
-	public void setExtension(
-			String extension) {
-
-			this.extension = extension;
+	public void setExtension(String extension) {
+		this.extension = extension;
 	}
 
 	@JsonIgnore
 	public void setExtension(
-			UnsafeSupplier<String, Throwable>
-				extensionUnsafeSupplier) {
+		UnsafeSupplier<String, Throwable> extensionUnsafeSupplier) {
 
-			try {
-				extension =
-					extensionUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
+		try {
+			extension = extensionUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected String extension;
+
 	public Long getId() {
-			return id;
+		return id;
 	}
 
-	public void setId(
-			Long id) {
-
-			this.id = id;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	@JsonIgnore
-	public void setId(
-			UnsafeSupplier<Long, Throwable>
-				idUnsafeSupplier) {
-
-			try {
-				id =
-					idUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
+	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+		try {
+			id = idUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected Long id;
+
 	public String getPhoneNumber() {
-			return phoneNumber;
+		return phoneNumber;
 	}
 
-	public void setPhoneNumber(
-			String phoneNumber) {
-
-			this.phoneNumber = phoneNumber;
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
 	}
 
 	@JsonIgnore
 	public void setPhoneNumber(
-			UnsafeSupplier<String, Throwable>
-				phoneNumberUnsafeSupplier) {
+		UnsafeSupplier<String, Throwable> phoneNumberUnsafeSupplier) {
 
-			try {
-				phoneNumber =
-					phoneNumberUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
+		try {
+			phoneNumber = phoneNumberUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected String phoneNumber;
+
 	public String getPhoneType() {
-			return phoneType;
+		return phoneType;
 	}
 
-	public void setPhoneType(
-			String phoneType) {
-
-			this.phoneType = phoneType;
+	public void setPhoneType(String phoneType) {
+		this.phoneType = phoneType;
 	}
 
 	@JsonIgnore
 	public void setPhoneType(
-			UnsafeSupplier<String, Throwable>
-				phoneTypeUnsafeSupplier) {
+		UnsafeSupplier<String, Throwable> phoneTypeUnsafeSupplier) {
 
-			try {
-				phoneType =
-					phoneTypeUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
+		try {
+			phoneType = phoneTypeUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField

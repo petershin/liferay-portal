@@ -37,81 +37,69 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class LocationImpl implements Location {
 
 	public String getAddressCountry() {
-			return addressCountry;
+		return addressCountry;
 	}
 
-	public void setAddressCountry(
-			String addressCountry) {
-
-			this.addressCountry = addressCountry;
+	public void setAddressCountry(String addressCountry) {
+		this.addressCountry = addressCountry;
 	}
 
 	@JsonIgnore
 	public void setAddressCountry(
-			UnsafeSupplier<String, Throwable>
-				addressCountryUnsafeSupplier) {
+		UnsafeSupplier<String, Throwable> addressCountryUnsafeSupplier) {
 
-			try {
-				addressCountry =
-					addressCountryUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
+		try {
+			addressCountry = addressCountryUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected String addressCountry;
+
 	public String getAddressRegion() {
-			return addressRegion;
+		return addressRegion;
 	}
 
-	public void setAddressRegion(
-			String addressRegion) {
-
-			this.addressRegion = addressRegion;
+	public void setAddressRegion(String addressRegion) {
+		this.addressRegion = addressRegion;
 	}
 
 	@JsonIgnore
 	public void setAddressRegion(
-			UnsafeSupplier<String, Throwable>
-				addressRegionUnsafeSupplier) {
+		UnsafeSupplier<String, Throwable> addressRegionUnsafeSupplier) {
 
-			try {
-				addressRegion =
-					addressRegionUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
+		try {
+			addressRegion = addressRegionUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected String addressRegion;
+
 	public Long getId() {
-			return id;
+		return id;
 	}
 
-	public void setId(
-			Long id) {
-
-			this.id = id;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	@JsonIgnore
-	public void setId(
-			UnsafeSupplier<Long, Throwable>
-				idUnsafeSupplier) {
-
-			try {
-				id =
-					idUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
+	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+		try {
+			id = idUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField

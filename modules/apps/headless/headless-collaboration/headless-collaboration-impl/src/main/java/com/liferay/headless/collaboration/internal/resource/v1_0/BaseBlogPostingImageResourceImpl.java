@@ -46,7 +46,8 @@ import javax.ws.rs.core.Context;
  */
 @Generated("")
 @Path("/v1.0")
-public abstract class BaseBlogPostingImageResourceImpl implements BlogPostingImageResource {
+public abstract class BaseBlogPostingImageResourceImpl
+	implements BlogPostingImageResource {
 
 	@Override
 	@GET
@@ -54,11 +55,13 @@ public abstract class BaseBlogPostingImageResourceImpl implements BlogPostingIma
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	public Page<BlogPostingImage> getContentSpaceBlogPostingImagesPage(
-	@PathParam("content-space-id") Long contentSpaceId,@Context Pagination pagination)
-			throws Exception {
+			@PathParam("content-space-id") Long contentSpaceId,
+			@Context Pagination pagination)
+		throws Exception {
 
-				return Page.of(Collections.emptyList());
+		return Page.of(Collections.emptyList());
 	}
+
 	@Override
 	@Consumes("multipart/form-data")
 	@POST
@@ -66,39 +69,44 @@ public abstract class BaseBlogPostingImageResourceImpl implements BlogPostingIma
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	public BlogPostingImage postContentSpaceBlogPostingImage(
-	@PathParam("content-space-id") Long contentSpaceId,MultipartBody multipartBody)
-			throws Exception {
+			@PathParam("content-space-id") Long contentSpaceId,
+			MultipartBody multipartBody)
+		throws Exception {
 
-				return new BlogPostingImageImpl();
+		return new BlogPostingImageImpl();
 	}
+
 	@Override
 	@DELETE
 	@Path("/blog-posting-images/{image-object-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	public boolean deleteImageObject(
-	@PathParam("image-object-id") Long imageObjectId)
-			throws Exception {
+			@PathParam("image-object-id") Long imageObjectId)
+		throws Exception {
 
-				return false;
+		return false;
 	}
+
 	@Override
 	@GET
 	@Path("/blog-posting-images/{image-object-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	public BlogPostingImage getImageObject(
-	@PathParam("image-object-id") Long imageObjectId)
-			throws Exception {
+			@PathParam("image-object-id") Long imageObjectId)
+		throws Exception {
 
-				return new BlogPostingImageImpl();
+		return new BlogPostingImageImpl();
 	}
 
 	public void setContextCompany(Company contextCompany) {
 		this.contextCompany = contextCompany;
 	}
 
-	protected <T, R> List<R> transform(List<T> list, UnsafeFunction<T, R, Throwable> unsafeFunction) {
+	protected <T, R> List<R> transform(
+		List<T> list, UnsafeFunction<T, R, Throwable> unsafeFunction) {
+
 		return TransformUtil.transform(list, unsafeFunction);
 	}
 

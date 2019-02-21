@@ -48,7 +48,8 @@ import javax.ws.rs.core.Context;
  */
 @Generated("")
 @Path("/v1.0")
-public abstract class BaseBlogPostingResourceImpl implements BlogPostingResource {
+public abstract class BaseBlogPostingResourceImpl
+	implements BlogPostingResource {
 
 	@Override
 	@DELETE
@@ -56,22 +57,24 @@ public abstract class BaseBlogPostingResourceImpl implements BlogPostingResource
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	public boolean deleteBlogPosting(
-	@PathParam("blog-posting-id") Long blogPostingId)
-			throws Exception {
+			@PathParam("blog-posting-id") Long blogPostingId)
+		throws Exception {
 
-				return false;
+		return false;
 	}
+
 	@Override
 	@GET
 	@Path("/blog-postings/{blog-posting-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	public BlogPosting getBlogPosting(
-	@PathParam("blog-posting-id") Long blogPostingId)
-			throws Exception {
+			@PathParam("blog-posting-id") Long blogPostingId)
+		throws Exception {
 
-				return new BlogPostingImpl();
+		return new BlogPostingImpl();
 	}
+
 	@Override
 	@Consumes("application/json")
 	@PATCH
@@ -79,62 +82,83 @@ public abstract class BaseBlogPostingResourceImpl implements BlogPostingResource
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	public BlogPosting patchBlogPosting(
-	@PathParam("blog-posting-id") Long blogPostingId,BlogPosting blogPosting)
-			throws Exception {
+			@PathParam("blog-posting-id") Long blogPostingId,
+			BlogPosting blogPosting)
+		throws Exception {
 
-				BlogPosting existingBlogPosting = getBlogPosting(blogPostingId);
+		BlogPosting existingBlogPosting = getBlogPosting(blogPostingId);
 
-						if (Validator.isNotNull(blogPosting.getAlternativeHeadline())) {
-							existingBlogPosting.setAlternativeHeadline(blogPosting.getAlternativeHeadline());
-	}
-						if (Validator.isNotNull(blogPosting.getArticleBody())) {
-							existingBlogPosting.setArticleBody(blogPosting.getArticleBody());
-	}
-						if (Validator.isNotNull(blogPosting.getCaption())) {
-							existingBlogPosting.setCaption(blogPosting.getCaption());
-	}
-						if (Validator.isNotNull(blogPosting.getCategoryIds())) {
-							existingBlogPosting.setCategoryIds(blogPosting.getCategoryIds());
-	}
-						if (Validator.isNotNull(blogPosting.getContentSpace())) {
-							existingBlogPosting.setContentSpace(blogPosting.getContentSpace());
-	}
-						if (Validator.isNotNull(blogPosting.getDateCreated())) {
-							existingBlogPosting.setDateCreated(blogPosting.getDateCreated());
-	}
-						if (Validator.isNotNull(blogPosting.getDateModified())) {
-							existingBlogPosting.setDateModified(blogPosting.getDateModified());
-	}
-						if (Validator.isNotNull(blogPosting.getDatePublished())) {
-							existingBlogPosting.setDatePublished(blogPosting.getDatePublished());
-	}
-						if (Validator.isNotNull(blogPosting.getDescription())) {
-							existingBlogPosting.setDescription(blogPosting.getDescription());
-	}
-						if (Validator.isNotNull(blogPosting.getEncodingFormat())) {
-							existingBlogPosting.setEncodingFormat(blogPosting.getEncodingFormat());
-	}
-						if (Validator.isNotNull(blogPosting.getFriendlyUrlPath())) {
-							existingBlogPosting.setFriendlyUrlPath(blogPosting.getFriendlyUrlPath());
-	}
-						if (Validator.isNotNull(blogPosting.getHasComments())) {
-							existingBlogPosting.setHasComments(blogPosting.getHasComments());
-	}
-						if (Validator.isNotNull(blogPosting.getHeadline())) {
-							existingBlogPosting.setHeadline(blogPosting.getHeadline());
-	}
-						if (Validator.isNotNull(blogPosting.getId())) {
-							existingBlogPosting.setId(blogPosting.getId());
-	}
-						if (Validator.isNotNull(blogPosting.getImageId())) {
-							existingBlogPosting.setImageId(blogPosting.getImageId());
-	}
-						if (Validator.isNotNull(blogPosting.getKeywords())) {
-							existingBlogPosting.setKeywords(blogPosting.getKeywords());
+		if (Validator.isNotNull(blogPosting.getAlternativeHeadline())) {
+			existingBlogPosting.setAlternativeHeadline(
+				blogPosting.getAlternativeHeadline());
+		}
+
+		if (Validator.isNotNull(blogPosting.getArticleBody())) {
+			existingBlogPosting.setArticleBody(blogPosting.getArticleBody());
+		}
+
+		if (Validator.isNotNull(blogPosting.getCaption())) {
+			existingBlogPosting.setCaption(blogPosting.getCaption());
+		}
+
+		if (Validator.isNotNull(blogPosting.getCategoryIds())) {
+			existingBlogPosting.setCategoryIds(blogPosting.getCategoryIds());
+		}
+
+		if (Validator.isNotNull(blogPosting.getContentSpace())) {
+			existingBlogPosting.setContentSpace(blogPosting.getContentSpace());
+		}
+
+		if (Validator.isNotNull(blogPosting.getDateCreated())) {
+			existingBlogPosting.setDateCreated(blogPosting.getDateCreated());
+		}
+
+		if (Validator.isNotNull(blogPosting.getDateModified())) {
+			existingBlogPosting.setDateModified(blogPosting.getDateModified());
+		}
+
+		if (Validator.isNotNull(blogPosting.getDatePublished())) {
+			existingBlogPosting.setDatePublished(
+				blogPosting.getDatePublished());
+		}
+
+		if (Validator.isNotNull(blogPosting.getDescription())) {
+			existingBlogPosting.setDescription(blogPosting.getDescription());
+		}
+
+		if (Validator.isNotNull(blogPosting.getEncodingFormat())) {
+			existingBlogPosting.setEncodingFormat(
+				blogPosting.getEncodingFormat());
+		}
+
+		if (Validator.isNotNull(blogPosting.getFriendlyUrlPath())) {
+			existingBlogPosting.setFriendlyUrlPath(
+				blogPosting.getFriendlyUrlPath());
+		}
+
+		if (Validator.isNotNull(blogPosting.getHasComments())) {
+			existingBlogPosting.setHasComments(blogPosting.getHasComments());
+		}
+
+		if (Validator.isNotNull(blogPosting.getHeadline())) {
+			existingBlogPosting.setHeadline(blogPosting.getHeadline());
+		}
+
+		if (Validator.isNotNull(blogPosting.getId())) {
+			existingBlogPosting.setId(blogPosting.getId());
+		}
+
+		if (Validator.isNotNull(blogPosting.getImageId())) {
+			existingBlogPosting.setImageId(blogPosting.getImageId());
+		}
+
+		if (Validator.isNotNull(blogPosting.getKeywords())) {
+			existingBlogPosting.setKeywords(blogPosting.getKeywords());
+		}
+
+		return putBlogPosting(blogPostingId, existingBlogPosting);
 	}
 
-				return putBlogPosting(blogPostingId, existingBlogPosting);
-	}
 	@Override
 	@Consumes("application/json")
 	@PUT
@@ -142,22 +166,26 @@ public abstract class BaseBlogPostingResourceImpl implements BlogPostingResource
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	public BlogPosting putBlogPosting(
-	@PathParam("blog-posting-id") Long blogPostingId,BlogPosting blogPosting)
-			throws Exception {
+			@PathParam("blog-posting-id") Long blogPostingId,
+			BlogPosting blogPosting)
+		throws Exception {
 
-				return new BlogPostingImpl();
+		return new BlogPostingImpl();
 	}
+
 	@Override
 	@GET
 	@Path("/content-spaces/{content-space-id}/blog-postings")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	public Page<BlogPosting> getContentSpaceBlogPostingsPage(
-	@PathParam("content-space-id") Long contentSpaceId,@Context Pagination pagination)
-			throws Exception {
+			@PathParam("content-space-id") Long contentSpaceId,
+			@Context Pagination pagination)
+		throws Exception {
 
-				return Page.of(Collections.emptyList());
+		return Page.of(Collections.emptyList());
 	}
+
 	@Override
 	@Consumes("application/json")
 	@POST
@@ -165,17 +193,20 @@ public abstract class BaseBlogPostingResourceImpl implements BlogPostingResource
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	public BlogPosting postContentSpaceBlogPosting(
-	@PathParam("content-space-id") Long contentSpaceId,BlogPosting blogPosting)
-			throws Exception {
+			@PathParam("content-space-id") Long contentSpaceId,
+			BlogPosting blogPosting)
+		throws Exception {
 
-				return new BlogPostingImpl();
+		return new BlogPostingImpl();
 	}
 
 	public void setContextCompany(Company contextCompany) {
 		this.contextCompany = contextCompany;
 	}
 
-	protected <T, R> List<R> transform(List<T> list, UnsafeFunction<T, R, Throwable> unsafeFunction) {
+	protected <T, R> List<R> transform(
+		List<T> list, UnsafeFunction<T, R, Throwable> unsafeFunction) {
+
 		return TransformUtil.transform(list, unsafeFunction);
 	}
 

@@ -52,22 +52,22 @@ public abstract class BaseFormResourceImpl implements FormResource {
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	public Page<Form> getContentSpaceFormsPage(
-	@PathParam("content-space-id") Long contentSpaceId,@Context Pagination pagination)
-			throws Exception {
+			@PathParam("content-space-id") Long contentSpaceId,
+			@Context Pagination pagination)
+		throws Exception {
 
-				return Page.of(Collections.emptyList());
+		return Page.of(Collections.emptyList());
 	}
+
 	@Override
 	@GET
 	@Path("/forms/{form-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Form getForm(
-	@PathParam("form-id") Long formId)
-			throws Exception {
-
-				return new FormImpl();
+	public Form getForm(@PathParam("form-id") Long formId) throws Exception {
+		return new FormImpl();
 	}
+
 	@Override
 	@Consumes("application/json")
 	@POST
@@ -75,40 +75,42 @@ public abstract class BaseFormResourceImpl implements FormResource {
 	@Produces("application/json")
 	@RequiresScope("everything.write")
 	public Form postFormEvaluateContext(
-	@PathParam("form-id") Long formId,Form form)
-			throws Exception {
+			@PathParam("form-id") Long formId, Form form)
+		throws Exception {
 
-				return new FormImpl();
+		return new FormImpl();
 	}
+
 	@Override
 	@GET
 	@Path("/forms/{form-id}/fetch-latest-draft")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Form getFormFetchLatestDraft(
-	@PathParam("form-id") Long formId)
-			throws Exception {
+	public Form getFormFetchLatestDraft(@PathParam("form-id") Long formId)
+		throws Exception {
 
-				return new FormImpl();
+		return new FormImpl();
 	}
+
 	@Override
 	@Consumes("application/json")
 	@POST
 	@Path("/forms/{form-id}/upload-file")
 	@Produces("application/json")
 	@RequiresScope("everything.write")
-	public Form postFormUploadFile(
-	@PathParam("form-id") Long formId,Form form)
-			throws Exception {
+	public Form postFormUploadFile(@PathParam("form-id") Long formId, Form form)
+		throws Exception {
 
-				return new FormImpl();
+		return new FormImpl();
 	}
 
 	public void setContextCompany(Company contextCompany) {
 		this.contextCompany = contextCompany;
 	}
 
-	protected <T, R> List<R> transform(List<T> list, UnsafeFunction<T, R, Throwable> unsafeFunction) {
+	protected <T, R> List<R> transform(
+		List<T> list, UnsafeFunction<T, R, Throwable> unsafeFunction) {
+
 		return TransformUtil.transform(list, unsafeFunction);
 	}
 

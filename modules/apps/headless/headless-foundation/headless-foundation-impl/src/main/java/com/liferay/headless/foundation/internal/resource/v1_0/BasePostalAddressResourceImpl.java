@@ -42,7 +42,8 @@ import javax.ws.rs.core.Context;
  */
 @Generated("")
 @Path("/v1.0")
-public abstract class BasePostalAddressResourceImpl implements PostalAddressResource {
+public abstract class BasePostalAddressResourceImpl
+	implements PostalAddressResource {
 
 	@Override
 	@GET
@@ -50,28 +51,31 @@ public abstract class BasePostalAddressResourceImpl implements PostalAddressReso
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	public Page<PostalAddress> getGenericParentPostalAddressesPage(
-	@PathParam("generic-parent-id") Object genericParentId,@Context Pagination pagination)
-			throws Exception {
+			@PathParam("generic-parent-id") Object genericParentId,
+			@Context Pagination pagination)
+		throws Exception {
 
-				return Page.of(Collections.emptyList());
+		return Page.of(Collections.emptyList());
 	}
+
 	@Override
 	@GET
 	@Path("/addresses/{address-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public PostalAddress getAddress(
-	@PathParam("address-id") Long addressId)
-			throws Exception {
+	public PostalAddress getAddress(@PathParam("address-id") Long addressId)
+		throws Exception {
 
-				return new PostalAddressImpl();
+		return new PostalAddressImpl();
 	}
 
 	public void setContextCompany(Company contextCompany) {
 		this.contextCompany = contextCompany;
 	}
 
-	protected <T, R> List<R> transform(List<T> list, UnsafeFunction<T, R, Throwable> unsafeFunction) {
+	protected <T, R> List<R> transform(
+		List<T> list, UnsafeFunction<T, R, Throwable> unsafeFunction) {
+
 		return TransformUtil.transform(list, unsafeFunction);
 	}
 

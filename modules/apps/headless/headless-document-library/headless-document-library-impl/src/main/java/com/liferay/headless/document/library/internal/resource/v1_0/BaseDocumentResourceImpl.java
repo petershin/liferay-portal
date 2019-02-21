@@ -56,11 +56,14 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	public Page<Document> getContentSpaceDocumentsPage(
-	@PathParam("content-space-id") Long contentSpaceId,@Context Filter filter,@Context Pagination pagination,@Context Sort[] sorts)
-			throws Exception {
+			@PathParam("content-space-id") Long contentSpaceId,
+			@Context Filter filter, @Context Pagination pagination,
+			@Context Sort[] sorts)
+		throws Exception {
 
-				return Page.of(Collections.emptyList());
+		return Page.of(Collections.emptyList());
 	}
+
 	@Override
 	@Consumes("multipart/form-data")
 	@POST
@@ -68,44 +71,48 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	public Document postContentSpaceDocument(
-	@PathParam("content-space-id") Long contentSpaceId,MultipartBody multipartBody)
-			throws Exception {
+			@PathParam("content-space-id") Long contentSpaceId,
+			MultipartBody multipartBody)
+		throws Exception {
 
-				return new DocumentImpl();
+		return new DocumentImpl();
 	}
+
 	@Override
 	@DELETE
 	@Path("/documents/{document-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public boolean deleteDocument(
-	@PathParam("document-id") Long documentId)
-			throws Exception {
+	public boolean deleteDocument(@PathParam("document-id") Long documentId)
+		throws Exception {
 
-				return false;
+		return false;
 	}
+
 	@Override
 	@GET
 	@Path("/documents/{document-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Document getDocument(
-	@PathParam("document-id") Long documentId)
-			throws Exception {
+	public Document getDocument(@PathParam("document-id") Long documentId)
+		throws Exception {
 
-				return new DocumentImpl();
+		return new DocumentImpl();
 	}
+
 	@Override
 	@GET
 	@Path("/folders/{folder-id}/documents")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	public Page<Document> getFolderDocumentsPage(
-	@PathParam("folder-id") Long folderId,@Context Filter filter,@Context Pagination pagination,@Context Sort[] sorts)
-			throws Exception {
+			@PathParam("folder-id") Long folderId, @Context Filter filter,
+			@Context Pagination pagination, @Context Sort[] sorts)
+		throws Exception {
 
-				return Page.of(Collections.emptyList());
+		return Page.of(Collections.emptyList());
 	}
+
 	@Override
 	@Consumes("multipart/form-data")
 	@POST
@@ -113,17 +120,19 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	public Document postFolderDocument(
-	@PathParam("folder-id") Long folderId,MultipartBody multipartBody)
-			throws Exception {
+			@PathParam("folder-id") Long folderId, MultipartBody multipartBody)
+		throws Exception {
 
-				return new DocumentImpl();
+		return new DocumentImpl();
 	}
 
 	public void setContextCompany(Company contextCompany) {
 		this.contextCompany = contextCompany;
 	}
 
-	protected <T, R> List<R> transform(List<T> list, UnsafeFunction<T, R, Throwable> unsafeFunction) {
+	protected <T, R> List<R> transform(
+		List<T> list, UnsafeFunction<T, R, Throwable> unsafeFunction) {
+
 		return TransformUtil.transform(list, unsafeFunction);
 	}
 

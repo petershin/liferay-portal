@@ -73,234 +73,327 @@ public abstract class BaseStructuredContentResourceTestCase {
 	}
 
 	@Test
-	public void testGetContentSpaceContentStructureStructuredContentsPage() throws Exception {
-			Assert.assertTrue(true);
+	public void testGetContentSpaceContentStructureStructuredContentsPage()
+		throws Exception {
+
+		Assert.assertTrue(true);
 	}
+
 	@Test
 	public void testGetContentSpaceStructuredContentsPage() throws Exception {
-			Assert.assertTrue(true);
+		Assert.assertTrue(true);
 	}
+
 	@Test
 	public void testPostContentSpaceStructuredContent() throws Exception {
-			Assert.assertTrue(true);
+		Assert.assertTrue(true);
 	}
+
 	@Test
 	public void testDeleteStructuredContent() throws Exception {
-			Assert.assertTrue(true);
+		Assert.assertTrue(true);
 	}
+
 	@Test
 	public void testGetStructuredContent() throws Exception {
-			Assert.assertTrue(true);
+		Assert.assertTrue(true);
 	}
+
 	@Test
 	public void testPatchStructuredContent() throws Exception {
-			Assert.assertTrue(true);
+		Assert.assertTrue(true);
 	}
+
 	@Test
 	public void testPutStructuredContent() throws Exception {
-			Assert.assertTrue(true);
+		Assert.assertTrue(true);
 	}
 
-	protected void assertResponseCode(int expectedResponseCode, Http.Response actualResponse) {
-		Assert.assertEquals(expectedResponseCode, actualResponse.getResponseCode());
+	protected void assertResponseCode(
+		int expectedResponseCode, Http.Response actualResponse) {
+
+		Assert.assertEquals(
+			expectedResponseCode, actualResponse.getResponseCode());
 	}
 
-	protected Page<StructuredContent> invokeGetContentSpaceContentStructureStructuredContentsPage(
-				Long contentSpaceId,Long contentStructureId,Filter filter,Pagination pagination,Sort[] sorts)
-			throws Exception {
+	protected Page<StructuredContent>
+			invokeGetContentSpaceContentStructureStructuredContentsPage(
+				Long contentSpaceId, Long contentStructureId, Filter filter,
+				Pagination pagination, Sort[] sorts)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/content-structures/{content-structure-id}/structured-contents", contentSpaceId,contentStructureId,filter,sorts));
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/content-structures/{content-structure-id}/structured-contents",
+					contentSpaceId, contentStructureId, filter, sorts));
 
-				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), Page.class);
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), Page.class);
 	}
 
-	protected Http.Response invokeGetContentSpaceContentStructureStructuredContentsPageResponse(
-				Long contentSpaceId,Long contentStructureId,Filter filter,Pagination pagination,Sort[] sorts)
-			throws Exception {
+	protected Http.Response
+			invokeGetContentSpaceContentStructureStructuredContentsPageResponse(
+				Long contentSpaceId, Long contentStructureId, Filter filter,
+				Pagination pagination, Sort[] sorts)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/content-structures/{content-structure-id}/structured-contents", contentSpaceId,contentStructureId,filter,sorts));
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/content-structures/{content-structure-id}/structured-contents",
+					contentSpaceId, contentStructureId, filter, sorts));
 
-			HttpUtil.URLtoString(options);
+		HttpUtil.URLtoString(options);
 
-			return options.getResponse();
+		return options.getResponse();
 	}
-	protected Page<StructuredContent> invokeGetContentSpaceStructuredContentsPage(
-				Long contentSpaceId,Filter filter,Pagination pagination,Sort[] sorts)
-			throws Exception {
 
-			Http.Options options = _createHttpOptions();
+	protected Page<StructuredContent>
+			invokeGetContentSpaceStructuredContentsPage(
+				Long contentSpaceId, Filter filter, Pagination pagination,
+				Sort[] sorts)
+		throws Exception {
 
-			options.setLocation(_resourceURL + _toPath("/content-spaces/{content-space-id}/structured-contents", contentSpaceId,filter,sorts));
+		Http.Options options = _createHttpOptions();
 
-				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), Page.class);
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/content-spaces/{content-space-id}/structured-contents",
+					contentSpaceId, filter, sorts));
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), Page.class);
 	}
 
 	protected Http.Response invokeGetContentSpaceStructuredContentsPageResponse(
-				Long contentSpaceId,Filter filter,Pagination pagination,Sort[] sorts)
-			throws Exception {
+			Long contentSpaceId, Filter filter, Pagination pagination,
+			Sort[] sorts)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/content-spaces/{content-space-id}/structured-contents", contentSpaceId,filter,sorts));
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/content-spaces/{content-space-id}/structured-contents",
+					contentSpaceId, filter, sorts));
 
-			HttpUtil.URLtoString(options);
+		HttpUtil.URLtoString(options);
 
-			return options.getResponse();
+		return options.getResponse();
 	}
+
 	protected StructuredContent invokePostContentSpaceStructuredContent(
-				Long contentSpaceId,StructuredContent structuredContent)
-			throws Exception {
+			Long contentSpaceId, StructuredContent structuredContent)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-				options.setBody(_inputObjectMapper.writeValueAsString(structuredContent), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(structuredContent),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-			options.setLocation(_resourceURL + _toPath("/content-spaces/{content-space-id}/structured-contents", contentSpaceId,structuredContent));
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/content-spaces/{content-space-id}/structured-contents",
+					contentSpaceId, structuredContent));
 
-				options.setPost(true);
+		options.setPost(true);
 
-				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), StructuredContentImpl.class);
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), StructuredContentImpl.class);
 	}
 
 	protected Http.Response invokePostContentSpaceStructuredContentResponse(
-				Long contentSpaceId,StructuredContent structuredContent)
-			throws Exception {
+			Long contentSpaceId, StructuredContent structuredContent)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-				options.setBody(_inputObjectMapper.writeValueAsString(structuredContent), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(structuredContent),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-			options.setLocation(_resourceURL + _toPath("/content-spaces/{content-space-id}/structured-contents", contentSpaceId,structuredContent));
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/content-spaces/{content-space-id}/structured-contents",
+					contentSpaceId, structuredContent));
 
-				options.setPost(true);
+		options.setPost(true);
 
-			HttpUtil.URLtoString(options);
+		HttpUtil.URLtoString(options);
 
-			return options.getResponse();
+		return options.getResponse();
 	}
-	protected boolean invokeDeleteStructuredContent(
-				Long structuredContentId)
-			throws Exception {
 
-			Http.Options options = _createHttpOptions();
+	protected boolean invokeDeleteStructuredContent(Long structuredContentId)
+		throws Exception {
 
-				options.setDelete(true);
+		Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/structured-contents/{structured-content-id}", structuredContentId));
+		options.setDelete(true);
 
-				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), Boolean.class);
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/structured-contents/{structured-content-id}",
+					structuredContentId));
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), Boolean.class);
 	}
 
 	protected Http.Response invokeDeleteStructuredContentResponse(
-				Long structuredContentId)
-			throws Exception {
+			Long structuredContentId)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-				options.setDelete(true);
+		options.setDelete(true);
 
-			options.setLocation(_resourceURL + _toPath("/structured-contents/{structured-content-id}", structuredContentId));
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/structured-contents/{structured-content-id}",
+					structuredContentId));
 
-			HttpUtil.URLtoString(options);
+		HttpUtil.URLtoString(options);
 
-			return options.getResponse();
+		return options.getResponse();
 	}
+
 	protected StructuredContent invokeGetStructuredContent(
-				Long structuredContentId)
-			throws Exception {
+			Long structuredContentId)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/structured-contents/{structured-content-id}", structuredContentId));
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/structured-contents/{structured-content-id}",
+					structuredContentId));
 
-				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), StructuredContentImpl.class);
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), StructuredContentImpl.class);
 	}
 
 	protected Http.Response invokeGetStructuredContentResponse(
-				Long structuredContentId)
-			throws Exception {
+			Long structuredContentId)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/structured-contents/{structured-content-id}", structuredContentId));
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/structured-contents/{structured-content-id}",
+					structuredContentId));
 
-			HttpUtil.URLtoString(options);
+		HttpUtil.URLtoString(options);
 
-			return options.getResponse();
+		return options.getResponse();
 	}
+
 	protected StructuredContent invokePatchStructuredContent(
-				Long structuredContentId,StructuredContent structuredContent)
-			throws Exception {
+			Long structuredContentId, StructuredContent structuredContent)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/structured-contents/{structured-content-id}", structuredContentId,structuredContent));
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/structured-contents/{structured-content-id}",
+					structuredContentId, structuredContent));
 
-				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), StructuredContentImpl.class);
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), StructuredContentImpl.class);
 	}
 
 	protected Http.Response invokePatchStructuredContentResponse(
-				Long structuredContentId,StructuredContent structuredContent)
-			throws Exception {
+			Long structuredContentId, StructuredContent structuredContent)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/structured-contents/{structured-content-id}", structuredContentId,structuredContent));
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/structured-contents/{structured-content-id}",
+					structuredContentId, structuredContent));
 
-			HttpUtil.URLtoString(options);
+		HttpUtil.URLtoString(options);
 
-			return options.getResponse();
+		return options.getResponse();
 	}
+
 	protected StructuredContent invokePutStructuredContent(
-				Long structuredContentId,StructuredContent structuredContent)
-			throws Exception {
+			Long structuredContentId, StructuredContent structuredContent)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-				options.setBody(_inputObjectMapper.writeValueAsString(structuredContent), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(structuredContent),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-			options.setLocation(_resourceURL + _toPath("/structured-contents/{structured-content-id}", structuredContentId,structuredContent));
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/structured-contents/{structured-content-id}",
+					structuredContentId, structuredContent));
 
-				options.setPut(true);
+		options.setPut(true);
 
-				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), StructuredContentImpl.class);
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), StructuredContentImpl.class);
 	}
 
 	protected Http.Response invokePutStructuredContentResponse(
-				Long structuredContentId,StructuredContent structuredContent)
-			throws Exception {
+			Long structuredContentId, StructuredContent structuredContent)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-				options.setBody(_inputObjectMapper.writeValueAsString(structuredContent), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(structuredContent),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-			options.setLocation(_resourceURL + _toPath("/structured-contents/{structured-content-id}", structuredContentId,structuredContent));
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/structured-contents/{structured-content-id}",
+					structuredContentId, structuredContent));
 
-				options.setPut(true);
+		options.setPut(true);
 
-			HttpUtil.URLtoString(options);
+		HttpUtil.URLtoString(options);
 
-			return options.getResponse();
+		return options.getResponse();
 	}
 
 	protected StructuredContent randomStructuredContent() {
 		return new StructuredContentImpl() {
 			{
-
-						contentSpace = RandomTestUtil.randomLong();
-						contentStructureId = RandomTestUtil.randomLong();
-						dateCreated = RandomTestUtil.nextDate();
-						dateModified = RandomTestUtil.nextDate();
-						datePublished = RandomTestUtil.nextDate();
-						description = RandomTestUtil.randomString();
-						id = RandomTestUtil.randomLong();
-						lastReviewed = RandomTestUtil.nextDate();
-						title = RandomTestUtil.randomString();
-	}
+				contentSpace = RandomTestUtil.randomLong();
+				contentStructureId = RandomTestUtil.randomLong();
+				dateCreated = RandomTestUtil.nextDate();
+				dateModified = RandomTestUtil.nextDate();
+				datePublished = RandomTestUtil.nextDate();
+				description = RandomTestUtil.randomString();
+				id = RandomTestUtil.randomLong();
+				lastReviewed = RandomTestUtil.nextDate();
+				title = RandomTestUtil.randomString();
+			}
 		};
 	}
 
@@ -308,380 +401,400 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 	protected static class StructuredContentImpl implements StructuredContent {
 
-	public AggregateRating getAggregateRating() {
-				return aggregateRating;
-	}
-
-	public void setAggregateRating(AggregateRating aggregateRating) {
-				this.aggregateRating = aggregateRating;
-	}
-
-	@JsonIgnore
-	public void setAggregateRating(
-				UnsafeSupplier<AggregateRating, Throwable> aggregateRatingUnsafeSupplier) {
-
-				try {
-					aggregateRating = aggregateRatingUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
-
-	@JsonProperty
-	protected AggregateRating aggregateRating;
-	public String[] getAvailableLanguages() {
-				return availableLanguages;
-	}
-
-	public void setAvailableLanguages(String[] availableLanguages) {
-				this.availableLanguages = availableLanguages;
-	}
-
-	@JsonIgnore
-	public void setAvailableLanguages(
-				UnsafeSupplier<String[], Throwable> availableLanguagesUnsafeSupplier) {
-
-				try {
-					availableLanguages = availableLanguagesUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
-
-	@JsonProperty
-	protected String[] availableLanguages;
-	public Categories[] getCategories() {
-				return categories;
-	}
-
-	public void setCategories(Categories[] categories) {
-				this.categories = categories;
-	}
-
-	@JsonIgnore
-	public void setCategories(
-				UnsafeSupplier<Categories[], Throwable> categoriesUnsafeSupplier) {
-
-				try {
-					categories = categoriesUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
-
-	@JsonProperty
-	protected Categories[] categories;
-	public Comment[] getComment() {
-				return comment;
-	}
-
-	public void setComment(Comment[] comment) {
-				this.comment = comment;
-	}
-
-	@JsonIgnore
-	public void setComment(
-				UnsafeSupplier<Comment[], Throwable> commentUnsafeSupplier) {
-
-				try {
-					comment = commentUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
-
-	@JsonProperty
-	protected Comment[] comment;
-	public Long getContentSpace() {
-				return contentSpace;
-	}
-
-	public void setContentSpace(Long contentSpace) {
-				this.contentSpace = contentSpace;
-	}
-
-	@JsonIgnore
-	public void setContentSpace(
-				UnsafeSupplier<Long, Throwable> contentSpaceUnsafeSupplier) {
-
-				try {
-					contentSpace = contentSpaceUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
-
-	@JsonProperty
-	protected Long contentSpace;
-	public Long getContentStructureId() {
-				return contentStructureId;
-	}
-
-	public void setContentStructureId(Long contentStructureId) {
-				this.contentStructureId = contentStructureId;
-	}
-
-	@JsonIgnore
-	public void setContentStructureId(
-				UnsafeSupplier<Long, Throwable> contentStructureIdUnsafeSupplier) {
-
-				try {
-					contentStructureId = contentStructureIdUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
-
-	@JsonProperty
-	protected Long contentStructureId;
-	public Creator getCreator() {
-				return creator;
-	}
-
-	public void setCreator(Creator creator) {
-				this.creator = creator;
-	}
-
-	@JsonIgnore
-	public void setCreator(
-				UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
-
-				try {
-					creator = creatorUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
-
-	@JsonProperty
-	protected Creator creator;
-	public Date getDateCreated() {
-				return dateCreated;
-	}
-
-	public void setDateCreated(Date dateCreated) {
-				this.dateCreated = dateCreated;
-	}
-
-	@JsonIgnore
-	public void setDateCreated(
-				UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
-
-				try {
-					dateCreated = dateCreatedUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
-
-	@JsonProperty
-	protected Date dateCreated;
-	public Date getDateModified() {
-				return dateModified;
-	}
-
-	public void setDateModified(Date dateModified) {
-				this.dateModified = dateModified;
-	}
-
-	@JsonIgnore
-	public void setDateModified(
-				UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
-
-				try {
-					dateModified = dateModifiedUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
-
-	@JsonProperty
-	protected Date dateModified;
-	public Date getDatePublished() {
-				return datePublished;
-	}
-
-	public void setDatePublished(Date datePublished) {
-				this.datePublished = datePublished;
-	}
-
-	@JsonIgnore
-	public void setDatePublished(
-				UnsafeSupplier<Date, Throwable> datePublishedUnsafeSupplier) {
-
-				try {
-					datePublished = datePublishedUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
-
-	@JsonProperty
-	protected Date datePublished;
-	public String getDescription() {
-				return description;
-	}
-
-	public void setDescription(String description) {
-				this.description = description;
-	}
-
-	@JsonIgnore
-	public void setDescription(
-				UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier) {
-
-				try {
-					description = descriptionUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
-
-	@JsonProperty
-	protected String description;
-	public Long getId() {
-				return id;
-	}
-
-	public void setId(Long id) {
-				this.id = id;
-	}
-
-	@JsonIgnore
-	public void setId(
-				UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
-
-				try {
-					id = idUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
-
-	@JsonProperty
-	protected Long id;
-	public String[] getKeywords() {
-				return keywords;
-	}
-
-	public void setKeywords(String[] keywords) {
-				this.keywords = keywords;
-	}
-
-	@JsonIgnore
-	public void setKeywords(
-				UnsafeSupplier<String[], Throwable> keywordsUnsafeSupplier) {
-
-				try {
-					keywords = keywordsUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
-
-	@JsonProperty
-	protected String[] keywords;
-	public Date getLastReviewed() {
-				return lastReviewed;
-	}
-
-	public void setLastReviewed(Date lastReviewed) {
-				this.lastReviewed = lastReviewed;
-	}
-
-	@JsonIgnore
-	public void setLastReviewed(
-				UnsafeSupplier<Date, Throwable> lastReviewedUnsafeSupplier) {
-
-				try {
-					lastReviewed = lastReviewedUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
-
-	@JsonProperty
-	protected Date lastReviewed;
-	public RenderedContentsByTemplate[] getRenderedContentsByTemplate() {
-				return renderedContentsByTemplate;
-	}
-
-	public void setRenderedContentsByTemplate(RenderedContentsByTemplate[] renderedContentsByTemplate) {
-				this.renderedContentsByTemplate = renderedContentsByTemplate;
-	}
-
-	@JsonIgnore
-	public void setRenderedContentsByTemplate(
-				UnsafeSupplier<RenderedContentsByTemplate[], Throwable> renderedContentsByTemplateUnsafeSupplier) {
-
-				try {
-					renderedContentsByTemplate = renderedContentsByTemplateUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
-
-	@JsonProperty
-	protected RenderedContentsByTemplate[] renderedContentsByTemplate;
-	public String getTitle() {
-				return title;
-	}
-
-	public void setTitle(String title) {
-				this.title = title;
-	}
-
-	@JsonIgnore
-	public void setTitle(
-				UnsafeSupplier<String, Throwable> titleUnsafeSupplier) {
-
-				try {
-					title = titleUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
-
-	@JsonProperty
-	protected String title;
-	public Values[] getValues() {
-				return values;
-	}
-
-	public void setValues(Values[] values) {
-				this.values = values;
-	}
-
-	@JsonIgnore
-	public void setValues(
-				UnsafeSupplier<Values[], Throwable> valuesUnsafeSupplier) {
-
-				try {
-					values = valuesUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
-
-	@JsonProperty
-	protected Values[] values;
+		public AggregateRating getAggregateRating() {
+			return aggregateRating;
+		}
+
+		public void setAggregateRating(AggregateRating aggregateRating) {
+			this.aggregateRating = aggregateRating;
+		}
+
+		@JsonIgnore
+		public void setAggregateRating(
+			UnsafeSupplier<AggregateRating, Throwable>
+				aggregateRatingUnsafeSupplier) {
+
+			try {
+				aggregateRating = aggregateRatingUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
+
+		@JsonProperty
+		protected AggregateRating aggregateRating;
+
+		public String[] getAvailableLanguages() {
+			return availableLanguages;
+		}
+
+		public void setAvailableLanguages(String[] availableLanguages) {
+			this.availableLanguages = availableLanguages;
+		}
+
+		@JsonIgnore
+		public void setAvailableLanguages(
+			UnsafeSupplier<String[], Throwable>
+				availableLanguagesUnsafeSupplier) {
+
+			try {
+				availableLanguages = availableLanguagesUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
+
+		@JsonProperty
+		protected String[] availableLanguages;
+
+		public Categories[] getCategories() {
+			return categories;
+		}
+
+		public void setCategories(Categories[] categories) {
+			this.categories = categories;
+		}
+
+		@JsonIgnore
+		public void setCategories(
+			UnsafeSupplier<Categories[], Throwable> categoriesUnsafeSupplier) {
+
+			try {
+				categories = categoriesUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
+
+		@JsonProperty
+		protected Categories[] categories;
+
+		public Comment[] getComment() {
+			return comment;
+		}
+
+		public void setComment(Comment[] comment) {
+			this.comment = comment;
+		}
+
+		@JsonIgnore
+		public void setComment(
+			UnsafeSupplier<Comment[], Throwable> commentUnsafeSupplier) {
+
+			try {
+				comment = commentUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
+
+		@JsonProperty
+		protected Comment[] comment;
+
+		public Long getContentSpace() {
+			return contentSpace;
+		}
+
+		public void setContentSpace(Long contentSpace) {
+			this.contentSpace = contentSpace;
+		}
+
+		@JsonIgnore
+		public void setContentSpace(
+			UnsafeSupplier<Long, Throwable> contentSpaceUnsafeSupplier) {
+
+			try {
+				contentSpace = contentSpaceUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
+
+		@JsonProperty
+		protected Long contentSpace;
+
+		public Long getContentStructureId() {
+			return contentStructureId;
+		}
+
+		public void setContentStructureId(Long contentStructureId) {
+			this.contentStructureId = contentStructureId;
+		}
+
+		@JsonIgnore
+		public void setContentStructureId(
+			UnsafeSupplier<Long, Throwable> contentStructureIdUnsafeSupplier) {
+
+			try {
+				contentStructureId = contentStructureIdUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
+
+		@JsonProperty
+		protected Long contentStructureId;
+
+		public Creator getCreator() {
+			return creator;
+		}
+
+		public void setCreator(Creator creator) {
+			this.creator = creator;
+		}
+
+		@JsonIgnore
+		public void setCreator(
+			UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
+
+			try {
+				creator = creatorUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
+
+		@JsonProperty
+		protected Creator creator;
+
+		public Date getDateCreated() {
+			return dateCreated;
+		}
+
+		public void setDateCreated(Date dateCreated) {
+			this.dateCreated = dateCreated;
+		}
+
+		@JsonIgnore
+		public void setDateCreated(
+			UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
+
+			try {
+				dateCreated = dateCreatedUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
+
+		@JsonProperty
+		protected Date dateCreated;
+
+		public Date getDateModified() {
+			return dateModified;
+		}
+
+		public void setDateModified(Date dateModified) {
+			this.dateModified = dateModified;
+		}
+
+		@JsonIgnore
+		public void setDateModified(
+			UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
+
+			try {
+				dateModified = dateModifiedUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
+
+		@JsonProperty
+		protected Date dateModified;
+
+		public Date getDatePublished() {
+			return datePublished;
+		}
+
+		public void setDatePublished(Date datePublished) {
+			this.datePublished = datePublished;
+		}
+
+		@JsonIgnore
+		public void setDatePublished(
+			UnsafeSupplier<Date, Throwable> datePublishedUnsafeSupplier) {
+
+			try {
+				datePublished = datePublishedUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
+
+		@JsonProperty
+		protected Date datePublished;
+
+		public String getDescription() {
+			return description;
+		}
+
+		public void setDescription(String description) {
+			this.description = description;
+		}
+
+		@JsonIgnore
+		public void setDescription(
+			UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier) {
+
+			try {
+				description = descriptionUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
+
+		@JsonProperty
+		protected String description;
+
+		public Long getId() {
+			return id;
+		}
+
+		public void setId(Long id) {
+			this.id = id;
+		}
+
+		@JsonIgnore
+		public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+			try {
+				id = idUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
+
+		@JsonProperty
+		protected Long id;
+
+		public String[] getKeywords() {
+			return keywords;
+		}
+
+		public void setKeywords(String[] keywords) {
+			this.keywords = keywords;
+		}
+
+		@JsonIgnore
+		public void setKeywords(
+			UnsafeSupplier<String[], Throwable> keywordsUnsafeSupplier) {
+
+			try {
+				keywords = keywordsUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
+
+		@JsonProperty
+		protected String[] keywords;
+
+		public Date getLastReviewed() {
+			return lastReviewed;
+		}
+
+		public void setLastReviewed(Date lastReviewed) {
+			this.lastReviewed = lastReviewed;
+		}
+
+		@JsonIgnore
+		public void setLastReviewed(
+			UnsafeSupplier<Date, Throwable> lastReviewedUnsafeSupplier) {
+
+			try {
+				lastReviewed = lastReviewedUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
+
+		@JsonProperty
+		protected Date lastReviewed;
+
+		public RenderedContentsByTemplate[] getRenderedContentsByTemplate() {
+			return renderedContentsByTemplate;
+		}
+
+		public void setRenderedContentsByTemplate(
+			RenderedContentsByTemplate[] renderedContentsByTemplate) {
+
+			this.renderedContentsByTemplate = renderedContentsByTemplate;
+		}
+
+		@JsonIgnore
+		public void setRenderedContentsByTemplate(
+			UnsafeSupplier<RenderedContentsByTemplate[], Throwable>
+				renderedContentsByTemplateUnsafeSupplier) {
+
+			try {
+				renderedContentsByTemplate =
+					renderedContentsByTemplateUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
+
+		@JsonProperty
+		protected RenderedContentsByTemplate[] renderedContentsByTemplate;
+
+		public String getTitle() {
+			return title;
+		}
+
+		public void setTitle(String title) {
+			this.title = title;
+		}
+
+		@JsonIgnore
+		public void setTitle(
+			UnsafeSupplier<String, Throwable> titleUnsafeSupplier) {
+
+			try {
+				title = titleUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
+
+		@JsonProperty
+		protected String title;
+
+		public Values[] getValues() {
+			return values;
+		}
+
+		public void setValues(Values[] values) {
+			this.values = values;
+		}
+
+		@JsonIgnore
+		public void setValues(
+			UnsafeSupplier<Values[], Throwable> valuesUnsafeSupplier) {
+
+			try {
+				values = valuesUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
+
+		@JsonProperty
+		protected Values[] values;
 
 	}
 
@@ -692,9 +805,11 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 		String userNameAndPassword = "test@liferay.com:test";
 
-		String encodedUserNameAndPassword = Base64.encode(userNameAndPassword.getBytes());
+		String encodedUserNameAndPassword = Base64.encode(
+			userNameAndPassword.getBytes());
 
-		options.addHeader("Authorization", "Basic " + encodedUserNameAndPassword);
+		options.addHeader(
+			"Authorization", "Basic " + encodedUserNameAndPassword);
 
 		options.addHeader("Content-Type", "application/json");
 
@@ -708,7 +823,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {
 		{
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
-	}
+		}
 	};
 	private final static ObjectMapper _outputObjectMapper = new ObjectMapper();
 

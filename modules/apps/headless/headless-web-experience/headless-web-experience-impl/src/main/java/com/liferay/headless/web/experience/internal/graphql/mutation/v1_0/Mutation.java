@@ -38,81 +38,99 @@ public class Mutation {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public StructuredContent postContentSpaceStructuredContent(
-	@GraphQLName("content-space-id") Long contentSpaceId,@GraphQLName("StructuredContent") StructuredContent structuredContent)
-			throws Exception {
+			@GraphQLName("content-space-id") Long contentSpaceId,
+			@GraphQLName("StructuredContent") StructuredContent
+				structuredContent)
+		throws Exception {
 
-				return _getStructuredContentResource().postContentSpaceStructuredContent(
-					contentSpaceId,structuredContent);
+		return _getStructuredContentResource().
+			postContentSpaceStructuredContent(
+				contentSpaceId, structuredContent);
 	}
+
 	@GraphQLInvokeDetached
 	public boolean deleteStructuredContent(
-	@GraphQLName("structured-content-id") Long structuredContentId)
-			throws Exception {
+			@GraphQLName("structured-content-id") Long structuredContentId)
+		throws Exception {
 
-				return _getStructuredContentResource().deleteStructuredContent(
-					structuredContentId);
+		return _getStructuredContentResource().deleteStructuredContent(
+			structuredContentId);
 	}
+
 	@GraphQLInvokeDetached
 	public StructuredContent patchStructuredContent(
-	@GraphQLName("structured-content-id") Long structuredContentId,@GraphQLName("StructuredContent") StructuredContent structuredContent)
-			throws Exception {
+			@GraphQLName("structured-content-id") Long structuredContentId,
+			@GraphQLName("StructuredContent") StructuredContent
+				structuredContent)
+		throws Exception {
 
-				return _getStructuredContentResource().patchStructuredContent(
-					structuredContentId,structuredContent);
+		return _getStructuredContentResource().patchStructuredContent(
+			structuredContentId, structuredContent);
 	}
+
 	@GraphQLInvokeDetached
 	public StructuredContent putStructuredContent(
-	@GraphQLName("structured-content-id") Long structuredContentId,@GraphQLName("StructuredContent") StructuredContent structuredContent)
-			throws Exception {
+			@GraphQLName("structured-content-id") Long structuredContentId,
+			@GraphQLName("StructuredContent") StructuredContent
+				structuredContent)
+		throws Exception {
 
-				return _getStructuredContentResource().putStructuredContent(
-					structuredContentId,structuredContent);
+		return _getStructuredContentResource().putStructuredContent(
+			structuredContentId, structuredContent);
 	}
+
 	@GraphQLInvokeDetached
 	public boolean deleteStructuredContentContentDocument(
-	@GraphQLName("structured-content-id") Long structuredContentId,@GraphQLName("content-document-id") Long contentDocumentId)
-			throws Exception {
+			@GraphQLName("structured-content-id") Long structuredContentId,
+			@GraphQLName("content-document-id") Long contentDocumentId)
+		throws Exception {
 
-				return _getStructuredContentImageResource().deleteStructuredContentContentDocument(
-					structuredContentId,contentDocumentId);
+		return _getStructuredContentImageResource().
+			deleteStructuredContentContentDocument(
+				structuredContentId, contentDocumentId);
 	}
 
 	private static StructuredContentResource _getStructuredContentResource() {
-			return _structuredContentResourceServiceTracker.getService();
+		return _structuredContentResourceServiceTracker.getService();
 	}
 
-	private static final ServiceTracker<StructuredContentResource, StructuredContentResource>
+	private static final ServiceTracker
+		<StructuredContentResource, StructuredContentResource>
 			_structuredContentResourceServiceTracker;
-	private static StructuredContentImageResource _getStructuredContentImageResource() {
-			return _structuredContentImageResourceServiceTracker.getService();
+
+	private static StructuredContentImageResource
+		_getStructuredContentImageResource() {
+
+		return _structuredContentImageResourceServiceTracker.getService();
 	}
 
-	private static final ServiceTracker<StructuredContentImageResource, StructuredContentImageResource>
+	private static final ServiceTracker
+		<StructuredContentImageResource, StructuredContentImageResource>
 			_structuredContentImageResourceServiceTracker;
 
-		static {
-			Bundle bundle = FrameworkUtil.getBundle(Mutation.class);
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(Mutation.class);
 
-				ServiceTracker<StructuredContentResource, StructuredContentResource>
-					structuredContentResourceServiceTracker =
-						new ServiceTracker<>(
-							bundle.getBundleContext(),
-							StructuredContentResource.class, null);
+		ServiceTracker<StructuredContentResource, StructuredContentResource>
+			structuredContentResourceServiceTracker = new ServiceTracker<>(
+				bundle.getBundleContext(), StructuredContentResource.class,
+				null);
 
-				structuredContentResourceServiceTracker.open();
+		structuredContentResourceServiceTracker.open();
 
-				_structuredContentResourceServiceTracker =
-					structuredContentResourceServiceTracker;
-				ServiceTracker<StructuredContentImageResource, StructuredContentImageResource>
-					structuredContentImageResourceServiceTracker =
-						new ServiceTracker<>(
-							bundle.getBundleContext(),
-							StructuredContentImageResource.class, null);
+		_structuredContentResourceServiceTracker =
+			structuredContentResourceServiceTracker;
+		ServiceTracker
+			<StructuredContentImageResource, StructuredContentImageResource>
+				structuredContentImageResourceServiceTracker =
+					new ServiceTracker<>(
+						bundle.getBundleContext(),
+						StructuredContentImageResource.class, null);
 
-				structuredContentImageResourceServiceTracker.open();
+		structuredContentImageResourceServiceTracker.open();
 
-				_structuredContentImageResourceServiceTracker =
-					structuredContentImageResourceServiceTracker;
+		_structuredContentImageResourceServiceTracker =
+			structuredContentImageResourceServiceTracker;
 	}
 
 }

@@ -43,540 +43,476 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class BlogPostingImpl implements BlogPosting {
 
 	public AggregateRating getAggregateRating() {
-			return aggregateRating;
+		return aggregateRating;
 	}
 
-	public void setAggregateRating(
-			AggregateRating aggregateRating) {
-
-			this.aggregateRating = aggregateRating;
+	public void setAggregateRating(AggregateRating aggregateRating) {
+		this.aggregateRating = aggregateRating;
 	}
 
 	@JsonIgnore
 	public void setAggregateRating(
-			UnsafeSupplier<AggregateRating, Throwable>
-				aggregateRatingUnsafeSupplier) {
+		UnsafeSupplier<AggregateRating, Throwable>
+			aggregateRatingUnsafeSupplier) {
 
-			try {
-				aggregateRating =
-					aggregateRatingUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
+		try {
+			aggregateRating = aggregateRatingUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected AggregateRating aggregateRating;
+
 	public String getAlternativeHeadline() {
-			return alternativeHeadline;
+		return alternativeHeadline;
 	}
 
-	public void setAlternativeHeadline(
-			String alternativeHeadline) {
-
-			this.alternativeHeadline = alternativeHeadline;
+	public void setAlternativeHeadline(String alternativeHeadline) {
+		this.alternativeHeadline = alternativeHeadline;
 	}
 
 	@JsonIgnore
 	public void setAlternativeHeadline(
-			UnsafeSupplier<String, Throwable>
-				alternativeHeadlineUnsafeSupplier) {
+		UnsafeSupplier<String, Throwable> alternativeHeadlineUnsafeSupplier) {
 
-			try {
-				alternativeHeadline =
-					alternativeHeadlineUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
+		try {
+			alternativeHeadline = alternativeHeadlineUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected String alternativeHeadline;
+
 	public String getArticleBody() {
-			return articleBody;
+		return articleBody;
 	}
 
-	public void setArticleBody(
-			String articleBody) {
-
-			this.articleBody = articleBody;
+	public void setArticleBody(String articleBody) {
+		this.articleBody = articleBody;
 	}
 
 	@JsonIgnore
 	public void setArticleBody(
-			UnsafeSupplier<String, Throwable>
-				articleBodyUnsafeSupplier) {
+		UnsafeSupplier<String, Throwable> articleBodyUnsafeSupplier) {
 
-			try {
-				articleBody =
-					articleBodyUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
+		try {
+			articleBody = articleBodyUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected String articleBody;
+
 	public String getCaption() {
-			return caption;
+		return caption;
 	}
 
-	public void setCaption(
-			String caption) {
-
-			this.caption = caption;
+	public void setCaption(String caption) {
+		this.caption = caption;
 	}
 
 	@JsonIgnore
 	public void setCaption(
-			UnsafeSupplier<String, Throwable>
-				captionUnsafeSupplier) {
+		UnsafeSupplier<String, Throwable> captionUnsafeSupplier) {
 
-			try {
-				caption =
-					captionUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
+		try {
+			caption = captionUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected String caption;
+
 	public Categories[] getCategories() {
-			return categories;
+		return categories;
 	}
 
-	public void setCategories(
-			Categories[] categories) {
-
-			this.categories = categories;
+	public void setCategories(Categories[] categories) {
+		this.categories = categories;
 	}
 
 	@JsonIgnore
 	public void setCategories(
-			UnsafeSupplier<Categories[], Throwable>
-				categoriesUnsafeSupplier) {
+		UnsafeSupplier<Categories[], Throwable> categoriesUnsafeSupplier) {
 
-			try {
-				categories =
-					categoriesUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
+		try {
+			categories = categoriesUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected Categories[] categories;
+
 	public Long[] getCategoryIds() {
-			return categoryIds;
+		return categoryIds;
 	}
 
-	public void setCategoryIds(
-			Long[] categoryIds) {
-
-			this.categoryIds = categoryIds;
+	public void setCategoryIds(Long[] categoryIds) {
+		this.categoryIds = categoryIds;
 	}
 
 	@JsonIgnore
 	public void setCategoryIds(
-			UnsafeSupplier<Long[], Throwable>
-				categoryIdsUnsafeSupplier) {
+		UnsafeSupplier<Long[], Throwable> categoryIdsUnsafeSupplier) {
 
-			try {
-				categoryIds =
-					categoryIdsUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
+		try {
+			categoryIds = categoryIdsUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected Long[] categoryIds;
+
 	public Long getContentSpace() {
-			return contentSpace;
+		return contentSpace;
 	}
 
-	public void setContentSpace(
-			Long contentSpace) {
-
-			this.contentSpace = contentSpace;
+	public void setContentSpace(Long contentSpace) {
+		this.contentSpace = contentSpace;
 	}
 
 	@JsonIgnore
 	public void setContentSpace(
-			UnsafeSupplier<Long, Throwable>
-				contentSpaceUnsafeSupplier) {
+		UnsafeSupplier<Long, Throwable> contentSpaceUnsafeSupplier) {
 
-			try {
-				contentSpace =
-					contentSpaceUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
+		try {
+			contentSpace = contentSpaceUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected Long contentSpace;
+
 	public Creator getCreator() {
-			return creator;
+		return creator;
 	}
 
-	public void setCreator(
-			Creator creator) {
-
-			this.creator = creator;
+	public void setCreator(Creator creator) {
+		this.creator = creator;
 	}
 
 	@JsonIgnore
 	public void setCreator(
-			UnsafeSupplier<Creator, Throwable>
-				creatorUnsafeSupplier) {
+		UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
 
-			try {
-				creator =
-					creatorUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
+		try {
+			creator = creatorUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected Creator creator;
+
 	public Date getDateCreated() {
-			return dateCreated;
+		return dateCreated;
 	}
 
-	public void setDateCreated(
-			Date dateCreated) {
-
-			this.dateCreated = dateCreated;
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
 	}
 
 	@JsonIgnore
 	public void setDateCreated(
-			UnsafeSupplier<Date, Throwable>
-				dateCreatedUnsafeSupplier) {
+		UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
 
-			try {
-				dateCreated =
-					dateCreatedUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
+		try {
+			dateCreated = dateCreatedUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected Date dateCreated;
+
 	public Date getDateModified() {
-			return dateModified;
+		return dateModified;
 	}
 
-	public void setDateModified(
-			Date dateModified) {
-
-			this.dateModified = dateModified;
+	public void setDateModified(Date dateModified) {
+		this.dateModified = dateModified;
 	}
 
 	@JsonIgnore
 	public void setDateModified(
-			UnsafeSupplier<Date, Throwable>
-				dateModifiedUnsafeSupplier) {
+		UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
 
-			try {
-				dateModified =
-					dateModifiedUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
+		try {
+			dateModified = dateModifiedUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected Date dateModified;
+
 	public Date getDatePublished() {
-			return datePublished;
+		return datePublished;
 	}
 
-	public void setDatePublished(
-			Date datePublished) {
-
-			this.datePublished = datePublished;
+	public void setDatePublished(Date datePublished) {
+		this.datePublished = datePublished;
 	}
 
 	@JsonIgnore
 	public void setDatePublished(
-			UnsafeSupplier<Date, Throwable>
-				datePublishedUnsafeSupplier) {
+		UnsafeSupplier<Date, Throwable> datePublishedUnsafeSupplier) {
 
-			try {
-				datePublished =
-					datePublishedUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
+		try {
+			datePublished = datePublishedUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected Date datePublished;
+
 	public String getDescription() {
-			return description;
+		return description;
 	}
 
-	public void setDescription(
-			String description) {
-
-			this.description = description;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	@JsonIgnore
 	public void setDescription(
-			UnsafeSupplier<String, Throwable>
-				descriptionUnsafeSupplier) {
+		UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier) {
 
-			try {
-				description =
-					descriptionUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
+		try {
+			description = descriptionUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected String description;
+
 	public String getEncodingFormat() {
-			return encodingFormat;
+		return encodingFormat;
 	}
 
-	public void setEncodingFormat(
-			String encodingFormat) {
-
-			this.encodingFormat = encodingFormat;
+	public void setEncodingFormat(String encodingFormat) {
+		this.encodingFormat = encodingFormat;
 	}
 
 	@JsonIgnore
 	public void setEncodingFormat(
-			UnsafeSupplier<String, Throwable>
-				encodingFormatUnsafeSupplier) {
+		UnsafeSupplier<String, Throwable> encodingFormatUnsafeSupplier) {
 
-			try {
-				encodingFormat =
-					encodingFormatUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
+		try {
+			encodingFormat = encodingFormatUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected String encodingFormat;
+
 	public String getFriendlyUrlPath() {
-			return friendlyUrlPath;
+		return friendlyUrlPath;
 	}
 
-	public void setFriendlyUrlPath(
-			String friendlyUrlPath) {
-
-			this.friendlyUrlPath = friendlyUrlPath;
+	public void setFriendlyUrlPath(String friendlyUrlPath) {
+		this.friendlyUrlPath = friendlyUrlPath;
 	}
 
 	@JsonIgnore
 	public void setFriendlyUrlPath(
-			UnsafeSupplier<String, Throwable>
-				friendlyUrlPathUnsafeSupplier) {
+		UnsafeSupplier<String, Throwable> friendlyUrlPathUnsafeSupplier) {
 
-			try {
-				friendlyUrlPath =
-					friendlyUrlPathUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
+		try {
+			friendlyUrlPath = friendlyUrlPathUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected String friendlyUrlPath;
+
 	public Boolean getHasComments() {
-			return hasComments;
+		return hasComments;
 	}
 
-	public void setHasComments(
-			Boolean hasComments) {
-
-			this.hasComments = hasComments;
+	public void setHasComments(Boolean hasComments) {
+		this.hasComments = hasComments;
 	}
 
 	@JsonIgnore
 	public void setHasComments(
-			UnsafeSupplier<Boolean, Throwable>
-				hasCommentsUnsafeSupplier) {
+		UnsafeSupplier<Boolean, Throwable> hasCommentsUnsafeSupplier) {
 
-			try {
-				hasComments =
-					hasCommentsUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
+		try {
+			hasComments = hasCommentsUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected Boolean hasComments;
+
 	public String getHeadline() {
-			return headline;
+		return headline;
 	}
 
-	public void setHeadline(
-			String headline) {
-
-			this.headline = headline;
+	public void setHeadline(String headline) {
+		this.headline = headline;
 	}
 
 	@JsonIgnore
 	public void setHeadline(
-			UnsafeSupplier<String, Throwable>
-				headlineUnsafeSupplier) {
+		UnsafeSupplier<String, Throwable> headlineUnsafeSupplier) {
 
-			try {
-				headline =
-					headlineUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
+		try {
+			headline = headlineUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected String headline;
+
 	public Long getId() {
-			return id;
+		return id;
 	}
 
-	public void setId(
-			Long id) {
-
-			this.id = id;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	@JsonIgnore
-	public void setId(
-			UnsafeSupplier<Long, Throwable>
-				idUnsafeSupplier) {
-
-			try {
-				id =
-					idUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
+	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+		try {
+			id = idUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected Long id;
+
 	public Image getImage() {
-			return image;
+		return image;
 	}
 
-	public void setImage(
-			Image image) {
-
-			this.image = image;
+	public void setImage(Image image) {
+		this.image = image;
 	}
 
 	@JsonIgnore
-	public void setImage(
-			UnsafeSupplier<Image, Throwable>
-				imageUnsafeSupplier) {
-
-			try {
-				image =
-					imageUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
+	public void setImage(UnsafeSupplier<Image, Throwable> imageUnsafeSupplier) {
+		try {
+			image = imageUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected Image image;
+
 	public Long getImageId() {
-			return imageId;
+		return imageId;
 	}
 
-	public void setImageId(
-			Long imageId) {
-
-			this.imageId = imageId;
+	public void setImageId(Long imageId) {
+		this.imageId = imageId;
 	}
 
 	@JsonIgnore
 	public void setImageId(
-			UnsafeSupplier<Long, Throwable>
-				imageIdUnsafeSupplier) {
+		UnsafeSupplier<Long, Throwable> imageIdUnsafeSupplier) {
 
-			try {
-				imageId =
-					imageIdUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
+		try {
+			imageId = imageIdUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected Long imageId;
+
 	public String[] getKeywords() {
-			return keywords;
+		return keywords;
 	}
 
-	public void setKeywords(
-			String[] keywords) {
-
-			this.keywords = keywords;
+	public void setKeywords(String[] keywords) {
+		this.keywords = keywords;
 	}
 
 	@JsonIgnore
 	public void setKeywords(
-			UnsafeSupplier<String[], Throwable>
-				keywordsUnsafeSupplier) {
+		UnsafeSupplier<String[], Throwable> keywordsUnsafeSupplier) {
 
-			try {
-				keywords =
-					keywordsUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
+		try {
+			keywords = keywordsUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField

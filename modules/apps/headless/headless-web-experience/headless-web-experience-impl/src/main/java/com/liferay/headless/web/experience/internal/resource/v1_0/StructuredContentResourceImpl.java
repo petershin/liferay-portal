@@ -140,6 +140,7 @@ public class StructuredContentResourceImpl
 			filter, _indexerRegistry.nullSafeGetIndexer(JournalArticle.class),
 			pagination,
 			booleanQuery -> {
+
 				if (contentStructureId != null) {
 					BooleanFilter booleanFilter =
 						booleanQuery.getPreBooleanFilter();
@@ -223,6 +224,7 @@ public class StructuredContentResourceImpl
 			_journalArticleService.addArticle(
 				contentSpaceId, 0, 0, 0, null, true,
 				new HashMap<Locale, String>() {
+
 					{
 						put(
 							contextAcceptLanguage.getPreferredLocale(),
@@ -319,6 +321,7 @@ public class StructuredContentResourceImpl
 				"ddmFormValues",
 				_toString(
 					new DDMFormValues(ddmForm) {
+
 						{
 							setAvailableLocales(ddmForm.getAvailableLocales());
 							setDDMFormFieldValues(ddmFormFieldValues);
@@ -402,6 +405,7 @@ public class StructuredContentResourceImpl
 		return transform(
 			Arrays.asList(valuesArray),
 			values -> {
+
 				return new DDMFormFieldValue() {
 					{
 						setName(values.getName());
@@ -683,6 +687,7 @@ public class StructuredContentResourceImpl
 
 			values.add(
 				new ValuesImpl() {
+
 					{
 						dataType = ContentStructureUtil.toDataType(
 							ddmFormField);

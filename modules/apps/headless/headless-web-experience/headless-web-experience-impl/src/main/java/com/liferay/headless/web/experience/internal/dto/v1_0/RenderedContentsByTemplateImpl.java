@@ -34,84 +34,73 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Generated("")
 @GraphQLName("RenderedContentsByTemplate")
 @XmlRootElement(name = "RenderedContentsByTemplate")
-public class RenderedContentsByTemplateImpl implements RenderedContentsByTemplate {
+public class RenderedContentsByTemplateImpl
+	implements RenderedContentsByTemplate {
 
 	public Long getId() {
-			return id;
+		return id;
 	}
 
-	public void setId(
-			Long id) {
-
-			this.id = id;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	@JsonIgnore
-	public void setId(
-			UnsafeSupplier<Long, Throwable>
-				idUnsafeSupplier) {
-
-			try {
-				id =
-					idUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
+	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+		try {
+			id = idUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected Long id;
+
 	public String getRenderedContent() {
-			return renderedContent;
+		return renderedContent;
 	}
 
-	public void setRenderedContent(
-			String renderedContent) {
-
-			this.renderedContent = renderedContent;
+	public void setRenderedContent(String renderedContent) {
+		this.renderedContent = renderedContent;
 	}
 
 	@JsonIgnore
 	public void setRenderedContent(
-			UnsafeSupplier<String, Throwable>
-				renderedContentUnsafeSupplier) {
+		UnsafeSupplier<String, Throwable> renderedContentUnsafeSupplier) {
 
-			try {
-				renderedContent =
-					renderedContentUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
+		try {
+			renderedContent = renderedContentUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected String renderedContent;
+
 	public String getTemplate() {
-			return template;
+		return template;
 	}
 
-	public void setTemplate(
-			String template) {
-
-			this.template = template;
+	public void setTemplate(String template) {
+		this.template = template;
 	}
 
 	@JsonIgnore
 	public void setTemplate(
-			UnsafeSupplier<String, Throwable>
-				templateUnsafeSupplier) {
+		UnsafeSupplier<String, Throwable> templateUnsafeSupplier) {
 
-			try {
-				template =
-					templateUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
+		try {
+			template = templateUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField

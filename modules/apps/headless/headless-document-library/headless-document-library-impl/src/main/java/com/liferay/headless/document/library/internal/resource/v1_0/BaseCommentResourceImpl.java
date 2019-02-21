@@ -49,40 +49,45 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 	@Path("/comments/{comment-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Comment getComment(
-	@PathParam("comment-id") Long commentId)
-			throws Exception {
+	public Comment getComment(@PathParam("comment-id") Long commentId)
+		throws Exception {
 
-				return new CommentImpl();
+		return new CommentImpl();
 	}
+
 	@Override
 	@GET
 	@Path("/comments/{comment-id}/comments")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	public Page<Comment> getCommentCommentsPage(
-	@PathParam("comment-id") Long commentId,@Context Pagination pagination)
-			throws Exception {
+			@PathParam("comment-id") Long commentId,
+			@Context Pagination pagination)
+		throws Exception {
 
-				return Page.of(Collections.emptyList());
+		return Page.of(Collections.emptyList());
 	}
+
 	@Override
 	@GET
 	@Path("/documents/{document-id}/comments")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	public Page<Comment> getDocumentCommentsPage(
-	@PathParam("document-id") Long documentId,@Context Pagination pagination)
-			throws Exception {
+			@PathParam("document-id") Long documentId,
+			@Context Pagination pagination)
+		throws Exception {
 
-				return Page.of(Collections.emptyList());
+		return Page.of(Collections.emptyList());
 	}
 
 	public void setContextCompany(Company contextCompany) {
 		this.contextCompany = contextCompany;
 	}
 
-	protected <T, R> List<R> transform(List<T> list, UnsafeFunction<T, R, Throwable> unsafeFunction) {
+	protected <T, R> List<R> transform(
+		List<T> list, UnsafeFunction<T, R, Throwable> unsafeFunction) {
+
 		return TransformUtil.transform(list, unsafeFunction);
 	}
 

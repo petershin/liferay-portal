@@ -44,7 +44,8 @@ import javax.ws.rs.core.Context;
  */
 @Generated("")
 @Path("/v1.0")
-public abstract class BaseWorkflowTaskResourceImpl implements WorkflowTaskResource {
+public abstract class BaseWorkflowTaskResourceImpl
+	implements WorkflowTaskResource {
 
 	@Override
 	@GET
@@ -52,33 +53,36 @@ public abstract class BaseWorkflowTaskResourceImpl implements WorkflowTaskResour
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	public Page<WorkflowTask> getRoleWorkflowTasksPage(
-	@PathParam("role-id") Long roleId,@Context Pagination pagination)
-			throws Exception {
+			@PathParam("role-id") Long roleId, @Context Pagination pagination)
+		throws Exception {
 
-				return Page.of(Collections.emptyList());
+		return Page.of(Collections.emptyList());
 	}
+
 	@Override
 	@GET
 	@Path("/workflow-tasks")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	public Page<WorkflowTask> getWorkflowTasksPage(
-	@Context Pagination pagination)
-			throws Exception {
+			@Context Pagination pagination)
+		throws Exception {
 
-				return Page.of(Collections.emptyList());
+		return Page.of(Collections.emptyList());
 	}
+
 	@Override
 	@GET
 	@Path("/workflow-tasks/{workflow-task-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	public WorkflowTask getWorkflowTask(
-	@PathParam("workflow-task-id") Long workflowTaskId)
-			throws Exception {
+			@PathParam("workflow-task-id") Long workflowTaskId)
+		throws Exception {
 
-				return new WorkflowTaskImpl();
+		return new WorkflowTaskImpl();
 	}
+
 	@Override
 	@Consumes("application/json")
 	@POST
@@ -86,11 +90,13 @@ public abstract class BaseWorkflowTaskResourceImpl implements WorkflowTaskResour
 	@Produces("application/json")
 	@RequiresScope("everything.write")
 	public WorkflowTask postWorkflowTaskAssignToMe(
-	@PathParam("workflow-task-id") Long workflowTaskId,WorkflowTask workflowTask)
-			throws Exception {
+			@PathParam("workflow-task-id") Long workflowTaskId,
+			WorkflowTask workflowTask)
+		throws Exception {
 
-				return new WorkflowTaskImpl();
+		return new WorkflowTaskImpl();
 	}
+
 	@Override
 	@Consumes("application/json")
 	@POST
@@ -98,11 +104,13 @@ public abstract class BaseWorkflowTaskResourceImpl implements WorkflowTaskResour
 	@Produces("application/json")
 	@RequiresScope("everything.write")
 	public WorkflowTask postWorkflowTaskAssignToUser(
-	@PathParam("workflow-task-id") Long workflowTaskId,WorkflowTask workflowTask)
-			throws Exception {
+			@PathParam("workflow-task-id") Long workflowTaskId,
+			WorkflowTask workflowTask)
+		throws Exception {
 
-				return new WorkflowTaskImpl();
+		return new WorkflowTaskImpl();
 	}
+
 	@Override
 	@Consumes("application/json")
 	@POST
@@ -110,11 +118,13 @@ public abstract class BaseWorkflowTaskResourceImpl implements WorkflowTaskResour
 	@Produces("application/json")
 	@RequiresScope("everything.write")
 	public WorkflowTask postWorkflowTaskChangeTransition(
-	@PathParam("workflow-task-id") Long workflowTaskId,WorkflowTask workflowTask)
-			throws Exception {
+			@PathParam("workflow-task-id") Long workflowTaskId,
+			WorkflowTask workflowTask)
+		throws Exception {
 
-				return new WorkflowTaskImpl();
+		return new WorkflowTaskImpl();
 	}
+
 	@Override
 	@Consumes("application/json")
 	@POST
@@ -122,17 +132,20 @@ public abstract class BaseWorkflowTaskResourceImpl implements WorkflowTaskResour
 	@Produces("application/json")
 	@RequiresScope("everything.write")
 	public WorkflowTask postWorkflowTaskUpdateDueDate(
-	@PathParam("workflow-task-id") Long workflowTaskId,WorkflowTask workflowTask)
-			throws Exception {
+			@PathParam("workflow-task-id") Long workflowTaskId,
+			WorkflowTask workflowTask)
+		throws Exception {
 
-				return new WorkflowTaskImpl();
+		return new WorkflowTaskImpl();
 	}
 
 	public void setContextCompany(Company contextCompany) {
 		this.contextCompany = contextCompany;
 	}
 
-	protected <T, R> List<R> transform(List<T> list, UnsafeFunction<T, R, Throwable> unsafeFunction) {
+	protected <T, R> List<R> transform(
+		List<T> list, UnsafeFunction<T, R, Throwable> unsafeFunction) {
+
 		return TransformUtil.transform(list, unsafeFunction);
 	}
 

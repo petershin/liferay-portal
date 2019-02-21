@@ -37,81 +37,69 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class ObjectReviewedImpl implements ObjectReviewed {
 
 	public Long getId() {
-			return id;
+		return id;
 	}
 
-	public void setId(
-			Long id) {
-
-			this.id = id;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	@JsonIgnore
-	public void setId(
-			UnsafeSupplier<Long, Throwable>
-				idUnsafeSupplier) {
-
-			try {
-				id =
-					idUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
+	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+		try {
+			id = idUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected Long id;
+
 	public String getIdentifier() {
-			return identifier;
+		return identifier;
 	}
 
-	public void setIdentifier(
-			String identifier) {
-
-			this.identifier = identifier;
+	public void setIdentifier(String identifier) {
+		this.identifier = identifier;
 	}
 
 	@JsonIgnore
 	public void setIdentifier(
-			UnsafeSupplier<String, Throwable>
-				identifierUnsafeSupplier) {
+		UnsafeSupplier<String, Throwable> identifierUnsafeSupplier) {
 
-			try {
-				identifier =
-					identifierUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
+		try {
+			identifier = identifierUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected String identifier;
+
 	public String getResourceType() {
-			return resourceType;
+		return resourceType;
 	}
 
-	public void setResourceType(
-			String resourceType) {
-
-			this.resourceType = resourceType;
+	public void setResourceType(String resourceType) {
+		this.resourceType = resourceType;
 	}
 
 	@JsonIgnore
 	public void setResourceType(
-			UnsafeSupplier<String, Throwable>
-				resourceTypeUnsafeSupplier) {
+		UnsafeSupplier<String, Throwable> resourceTypeUnsafeSupplier) {
 
-			try {
-				resourceType =
-					resourceTypeUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
+		try {
+			resourceType = resourceTypeUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField

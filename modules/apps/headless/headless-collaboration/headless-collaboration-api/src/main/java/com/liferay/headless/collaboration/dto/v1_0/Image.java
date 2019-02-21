@@ -27,27 +27,22 @@ public interface Image {
 
 	public String getContentUrl();
 
-	public void setContentUrl(
-			String contentUrl);
+	public void setContentUrl(String contentUrl);
 
 	public void setContentUrl(
-			UnsafeSupplier<String, Throwable>
-				contentUrlUnsafeSupplier);
+		UnsafeSupplier<String, Throwable> contentUrlUnsafeSupplier);
+
 	public Long getImageId();
 
-	public void setImageId(
-			Long imageId);
+	public void setImageId(Long imageId);
 
 	public void setImageId(
-			UnsafeSupplier<Long, Throwable>
-				imageIdUnsafeSupplier);
+		UnsafeSupplier<Long, Throwable> imageIdUnsafeSupplier);
+
 	public String getName();
 
-	public void setName(
-			String name);
+	public void setName(String name);
 
-	public void setName(
-			UnsafeSupplier<String, Throwable>
-				nameUnsafeSupplier);
+	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier);
 
 }

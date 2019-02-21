@@ -61,78 +61,84 @@ public abstract class BasePostalAddressResourceTestCase {
 
 	@Test
 	public void testGetGenericParentPostalAddressesPage() throws Exception {
-			Assert.assertTrue(true);
-	}
-	@Test
-	public void testGetAddress() throws Exception {
-			Assert.assertTrue(true);
+		Assert.assertTrue(true);
 	}
 
-	protected void assertResponseCode(int expectedResponseCode, Http.Response actualResponse) {
-		Assert.assertEquals(expectedResponseCode, actualResponse.getResponseCode());
+	@Test
+	public void testGetAddress() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	protected void assertResponseCode(
+		int expectedResponseCode, Http.Response actualResponse) {
+
+		Assert.assertEquals(
+			expectedResponseCode, actualResponse.getResponseCode());
 	}
 
 	protected Page<PostalAddress> invokeGetGenericParentPostalAddressesPage(
-				Object genericParentId,Pagination pagination)
-			throws Exception {
+			Object genericParentId, Pagination pagination)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/addresses", genericParentId));
+		options.setLocation(
+			_resourceURL + _toPath("/addresses", genericParentId));
 
-				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), Page.class);
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), Page.class);
 	}
 
 	protected Http.Response invokeGetGenericParentPostalAddressesPageResponse(
-				Object genericParentId,Pagination pagination)
-			throws Exception {
+			Object genericParentId, Pagination pagination)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/addresses", genericParentId));
+		options.setLocation(
+			_resourceURL + _toPath("/addresses", genericParentId));
 
-			HttpUtil.URLtoString(options);
+		HttpUtil.URLtoString(options);
 
-			return options.getResponse();
-	}
-	protected PostalAddress invokeGetAddress(
-				Long addressId)
-			throws Exception {
-
-			Http.Options options = _createHttpOptions();
-
-			options.setLocation(_resourceURL + _toPath("/addresses/{address-id}", addressId));
-
-				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), PostalAddressImpl.class);
+		return options.getResponse();
 	}
 
-	protected Http.Response invokeGetAddressResponse(
-				Long addressId)
-			throws Exception {
+	protected PostalAddress invokeGetAddress(Long addressId) throws Exception {
+		Http.Options options = _createHttpOptions();
 
-			Http.Options options = _createHttpOptions();
+		options.setLocation(
+			_resourceURL + _toPath("/addresses/{address-id}", addressId));
 
-			options.setLocation(_resourceURL + _toPath("/addresses/{address-id}", addressId));
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), PostalAddressImpl.class);
+	}
 
-			HttpUtil.URLtoString(options);
+	protected Http.Response invokeGetAddressResponse(Long addressId)
+		throws Exception {
 
-			return options.getResponse();
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL + _toPath("/addresses/{address-id}", addressId));
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
 	}
 
 	protected PostalAddress randomPostalAddress() {
 		return new PostalAddressImpl() {
 			{
-
-						addressCountry = RandomTestUtil.randomString();
-						addressLocality = RandomTestUtil.randomString();
-						addressRegion = RandomTestUtil.randomString();
-						addressType = RandomTestUtil.randomString();
-						id = RandomTestUtil.randomLong();
-						postalCode = RandomTestUtil.randomString();
-						streetAddressLine1 = RandomTestUtil.randomString();
-						streetAddressLine2 = RandomTestUtil.randomString();
-						streetAddressLine3 = RandomTestUtil.randomString();
-	}
+				addressCountry = RandomTestUtil.randomString();
+				addressLocality = RandomTestUtil.randomString();
+				addressRegion = RandomTestUtil.randomString();
+				addressType = RandomTestUtil.randomString();
+				id = RandomTestUtil.randomLong();
+				postalCode = RandomTestUtil.randomString();
+				streetAddressLine1 = RandomTestUtil.randomString();
+				streetAddressLine2 = RandomTestUtil.randomString();
+				streetAddressLine3 = RandomTestUtil.randomString();
+			}
 		};
 	}
 
@@ -140,204 +146,213 @@ public abstract class BasePostalAddressResourceTestCase {
 
 	protected static class PostalAddressImpl implements PostalAddress {
 
-	public String getAddressCountry() {
-				return addressCountry;
-	}
+		public String getAddressCountry() {
+			return addressCountry;
+		}
 
-	public void setAddressCountry(String addressCountry) {
-				this.addressCountry = addressCountry;
-	}
+		public void setAddressCountry(String addressCountry) {
+			this.addressCountry = addressCountry;
+		}
 
-	@JsonIgnore
-	public void setAddressCountry(
-				UnsafeSupplier<String, Throwable> addressCountryUnsafeSupplier) {
+		@JsonIgnore
+		public void setAddressCountry(
+			UnsafeSupplier<String, Throwable> addressCountryUnsafeSupplier) {
 
-				try {
-					addressCountry = addressCountryUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+			try {
+				addressCountry = addressCountryUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-	@JsonProperty
-	protected String addressCountry;
-	public String getAddressLocality() {
-				return addressLocality;
-	}
+		@JsonProperty
+		protected String addressCountry;
 
-	public void setAddressLocality(String addressLocality) {
-				this.addressLocality = addressLocality;
-	}
+		public String getAddressLocality() {
+			return addressLocality;
+		}
 
-	@JsonIgnore
-	public void setAddressLocality(
-				UnsafeSupplier<String, Throwable> addressLocalityUnsafeSupplier) {
+		public void setAddressLocality(String addressLocality) {
+			this.addressLocality = addressLocality;
+		}
 
-				try {
-					addressLocality = addressLocalityUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		@JsonIgnore
+		public void setAddressLocality(
+			UnsafeSupplier<String, Throwable> addressLocalityUnsafeSupplier) {
 
-	@JsonProperty
-	protected String addressLocality;
-	public String getAddressRegion() {
-				return addressRegion;
-	}
+			try {
+				addressLocality = addressLocalityUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-	public void setAddressRegion(String addressRegion) {
-				this.addressRegion = addressRegion;
-	}
+		@JsonProperty
+		protected String addressLocality;
 
-	@JsonIgnore
-	public void setAddressRegion(
-				UnsafeSupplier<String, Throwable> addressRegionUnsafeSupplier) {
+		public String getAddressRegion() {
+			return addressRegion;
+		}
 
-				try {
-					addressRegion = addressRegionUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		public void setAddressRegion(String addressRegion) {
+			this.addressRegion = addressRegion;
+		}
 
-	@JsonProperty
-	protected String addressRegion;
-	public String getAddressType() {
-				return addressType;
-	}
+		@JsonIgnore
+		public void setAddressRegion(
+			UnsafeSupplier<String, Throwable> addressRegionUnsafeSupplier) {
 
-	public void setAddressType(String addressType) {
-				this.addressType = addressType;
-	}
+			try {
+				addressRegion = addressRegionUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-	@JsonIgnore
-	public void setAddressType(
-				UnsafeSupplier<String, Throwable> addressTypeUnsafeSupplier) {
+		@JsonProperty
+		protected String addressRegion;
 
-				try {
-					addressType = addressTypeUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		public String getAddressType() {
+			return addressType;
+		}
 
-	@JsonProperty
-	protected String addressType;
-	public Long getId() {
-				return id;
-	}
+		public void setAddressType(String addressType) {
+			this.addressType = addressType;
+		}
 
-	public void setId(Long id) {
-				this.id = id;
-	}
+		@JsonIgnore
+		public void setAddressType(
+			UnsafeSupplier<String, Throwable> addressTypeUnsafeSupplier) {
 
-	@JsonIgnore
-	public void setId(
-				UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+			try {
+				addressType = addressTypeUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-				try {
-					id = idUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		@JsonProperty
+		protected String addressType;
 
-	@JsonProperty
-	protected Long id;
-	public String getPostalCode() {
-				return postalCode;
-	}
+		public Long getId() {
+			return id;
+		}
 
-	public void setPostalCode(String postalCode) {
-				this.postalCode = postalCode;
-	}
+		public void setId(Long id) {
+			this.id = id;
+		}
 
-	@JsonIgnore
-	public void setPostalCode(
-				UnsafeSupplier<String, Throwable> postalCodeUnsafeSupplier) {
+		@JsonIgnore
+		public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+			try {
+				id = idUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-				try {
-					postalCode = postalCodeUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		@JsonProperty
+		protected Long id;
 
-	@JsonProperty
-	protected String postalCode;
-	public String getStreetAddressLine1() {
-				return streetAddressLine1;
-	}
+		public String getPostalCode() {
+			return postalCode;
+		}
 
-	public void setStreetAddressLine1(String streetAddressLine1) {
-				this.streetAddressLine1 = streetAddressLine1;
-	}
+		public void setPostalCode(String postalCode) {
+			this.postalCode = postalCode;
+		}
 
-	@JsonIgnore
-	public void setStreetAddressLine1(
-				UnsafeSupplier<String, Throwable> streetAddressLine1UnsafeSupplier) {
+		@JsonIgnore
+		public void setPostalCode(
+			UnsafeSupplier<String, Throwable> postalCodeUnsafeSupplier) {
 
-				try {
-					streetAddressLine1 = streetAddressLine1UnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+			try {
+				postalCode = postalCodeUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-	@JsonProperty
-	protected String streetAddressLine1;
-	public String getStreetAddressLine2() {
-				return streetAddressLine2;
-	}
+		@JsonProperty
+		protected String postalCode;
 
-	public void setStreetAddressLine2(String streetAddressLine2) {
-				this.streetAddressLine2 = streetAddressLine2;
-	}
+		public String getStreetAddressLine1() {
+			return streetAddressLine1;
+		}
 
-	@JsonIgnore
-	public void setStreetAddressLine2(
-				UnsafeSupplier<String, Throwable> streetAddressLine2UnsafeSupplier) {
+		public void setStreetAddressLine1(String streetAddressLine1) {
+			this.streetAddressLine1 = streetAddressLine1;
+		}
 
-				try {
-					streetAddressLine2 = streetAddressLine2UnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		@JsonIgnore
+		public void setStreetAddressLine1(
+			UnsafeSupplier<String, Throwable>
+				streetAddressLine1UnsafeSupplier) {
 
-	@JsonProperty
-	protected String streetAddressLine2;
-	public String getStreetAddressLine3() {
-				return streetAddressLine3;
-	}
+			try {
+				streetAddressLine1 = streetAddressLine1UnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-	public void setStreetAddressLine3(String streetAddressLine3) {
-				this.streetAddressLine3 = streetAddressLine3;
-	}
+		@JsonProperty
+		protected String streetAddressLine1;
 
-	@JsonIgnore
-	public void setStreetAddressLine3(
-				UnsafeSupplier<String, Throwable> streetAddressLine3UnsafeSupplier) {
+		public String getStreetAddressLine2() {
+			return streetAddressLine2;
+		}
 
-				try {
-					streetAddressLine3 = streetAddressLine3UnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		public void setStreetAddressLine2(String streetAddressLine2) {
+			this.streetAddressLine2 = streetAddressLine2;
+		}
 
-	@JsonProperty
-	protected String streetAddressLine3;
+		@JsonIgnore
+		public void setStreetAddressLine2(
+			UnsafeSupplier<String, Throwable>
+				streetAddressLine2UnsafeSupplier) {
+
+			try {
+				streetAddressLine2 = streetAddressLine2UnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
+
+		@JsonProperty
+		protected String streetAddressLine2;
+
+		public String getStreetAddressLine3() {
+			return streetAddressLine3;
+		}
+
+		public void setStreetAddressLine3(String streetAddressLine3) {
+			this.streetAddressLine3 = streetAddressLine3;
+		}
+
+		@JsonIgnore
+		public void setStreetAddressLine3(
+			UnsafeSupplier<String, Throwable>
+				streetAddressLine3UnsafeSupplier) {
+
+			try {
+				streetAddressLine3 = streetAddressLine3UnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
+
+		@JsonProperty
+		protected String streetAddressLine3;
 
 	}
 
@@ -348,9 +363,11 @@ public abstract class BasePostalAddressResourceTestCase {
 
 		String userNameAndPassword = "test@liferay.com:test";
 
-		String encodedUserNameAndPassword = Base64.encode(userNameAndPassword.getBytes());
+		String encodedUserNameAndPassword = Base64.encode(
+			userNameAndPassword.getBytes());
 
-		options.addHeader("Authorization", "Basic " + encodedUserNameAndPassword);
+		options.addHeader(
+			"Authorization", "Basic " + encodedUserNameAndPassword);
 
 		options.addHeader("Content-Type", "application/json");
 
@@ -364,7 +381,7 @@ public abstract class BasePostalAddressResourceTestCase {
 	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {
 		{
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
-	}
+		}
 	};
 	private final static ObjectMapper _outputObjectMapper = new ObjectMapper();
 

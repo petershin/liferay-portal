@@ -68,175 +68,215 @@ public abstract class BaseKeywordResourceTestCase {
 
 	@Test
 	public void testGetContentSpaceKeywordsPage() throws Exception {
-			Assert.assertTrue(true);
-	}
-	@Test
-	public void testPostContentSpaceKeyword() throws Exception {
-			Assert.assertTrue(true);
-	}
-	@Test
-	public void testDeleteKeyword() throws Exception {
-			Assert.assertTrue(true);
-	}
-	@Test
-	public void testGetKeyword() throws Exception {
-			Assert.assertTrue(true);
-	}
-	@Test
-	public void testPutKeyword() throws Exception {
-			Assert.assertTrue(true);
+		Assert.assertTrue(true);
 	}
 
-	protected void assertResponseCode(int expectedResponseCode, Http.Response actualResponse) {
-		Assert.assertEquals(expectedResponseCode, actualResponse.getResponseCode());
+	@Test
+	public void testPostContentSpaceKeyword() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	@Test
+	public void testDeleteKeyword() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	@Test
+	public void testGetKeyword() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	@Test
+	public void testPutKeyword() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	protected void assertResponseCode(
+		int expectedResponseCode, Http.Response actualResponse) {
+
+		Assert.assertEquals(
+			expectedResponseCode, actualResponse.getResponseCode());
 	}
 
 	protected Page<Keyword> invokeGetContentSpaceKeywordsPage(
-				Long contentSpaceId,Filter filter,Pagination pagination,Sort[] sorts)
-			throws Exception {
+			Long contentSpaceId, Filter filter, Pagination pagination,
+			Sort[] sorts)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/content-spaces/{content-space-id}/keywords", contentSpaceId,filter,sorts));
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/content-spaces/{content-space-id}/keywords",
+					contentSpaceId, filter, sorts));
 
-				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), Page.class);
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), Page.class);
 	}
 
 	protected Http.Response invokeGetContentSpaceKeywordsPageResponse(
-				Long contentSpaceId,Filter filter,Pagination pagination,Sort[] sorts)
-			throws Exception {
+			Long contentSpaceId, Filter filter, Pagination pagination,
+			Sort[] sorts)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/content-spaces/{content-space-id}/keywords", contentSpaceId,filter,sorts));
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/content-spaces/{content-space-id}/keywords",
+					contentSpaceId, filter, sorts));
 
-			HttpUtil.URLtoString(options);
+		HttpUtil.URLtoString(options);
 
-			return options.getResponse();
+		return options.getResponse();
 	}
+
 	protected Keyword invokePostContentSpaceKeyword(
-				Long contentSpaceId,Keyword keyword)
-			throws Exception {
+			Long contentSpaceId, Keyword keyword)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-				options.setBody(_inputObjectMapper.writeValueAsString(keyword), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(keyword),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-			options.setLocation(_resourceURL + _toPath("/content-spaces/{content-space-id}/keywords", contentSpaceId,keyword));
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/content-spaces/{content-space-id}/keywords",
+					contentSpaceId, keyword));
 
-				options.setPost(true);
+		options.setPost(true);
 
-				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), KeywordImpl.class);
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), KeywordImpl.class);
 	}
 
 	protected Http.Response invokePostContentSpaceKeywordResponse(
-				Long contentSpaceId,Keyword keyword)
-			throws Exception {
+			Long contentSpaceId, Keyword keyword)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-				options.setBody(_inputObjectMapper.writeValueAsString(keyword), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(keyword),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-			options.setLocation(_resourceURL + _toPath("/content-spaces/{content-space-id}/keywords", contentSpaceId,keyword));
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/content-spaces/{content-space-id}/keywords",
+					contentSpaceId, keyword));
 
-				options.setPost(true);
+		options.setPost(true);
 
-			HttpUtil.URLtoString(options);
+		HttpUtil.URLtoString(options);
 
-			return options.getResponse();
-	}
-	protected boolean invokeDeleteKeyword(
-				Long keywordId)
-			throws Exception {
-
-			Http.Options options = _createHttpOptions();
-
-				options.setDelete(true);
-
-			options.setLocation(_resourceURL + _toPath("/keywords/{keyword-id}", keywordId));
-
-				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), Boolean.class);
+		return options.getResponse();
 	}
 
-	protected Http.Response invokeDeleteKeywordResponse(
-				Long keywordId)
-			throws Exception {
+	protected boolean invokeDeleteKeyword(Long keywordId) throws Exception {
+		Http.Options options = _createHttpOptions();
 
-			Http.Options options = _createHttpOptions();
+		options.setDelete(true);
 
-				options.setDelete(true);
+		options.setLocation(
+			_resourceURL + _toPath("/keywords/{keyword-id}", keywordId));
 
-			options.setLocation(_resourceURL + _toPath("/keywords/{keyword-id}", keywordId));
-
-			HttpUtil.URLtoString(options);
-
-			return options.getResponse();
-	}
-	protected Keyword invokeGetKeyword(
-				Long keywordId)
-			throws Exception {
-
-			Http.Options options = _createHttpOptions();
-
-			options.setLocation(_resourceURL + _toPath("/keywords/{keyword-id}", keywordId));
-
-				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), KeywordImpl.class);
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), Boolean.class);
 	}
 
-	protected Http.Response invokeGetKeywordResponse(
-				Long keywordId)
-			throws Exception {
+	protected Http.Response invokeDeleteKeywordResponse(Long keywordId)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/keywords/{keyword-id}", keywordId));
+		options.setDelete(true);
 
-			HttpUtil.URLtoString(options);
+		options.setLocation(
+			_resourceURL + _toPath("/keywords/{keyword-id}", keywordId));
 
-			return options.getResponse();
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
 	}
-	protected Keyword invokePutKeyword(
-				Long keywordId,Keyword keyword)
-			throws Exception {
 
-			Http.Options options = _createHttpOptions();
+	protected Keyword invokeGetKeyword(Long keywordId) throws Exception {
+		Http.Options options = _createHttpOptions();
 
-				options.setBody(_inputObjectMapper.writeValueAsString(keyword), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+		options.setLocation(
+			_resourceURL + _toPath("/keywords/{keyword-id}", keywordId));
 
-			options.setLocation(_resourceURL + _toPath("/keywords/{keyword-id}", keywordId,keyword));
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), KeywordImpl.class);
+	}
 
-				options.setPut(true);
+	protected Http.Response invokeGetKeywordResponse(Long keywordId)
+		throws Exception {
 
-				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), KeywordImpl.class);
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL + _toPath("/keywords/{keyword-id}", keywordId));
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	protected Keyword invokePutKeyword(Long keywordId, Keyword keyword)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(keyword),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+
+		options.setLocation(
+			_resourceURL +
+				_toPath("/keywords/{keyword-id}", keywordId, keyword));
+
+		options.setPut(true);
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), KeywordImpl.class);
 	}
 
 	protected Http.Response invokePutKeywordResponse(
-				Long keywordId,Keyword keyword)
-			throws Exception {
+			Long keywordId, Keyword keyword)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-				options.setBody(_inputObjectMapper.writeValueAsString(keyword), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(keyword),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-			options.setLocation(_resourceURL + _toPath("/keywords/{keyword-id}", keywordId,keyword));
+		options.setLocation(
+			_resourceURL +
+				_toPath("/keywords/{keyword-id}", keywordId, keyword));
 
-				options.setPut(true);
+		options.setPut(true);
 
-			HttpUtil.URLtoString(options);
+		HttpUtil.URLtoString(options);
 
-			return options.getResponse();
+		return options.getResponse();
 	}
 
 	protected Keyword randomKeyword() {
 		return new KeywordImpl() {
 			{
-
-						contentSpace = RandomTestUtil.randomLong();
-						dateCreated = RandomTestUtil.nextDate();
-						dateModified = RandomTestUtil.nextDate();
-						id = RandomTestUtil.randomLong();
-						name = RandomTestUtil.randomString();
-	}
+				contentSpace = RandomTestUtil.randomLong();
+				dateCreated = RandomTestUtil.nextDate();
+				dateModified = RandomTestUtil.nextDate();
+				id = RandomTestUtil.randomLong();
+				name = RandomTestUtil.randomString();
+			}
 		};
 	}
 
@@ -244,160 +284,164 @@ public abstract class BaseKeywordResourceTestCase {
 
 	protected static class KeywordImpl implements Keyword {
 
-	public Long getContentSpace() {
-				return contentSpace;
-	}
+		public Long getContentSpace() {
+			return contentSpace;
+		}
 
-	public void setContentSpace(Long contentSpace) {
-				this.contentSpace = contentSpace;
-	}
+		public void setContentSpace(Long contentSpace) {
+			this.contentSpace = contentSpace;
+		}
 
-	@JsonIgnore
-	public void setContentSpace(
-				UnsafeSupplier<Long, Throwable> contentSpaceUnsafeSupplier) {
+		@JsonIgnore
+		public void setContentSpace(
+			UnsafeSupplier<Long, Throwable> contentSpaceUnsafeSupplier) {
 
-				try {
-					contentSpace = contentSpaceUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+			try {
+				contentSpace = contentSpaceUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-	@JsonProperty
-	protected Long contentSpace;
-	public Creator getCreator() {
-				return creator;
-	}
+		@JsonProperty
+		protected Long contentSpace;
 
-	public void setCreator(Creator creator) {
-				this.creator = creator;
-	}
+		public Creator getCreator() {
+			return creator;
+		}
 
-	@JsonIgnore
-	public void setCreator(
-				UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
+		public void setCreator(Creator creator) {
+			this.creator = creator;
+		}
 
-				try {
-					creator = creatorUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		@JsonIgnore
+		public void setCreator(
+			UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
 
-	@JsonProperty
-	protected Creator creator;
-	public Date getDateCreated() {
-				return dateCreated;
-	}
+			try {
+				creator = creatorUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-	public void setDateCreated(Date dateCreated) {
-				this.dateCreated = dateCreated;
-	}
+		@JsonProperty
+		protected Creator creator;
 
-	@JsonIgnore
-	public void setDateCreated(
-				UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
+		public Date getDateCreated() {
+			return dateCreated;
+		}
 
-				try {
-					dateCreated = dateCreatedUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		public void setDateCreated(Date dateCreated) {
+			this.dateCreated = dateCreated;
+		}
 
-	@JsonProperty
-	protected Date dateCreated;
-	public Date getDateModified() {
-				return dateModified;
-	}
+		@JsonIgnore
+		public void setDateCreated(
+			UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
 
-	public void setDateModified(Date dateModified) {
-				this.dateModified = dateModified;
-	}
+			try {
+				dateCreated = dateCreatedUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-	@JsonIgnore
-	public void setDateModified(
-				UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
+		@JsonProperty
+		protected Date dateCreated;
 
-				try {
-					dateModified = dateModifiedUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		public Date getDateModified() {
+			return dateModified;
+		}
 
-	@JsonProperty
-	protected Date dateModified;
-	public Long getId() {
-				return id;
-	}
+		public void setDateModified(Date dateModified) {
+			this.dateModified = dateModified;
+		}
 
-	public void setId(Long id) {
-				this.id = id;
-	}
+		@JsonIgnore
+		public void setDateModified(
+			UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
 
-	@JsonIgnore
-	public void setId(
-				UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+			try {
+				dateModified = dateModifiedUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-				try {
-					id = idUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		@JsonProperty
+		protected Date dateModified;
 
-	@JsonProperty
-	protected Long id;
-	public Number getKeywordUsageCount() {
-				return keywordUsageCount;
-	}
+		public Long getId() {
+			return id;
+		}
 
-	public void setKeywordUsageCount(Number keywordUsageCount) {
-				this.keywordUsageCount = keywordUsageCount;
-	}
+		public void setId(Long id) {
+			this.id = id;
+		}
 
-	@JsonIgnore
-	public void setKeywordUsageCount(
-				UnsafeSupplier<Number, Throwable> keywordUsageCountUnsafeSupplier) {
+		@JsonIgnore
+		public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+			try {
+				id = idUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-				try {
-					keywordUsageCount = keywordUsageCountUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		@JsonProperty
+		protected Long id;
 
-	@JsonProperty
-	protected Number keywordUsageCount;
-	public String getName() {
-				return name;
-	}
+		public Number getKeywordUsageCount() {
+			return keywordUsageCount;
+		}
 
-	public void setName(String name) {
-				this.name = name;
-	}
+		public void setKeywordUsageCount(Number keywordUsageCount) {
+			this.keywordUsageCount = keywordUsageCount;
+		}
 
-	@JsonIgnore
-	public void setName(
-				UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
+		@JsonIgnore
+		public void setKeywordUsageCount(
+			UnsafeSupplier<Number, Throwable> keywordUsageCountUnsafeSupplier) {
 
-				try {
-					name = nameUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+			try {
+				keywordUsageCount = keywordUsageCountUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-	@JsonProperty
-	protected String name;
+		@JsonProperty
+		protected Number keywordUsageCount;
+
+		public String getName() {
+			return name;
+		}
+
+		public void setName(String name) {
+			this.name = name;
+		}
+
+		@JsonIgnore
+		public void setName(
+			UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
+
+			try {
+				name = nameUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
+
+		@JsonProperty
+		protected String name;
 
 	}
 
@@ -408,9 +452,11 @@ public abstract class BaseKeywordResourceTestCase {
 
 		String userNameAndPassword = "test@liferay.com:test";
 
-		String encodedUserNameAndPassword = Base64.encode(userNameAndPassword.getBytes());
+		String encodedUserNameAndPassword = Base64.encode(
+			userNameAndPassword.getBytes());
 
-		options.addHeader("Authorization", "Basic " + encodedUserNameAndPassword);
+		options.addHeader(
+			"Authorization", "Basic " + encodedUserNameAndPassword);
 
 		options.addHeader("Content-Type", "application/json");
 
@@ -424,7 +470,7 @@ public abstract class BaseKeywordResourceTestCase {
 	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {
 		{
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
-	}
+		}
 	};
 	private final static ObjectMapper _outputObjectMapper = new ObjectMapper();
 

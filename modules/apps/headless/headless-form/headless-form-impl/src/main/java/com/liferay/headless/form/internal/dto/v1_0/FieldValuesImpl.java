@@ -38,135 +38,115 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class FieldValuesImpl implements FieldValues {
 
 	public FormDocument getDocument() {
-			return document;
+		return document;
 	}
 
-	public void setDocument(
-			FormDocument document) {
-
-			this.document = document;
+	public void setDocument(FormDocument document) {
+		this.document = document;
 	}
 
 	@JsonIgnore
 	public void setDocument(
-			UnsafeSupplier<FormDocument, Throwable>
-				documentUnsafeSupplier) {
+		UnsafeSupplier<FormDocument, Throwable> documentUnsafeSupplier) {
 
-			try {
-				document =
-					documentUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
+		try {
+			document = documentUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected FormDocument document;
+
 	public Long getDocumentId() {
-			return documentId;
+		return documentId;
 	}
 
-	public void setDocumentId(
-			Long documentId) {
-
-			this.documentId = documentId;
+	public void setDocumentId(Long documentId) {
+		this.documentId = documentId;
 	}
 
 	@JsonIgnore
 	public void setDocumentId(
-			UnsafeSupplier<Long, Throwable>
-				documentIdUnsafeSupplier) {
+		UnsafeSupplier<Long, Throwable> documentIdUnsafeSupplier) {
 
-			try {
-				documentId =
-					documentIdUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
+		try {
+			documentId = documentIdUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected Long documentId;
+
 	public Long getId() {
-			return id;
+		return id;
 	}
 
-	public void setId(
-			Long id) {
-
-			this.id = id;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	@JsonIgnore
-	public void setId(
-			UnsafeSupplier<Long, Throwable>
-				idUnsafeSupplier) {
-
-			try {
-				id =
-					idUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
+	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+		try {
+			id = idUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected Long id;
+
 	public String getName() {
-			return name;
+		return name;
 	}
 
-	public void setName(
-			String name) {
-
-			this.name = name;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	@JsonIgnore
-	public void setName(
-			UnsafeSupplier<String, Throwable>
-				nameUnsafeSupplier) {
-
-			try {
-				name =
-					nameUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
+	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
+		try {
+			name = nameUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected String name;
+
 	public String getValue() {
-			return value;
+		return value;
 	}
 
-	public void setValue(
-			String value) {
-
-			this.value = value;
+	public void setValue(String value) {
+		this.value = value;
 	}
 
 	@JsonIgnore
 	public void setValue(
-			UnsafeSupplier<String, Throwable>
-				valueUnsafeSupplier) {
+		UnsafeSupplier<String, Throwable> valueUnsafeSupplier) {
 
-			try {
-				value =
-					valueUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
+		try {
+			value = valueUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField

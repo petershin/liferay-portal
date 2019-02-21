@@ -56,11 +56,14 @@ public abstract class BaseKeywordResourceImpl implements KeywordResource {
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	public Page<Keyword> getContentSpaceKeywordsPage(
-	@PathParam("content-space-id") Long contentSpaceId,@Context Filter filter,@Context Pagination pagination,@Context Sort[] sorts)
-			throws Exception {
+			@PathParam("content-space-id") Long contentSpaceId,
+			@Context Filter filter, @Context Pagination pagination,
+			@Context Sort[] sorts)
+		throws Exception {
 
-				return Page.of(Collections.emptyList());
+		return Page.of(Collections.emptyList());
 	}
+
 	@Override
 	@Consumes("application/json")
 	@POST
@@ -68,33 +71,34 @@ public abstract class BaseKeywordResourceImpl implements KeywordResource {
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	public Keyword postContentSpaceKeyword(
-	@PathParam("content-space-id") Long contentSpaceId,Keyword keyword)
-			throws Exception {
+			@PathParam("content-space-id") Long contentSpaceId, Keyword keyword)
+		throws Exception {
 
-				return new KeywordImpl();
+		return new KeywordImpl();
 	}
+
 	@Override
 	@DELETE
 	@Path("/keywords/{keyword-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public boolean deleteKeyword(
-	@PathParam("keyword-id") Long keywordId)
-			throws Exception {
+	public boolean deleteKeyword(@PathParam("keyword-id") Long keywordId)
+		throws Exception {
 
-				return false;
+		return false;
 	}
+
 	@Override
 	@GET
 	@Path("/keywords/{keyword-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Keyword getKeyword(
-	@PathParam("keyword-id") Long keywordId)
-			throws Exception {
+	public Keyword getKeyword(@PathParam("keyword-id") Long keywordId)
+		throws Exception {
 
-				return new KeywordImpl();
+		return new KeywordImpl();
 	}
+
 	@Override
 	@Consumes("application/json")
 	@PUT
@@ -102,17 +106,19 @@ public abstract class BaseKeywordResourceImpl implements KeywordResource {
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	public Keyword putKeyword(
-	@PathParam("keyword-id") Long keywordId,Keyword keyword)
-			throws Exception {
+			@PathParam("keyword-id") Long keywordId, Keyword keyword)
+		throws Exception {
 
-				return new KeywordImpl();
+		return new KeywordImpl();
 	}
 
 	public void setContextCompany(Company contextCompany) {
 		this.contextCompany = contextCompany;
 	}
 
-	protected <T, R> List<R> transform(List<T> list, UnsafeFunction<T, R, Throwable> unsafeFunction) {
+	protected <T, R> List<R> transform(
+		List<T> list, UnsafeFunction<T, R, Throwable> unsafeFunction) {
+
 		return TransformUtil.transform(list, unsafeFunction);
 	}
 

@@ -38,162 +38,137 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class ValuesImpl implements Values {
 
 	public String getDataType() {
-			return dataType;
+		return dataType;
 	}
 
-	public void setDataType(
-			String dataType) {
-
-			this.dataType = dataType;
+	public void setDataType(String dataType) {
+		this.dataType = dataType;
 	}
 
 	@JsonIgnore
 	public void setDataType(
-			UnsafeSupplier<String, Throwable>
-				dataTypeUnsafeSupplier) {
+		UnsafeSupplier<String, Throwable> dataTypeUnsafeSupplier) {
 
-			try {
-				dataType =
-					dataTypeUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
+		try {
+			dataType = dataTypeUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected String dataType;
+
 	public Long getId() {
-			return id;
+		return id;
 	}
 
-	public void setId(
-			Long id) {
-
-			this.id = id;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	@JsonIgnore
-	public void setId(
-			UnsafeSupplier<Long, Throwable>
-				idUnsafeSupplier) {
-
-			try {
-				id =
-					idUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
+	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+		try {
+			id = idUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected Long id;
+
 	public String getInputControl() {
-			return inputControl;
+		return inputControl;
 	}
 
-	public void setInputControl(
-			String inputControl) {
-
-			this.inputControl = inputControl;
+	public void setInputControl(String inputControl) {
+		this.inputControl = inputControl;
 	}
 
 	@JsonIgnore
 	public void setInputControl(
-			UnsafeSupplier<String, Throwable>
-				inputControlUnsafeSupplier) {
+		UnsafeSupplier<String, Throwable> inputControlUnsafeSupplier) {
 
-			try {
-				inputControl =
-					inputControlUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
+		try {
+			inputControl = inputControlUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected String inputControl;
+
 	public String getLabel() {
-			return label;
+		return label;
 	}
 
-	public void setLabel(
-			String label) {
-
-			this.label = label;
+	public void setLabel(String label) {
+		this.label = label;
 	}
 
 	@JsonIgnore
 	public void setLabel(
-			UnsafeSupplier<String, Throwable>
-				labelUnsafeSupplier) {
+		UnsafeSupplier<String, Throwable> labelUnsafeSupplier) {
 
-			try {
-				label =
-					labelUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
+		try {
+			label = labelUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected String label;
+
 	public String getName() {
-			return name;
+		return name;
 	}
 
-	public void setName(
-			String name) {
-
-			this.name = name;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	@JsonIgnore
-	public void setName(
-			UnsafeSupplier<String, Throwable>
-				nameUnsafeSupplier) {
-
-			try {
-				name =
-					nameUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
+	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
+		try {
+			name = nameUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected String name;
+
 	public Value getValue() {
-			return value;
+		return value;
 	}
 
-	public void setValue(
-			Value value) {
-
-			this.value = value;
+	public void setValue(Value value) {
+		this.value = value;
 	}
 
 	@JsonIgnore
-	public void setValue(
-			UnsafeSupplier<Value, Throwable>
-				valueUnsafeSupplier) {
-
-			try {
-				value =
-					valueUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
+	public void setValue(UnsafeSupplier<Value, Throwable> valueUnsafeSupplier) {
+		try {
+			value = valueUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField

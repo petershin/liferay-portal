@@ -32,24 +32,25 @@ import javax.annotation.Generated;
 @Generated("")
 public interface BlogPostingResource {
 
-	public boolean deleteBlogPosting(
-				Long blogPostingId)
-			throws Exception;
-	public BlogPosting getBlogPosting(
-				Long blogPostingId)
-			throws Exception;
+	public boolean deleteBlogPosting(Long blogPostingId) throws Exception;
+
+	public BlogPosting getBlogPosting(Long blogPostingId) throws Exception;
+
 	public BlogPosting patchBlogPosting(
-				Long blogPostingId,BlogPosting blogPosting)
-			throws Exception;
+			Long blogPostingId, BlogPosting blogPosting)
+		throws Exception;
+
 	public BlogPosting putBlogPosting(
-				Long blogPostingId,BlogPosting blogPosting)
-			throws Exception;
+			Long blogPostingId, BlogPosting blogPosting)
+		throws Exception;
+
 	public Page<BlogPosting> getContentSpaceBlogPostingsPage(
-				Long contentSpaceId,Pagination pagination)
-			throws Exception;
+			Long contentSpaceId, Pagination pagination)
+		throws Exception;
+
 	public BlogPosting postContentSpaceBlogPosting(
-				Long contentSpaceId,BlogPosting blogPosting)
-			throws Exception;
+			Long contentSpaceId, BlogPosting blogPosting)
+		throws Exception;
 
 	public void setContextCompany(Company contextCompany);
 

@@ -70,240 +70,306 @@ public abstract class BaseCategoryResourceTestCase {
 
 	@Test
 	public void testDeleteCategory() throws Exception {
-			Assert.assertTrue(true);
+		Assert.assertTrue(true);
 	}
+
 	@Test
 	public void testGetCategory() throws Exception {
-			Assert.assertTrue(true);
+		Assert.assertTrue(true);
 	}
+
 	@Test
 	public void testPutCategory() throws Exception {
-			Assert.assertTrue(true);
+		Assert.assertTrue(true);
 	}
+
 	@Test
 	public void testGetCategoryCategoriesPage() throws Exception {
-			Assert.assertTrue(true);
+		Assert.assertTrue(true);
 	}
+
 	@Test
 	public void testPostCategoryCategory() throws Exception {
-			Assert.assertTrue(true);
+		Assert.assertTrue(true);
 	}
+
 	@Test
 	public void testGetVocabularyCategoriesPage() throws Exception {
-			Assert.assertTrue(true);
+		Assert.assertTrue(true);
 	}
+
 	@Test
 	public void testPostVocabularyCategory() throws Exception {
-			Assert.assertTrue(true);
+		Assert.assertTrue(true);
 	}
 
-	protected void assertResponseCode(int expectedResponseCode, Http.Response actualResponse) {
-		Assert.assertEquals(expectedResponseCode, actualResponse.getResponseCode());
+	protected void assertResponseCode(
+		int expectedResponseCode, Http.Response actualResponse) {
+
+		Assert.assertEquals(
+			expectedResponseCode, actualResponse.getResponseCode());
 	}
 
-	protected boolean invokeDeleteCategory(
-				Long categoryId)
-			throws Exception {
+	protected boolean invokeDeleteCategory(Long categoryId) throws Exception {
+		Http.Options options = _createHttpOptions();
 
-			Http.Options options = _createHttpOptions();
+		options.setDelete(true);
 
-				options.setDelete(true);
+		options.setLocation(
+			_resourceURL + _toPath("/categories/{category-id}", categoryId));
 
-			options.setLocation(_resourceURL + _toPath("/categories/{category-id}", categoryId));
-
-				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), Boolean.class);
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), Boolean.class);
 	}
 
-	protected Http.Response invokeDeleteCategoryResponse(
-				Long categoryId)
-			throws Exception {
+	protected Http.Response invokeDeleteCategoryResponse(Long categoryId)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-				options.setDelete(true);
+		options.setDelete(true);
 
-			options.setLocation(_resourceURL + _toPath("/categories/{category-id}", categoryId));
+		options.setLocation(
+			_resourceURL + _toPath("/categories/{category-id}", categoryId));
 
-			HttpUtil.URLtoString(options);
+		HttpUtil.URLtoString(options);
 
-			return options.getResponse();
-	}
-	protected Category invokeGetCategory(
-				Long categoryId)
-			throws Exception {
-
-			Http.Options options = _createHttpOptions();
-
-			options.setLocation(_resourceURL + _toPath("/categories/{category-id}", categoryId));
-
-				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), CategoryImpl.class);
+		return options.getResponse();
 	}
 
-	protected Http.Response invokeGetCategoryResponse(
-				Long categoryId)
-			throws Exception {
+	protected Category invokeGetCategory(Long categoryId) throws Exception {
+		Http.Options options = _createHttpOptions();
 
-			Http.Options options = _createHttpOptions();
+		options.setLocation(
+			_resourceURL + _toPath("/categories/{category-id}", categoryId));
 
-			options.setLocation(_resourceURL + _toPath("/categories/{category-id}", categoryId));
-
-			HttpUtil.URLtoString(options);
-
-			return options.getResponse();
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), CategoryImpl.class);
 	}
-	protected Category invokePutCategory(
-				Long categoryId,Category category)
-			throws Exception {
 
-			Http.Options options = _createHttpOptions();
+	protected Http.Response invokeGetCategoryResponse(Long categoryId)
+		throws Exception {
 
-				options.setBody(_inputObjectMapper.writeValueAsString(category), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+		Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/categories/{category-id}", categoryId,category));
+		options.setLocation(
+			_resourceURL + _toPath("/categories/{category-id}", categoryId));
 
-				options.setPut(true);
+		HttpUtil.URLtoString(options);
 
-				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), CategoryImpl.class);
+		return options.getResponse();
+	}
+
+	protected Category invokePutCategory(Long categoryId, Category category)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(category),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+
+		options.setLocation(
+			_resourceURL +
+				_toPath("/categories/{category-id}", categoryId, category));
+
+		options.setPut(true);
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), CategoryImpl.class);
 	}
 
 	protected Http.Response invokePutCategoryResponse(
-				Long categoryId,Category category)
-			throws Exception {
+			Long categoryId, Category category)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-				options.setBody(_inputObjectMapper.writeValueAsString(category), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(category),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-			options.setLocation(_resourceURL + _toPath("/categories/{category-id}", categoryId,category));
+		options.setLocation(
+			_resourceURL +
+				_toPath("/categories/{category-id}", categoryId, category));
 
-				options.setPut(true);
+		options.setPut(true);
 
-			HttpUtil.URLtoString(options);
+		HttpUtil.URLtoString(options);
 
-			return options.getResponse();
+		return options.getResponse();
 	}
+
 	protected Page<Category> invokeGetCategoryCategoriesPage(
-				Long categoryId,Filter filter,Pagination pagination,Sort[] sorts)
-			throws Exception {
+			Long categoryId, Filter filter, Pagination pagination, Sort[] sorts)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/categories/{category-id}/categories", categoryId,filter,sorts));
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/categories/{category-id}/categories", categoryId, filter,
+					sorts));
 
-				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), Page.class);
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), Page.class);
 	}
 
 	protected Http.Response invokeGetCategoryCategoriesPageResponse(
-				Long categoryId,Filter filter,Pagination pagination,Sort[] sorts)
-			throws Exception {
+			Long categoryId, Filter filter, Pagination pagination, Sort[] sorts)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/categories/{category-id}/categories", categoryId,filter,sorts));
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/categories/{category-id}/categories", categoryId, filter,
+					sorts));
 
-			HttpUtil.URLtoString(options);
+		HttpUtil.URLtoString(options);
 
-			return options.getResponse();
+		return options.getResponse();
 	}
+
 	protected Category invokePostCategoryCategory(
-				Long categoryId,Category category)
-			throws Exception {
+			Long categoryId, Category category)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-				options.setBody(_inputObjectMapper.writeValueAsString(category), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(category),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-			options.setLocation(_resourceURL + _toPath("/categories/{category-id}/categories", categoryId,category));
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/categories/{category-id}/categories", categoryId,
+					category));
 
-				options.setPost(true);
+		options.setPost(true);
 
-				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), CategoryImpl.class);
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), CategoryImpl.class);
 	}
 
 	protected Http.Response invokePostCategoryCategoryResponse(
-				Long categoryId,Category category)
-			throws Exception {
+			Long categoryId, Category category)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-				options.setBody(_inputObjectMapper.writeValueAsString(category), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(category),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-			options.setLocation(_resourceURL + _toPath("/categories/{category-id}/categories", categoryId,category));
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/categories/{category-id}/categories", categoryId,
+					category));
 
-				options.setPost(true);
+		options.setPost(true);
 
-			HttpUtil.URLtoString(options);
+		HttpUtil.URLtoString(options);
 
-			return options.getResponse();
+		return options.getResponse();
 	}
+
 	protected Page<Category> invokeGetVocabularyCategoriesPage(
-				Long vocabularyId,Filter filter,Pagination pagination,Sort[] sorts)
-			throws Exception {
+			Long vocabularyId, Filter filter, Pagination pagination,
+			Sort[] sorts)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/vocabularies/{vocabulary-id}/categories", vocabularyId,filter,sorts));
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/vocabularies/{vocabulary-id}/categories", vocabularyId,
+					filter, sorts));
 
-				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), Page.class);
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), Page.class);
 	}
 
 	protected Http.Response invokeGetVocabularyCategoriesPageResponse(
-				Long vocabularyId,Filter filter,Pagination pagination,Sort[] sorts)
-			throws Exception {
+			Long vocabularyId, Filter filter, Pagination pagination,
+			Sort[] sorts)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/vocabularies/{vocabulary-id}/categories", vocabularyId,filter,sorts));
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/vocabularies/{vocabulary-id}/categories", vocabularyId,
+					filter, sorts));
 
-			HttpUtil.URLtoString(options);
+		HttpUtil.URLtoString(options);
 
-			return options.getResponse();
+		return options.getResponse();
 	}
+
 	protected Category invokePostVocabularyCategory(
-				Long vocabularyId,Category category)
-			throws Exception {
+			Long vocabularyId, Category category)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-				options.setBody(_inputObjectMapper.writeValueAsString(category), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(category),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-			options.setLocation(_resourceURL + _toPath("/vocabularies/{vocabulary-id}/categories", vocabularyId,category));
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/vocabularies/{vocabulary-id}/categories", vocabularyId,
+					category));
 
-				options.setPost(true);
+		options.setPost(true);
 
-				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), CategoryImpl.class);
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), CategoryImpl.class);
 	}
 
 	protected Http.Response invokePostVocabularyCategoryResponse(
-				Long vocabularyId,Category category)
-			throws Exception {
+			Long vocabularyId, Category category)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-				options.setBody(_inputObjectMapper.writeValueAsString(category), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(category),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-			options.setLocation(_resourceURL + _toPath("/vocabularies/{vocabulary-id}/categories", vocabularyId,category));
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/vocabularies/{vocabulary-id}/categories", vocabularyId,
+					category));
 
-				options.setPost(true);
+		options.setPost(true);
 
-			HttpUtil.URLtoString(options);
+		HttpUtil.URLtoString(options);
 
-			return options.getResponse();
+		return options.getResponse();
 	}
 
 	protected Category randomCategory() {
 		return new CategoryImpl() {
 			{
-
-						creatorId = RandomTestUtil.randomLong();
-						dateCreated = RandomTestUtil.nextDate();
-						dateModified = RandomTestUtil.nextDate();
-						description = RandomTestUtil.randomString();
-						hasCategories = RandomTestUtil.randomBoolean();
-						id = RandomTestUtil.randomLong();
-						name = RandomTestUtil.randomString();
-						parentVocabularyId = RandomTestUtil.randomLong();
-	}
+				creatorId = RandomTestUtil.randomLong();
+				dateCreated = RandomTestUtil.nextDate();
+				dateModified = RandomTestUtil.nextDate();
+				description = RandomTestUtil.randomString();
+				hasCategories = RandomTestUtil.randomBoolean();
+				id = RandomTestUtil.randomLong();
+				name = RandomTestUtil.randomString();
+				parentVocabularyId = RandomTestUtil.randomLong();
+			}
 		};
 	}
 
@@ -311,270 +377,282 @@ public abstract class BaseCategoryResourceTestCase {
 
 	protected static class CategoryImpl implements Category {
 
-	public String[] getAvailableLanguages() {
-				return availableLanguages;
-	}
+		public String[] getAvailableLanguages() {
+			return availableLanguages;
+		}
 
-	public void setAvailableLanguages(String[] availableLanguages) {
-				this.availableLanguages = availableLanguages;
-	}
+		public void setAvailableLanguages(String[] availableLanguages) {
+			this.availableLanguages = availableLanguages;
+		}
 
-	@JsonIgnore
-	public void setAvailableLanguages(
-				UnsafeSupplier<String[], Throwable> availableLanguagesUnsafeSupplier) {
+		@JsonIgnore
+		public void setAvailableLanguages(
+			UnsafeSupplier<String[], Throwable>
+				availableLanguagesUnsafeSupplier) {
 
-				try {
-					availableLanguages = availableLanguagesUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+			try {
+				availableLanguages = availableLanguagesUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-	@JsonProperty
-	protected String[] availableLanguages;
-	public ParentCategory getParentCategory() {
-				return parentCategory;
-	}
+		@JsonProperty
+		protected String[] availableLanguages;
 
-	public void setParentCategory(ParentCategory parentCategory) {
-				this.parentCategory = parentCategory;
-	}
+		public ParentCategory getParentCategory() {
+			return parentCategory;
+		}
 
-	@JsonIgnore
-	public void setParentCategory(
-				UnsafeSupplier<ParentCategory, Throwable> parentCategoryUnsafeSupplier) {
+		public void setParentCategory(ParentCategory parentCategory) {
+			this.parentCategory = parentCategory;
+		}
 
-				try {
-					parentCategory = parentCategoryUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		@JsonIgnore
+		public void setParentCategory(
+			UnsafeSupplier<ParentCategory, Throwable>
+				parentCategoryUnsafeSupplier) {
 
-	@JsonProperty
-	protected ParentCategory parentCategory;
-	public Creator getCreator() {
-				return creator;
-	}
+			try {
+				parentCategory = parentCategoryUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-	public void setCreator(Creator creator) {
-				this.creator = creator;
-	}
+		@JsonProperty
+		protected ParentCategory parentCategory;
 
-	@JsonIgnore
-	public void setCreator(
-				UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
+		public Creator getCreator() {
+			return creator;
+		}
 
-				try {
-					creator = creatorUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		public void setCreator(Creator creator) {
+			this.creator = creator;
+		}
 
-	@JsonProperty
-	protected Creator creator;
-	public Long getCreatorId() {
-				return creatorId;
-	}
+		@JsonIgnore
+		public void setCreator(
+			UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
 
-	public void setCreatorId(Long creatorId) {
-				this.creatorId = creatorId;
-	}
+			try {
+				creator = creatorUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-	@JsonIgnore
-	public void setCreatorId(
-				UnsafeSupplier<Long, Throwable> creatorIdUnsafeSupplier) {
+		@JsonProperty
+		protected Creator creator;
 
-				try {
-					creatorId = creatorIdUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		public Long getCreatorId() {
+			return creatorId;
+		}
 
-	@JsonProperty
-	protected Long creatorId;
-	public Date getDateCreated() {
-				return dateCreated;
-	}
+		public void setCreatorId(Long creatorId) {
+			this.creatorId = creatorId;
+		}
 
-	public void setDateCreated(Date dateCreated) {
-				this.dateCreated = dateCreated;
-	}
+		@JsonIgnore
+		public void setCreatorId(
+			UnsafeSupplier<Long, Throwable> creatorIdUnsafeSupplier) {
 
-	@JsonIgnore
-	public void setDateCreated(
-				UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
+			try {
+				creatorId = creatorIdUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-				try {
-					dateCreated = dateCreatedUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		@JsonProperty
+		protected Long creatorId;
 
-	@JsonProperty
-	protected Date dateCreated;
-	public Date getDateModified() {
-				return dateModified;
-	}
+		public Date getDateCreated() {
+			return dateCreated;
+		}
 
-	public void setDateModified(Date dateModified) {
-				this.dateModified = dateModified;
-	}
+		public void setDateCreated(Date dateCreated) {
+			this.dateCreated = dateCreated;
+		}
 
-	@JsonIgnore
-	public void setDateModified(
-				UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
+		@JsonIgnore
+		public void setDateCreated(
+			UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
 
-				try {
-					dateModified = dateModifiedUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+			try {
+				dateCreated = dateCreatedUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-	@JsonProperty
-	protected Date dateModified;
-	public String getDescription() {
-				return description;
-	}
+		@JsonProperty
+		protected Date dateCreated;
 
-	public void setDescription(String description) {
-				this.description = description;
-	}
+		public Date getDateModified() {
+			return dateModified;
+		}
 
-	@JsonIgnore
-	public void setDescription(
-				UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier) {
+		public void setDateModified(Date dateModified) {
+			this.dateModified = dateModified;
+		}
 
-				try {
-					description = descriptionUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		@JsonIgnore
+		public void setDateModified(
+			UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
 
-	@JsonProperty
-	protected String description;
-	public Boolean getHasCategories() {
-				return hasCategories;
-	}
+			try {
+				dateModified = dateModifiedUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-	public void setHasCategories(Boolean hasCategories) {
-				this.hasCategories = hasCategories;
-	}
+		@JsonProperty
+		protected Date dateModified;
 
-	@JsonIgnore
-	public void setHasCategories(
-				UnsafeSupplier<Boolean, Throwable> hasCategoriesUnsafeSupplier) {
+		public String getDescription() {
+			return description;
+		}
 
-				try {
-					hasCategories = hasCategoriesUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		public void setDescription(String description) {
+			this.description = description;
+		}
 
-	@JsonProperty
-	protected Boolean hasCategories;
-	public Long getId() {
-				return id;
-	}
+		@JsonIgnore
+		public void setDescription(
+			UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier) {
 
-	public void setId(Long id) {
-				this.id = id;
-	}
+			try {
+				description = descriptionUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-	@JsonIgnore
-	public void setId(
-				UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+		@JsonProperty
+		protected String description;
 
-				try {
-					id = idUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		public Boolean getHasCategories() {
+			return hasCategories;
+		}
 
-	@JsonProperty
-	protected Long id;
-	public String getName() {
-				return name;
-	}
+		public void setHasCategories(Boolean hasCategories) {
+			this.hasCategories = hasCategories;
+		}
 
-	public void setName(String name) {
-				this.name = name;
-	}
+		@JsonIgnore
+		public void setHasCategories(
+			UnsafeSupplier<Boolean, Throwable> hasCategoriesUnsafeSupplier) {
 
-	@JsonIgnore
-	public void setName(
-				UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
+			try {
+				hasCategories = hasCategoriesUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-				try {
-					name = nameUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		@JsonProperty
+		protected Boolean hasCategories;
 
-	@JsonProperty
-	protected String name;
-	public ParentVocabulary getParentVocabulary() {
-				return parentVocabulary;
-	}
+		public Long getId() {
+			return id;
+		}
 
-	public void setParentVocabulary(ParentVocabulary parentVocabulary) {
-				this.parentVocabulary = parentVocabulary;
-	}
+		public void setId(Long id) {
+			this.id = id;
+		}
 
-	@JsonIgnore
-	public void setParentVocabulary(
-				UnsafeSupplier<ParentVocabulary, Throwable> parentVocabularyUnsafeSupplier) {
+		@JsonIgnore
+		public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+			try {
+				id = idUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-				try {
-					parentVocabulary = parentVocabularyUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		@JsonProperty
+		protected Long id;
 
-	@JsonProperty
-	protected ParentVocabulary parentVocabulary;
-	public Long getParentVocabularyId() {
-				return parentVocabularyId;
-	}
+		public String getName() {
+			return name;
+		}
 
-	public void setParentVocabularyId(Long parentVocabularyId) {
-				this.parentVocabularyId = parentVocabularyId;
-	}
+		public void setName(String name) {
+			this.name = name;
+		}
 
-	@JsonIgnore
-	public void setParentVocabularyId(
-				UnsafeSupplier<Long, Throwable> parentVocabularyIdUnsafeSupplier) {
+		@JsonIgnore
+		public void setName(
+			UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
 
-				try {
-					parentVocabularyId = parentVocabularyIdUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+			try {
+				name = nameUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-	@JsonProperty
-	protected Long parentVocabularyId;
+		@JsonProperty
+		protected String name;
+
+		public ParentVocabulary getParentVocabulary() {
+			return parentVocabulary;
+		}
+
+		public void setParentVocabulary(ParentVocabulary parentVocabulary) {
+			this.parentVocabulary = parentVocabulary;
+		}
+
+		@JsonIgnore
+		public void setParentVocabulary(
+			UnsafeSupplier<ParentVocabulary, Throwable>
+				parentVocabularyUnsafeSupplier) {
+
+			try {
+				parentVocabulary = parentVocabularyUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
+
+		@JsonProperty
+		protected ParentVocabulary parentVocabulary;
+
+		public Long getParentVocabularyId() {
+			return parentVocabularyId;
+		}
+
+		public void setParentVocabularyId(Long parentVocabularyId) {
+			this.parentVocabularyId = parentVocabularyId;
+		}
+
+		@JsonIgnore
+		public void setParentVocabularyId(
+			UnsafeSupplier<Long, Throwable> parentVocabularyIdUnsafeSupplier) {
+
+			try {
+				parentVocabularyId = parentVocabularyIdUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
+
+		@JsonProperty
+		protected Long parentVocabularyId;
 
 	}
 
@@ -585,9 +663,11 @@ public abstract class BaseCategoryResourceTestCase {
 
 		String userNameAndPassword = "test@liferay.com:test";
 
-		String encodedUserNameAndPassword = Base64.encode(userNameAndPassword.getBytes());
+		String encodedUserNameAndPassword = Base64.encode(
+			userNameAndPassword.getBytes());
 
-		options.addHeader("Authorization", "Basic " + encodedUserNameAndPassword);
+		options.addHeader(
+			"Authorization", "Basic " + encodedUserNameAndPassword);
 
 		options.addHeader("Content-Type", "application/json");
 
@@ -601,7 +681,7 @@ public abstract class BaseCategoryResourceTestCase {
 	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {
 		{
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
-	}
+		}
 	};
 	private final static ObjectMapper _outputObjectMapper = new ObjectMapper();
 

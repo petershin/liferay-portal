@@ -40,100 +40,100 @@ public class Mutation {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Document postContentSpaceDocument(
-	@GraphQLName("content-space-id") Long contentSpaceId,@GraphQLName("MultipartBody") MultipartBody multipartBody)
-			throws Exception {
+			@GraphQLName("content-space-id") Long contentSpaceId,
+			@GraphQLName("MultipartBody") MultipartBody multipartBody)
+		throws Exception {
 
-				return _getDocumentResource().postContentSpaceDocument(
-					contentSpaceId,multipartBody);
+		return _getDocumentResource().postContentSpaceDocument(
+			contentSpaceId, multipartBody);
 	}
+
 	@GraphQLInvokeDetached
-	public boolean deleteDocument(
-	@GraphQLName("document-id") Long documentId)
-			throws Exception {
+	public boolean deleteDocument(@GraphQLName("document-id") Long documentId)
+		throws Exception {
 
-				return _getDocumentResource().deleteDocument(
-					documentId);
+		return _getDocumentResource().deleteDocument(documentId);
 	}
+
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Document postFolderDocument(
-	@GraphQLName("folder-id") Long folderId,@GraphQLName("MultipartBody") MultipartBody multipartBody)
-			throws Exception {
+			@GraphQLName("folder-id") Long folderId,
+			@GraphQLName("MultipartBody") MultipartBody multipartBody)
+		throws Exception {
 
-				return _getDocumentResource().postFolderDocument(
-					folderId,multipartBody);
+		return _getDocumentResource().postFolderDocument(
+			folderId, multipartBody);
 	}
+
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Folder postContentSpaceFolder(
-	@GraphQLName("content-space-id") Long contentSpaceId,@GraphQLName("Folder") Folder folder)
-			throws Exception {
+			@GraphQLName("content-space-id") Long contentSpaceId,
+			@GraphQLName("Folder") Folder folder)
+		throws Exception {
 
-				return _getFolderResource().postContentSpaceFolder(
-					contentSpaceId,folder);
+		return _getFolderResource().postContentSpaceFolder(
+			contentSpaceId, folder);
 	}
+
 	@GraphQLInvokeDetached
-	public boolean deleteFolder(
-	@GraphQLName("folder-id") Long folderId)
-			throws Exception {
+	public boolean deleteFolder(@GraphQLName("folder-id") Long folderId)
+		throws Exception {
 
-				return _getFolderResource().deleteFolder(
-					folderId);
+		return _getFolderResource().deleteFolder(folderId);
 	}
+
 	@GraphQLInvokeDetached
 	public Folder putFolder(
-	@GraphQLName("folder-id") Long folderId,@GraphQLName("Folder") Folder folder)
-			throws Exception {
+			@GraphQLName("folder-id") Long folderId,
+			@GraphQLName("Folder") Folder folder)
+		throws Exception {
 
-				return _getFolderResource().putFolder(
-					folderId,folder);
+		return _getFolderResource().putFolder(folderId, folder);
 	}
+
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Folder postFolderFolder(
-	@GraphQLName("folder-id") Long folderId,@GraphQLName("Folder") Folder folder)
-			throws Exception {
+			@GraphQLName("folder-id") Long folderId,
+			@GraphQLName("Folder") Folder folder)
+		throws Exception {
 
-				return _getFolderResource().postFolderFolder(
-					folderId,folder);
+		return _getFolderResource().postFolderFolder(folderId, folder);
 	}
 
 	private static DocumentResource _getDocumentResource() {
-			return _documentResourceServiceTracker.getService();
+		return _documentResourceServiceTracker.getService();
 	}
 
 	private static final ServiceTracker<DocumentResource, DocumentResource>
-			_documentResourceServiceTracker;
+		_documentResourceServiceTracker;
+
 	private static FolderResource _getFolderResource() {
-			return _folderResourceServiceTracker.getService();
+		return _folderResourceServiceTracker.getService();
 	}
 
 	private static final ServiceTracker<FolderResource, FolderResource>
-			_folderResourceServiceTracker;
+		_folderResourceServiceTracker;
 
-		static {
-			Bundle bundle = FrameworkUtil.getBundle(Mutation.class);
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(Mutation.class);
 
-				ServiceTracker<DocumentResource, DocumentResource>
-					documentResourceServiceTracker =
-						new ServiceTracker<>(
-							bundle.getBundleContext(),
-							DocumentResource.class, null);
+		ServiceTracker<DocumentResource, DocumentResource>
+			documentResourceServiceTracker = new ServiceTracker<>(
+				bundle.getBundleContext(), DocumentResource.class, null);
 
-				documentResourceServiceTracker.open();
+		documentResourceServiceTracker.open();
 
-				_documentResourceServiceTracker =
-					documentResourceServiceTracker;
-				ServiceTracker<FolderResource, FolderResource>
-					folderResourceServiceTracker =
-						new ServiceTracker<>(
-							bundle.getBundleContext(),
-							FolderResource.class, null);
+		_documentResourceServiceTracker = documentResourceServiceTracker;
+		ServiceTracker<FolderResource, FolderResource>
+			folderResourceServiceTracker = new ServiceTracker<>(
+				bundle.getBundleContext(), FolderResource.class, null);
 
-				folderResourceServiceTracker.open();
+		folderResourceServiceTracker.open();
 
-				_folderResourceServiceTracker =
-					folderResourceServiceTracker;
+		_folderResourceServiceTracker = folderResourceServiceTracker;
 	}
 
 }

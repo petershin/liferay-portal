@@ -39,91 +39,97 @@ public class Mutation {
 
 	@GraphQLInvokeDetached
 	public boolean deleteBlogPosting(
-	@GraphQLName("blog-posting-id") Long blogPostingId)
-			throws Exception {
+			@GraphQLName("blog-posting-id") Long blogPostingId)
+		throws Exception {
 
-				return _getBlogPostingResource().deleteBlogPosting(
-					blogPostingId);
+		return _getBlogPostingResource().deleteBlogPosting(blogPostingId);
 	}
+
 	@GraphQLInvokeDetached
 	public BlogPosting patchBlogPosting(
-	@GraphQLName("blog-posting-id") Long blogPostingId,@GraphQLName("BlogPosting") BlogPosting blogPosting)
-			throws Exception {
+			@GraphQLName("blog-posting-id") Long blogPostingId,
+			@GraphQLName("BlogPosting") BlogPosting blogPosting)
+		throws Exception {
 
-				return _getBlogPostingResource().patchBlogPosting(
-					blogPostingId,blogPosting);
+		return _getBlogPostingResource().patchBlogPosting(
+			blogPostingId, blogPosting);
 	}
+
 	@GraphQLInvokeDetached
 	public BlogPosting putBlogPosting(
-	@GraphQLName("blog-posting-id") Long blogPostingId,@GraphQLName("BlogPosting") BlogPosting blogPosting)
-			throws Exception {
+			@GraphQLName("blog-posting-id") Long blogPostingId,
+			@GraphQLName("BlogPosting") BlogPosting blogPosting)
+		throws Exception {
 
-				return _getBlogPostingResource().putBlogPosting(
-					blogPostingId,blogPosting);
+		return _getBlogPostingResource().putBlogPosting(
+			blogPostingId, blogPosting);
 	}
+
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public BlogPosting postContentSpaceBlogPosting(
-	@GraphQLName("content-space-id") Long contentSpaceId,@GraphQLName("BlogPosting") BlogPosting blogPosting)
-			throws Exception {
+			@GraphQLName("content-space-id") Long contentSpaceId,
+			@GraphQLName("BlogPosting") BlogPosting blogPosting)
+		throws Exception {
 
-				return _getBlogPostingResource().postContentSpaceBlogPosting(
-					contentSpaceId,blogPosting);
+		return _getBlogPostingResource().postContentSpaceBlogPosting(
+			contentSpaceId, blogPosting);
 	}
+
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public BlogPostingImage postContentSpaceBlogPostingImage(
-	@GraphQLName("content-space-id") Long contentSpaceId,@GraphQLName("MultipartBody") MultipartBody multipartBody)
-			throws Exception {
+			@GraphQLName("content-space-id") Long contentSpaceId,
+			@GraphQLName("MultipartBody") MultipartBody multipartBody)
+		throws Exception {
 
-				return _getBlogPostingImageResource().postContentSpaceBlogPostingImage(
-					contentSpaceId,multipartBody);
+		return _getBlogPostingImageResource().postContentSpaceBlogPostingImage(
+			contentSpaceId, multipartBody);
 	}
+
 	@GraphQLInvokeDetached
 	public boolean deleteImageObject(
-	@GraphQLName("image-object-id") Long imageObjectId)
-			throws Exception {
+			@GraphQLName("image-object-id") Long imageObjectId)
+		throws Exception {
 
-				return _getBlogPostingImageResource().deleteImageObject(
-					imageObjectId);
+		return _getBlogPostingImageResource().deleteImageObject(imageObjectId);
 	}
 
 	private static BlogPostingResource _getBlogPostingResource() {
-			return _blogPostingResourceServiceTracker.getService();
+		return _blogPostingResourceServiceTracker.getService();
 	}
 
-	private static final ServiceTracker<BlogPostingResource, BlogPostingResource>
+	private static final ServiceTracker
+		<BlogPostingResource, BlogPostingResource>
 			_blogPostingResourceServiceTracker;
+
 	private static BlogPostingImageResource _getBlogPostingImageResource() {
-			return _blogPostingImageResourceServiceTracker.getService();
+		return _blogPostingImageResourceServiceTracker.getService();
 	}
 
-	private static final ServiceTracker<BlogPostingImageResource, BlogPostingImageResource>
+	private static final ServiceTracker
+		<BlogPostingImageResource, BlogPostingImageResource>
 			_blogPostingImageResourceServiceTracker;
 
-		static {
-			Bundle bundle = FrameworkUtil.getBundle(Mutation.class);
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(Mutation.class);
 
-				ServiceTracker<BlogPostingResource, BlogPostingResource>
-					blogPostingResourceServiceTracker =
-						new ServiceTracker<>(
-							bundle.getBundleContext(),
-							BlogPostingResource.class, null);
+		ServiceTracker<BlogPostingResource, BlogPostingResource>
+			blogPostingResourceServiceTracker = new ServiceTracker<>(
+				bundle.getBundleContext(), BlogPostingResource.class, null);
 
-				blogPostingResourceServiceTracker.open();
+		blogPostingResourceServiceTracker.open();
 
-				_blogPostingResourceServiceTracker =
-					blogPostingResourceServiceTracker;
-				ServiceTracker<BlogPostingImageResource, BlogPostingImageResource>
-					blogPostingImageResourceServiceTracker =
-						new ServiceTracker<>(
-							bundle.getBundleContext(),
-							BlogPostingImageResource.class, null);
+		_blogPostingResourceServiceTracker = blogPostingResourceServiceTracker;
+		ServiceTracker<BlogPostingImageResource, BlogPostingImageResource>
+			blogPostingImageResourceServiceTracker = new ServiceTracker<>(
+				bundle.getBundleContext(), BlogPostingImageResource.class,
+				null);
 
-				blogPostingImageResourceServiceTracker.open();
+		blogPostingImageResourceServiceTracker.open();
 
-				_blogPostingImageResourceServiceTracker =
-					blogPostingImageResourceServiceTracker;
+		_blogPostingImageResourceServiceTracker =
+			blogPostingImageResourceServiceTracker;
 	}
 
 }

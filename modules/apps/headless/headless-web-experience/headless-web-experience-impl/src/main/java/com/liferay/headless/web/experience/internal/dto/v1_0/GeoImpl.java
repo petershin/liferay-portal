@@ -37,81 +37,69 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class GeoImpl implements Geo {
 
 	public Long getId() {
-			return id;
+		return id;
 	}
 
-	public void setId(
-			Long id) {
-
-			this.id = id;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	@JsonIgnore
-	public void setId(
-			UnsafeSupplier<Long, Throwable>
-				idUnsafeSupplier) {
-
-			try {
-				id =
-					idUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
+	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+		try {
+			id = idUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected Long id;
+
 	public Number getLatitude() {
-			return latitude;
+		return latitude;
 	}
 
-	public void setLatitude(
-			Number latitude) {
-
-			this.latitude = latitude;
+	public void setLatitude(Number latitude) {
+		this.latitude = latitude;
 	}
 
 	@JsonIgnore
 	public void setLatitude(
-			UnsafeSupplier<Number, Throwable>
-				latitudeUnsafeSupplier) {
+		UnsafeSupplier<Number, Throwable> latitudeUnsafeSupplier) {
 
-			try {
-				latitude =
-					latitudeUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
+		try {
+			latitude = latitudeUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected Number latitude;
+
 	public Number getLongitude() {
-			return longitude;
+		return longitude;
 	}
 
-	public void setLongitude(
-			Number longitude) {
-
-			this.longitude = longitude;
+	public void setLongitude(Number longitude) {
+		this.longitude = longitude;
 	}
 
 	@JsonIgnore
 	public void setLongitude(
-			UnsafeSupplier<Number, Throwable>
-				longitudeUnsafeSupplier) {
+		UnsafeSupplier<Number, Throwable> longitudeUnsafeSupplier) {
 
-			try {
-				longitude =
-					longitudeUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
+		try {
+			longitude = longitudeUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField

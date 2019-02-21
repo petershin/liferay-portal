@@ -181,6 +181,7 @@ public class BlogPostingResourceImpl extends BaseBlogPostingResourceImpl {
 
 		return stream.map(
 			assetCategory -> new CategoriesImpl() {
+
 				{
 					setCategoryId(assetCategory.getCategoryId());
 					setCategoryName(assetCategory.getName());

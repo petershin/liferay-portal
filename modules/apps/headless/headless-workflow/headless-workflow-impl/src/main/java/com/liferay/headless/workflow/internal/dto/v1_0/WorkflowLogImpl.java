@@ -40,297 +40,259 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class WorkflowLogImpl implements WorkflowLog {
 
 	public String getAuditPerson() {
-			return auditPerson;
+		return auditPerson;
 	}
 
-	public void setAuditPerson(
-			String auditPerson) {
-
-			this.auditPerson = auditPerson;
+	public void setAuditPerson(String auditPerson) {
+		this.auditPerson = auditPerson;
 	}
 
 	@JsonIgnore
 	public void setAuditPerson(
-			UnsafeSupplier<String, Throwable>
-				auditPersonUnsafeSupplier) {
+		UnsafeSupplier<String, Throwable> auditPersonUnsafeSupplier) {
 
-			try {
-				auditPerson =
-					auditPersonUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
+		try {
+			auditPerson = auditPersonUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected String auditPerson;
+
 	public String getCommentLog() {
-			return commentLog;
+		return commentLog;
 	}
 
-	public void setCommentLog(
-			String commentLog) {
-
-			this.commentLog = commentLog;
+	public void setCommentLog(String commentLog) {
+		this.commentLog = commentLog;
 	}
 
 	@JsonIgnore
 	public void setCommentLog(
-			UnsafeSupplier<String, Throwable>
-				commentLogUnsafeSupplier) {
+		UnsafeSupplier<String, Throwable> commentLogUnsafeSupplier) {
 
-			try {
-				commentLog =
-					commentLogUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
+		try {
+			commentLog = commentLogUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected String commentLog;
+
 	public Date getDateCreated() {
-			return dateCreated;
+		return dateCreated;
 	}
 
-	public void setDateCreated(
-			Date dateCreated) {
-
-			this.dateCreated = dateCreated;
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
 	}
 
 	@JsonIgnore
 	public void setDateCreated(
-			UnsafeSupplier<Date, Throwable>
-				dateCreatedUnsafeSupplier) {
+		UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
 
-			try {
-				dateCreated =
-					dateCreatedUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
+		try {
+			dateCreated = dateCreatedUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected Date dateCreated;
+
 	public Long getId() {
-			return id;
+		return id;
 	}
 
-	public void setId(
-			Long id) {
-
-			this.id = id;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	@JsonIgnore
-	public void setId(
-			UnsafeSupplier<Long, Throwable>
-				idUnsafeSupplier) {
-
-			try {
-				id =
-					idUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
+	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+		try {
+			id = idUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected Long id;
+
 	public String getPerson() {
-			return person;
+		return person;
 	}
 
-	public void setPerson(
-			String person) {
-
-			this.person = person;
+	public void setPerson(String person) {
+		this.person = person;
 	}
 
 	@JsonIgnore
 	public void setPerson(
-			UnsafeSupplier<String, Throwable>
-				personUnsafeSupplier) {
+		UnsafeSupplier<String, Throwable> personUnsafeSupplier) {
 
-			try {
-				person =
-					personUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
+		try {
+			person = personUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected String person;
+
 	public String getPreviousPerson() {
-			return previousPerson;
+		return previousPerson;
 	}
 
-	public void setPreviousPerson(
-			String previousPerson) {
-
-			this.previousPerson = previousPerson;
+	public void setPreviousPerson(String previousPerson) {
+		this.previousPerson = previousPerson;
 	}
 
 	@JsonIgnore
 	public void setPreviousPerson(
-			UnsafeSupplier<String, Throwable>
-				previousPersonUnsafeSupplier) {
+		UnsafeSupplier<String, Throwable> previousPersonUnsafeSupplier) {
 
-			try {
-				previousPerson =
-					previousPersonUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
+		try {
+			previousPerson = previousPersonUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected String previousPerson;
+
 	public String getPreviousState() {
-			return previousState;
+		return previousState;
 	}
 
-	public void setPreviousState(
-			String previousState) {
-
-			this.previousState = previousState;
+	public void setPreviousState(String previousState) {
+		this.previousState = previousState;
 	}
 
 	@JsonIgnore
 	public void setPreviousState(
-			UnsafeSupplier<String, Throwable>
-				previousStateUnsafeSupplier) {
+		UnsafeSupplier<String, Throwable> previousStateUnsafeSupplier) {
 
-			try {
-				previousState =
-					previousStateUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
+		try {
+			previousState = previousStateUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected String previousState;
+
 	public String getState() {
-			return state;
+		return state;
 	}
 
-	public void setState(
-			String state) {
-
-			this.state = state;
+	public void setState(String state) {
+		this.state = state;
 	}
 
 	@JsonIgnore
 	public void setState(
-			UnsafeSupplier<String, Throwable>
-				stateUnsafeSupplier) {
+		UnsafeSupplier<String, Throwable> stateUnsafeSupplier) {
 
-			try {
-				state =
-					stateUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
+		try {
+			state = stateUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected String state;
+
 	public WorkflowTask getTask() {
-			return task;
+		return task;
 	}
 
-	public void setTask(
-			WorkflowTask task) {
-
-			this.task = task;
+	public void setTask(WorkflowTask task) {
+		this.task = task;
 	}
 
 	@JsonIgnore
 	public void setTask(
-			UnsafeSupplier<WorkflowTask, Throwable>
-				taskUnsafeSupplier) {
+		UnsafeSupplier<WorkflowTask, Throwable> taskUnsafeSupplier) {
 
-			try {
-				task =
-					taskUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
+		try {
+			task = taskUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected WorkflowTask task;
+
 	public Long getTaskId() {
-			return taskId;
+		return taskId;
 	}
 
-	public void setTaskId(
-			Long taskId) {
-
-			this.taskId = taskId;
+	public void setTaskId(Long taskId) {
+		this.taskId = taskId;
 	}
 
 	@JsonIgnore
 	public void setTaskId(
-			UnsafeSupplier<Long, Throwable>
-				taskIdUnsafeSupplier) {
+		UnsafeSupplier<Long, Throwable> taskIdUnsafeSupplier) {
 
-			try {
-				taskId =
-					taskIdUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
+		try {
+			taskId = taskIdUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected Long taskId;
+
 	public String getType() {
-			return type;
+		return type;
 	}
 
-	public void setType(
-			String type) {
-
-			this.type = type;
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	@JsonIgnore
-	public void setType(
-			UnsafeSupplier<String, Throwable>
-				typeUnsafeSupplier) {
-
-			try {
-				type =
-					typeUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
+	public void setType(UnsafeSupplier<String, Throwable> typeUnsafeSupplier) {
+		try {
+			type = typeUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
