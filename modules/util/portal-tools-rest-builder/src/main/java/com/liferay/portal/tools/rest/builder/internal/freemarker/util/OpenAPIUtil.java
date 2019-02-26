@@ -22,6 +22,9 @@ import com.liferay.portal.vulcan.yaml.openapi.Items;
 import com.liferay.portal.vulcan.yaml.openapi.OpenAPIYAML;
 import com.liferay.portal.vulcan.yaml.openapi.Schema;
 
+import java.util.AbstractMap;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
@@ -33,6 +36,24 @@ import java.util.regex.Pattern;
  * @author Peter Shin
  */
 public class OpenAPIUtil {
+
+	public static String escapeVersion(OpenAPIYAML openAPIYAML) {
+		Info info = openAPIYAML.getInfo();
+
+		String version = info.getVersion();
+
+		if (Validator.isNull(version)) {
+			return null;
+		}
+
+		Matcher matcher = _nondigitPattern.matcher(version);
+
+		String versionDirName = matcher.replaceAll("_");
+
+		matcher = _leadingUnderscorePattern.matcher(versionDirName);
+
+		return "v" + matcher.replaceFirst("");
+	}
 
 	public static Map<String, Schema> getAllSchemas(OpenAPIYAML openAPIYAML) {
 		Map<String, Schema> allSchemas = new TreeMap<>();
@@ -76,23 +97,49 @@ public class OpenAPIUtil {
 		return allSchemas;
 	}
 
-	public static String escapeVersion(OpenAPIYAML openAPIYAML) {
-		Info info = openAPIYAML.getInfo();
+	private static final Map<Map.Entry<String, String>, String> _javaTypeMap =
 
-		String version = info.getVersion();
+		// https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.1.md#dataTypes
 
-		if (Validator.isNull(version)) {
-			return null;
-		}
-
-		Matcher matcher = _nondigitPattern.matcher(version);
-
-		String versionDirName = matcher.replaceAll("_");
-
-		matcher = _leadingUnderscorePattern.matcher(versionDirName);
-
-		return "v" + matcher.replaceFirst("");
-	}
+		new HashMap<Map.Entry<String, String>, String>() {
+			{
+				put(
+					new AbstractMap.SimpleImmutableEntry<>("boolean", null),
+					Boolean.class.getName());
+				put(
+					new AbstractMap.SimpleImmutableEntry<>("integer", "int32"),
+					Integer.class.getName());
+				put(
+					new AbstractMap.SimpleImmutableEntry<>("integer", "int64"),
+					Long.class.getName());
+				put(
+					new AbstractMap.SimpleImmutableEntry<>("number", "float"),
+					Float.class.getName());
+				put(
+					new AbstractMap.SimpleImmutableEntry<>("number", "double"),
+					Double.class.getName());
+				put(
+					new AbstractMap.SimpleImmutableEntry<>("string", null),
+					String.class.getName());
+				put(
+					new AbstractMap.SimpleImmutableEntry<>("string", "byte"),
+					String.class.getName());
+				put(
+					new AbstractMap.SimpleImmutableEntry<>("string", "binary"),
+					String.class.getName());
+				put(
+					new AbstractMap.SimpleImmutableEntry<>("string", "date"),
+					Date.class.getName());
+				put(
+					new AbstractMap.SimpleImmutableEntry<>(
+						"string", "date-time"),
+					Date.class.getName());
+				put(
+					new AbstractMap.SimpleImmutableEntry<>(
+						"string", "password"),
+					String.class.getName());
+			}
+		};
 
 	private static final Pattern _leadingUnderscorePattern = Pattern.compile(
 		"^_+");
