@@ -1,16 +1,22 @@
 {
 	"private": true,
 	"workspaces": {
-		"nohoist": ["**/clay-*"],
+		"nohoist": [
+			"**/clay-*"
+		],
 		"packages": [
 			"apps/adaptive-media/adaptive-media-web",
 			"apps/analytics/analytics-client-js",
 			"apps/asset/asset-browser-web",
+			"apps/asset/asset-categories-admin-web",
 			"apps/asset/asset-categories-selector-web",
 			"apps/asset/asset-list-web",
 			"apps/asset/asset-publisher-web",
 			"apps/asset/asset-taglib",
+			"apps/asset/asset-tags-admin-web",
+			"apps/blogs/blogs-web",
 			"apps/change-tracking/change-tracking-change-lists-configuration-web",
+			"apps/change-tracking/change-tracking-change-lists-web",
 			"apps/document-library/document-library-preview-audio",
 			"apps/document-library/document-library-preview-image",
 			"apps/document-library/document-library-preview-pdf",
@@ -54,11 +60,16 @@
 			"apps/portal-portlet-bridge/portal-portlet-bridge-soy-impl",
 			"apps/portal-search/portal-search-web",
 			"apps/portlet-configuration/portlet-configuration-css-web",
+			"apps/portlet-configuration/portlet-configuration-web",
+			"apps/product-navigation/product-navigation-control-menu-web",
 			"apps/segments/segments-web",
 			"apps/sharing/sharing-web",
 			"apps/site-navigation/site-navigation-admin-web",
 			"apps/site-navigation/site-navigation-item-selector-web",
 			"apps/site/site-admin-web",
+			"apps/site/site-memberships-web",
+			"apps/site/site-my-sites-web",
+			"apps/site/site-teams-web",
 			"apps/trash/trash-web",
 			"apps/users-admin/users-admin-web",
 			"apps/wiki/wiki-web"

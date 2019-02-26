@@ -13,7 +13,7 @@
 		"metal-soy": "^2.16.7"
 	},
 	"devDependencies": {
-		"liferay-npm-scripts": "1.2.0"
+		"liferay-npm-scripts": "1.3.0"
 	},
 	"name": "sharing-web",
 	"scripts": {
