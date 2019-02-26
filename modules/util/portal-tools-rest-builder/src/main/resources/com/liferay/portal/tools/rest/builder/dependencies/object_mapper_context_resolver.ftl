@@ -1,4 +1,4 @@
-package ${configYAML.apiPackagePath}.internal.jaxrs.context.resolver.${versionDirName};
+package ${configYAML.apiPackagePath}.internal.jaxrs.context.resolver.${escapedVersion};
 
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -20,7 +20,7 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"osgi.jaxrs.extension=true",
 		"osgi.jaxrs.extension.select=(osgi.jaxrs.name=${configYAML.application.name})",
-		"osgi.jaxrs.name=${configYAML.application.name}.${versionDirName}.ObjectMapperContextResolver"
+		"osgi.jaxrs.name=${configYAML.application.name}.${escapedVersion}.ObjectMapperContextResolver"
 	},
 	service = ContextResolver.class
 )

@@ -1,8 +1,8 @@
-package ${configYAML.apiPackagePath}.resource.${versionDirName}.test;
+package ${configYAML.apiPackagePath}.resource.${escapedVersion}.test;
 
 <#compress>
 	<#list allSchemas?keys as schemaName>
-		import ${configYAML.apiPackagePath}.dto.${versionDirName}.${schemaName};
+		import ${configYAML.apiPackagePath}.dto.${escapedVersion}.${schemaName};
 	</#list>
 </#compress>
 
@@ -70,10 +70,10 @@ public abstract class Base${schemaName}ResourceTestCase {
 	}
 
 	<#list freeMarkerTool.getResourceJavaMethodSignatures(configYAML, openAPIYAML, schemaName, false) as javaMethodSignature>
-		protected ${javaMethodSignature.returnType} invoke${javaMethodSignature.methodName?cap_first}(${freeMarkerTool.getResourceParameters(javaMethodSignature.javaParameters, false)}) throws Exception {
+		protected ${javaMethodSignature.returnType} invoke${javaMethodSignature.methodName?cap_first}(${freeMarkerTool.getResourceParameters(javaMethodSignature.javaMethodParameters, javaMethodSignature.operation, false)}) throws Exception {
 			Http.Options options = _createHttpOptions();
 
-			<#assign arguments = freeMarkerTool.getResourceArguments(javaMethodSignature.javaParameters) />
+			<#assign arguments = freeMarkerTool.getResourceArguments(javaMethodSignature.javaMethodParameters) />
 
 			<#if freeMarkerTool.hasHTTPMethod(javaMethodSignature, "post", "put") && arguments?ends_with(",${schemaVarName}")>
 				options.setBody(_inputObjectMapper.writeValueAsString(${schemaVarName}), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
@@ -83,7 +83,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 				options.setDelete(true);
 			</#if>
 
-			options.setLocation(_resourceURL + _toPath("${javaMethodSignature.path}", ${javaMethodSignature.javaParameters[0].parameterName}));
+			options.setLocation(_resourceURL + _toPath("${javaMethodSignature.path}", ${javaMethodSignature.javaMethodParameters[0].parameterName}));
 
 			<#if freeMarkerTool.hasHTTPMethod(javaMethodSignature, "post")>
 				options.setPost(true);
@@ -102,10 +102,10 @@ public abstract class Base${schemaName}ResourceTestCase {
 			</#if>
 		}
 
-		protected Http.Response invoke${javaMethodSignature.methodName?cap_first}Response(${freeMarkerTool.getResourceParameters(javaMethodSignature.javaParameters, false)}) throws Exception {
+		protected Http.Response invoke${javaMethodSignature.methodName?cap_first}Response(${freeMarkerTool.getResourceParameters(javaMethodSignature.javaMethodParameters, javaMethodSignature.operation, false)}) throws Exception {
 			Http.Options options = _createHttpOptions();
 
-			<#assign arguments = freeMarkerTool.getResourceArguments(javaMethodSignature.javaParameters) />
+			<#assign arguments = freeMarkerTool.getResourceArguments(javaMethodSignature.javaMethodParameters) />
 
 			<#if freeMarkerTool.hasHTTPMethod(javaMethodSignature, "post", "put") && arguments?ends_with(",${schemaVarName}")>
 				options.setBody(_inputObjectMapper.writeValueAsString(${schemaVarName}), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
@@ -115,7 +115,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 				options.setDelete(true);
 			</#if>
 
-			options.setLocation(_resourceURL + _toPath("${javaMethodSignature.path}", ${javaMethodSignature.javaParameters[0].parameterName}));
+			options.setLocation(_resourceURL + _toPath("${javaMethodSignature.path}", ${javaMethodSignature.javaMethodParameters[0].parameterName}));
 
 			<#if freeMarkerTool.hasHTTPMethod(javaMethodSignature, "post")>
 				options.setPost(true);
@@ -175,11 +175,11 @@ public abstract class Base${schemaName}ResourceTestCase {
 			{
 				<#assign randomDataTypes = ["Boolean", "Double", "Long", "String"] />
 
-				<#list freeMarkerTool.getDTOJavaParameters(configYAML, openAPIYAML, schema, false) as javaParameter>
-					<#if randomDataTypes?seq_contains(javaParameter.parameterType)>
-						${javaParameter.parameterName} = RandomTestUtil.random${javaParameter.parameterType}();
-					<#elseif stringUtil.equals(javaParameter.parameterType, "Date")>
-						${javaParameter.parameterName} = RandomTestUtil.nextDate();
+				<#list freeMarkerTool.getDTOJavaMethodParameters(configYAML, openAPIYAML, schema, false) as javaMethodParameter>
+					<#if randomDataTypes?seq_contains(javaMethodParameter.parameterType)>
+						${javaMethodParameter.parameterName} = RandomTestUtil.random${javaMethodParameter.parameterType}();
+					<#elseif stringUtil.equals(javaMethodParameter.parameterType, "Date")>
+						${javaMethodParameter.parameterName} = RandomTestUtil.nextDate();
 					</#if>
 				</#list>
 			}

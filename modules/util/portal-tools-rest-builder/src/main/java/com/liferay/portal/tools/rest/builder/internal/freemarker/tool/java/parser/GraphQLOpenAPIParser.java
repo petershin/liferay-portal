@@ -14,8 +14,8 @@
 
 package com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parser;
 
+import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaMethodParameter;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaMethodSignature;
-import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaParameter;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parser.util.OpenAPIParserUtil;
 import com.liferay.portal.tools.rest.builder.internal.util.CamelCaseUtil;
 import com.liferay.portal.vulcan.yaml.openapi.Operation;
@@ -52,19 +52,21 @@ public class GraphQLOpenAPIParser {
 	}
 
 	public static String getParameters(
-		List<JavaParameter> javaParameters, boolean annotation) {
+		List<JavaMethodParameter> javaMethodParameters, Operation operation,
+		boolean annotation) {
 
 		StringBuilder sb = new StringBuilder();
 
-		for (JavaParameter javaParameter : javaParameters) {
+		for (JavaMethodParameter javaMethodParameter : javaMethodParameters) {
 			String parameterAnnotation = null;
 
 			if (annotation) {
-				parameterAnnotation = _getParameterAnnotation(javaParameter);
+				parameterAnnotation = _getParameterAnnotation(
+					javaMethodParameter, operation);
 			}
 
 			String parameter = OpenAPIParserUtil.getParameter(
-				javaParameter, parameterAnnotation);
+				javaMethodParameter, parameterAnnotation);
 
 			sb.append(parameter);
 
@@ -78,15 +80,15 @@ public class GraphQLOpenAPIParser {
 		return sb.toString();
 	}
 
-	private static String _getParameterAnnotation(JavaParameter javaParameter) {
-		Operation operation = javaParameter.getOperation();
+	private static String _getParameterAnnotation(
+		JavaMethodParameter javaMethodParameter, Operation operation) {
 
 		for (Parameter parameter : operation.getParameters()) {
 			String parameterName = CamelCaseUtil.toCamelCase(
 				parameter.getName(), false);
 
 			if (!Objects.equals(
-					parameterName, javaParameter.getParameterName())) {
+					parameterName, javaMethodParameter.getParameterName())) {
 
 				continue;
 			}
