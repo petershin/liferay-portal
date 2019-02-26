@@ -35,7 +35,8 @@ public class Mutation {
 	@GraphQLInvokeDetached
 	public WorkflowTask postWorkflowTaskAssignToMe(
 			@GraphQLName("workflow-task-id") Long workflowTaskId,
-			@GraphQLName("WorkflowTask") WorkflowTask workflowTask)
+			@GraphQLName("WorkflowTask")
+				WorkflowTask workflowTask)
 		throws Exception {
 
 		WorkflowTaskResource workflowTaskResource =
@@ -49,7 +50,8 @@ public class Mutation {
 	@GraphQLInvokeDetached
 	public WorkflowTask postWorkflowTaskAssignToUser(
 			@GraphQLName("workflow-task-id") Long workflowTaskId,
-			@GraphQLName("WorkflowTask") WorkflowTask workflowTask)
+			@GraphQLName("WorkflowTask")
+				WorkflowTask workflowTask)
 		throws Exception {
 
 		WorkflowTaskResource workflowTaskResource =
@@ -63,7 +65,8 @@ public class Mutation {
 	@GraphQLInvokeDetached
 	public WorkflowTask postWorkflowTaskChangeTransition(
 			@GraphQLName("workflow-task-id") Long workflowTaskId,
-			@GraphQLName("WorkflowTask") WorkflowTask workflowTask)
+			@GraphQLName("WorkflowTask")
+				WorkflowTask workflowTask)
 		throws Exception {
 
 		WorkflowTaskResource workflowTaskResource =
@@ -77,7 +80,8 @@ public class Mutation {
 	@GraphQLInvokeDetached
 	public WorkflowTask postWorkflowTaskUpdateDueDate(
 			@GraphQLName("workflow-task-id") Long workflowTaskId,
-			@GraphQLName("WorkflowTask") WorkflowTask workflowTask)
+			@GraphQLName("WorkflowTask")
+				WorkflowTask workflowTask)
 		throws Exception {
 
 		WorkflowTaskResource workflowTaskResource =

@@ -102,9 +102,12 @@ public class Query {
 	@GraphQLInvokeDetached
 	public Collection<Category> getCategoryCategoriesPage(
 			@GraphQLName("category-id") Long categoryId,
-			@GraphQLName("filter") Filter filter,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page, @GraphQLName("Sort[]") Sort[] sorts)
+			@GraphQLName("filter")
+				Filter filter,
+			@GraphQLName("pageSize") Integer pageSize,
+			@GraphQLName("page") Integer page,
+			@GraphQLName("Sort[]")
+				Sort[] sorts)
 		throws Exception {
 
 		CategoryResource categoryResource = _createCategoryResource();
@@ -122,10 +125,14 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<Keyword> getContentSpaceKeywordsPage(
-			@GraphQLName("content-space-id") Long contentSpaceId,
-			@GraphQLName("filter") Filter filter,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page, @GraphQLName("Sort[]") Sort[] sorts)
+			@GraphQLName("content-space-id") Long
+				contentSpaceId,
+			@GraphQLName("filter")
+				Filter filter,
+			@GraphQLName("pageSize") Integer pageSize,
+			@GraphQLName("page") Integer page,
+			@GraphQLName("Sort[]")
+				Sort[] sorts)
 		throws Exception {
 
 		KeywordResource keywordResource = _createKeywordResource();
@@ -143,10 +150,14 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<Vocabulary> getContentSpaceVocabulariesPage(
-			@GraphQLName("content-space-id") Long contentSpaceId,
-			@GraphQLName("filter") Filter filter,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page, @GraphQLName("Sort[]") Sort[] sorts)
+			@GraphQLName("content-space-id") Long
+				contentSpaceId,
+			@GraphQLName("filter")
+				Filter filter,
+			@GraphQLName("pageSize") Integer pageSize,
+			@GraphQLName("page") Integer page,
+			@GraphQLName("Sort[]")
+				Sort[] sorts)
 		throws Exception {
 
 		VocabularyResource vocabularyResource = _createVocabularyResource();
@@ -179,9 +190,10 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<Email> getGenericParentEmailsPage(
-			@GraphQLName("generic-parent-id") Object genericParentId,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
+			@GraphQLName("generic-parent-id") Object
+				genericParentId,
+			@GraphQLName("pageSize") Integer pageSize,
+			@GraphQLName("page") Integer page)
 		throws Exception {
 
 		EmailResource emailResource = _createEmailResource();
@@ -199,9 +211,10 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<Phone> getGenericParentPhonesPage(
-			@GraphQLName("generic-parent-id") Object genericParentId,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
+			@GraphQLName("generic-parent-id") Object
+				genericParentId,
+			@GraphQLName("pageSize") Integer pageSize,
+			@GraphQLName("page") Integer page)
 		throws Exception {
 
 		PhoneResource phoneResource = _createPhoneResource();
@@ -219,9 +232,10 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<PostalAddress> getGenericParentPostalAddressesPage(
-			@GraphQLName("generic-parent-id") Object genericParentId,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
+			@GraphQLName("generic-parent-id") Object
+				genericParentId,
+			@GraphQLName("pageSize") Integer pageSize,
+			@GraphQLName("page") Integer page)
 		throws Exception {
 
 		PostalAddressResource postalAddressResource =
@@ -241,9 +255,10 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<WebUrl> getGenericParentWebUrlsPage(
-			@GraphQLName("generic-parent-id") Object genericParentId,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
+			@GraphQLName("generic-parent-id") Object
+				genericParentId,
+			@GraphQLName("pageSize") Integer pageSize,
+			@GraphQLName("page") Integer page)
 		throws Exception {
 
 		WebUrlResource webUrlResource = _createWebUrlResource();
@@ -275,7 +290,8 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public UserAccount getMyUserAccount(
-			@GraphQLName("my-user-account-id") Long myUserAccountId)
+			@GraphQLName("my-user-account-id") Long
+				myUserAccountId)
 		throws Exception {
 
 		UserAccountResource userAccountResource = _createUserAccountResource();
@@ -290,9 +306,10 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<Organization> getMyUserAccountOrganizationsPage(
-			@GraphQLName("my-user-account-id") Long myUserAccountId,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
+			@GraphQLName("my-user-account-id") Long
+				myUserAccountId,
+			@GraphQLName("pageSize") Integer pageSize,
+			@GraphQLName("page") Integer page)
 		throws Exception {
 
 		OrganizationResource organizationResource =
@@ -312,9 +329,10 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<Role> getMyUserAccountRolesPage(
-			@GraphQLName("my-user-account-id") Long myUserAccountId,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
+			@GraphQLName("my-user-account-id") Long
+				myUserAccountId,
+			@GraphQLName("pageSize") Integer pageSize,
+			@GraphQLName("page") Integer page)
 		throws Exception {
 
 		RoleResource roleResource = _createRoleResource();
@@ -348,9 +366,10 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<Organization> getOrganizationOrganizationsPage(
-			@GraphQLName("organization-id") Long organizationId,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
+			@GraphQLName("organization-id") Long
+				organizationId,
+			@GraphQLName("pageSize") Integer pageSize,
+			@GraphQLName("page") Integer page)
 		throws Exception {
 
 		OrganizationResource organizationResource =
@@ -370,8 +389,8 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<Organization> getOrganizationsPage(
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
+			@GraphQLName("pageSize") Integer pageSize,
+			@GraphQLName("page") Integer page)
 		throws Exception {
 
 		OrganizationResource organizationResource =
@@ -390,9 +409,10 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<UserAccount> getOrganizationUserAccountsPage(
-			@GraphQLName("organization-id") Long organizationId,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
+			@GraphQLName("organization-id") Long
+				organizationId,
+			@GraphQLName("pageSize") Integer pageSize,
+			@GraphQLName("page") Integer page)
 		throws Exception {
 
 		UserAccountResource userAccountResource = _createUserAccountResource();
@@ -437,8 +457,8 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<Role> getRolesPage(
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
+			@GraphQLName("pageSize") Integer pageSize,
+			@GraphQLName("page") Integer page)
 		throws Exception {
 
 		RoleResource roleResource = _createRoleResource();
@@ -471,9 +491,10 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<Organization> getUserAccountOrganizationsPage(
-			@GraphQLName("user-account-id") Long userAccountId,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
+			@GraphQLName("user-account-id") Long
+				userAccountId,
+			@GraphQLName("pageSize") Integer pageSize,
+			@GraphQLName("page") Integer page)
 		throws Exception {
 
 		OrganizationResource organizationResource =
@@ -494,8 +515,8 @@ public class Query {
 	@GraphQLInvokeDetached
 	public Collection<Role> getUserAccountRolesPage(
 			@GraphQLName("user-account-id") Long userAccountId,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
+			@GraphQLName("pageSize") Integer pageSize,
+			@GraphQLName("page") Integer page)
 		throws Exception {
 
 		RoleResource roleResource = _createRoleResource();
@@ -513,9 +534,10 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<UserAccount> getUserAccountsPage(
-			@GraphQLName("fullnamequery") String fullnamequery,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
+			@GraphQLName("fullnamequery") String
+				fullnamequery,
+			@GraphQLName("pageSize") Integer pageSize,
+			@GraphQLName("page") Integer page)
 		throws Exception {
 
 		UserAccountResource userAccountResource = _createUserAccountResource();
@@ -534,8 +556,8 @@ public class Query {
 	@GraphQLInvokeDetached
 	public Collection<Segment> getUserSegmentsPage(
 			@GraphQLName("user-id") Long userId,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
+			@GraphQLName("pageSize") Integer pageSize,
+			@GraphQLName("page") Integer page)
 		throws Exception {
 
 		SegmentResource segmentResource = _createSegmentResource();
@@ -569,9 +591,12 @@ public class Query {
 	@GraphQLInvokeDetached
 	public Collection<Category> getVocabularyCategoriesPage(
 			@GraphQLName("vocabulary-id") Long vocabularyId,
-			@GraphQLName("filter") Filter filter,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page, @GraphQLName("Sort[]") Sort[] sorts)
+			@GraphQLName("filter")
+				Filter filter,
+			@GraphQLName("pageSize") Integer pageSize,
+			@GraphQLName("page") Integer page,
+			@GraphQLName("Sort[]")
+				Sort[] sorts)
 		throws Exception {
 
 		CategoryResource categoryResource = _createCategoryResource();
@@ -590,8 +615,8 @@ public class Query {
 	@GraphQLInvokeDetached
 	public Collection<UserAccount> getWebSiteUserAccountsPage(
 			@GraphQLName("web-site-id") Long webSiteId,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
+			@GraphQLName("pageSize") Integer pageSize,
+			@GraphQLName("page") Integer page)
 		throws Exception {
 
 		UserAccountResource userAccountResource = _createUserAccountResource();

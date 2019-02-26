@@ -63,9 +63,12 @@ public class Query {
 	@GraphQLInvokeDetached
 	public Collection<Comment> getCommentCommentsPage(
 			@GraphQLName("comment-id") Long commentId,
-			@GraphQLName("filter") Filter filter,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page, @GraphQLName("Sort[]") Sort[] sorts)
+			@GraphQLName("filter")
+				Filter filter,
+			@GraphQLName("pageSize") Integer pageSize,
+			@GraphQLName("page") Integer page,
+			@GraphQLName("Sort[]")
+				Sort[] sorts)
 		throws Exception {
 
 		CommentResource commentResource = _createCommentResource();
@@ -83,10 +86,14 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<Document> getContentSpaceDocumentsPage(
-			@GraphQLName("content-space-id") Long contentSpaceId,
-			@GraphQLName("filter") Filter filter,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page, @GraphQLName("Sort[]") Sort[] sorts)
+			@GraphQLName("content-space-id") Long
+				contentSpaceId,
+			@GraphQLName("filter")
+				Filter filter,
+			@GraphQLName("pageSize") Integer pageSize,
+			@GraphQLName("page") Integer page,
+			@GraphQLName("Sort[]")
+				Sort[] sorts)
 		throws Exception {
 
 		DocumentResource documentResource = _createDocumentResource();
@@ -104,9 +111,10 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<Folder> getContentSpaceFoldersPage(
-			@GraphQLName("content-space-id") Long contentSpaceId,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
+			@GraphQLName("content-space-id") Long
+				contentSpaceId,
+			@GraphQLName("pageSize") Integer pageSize,
+			@GraphQLName("page") Integer page)
 		throws Exception {
 
 		FolderResource folderResource = _createFolderResource();
@@ -139,9 +147,12 @@ public class Query {
 	@GraphQLInvokeDetached
 	public Collection<Comment> getDocumentCommentsPage(
 			@GraphQLName("document-id") Long documentId,
-			@GraphQLName("filter") Filter filter,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page, @GraphQLName("Sort[]") Sort[] sorts)
+			@GraphQLName("filter")
+				Filter filter,
+			@GraphQLName("pageSize") Integer pageSize,
+			@GraphQLName("page") Integer page,
+			@GraphQLName("Sort[]")
+				Sort[] sorts)
 		throws Exception {
 
 		CommentResource commentResource = _createCommentResource();
@@ -174,9 +185,12 @@ public class Query {
 	@GraphQLInvokeDetached
 	public Collection<Document> getFolderDocumentsPage(
 			@GraphQLName("folder-id") Long folderId,
-			@GraphQLName("filter") Filter filter,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page, @GraphQLName("Sort[]") Sort[] sorts)
+			@GraphQLName("filter")
+				Filter filter,
+			@GraphQLName("pageSize") Integer pageSize,
+			@GraphQLName("page") Integer page,
+			@GraphQLName("Sort[]")
+				Sort[] sorts)
 		throws Exception {
 
 		DocumentResource documentResource = _createDocumentResource();
@@ -195,8 +209,8 @@ public class Query {
 	@GraphQLInvokeDetached
 	public Collection<Folder> getFolderFoldersPage(
 			@GraphQLName("folder-id") Long folderId,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
+			@GraphQLName("pageSize") Integer pageSize,
+			@GraphQLName("page") Integer page)
 		throws Exception {
 
 		FolderResource folderResource = _createFolderResource();

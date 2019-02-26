@@ -66,9 +66,12 @@ public class Query {
 	@GraphQLInvokeDetached
 	public Collection<Comment> getCommentCommentsPage(
 			@GraphQLName("comment-id") Long commentId,
-			@GraphQLName("filter") Filter filter,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page, @GraphQLName("Sort[]") Sort[] sorts)
+			@GraphQLName("filter")
+				Filter filter,
+			@GraphQLName("pageSize") Integer pageSize,
+			@GraphQLName("page") Integer page,
+			@GraphQLName("Sort[]")
+				Sort[] sorts)
 		throws Exception {
 
 		CommentResource commentResource = _createCommentResource();
@@ -86,10 +89,14 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<ContentStructure> getContentSpaceContentStructuresPage(
-			@GraphQLName("content-space-id") Long contentSpaceId,
-			@GraphQLName("filter") Filter filter,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page, @GraphQLName("Sort[]") Sort[] sorts)
+			@GraphQLName("content-space-id") Long
+				contentSpaceId,
+			@GraphQLName("filter")
+				Filter filter,
+			@GraphQLName("pageSize") Integer pageSize,
+			@GraphQLName("page") Integer page,
+			@GraphQLName("Sort[]")
+				Sort[] sorts)
 		throws Exception {
 
 		ContentStructureResource contentStructureResource =
@@ -109,13 +116,17 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<StructuredContent>
-			getContentSpaceContentStructureStructuredContentsPage(
-				@GraphQLName("content-space-id") Long contentSpaceId,
-				@GraphQLName("content-structure-id") Long contentStructureId,
-				@GraphQLName("filter") Filter filter,
-				@GraphQLName("pageSize") int pageSize,
-				@GraphQLName("page") int page,
-				@GraphQLName("Sort[]") Sort[] sorts)
+				getContentSpaceContentStructureStructuredContentsPage(
+					@GraphQLName("content-space-id") Long
+						contentSpaceId,
+					@GraphQLName("content-structure-id") Long
+						contentStructureId,
+					@GraphQLName("filter")
+						Filter filter,
+					@GraphQLName("pageSize") Integer pageSize,
+					@GraphQLName("page") Integer page,
+					@GraphQLName("Sort[]")
+						Sort[] sorts)
 		throws Exception {
 
 		StructuredContentResource structuredContentResource =
@@ -137,10 +148,14 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<StructuredContent> getContentSpaceStructuredContentsPage(
-			@GraphQLName("content-space-id") Long contentSpaceId,
-			@GraphQLName("filter") Filter filter,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page, @GraphQLName("Sort[]") Sort[] sorts)
+			@GraphQLName("content-space-id") Long
+				contentSpaceId,
+			@GraphQLName("filter")
+				Filter filter,
+			@GraphQLName("pageSize") Integer pageSize,
+			@GraphQLName("page") Integer page,
+			@GraphQLName("Sort[]")
+				Sort[] sorts)
 		throws Exception {
 
 		StructuredContentResource structuredContentResource =
@@ -160,7 +175,8 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public ContentStructure getContentStructure(
-			@GraphQLName("content-structure-id") Long contentStructureId)
+			@GraphQLName("content-structure-id") Long
+				contentStructureId)
 		throws Exception {
 
 		ContentStructureResource contentStructureResource =
@@ -176,7 +192,8 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public StructuredContent getStructuredContent(
-			@GraphQLName("structured-content-id") Long structuredContentId)
+			@GraphQLName("structured-content-id") Long
+				structuredContentId)
 		throws Exception {
 
 		StructuredContentResource structuredContentResource =
@@ -193,10 +210,14 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<Comment> getStructuredContentCommentsPage(
-			@GraphQLName("structured-content-id") Long structuredContentId,
-			@GraphQLName("filter") Filter filter,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page, @GraphQLName("Sort[]") Sort[] sorts)
+			@GraphQLName("structured-content-id") Long
+				structuredContentId,
+			@GraphQLName("filter")
+				Filter filter,
+			@GraphQLName("pageSize") Integer pageSize,
+			@GraphQLName("page") Integer page,
+			@GraphQLName("Sort[]")
+				Sort[] sorts)
 		throws Exception {
 
 		CommentResource commentResource = _createCommentResource();
@@ -214,8 +235,10 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public StructuredContentImage getStructuredContentContentDocument(
-			@GraphQLName("structured-content-id") Long structuredContentId,
-			@GraphQLName("content-document-id") Long contentDocumentId)
+			@GraphQLName("structured-content-id") Long
+				structuredContentId,
+			@GraphQLName("content-document-id") Long
+				contentDocumentId)
 		throws Exception {
 
 		StructuredContentImageResource structuredContentImageResource =
@@ -233,8 +256,9 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<StructuredContentImage>
-			getStructuredContentStructuredContentImagesPage(
-				@GraphQLName("structured-content-id") Long structuredContentId)
+				getStructuredContentStructuredContentImagesPage(
+					@GraphQLName("structured-content-id") Long
+						structuredContentId)
 		throws Exception {
 
 		StructuredContentImageResource structuredContentImageResource =
@@ -255,7 +279,8 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public String getStructuredContentTemplate(
-			@GraphQLName("structured-content-id") Long structuredContentId,
+			@GraphQLName("structured-content-id") Long
+				structuredContentId,
 			@GraphQLName("template-id") Long templateId)
 		throws Exception {
 

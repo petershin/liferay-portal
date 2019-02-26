@@ -39,7 +39,7 @@ import javax.annotation.Generated;
 public class Mutation {
 
 	@GraphQLInvokeDetached
-	public boolean deleteComment(@GraphQLName("comment-id") Long commentId)
+	public Boolean deleteComment(@GraphQLName("comment-id") Long commentId)
 		throws Exception {
 
 		CommentResource commentResource = _createCommentResource();
@@ -48,7 +48,7 @@ public class Mutation {
 	}
 
 	@GraphQLInvokeDetached
-	public boolean deleteDocument(@GraphQLName("document-id") Long documentId)
+	public Boolean deleteDocument(@GraphQLName("document-id") Long documentId)
 		throws Exception {
 
 		DocumentResource documentResource = _createDocumentResource();
@@ -57,7 +57,7 @@ public class Mutation {
 	}
 
 	@GraphQLInvokeDetached
-	public boolean deleteFolder(@GraphQLName("folder-id") Long folderId)
+	public Boolean deleteFolder(@GraphQLName("folder-id") Long folderId)
 		throws Exception {
 
 		FolderResource folderResource = _createFolderResource();
@@ -68,7 +68,8 @@ public class Mutation {
 	@GraphQLInvokeDetached
 	public Document patchDocument(
 			@GraphQLName("document-id") Long documentId,
-			@GraphQLName("MultipartBody") MultipartBody multipartBody)
+			@GraphQLName("MultipartBody")
+				MultipartBody multipartBody)
 		throws Exception {
 
 		DocumentResource documentResource = _createDocumentResource();
@@ -79,7 +80,8 @@ public class Mutation {
 	@GraphQLInvokeDetached
 	public Folder patchFolder(
 			@GraphQLName("folder-id") Long folderId,
-			@GraphQLName("Folder") Folder folder)
+			@GraphQLName("Folder")
+				Folder folder)
 		throws Exception {
 
 		FolderResource folderResource = _createFolderResource();
@@ -91,7 +93,8 @@ public class Mutation {
 	@GraphQLInvokeDetached
 	public Comment postCommentComment(
 			@GraphQLName("comment-id") Long commentId,
-			@GraphQLName("Comment") Comment comment)
+			@GraphQLName("Comment")
+				Comment comment)
 		throws Exception {
 
 		CommentResource commentResource = _createCommentResource();
@@ -103,7 +106,8 @@ public class Mutation {
 	@GraphQLInvokeDetached
 	public Document postContentSpaceDocument(
 			@GraphQLName("content-space-id") Long contentSpaceId,
-			@GraphQLName("MultipartBody") MultipartBody multipartBody)
+			@GraphQLName("MultipartBody")
+				MultipartBody multipartBody)
 		throws Exception {
 
 		DocumentResource documentResource = _createDocumentResource();
@@ -116,7 +120,8 @@ public class Mutation {
 	@GraphQLInvokeDetached
 	public Folder postContentSpaceFolder(
 			@GraphQLName("content-space-id") Long contentSpaceId,
-			@GraphQLName("Folder") Folder folder)
+			@GraphQLName("Folder")
+				Folder folder)
 		throws Exception {
 
 		FolderResource folderResource = _createFolderResource();
@@ -128,7 +133,8 @@ public class Mutation {
 	@GraphQLInvokeDetached
 	public Comment postDocumentComment(
 			@GraphQLName("document-id") Long documentId,
-			@GraphQLName("Comment") Comment comment)
+			@GraphQLName("Comment")
+				Comment comment)
 		throws Exception {
 
 		CommentResource commentResource = _createCommentResource();
@@ -140,7 +146,8 @@ public class Mutation {
 	@GraphQLInvokeDetached
 	public Document postFolderDocument(
 			@GraphQLName("folder-id") Long folderId,
-			@GraphQLName("MultipartBody") MultipartBody multipartBody)
+			@GraphQLName("MultipartBody")
+				MultipartBody multipartBody)
 		throws Exception {
 
 		DocumentResource documentResource = _createDocumentResource();
@@ -152,7 +159,8 @@ public class Mutation {
 	@GraphQLInvokeDetached
 	public Folder postFolderFolder(
 			@GraphQLName("folder-id") Long folderId,
-			@GraphQLName("Folder") Folder folder)
+			@GraphQLName("Folder")
+				Folder folder)
 		throws Exception {
 
 		FolderResource folderResource = _createFolderResource();
@@ -163,7 +171,8 @@ public class Mutation {
 	@GraphQLInvokeDetached
 	public Comment putComment(
 			@GraphQLName("comment-id") Long commentId,
-			@GraphQLName("Comment") Comment comment)
+			@GraphQLName("Comment")
+				Comment comment)
 		throws Exception {
 
 		CommentResource commentResource = _createCommentResource();
@@ -174,7 +183,8 @@ public class Mutation {
 	@GraphQLInvokeDetached
 	public Document putDocument(
 			@GraphQLName("document-id") Long documentId,
-			@GraphQLName("MultipartBody") MultipartBody multipartBody)
+			@GraphQLName("MultipartBody")
+				MultipartBody multipartBody)
 		throws Exception {
 
 		DocumentResource documentResource = _createDocumentResource();
@@ -185,7 +195,8 @@ public class Mutation {
 	@GraphQLInvokeDetached
 	public Folder putFolder(
 			@GraphQLName("folder-id") Long folderId,
-			@GraphQLName("Folder") Folder folder)
+			@GraphQLName("Folder")
+				Folder folder)
 		throws Exception {
 
 		FolderResource folderResource = _createFolderResource();

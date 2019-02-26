@@ -37,7 +37,7 @@ import javax.annotation.Generated;
 public class Mutation {
 
 	@GraphQLInvokeDetached
-	public boolean deleteFormDocument(
+	public Boolean deleteFormDocument(
 			@GraphQLName("form-document-id") Long formDocumentId)
 		throws Exception {
 
@@ -62,7 +62,8 @@ public class Mutation {
 	@GraphQLInvokeDetached
 	public FormRecord postFormFormRecord(
 			@GraphQLName("form-id") Long formId,
-			@GraphQLName("FormRecord") FormRecord formRecord)
+			@GraphQLName("FormRecord")
+				FormRecord formRecord)
 		throws Exception {
 
 		FormRecordResource formRecordResource = _createFormRecordResource();
@@ -84,7 +85,8 @@ public class Mutation {
 	@GraphQLInvokeDetached
 	public FormRecord putFormRecord(
 			@GraphQLName("form-record-id") Long formRecordId,
-			@GraphQLName("FormRecord") FormRecord formRecord)
+			@GraphQLName("FormRecord")
+				FormRecord formRecord)
 		throws Exception {
 
 		FormRecordResource formRecordResource = _createFormRecordResource();

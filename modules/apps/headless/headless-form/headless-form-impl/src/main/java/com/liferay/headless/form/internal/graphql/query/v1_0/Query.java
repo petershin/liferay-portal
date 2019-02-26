@@ -50,8 +50,8 @@ public class Query {
 	@GraphQLInvokeDetached
 	public Collection<Form> getContentSpaceFormsPage(
 			@GraphQLName("content-space-id") Long contentSpaceId,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
+			@GraphQLName("pageSize") Integer pageSize,
+			@GraphQLName("page") Integer page)
 		throws Exception {
 
 		FormResource formResource = _createFormResource();
@@ -69,9 +69,10 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<FormStructure> getContentSpaceFormStructuresPage(
-			@GraphQLName("content-space-id") Long contentSpaceId,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
+			@GraphQLName("content-space-id") Long
+				contentSpaceId,
+			@GraphQLName("pageSize") Integer pageSize,
+			@GraphQLName("page") Integer page)
 		throws Exception {
 
 		FormStructureResource formStructureResource =
@@ -134,8 +135,8 @@ public class Query {
 	@GraphQLInvokeDetached
 	public Collection<FormRecord> getFormFormRecordsPage(
 			@GraphQLName("form-id") Long formId,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
+			@GraphQLName("pageSize") Integer pageSize,
+			@GraphQLName("page") Integer page)
 		throws Exception {
 
 		FormRecordResource formRecordResource = _createFormRecordResource();

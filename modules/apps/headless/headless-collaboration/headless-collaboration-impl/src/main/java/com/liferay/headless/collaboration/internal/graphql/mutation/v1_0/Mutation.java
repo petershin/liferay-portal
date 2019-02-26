@@ -39,7 +39,7 @@ import javax.annotation.Generated;
 public class Mutation {
 
 	@GraphQLInvokeDetached
-	public boolean deleteBlogPosting(
+	public Boolean deleteBlogPosting(
 			@GraphQLName("blog-posting-id") Long blogPostingId)
 		throws Exception {
 
@@ -49,7 +49,7 @@ public class Mutation {
 	}
 
 	@GraphQLInvokeDetached
-	public boolean deleteComment(@GraphQLName("comment-id") Long commentId)
+	public Boolean deleteComment(@GraphQLName("comment-id") Long commentId)
 		throws Exception {
 
 		CommentResource commentResource = _createCommentResource();
@@ -58,7 +58,7 @@ public class Mutation {
 	}
 
 	@GraphQLInvokeDetached
-	public boolean deleteImageObject(
+	public Boolean deleteImageObject(
 			@GraphQLName("image-object-id") Long imageObjectId)
 		throws Exception {
 
@@ -71,7 +71,8 @@ public class Mutation {
 	@GraphQLInvokeDetached
 	public BlogPosting patchBlogPosting(
 			@GraphQLName("blog-posting-id") Long blogPostingId,
-			@GraphQLName("BlogPosting") BlogPosting blogPosting)
+			@GraphQLName("BlogPosting")
+				BlogPosting blogPosting)
 		throws Exception {
 
 		BlogPostingResource blogPostingResource = _createBlogPostingResource();
@@ -83,7 +84,8 @@ public class Mutation {
 	@GraphQLInvokeDetached
 	public Comment postBlogPostingComment(
 			@GraphQLName("blog-posting-id") Long blogPostingId,
-			@GraphQLName("Comment") Comment comment)
+			@GraphQLName("Comment")
+				Comment comment)
 		throws Exception {
 
 		CommentResource commentResource = _createCommentResource();
@@ -95,7 +97,8 @@ public class Mutation {
 	@GraphQLInvokeDetached
 	public Comment postCommentComment(
 			@GraphQLName("comment-id") Long commentId,
-			@GraphQLName("Comment") Comment comment)
+			@GraphQLName("Comment")
+				Comment comment)
 		throws Exception {
 
 		CommentResource commentResource = _createCommentResource();
@@ -107,7 +110,8 @@ public class Mutation {
 	@GraphQLInvokeDetached
 	public BlogPosting postContentSpaceBlogPosting(
 			@GraphQLName("content-space-id") Long contentSpaceId,
-			@GraphQLName("BlogPosting") BlogPosting blogPosting)
+			@GraphQLName("BlogPosting")
+				BlogPosting blogPosting)
 		throws Exception {
 
 		BlogPostingResource blogPostingResource = _createBlogPostingResource();
@@ -120,7 +124,8 @@ public class Mutation {
 	@GraphQLInvokeDetached
 	public BlogPostingImage postContentSpaceBlogPostingImage(
 			@GraphQLName("content-space-id") Long contentSpaceId,
-			@GraphQLName("MultipartBody") MultipartBody multipartBody)
+			@GraphQLName("MultipartBody")
+				MultipartBody multipartBody)
 		throws Exception {
 
 		BlogPostingImageResource blogPostingImageResource =
@@ -133,7 +138,8 @@ public class Mutation {
 	@GraphQLInvokeDetached
 	public BlogPosting putBlogPosting(
 			@GraphQLName("blog-posting-id") Long blogPostingId,
-			@GraphQLName("BlogPosting") BlogPosting blogPosting)
+			@GraphQLName("BlogPosting")
+				BlogPosting blogPosting)
 		throws Exception {
 
 		BlogPostingResource blogPostingResource = _createBlogPostingResource();
@@ -144,7 +150,8 @@ public class Mutation {
 	@GraphQLInvokeDetached
 	public Comment putComment(
 			@GraphQLName("comment-id") Long commentId,
-			@GraphQLName("Comment") Comment comment)
+			@GraphQLName("Comment")
+				Comment comment)
 		throws Exception {
 
 		CommentResource commentResource = _createCommentResource();

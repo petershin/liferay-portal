@@ -44,8 +44,8 @@ public class Query {
 	@GraphQLInvokeDetached
 	public Collection<WorkflowTask> getRoleWorkflowTasksPage(
 			@GraphQLName("role-id") Long roleId,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
+			@GraphQLName("pageSize") Integer pageSize,
+			@GraphQLName("page") Integer page)
 		throws Exception {
 
 		WorkflowTaskResource workflowTaskResource =
@@ -95,8 +95,8 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<WorkflowTask> getWorkflowTasksPage(
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
+			@GraphQLName("pageSize") Integer pageSize,
+			@GraphQLName("page") Integer page)
 		throws Exception {
 
 		WorkflowTaskResource workflowTaskResource =
@@ -115,9 +115,10 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<WorkflowLog> getWorkflowTaskWorkflowLogsPage(
-			@GraphQLName("workflow-task-id") Long workflowTaskId,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
+			@GraphQLName("workflow-task-id") Long
+				workflowTaskId,
+			@GraphQLName("pageSize") Integer pageSize,
+			@GraphQLName("page") Integer page)
 		throws Exception {
 
 		WorkflowLogResource workflowLogResource = _createWorkflowLogResource();

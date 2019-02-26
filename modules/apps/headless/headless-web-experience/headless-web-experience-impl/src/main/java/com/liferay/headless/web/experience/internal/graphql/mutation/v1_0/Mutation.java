@@ -37,7 +37,7 @@ import javax.annotation.Generated;
 public class Mutation {
 
 	@GraphQLInvokeDetached
-	public boolean deleteComment(@GraphQLName("comment-id") Long commentId)
+	public Boolean deleteComment(@GraphQLName("comment-id") Long commentId)
 		throws Exception {
 
 		CommentResource commentResource = _createCommentResource();
@@ -46,8 +46,9 @@ public class Mutation {
 	}
 
 	@GraphQLInvokeDetached
-	public boolean deleteStructuredContent(
-			@GraphQLName("structured-content-id") Long structuredContentId)
+	public Boolean deleteStructuredContent(
+			@GraphQLName("structured-content-id") Long
+				structuredContentId)
 		throws Exception {
 
 		StructuredContentResource structuredContentResource =
@@ -58,9 +59,11 @@ public class Mutation {
 	}
 
 	@GraphQLInvokeDetached
-	public boolean deleteStructuredContentContentDocument(
-			@GraphQLName("structured-content-id") Long structuredContentId,
-			@GraphQLName("content-document-id") Long contentDocumentId)
+	public Boolean deleteStructuredContentContentDocument(
+			@GraphQLName("structured-content-id") Long
+				structuredContentId,
+			@GraphQLName("content-document-id") Long
+				contentDocumentId)
 		throws Exception {
 
 		StructuredContentImageResource structuredContentImageResource =
@@ -74,8 +77,7 @@ public class Mutation {
 	@GraphQLInvokeDetached
 	public StructuredContent patchStructuredContent(
 			@GraphQLName("structured-content-id") Long structuredContentId,
-			@GraphQLName("StructuredContent") StructuredContent
-				structuredContent)
+			@GraphQLName("StructuredContent") StructuredContent structuredContent)
 		throws Exception {
 
 		StructuredContentResource structuredContentResource =
@@ -89,7 +91,8 @@ public class Mutation {
 	@GraphQLInvokeDetached
 	public Comment postCommentComment(
 			@GraphQLName("comment-id") Long commentId,
-			@GraphQLName("Comment") Comment comment)
+			@GraphQLName("Comment")
+				Comment comment)
 		throws Exception {
 
 		CommentResource commentResource = _createCommentResource();
@@ -101,8 +104,7 @@ public class Mutation {
 	@GraphQLInvokeDetached
 	public StructuredContent postContentSpaceStructuredContent(
 			@GraphQLName("content-space-id") Long contentSpaceId,
-			@GraphQLName("StructuredContent") StructuredContent
-				structuredContent)
+			@GraphQLName("StructuredContent") StructuredContent structuredContent)
 		throws Exception {
 
 		StructuredContentResource structuredContentResource =
@@ -115,8 +117,10 @@ public class Mutation {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Comment postStructuredContentComment(
-			@GraphQLName("structured-content-id") Long structuredContentId,
-			@GraphQLName("Comment") Comment comment)
+			@GraphQLName("structured-content-id") Long
+				structuredContentId,
+			@GraphQLName("Comment")
+				Comment comment)
 		throws Exception {
 
 		CommentResource commentResource = _createCommentResource();
@@ -128,7 +132,8 @@ public class Mutation {
 	@GraphQLInvokeDetached
 	public Comment putComment(
 			@GraphQLName("comment-id") Long commentId,
-			@GraphQLName("Comment") Comment comment)
+			@GraphQLName("Comment")
+				Comment comment)
 		throws Exception {
 
 		CommentResource commentResource = _createCommentResource();
@@ -139,8 +144,7 @@ public class Mutation {
 	@GraphQLInvokeDetached
 	public StructuredContent putStructuredContent(
 			@GraphQLName("structured-content-id") Long structuredContentId,
-			@GraphQLName("StructuredContent") StructuredContent
-				structuredContent)
+			@GraphQLName("StructuredContent") StructuredContent structuredContent)
 		throws Exception {
 
 		StructuredContentResource structuredContentResource =

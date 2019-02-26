@@ -41,7 +41,7 @@ import javax.annotation.Generated;
 public class Mutation {
 
 	@GraphQLInvokeDetached
-	public boolean deleteCategory(@GraphQLName("category-id") Long categoryId)
+	public Boolean deleteCategory(@GraphQLName("category-id") Long categoryId)
 		throws Exception {
 
 		CategoryResource categoryResource = _createCategoryResource();
@@ -50,7 +50,7 @@ public class Mutation {
 	}
 
 	@GraphQLInvokeDetached
-	public boolean deleteKeyword(@GraphQLName("keyword-id") Long keywordId)
+	public Boolean deleteKeyword(@GraphQLName("keyword-id") Long keywordId)
 		throws Exception {
 
 		KeywordResource keywordResource = _createKeywordResource();
@@ -59,7 +59,7 @@ public class Mutation {
 	}
 
 	@GraphQLInvokeDetached
-	public boolean deleteUserAccount(
+	public Boolean deleteUserAccount(
 			@GraphQLName("user-account-id") Long userAccountId)
 		throws Exception {
 
@@ -69,7 +69,7 @@ public class Mutation {
 	}
 
 	@GraphQLInvokeDetached
-	public boolean deleteVocabulary(
+	public Boolean deleteVocabulary(
 			@GraphQLName("vocabulary-id") Long vocabularyId)
 		throws Exception {
 
@@ -82,7 +82,8 @@ public class Mutation {
 	@GraphQLInvokeDetached
 	public Category postCategoryCategory(
 			@GraphQLName("category-id") Long categoryId,
-			@GraphQLName("Category") Category category)
+			@GraphQLName("Category")
+				Category category)
 		throws Exception {
 
 		CategoryResource categoryResource = _createCategoryResource();
@@ -94,7 +95,8 @@ public class Mutation {
 	@GraphQLInvokeDetached
 	public Keyword postContentSpaceKeyword(
 			@GraphQLName("content-space-id") Long contentSpaceId,
-			@GraphQLName("Keyword") Keyword keyword)
+			@GraphQLName("Keyword")
+				Keyword keyword)
 		throws Exception {
 
 		KeywordResource keywordResource = _createKeywordResource();
@@ -106,7 +108,8 @@ public class Mutation {
 	@GraphQLInvokeDetached
 	public Vocabulary postContentSpaceVocabulary(
 			@GraphQLName("content-space-id") Long contentSpaceId,
-			@GraphQLName("Vocabulary") Vocabulary vocabulary)
+			@GraphQLName("Vocabulary")
+				Vocabulary vocabulary)
 		throws Exception {
 
 		VocabularyResource vocabularyResource = _createVocabularyResource();
@@ -118,7 +121,8 @@ public class Mutation {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public UserAccount postUserAccount(
-			@GraphQLName("UserAccount") UserAccount userAccount)
+			@GraphQLName("UserAccount")
+				UserAccount userAccount)
 		throws Exception {
 
 		UserAccountResource userAccountResource = _createUserAccountResource();
@@ -130,7 +134,8 @@ public class Mutation {
 	@GraphQLInvokeDetached
 	public Category postVocabularyCategory(
 			@GraphQLName("vocabulary-id") Long vocabularyId,
-			@GraphQLName("Category") Category category)
+			@GraphQLName("Category")
+				Category category)
 		throws Exception {
 
 		CategoryResource categoryResource = _createCategoryResource();
@@ -141,7 +146,8 @@ public class Mutation {
 	@GraphQLInvokeDetached
 	public Category putCategory(
 			@GraphQLName("category-id") Long categoryId,
-			@GraphQLName("Category") Category category)
+			@GraphQLName("Category")
+				Category category)
 		throws Exception {
 
 		CategoryResource categoryResource = _createCategoryResource();
@@ -152,7 +158,8 @@ public class Mutation {
 	@GraphQLInvokeDetached
 	public Keyword putKeyword(
 			@GraphQLName("keyword-id") Long keywordId,
-			@GraphQLName("Keyword") Keyword keyword)
+			@GraphQLName("Keyword")
+				Keyword keyword)
 		throws Exception {
 
 		KeywordResource keywordResource = _createKeywordResource();
@@ -163,7 +170,8 @@ public class Mutation {
 	@GraphQLInvokeDetached
 	public UserAccount putUserAccount(
 			@GraphQLName("user-account-id") Long userAccountId,
-			@GraphQLName("UserAccount") UserAccount userAccount)
+			@GraphQLName("UserAccount")
+				UserAccount userAccount)
 		throws Exception {
 
 		UserAccountResource userAccountResource = _createUserAccountResource();
@@ -174,7 +182,8 @@ public class Mutation {
 	@GraphQLInvokeDetached
 	public Vocabulary putVocabulary(
 			@GraphQLName("vocabulary-id") Long vocabularyId,
-			@GraphQLName("Vocabulary") Vocabulary vocabulary)
+			@GraphQLName("Vocabulary")
+				Vocabulary vocabulary)
 		throws Exception {
 
 		VocabularyResource vocabularyResource = _createVocabularyResource();
