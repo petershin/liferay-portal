@@ -206,6 +206,7 @@ gradle.beforeProject {
 
 			npmInstall {
 				enabled = false
+				nodeModulesDir = new File(rootDir, "node_modules")
 			}
 		}
 
