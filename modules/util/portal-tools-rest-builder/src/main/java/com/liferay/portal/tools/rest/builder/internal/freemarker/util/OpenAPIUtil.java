@@ -185,19 +185,15 @@ public class OpenAPIUtil {
 						return;
 					}
 
-					String returnType = _getReturnType(
-						operation, restTypeMap);
+					Map.Entry<String, String> returnTypeAndSchemaName =
+						_getReturnTypeAndSchemaName(operation, restTypeMap);
 
-					for (String schemaName : schemas.keySet()) {
+					String returnType = returnTypeAndSchemaName.getKey();
+					String schemaName = returnTypeAndSchemaName.getValue();
 
-						// TODO: Instead of calling isSchemaMethod I think we should make a getMethodSchema(operation, restTypeMap, returnType) method
-
-						if (!_isSchemaMethod(
-								operation, restTypeMap, returnType,
-								schemaName)) {
-
-							return;
-						}
+					if (_isSchemaMethod(
+							operation, restTypeMap, returnType,
+							schemaName)) {
 
 						List<JavaMethodParameter> javaMethodParameters =
 							_getJavaMethodParameters(operation, restTypeMap);
@@ -335,6 +331,15 @@ public class OpenAPIUtil {
 	private static String _getJavaType(
 		Map<String, String> restTypeMap, Schema schema) {
 
+		Map.Entry<String, String> javaTypeAndSchemaName =
+			_getJavaTypeAndSchemaName(restTypeMap, schema);
+
+		return javaTypeAndSchemaName.getKey();
+	}
+
+	private static Map.Entry<String, String> _getJavaTypeAndSchemaName(
+		Map<String, String> restTypeMap, Schema schema) {
+
 		Items items = schema.getItems();
 		String type = schema.getType();
 
@@ -350,9 +355,12 @@ public class OpenAPIUtil {
 						itemsType, itemsFormat));
 			}
 
+			String schemaName = null;
+
 			if (items.getReference() != null) {
-				javaDataType = restTypeMap.get(
-					_getReferenceName(items.getReference()));
+				schemaName = _getReferenceName(items.getReference());
+
+				javaDataType = restTypeMap.get(schemaName);
 			}
 
 			if (javaDataType != null) {
@@ -363,7 +371,8 @@ public class OpenAPIUtil {
 				sb.append(javaDataType);
 				sb.append(">");
 
-				return sb.toString();
+				return new AbstractMap.SimpleImmutableEntry<>(
+					sb.toString(), schemaName);
 			}
 		}
 
@@ -373,17 +382,21 @@ public class OpenAPIUtil {
 					type, schema.getFormat()));
 
 			if (javaType != null) {
-				return javaType;
+				return new AbstractMap.SimpleImmutableEntry<>(javaType, null);
 			}
 
-			javaType = restTypeMap.get(StringUtil.upperCaseFirstLetter(type));
+			String schemaName = StringUtil.upperCaseFirstLetter(type);
+
+			javaType = restTypeMap.get(schemaName);
 
 			if (javaType != null) {
-				return javaType;
+				return new AbstractMap.SimpleImmutableEntry<>(
+					javaType, schemaName);
 			}
 
 			if (Objects.equals(type, "object")) {
-				return Object.class.getName();
+				return new AbstractMap.SimpleImmutableEntry<>(
+					Object.class.getName(), null);
 			}
 		}
 
@@ -392,8 +405,10 @@ public class OpenAPIUtil {
 		if (allOfSchemas != null) {
 			for (Schema allOfSchema : allOfSchemas) {
 				if (Validator.isNotNull(allOfSchema.getReference())) {
-					return restTypeMap.get(
-						_getReferenceName(items.getReference()));
+					String schemaName = _getReferenceName(items.getReference());
+
+					return new AbstractMap.SimpleImmutableEntry<>(
+						restTypeMap.get(schemaName), schemaName);
 				}
 			}
 		}
@@ -401,13 +416,17 @@ public class OpenAPIUtil {
 		if ((schema.getAnyOfSchemas() != null) ||
 			(schema.getOneOfSchemas() != null)) {
 
-			return Object.class.getName();
+			return new AbstractMap.SimpleImmutableEntry<>(
+				Object.class.getName(), null);
 		}
 
 		String schemaReference = schema.getReference();
 
 		if (schemaReference != null) {
-			return restTypeMap.get(_getReferenceName(schemaReference));
+			String schemaName = _getReferenceName(schemaReference);
+
+			return new AbstractMap.SimpleImmutableEntry<>(
+				restTypeMap.get(schemaName), schemaName);
 		}
 
 		return null;
@@ -479,13 +498,14 @@ public class OpenAPIUtil {
 		return reference.substring(index + 1);
 	}
 
-	private static String _getReturnType(
+	private static Map.Entry<String, String> _getReturnTypeAndSchemaName(
 		Operation operation, Map<String, String> restTypeMap) {
 
 		Map<String, Response> responses = operation.getResponses();
 
 		if (responses.isEmpty()) {
-			return Boolean.class.getName();
+			return new AbstractMap.SimpleImmutableEntry<>(
+				Boolean.class.getName(), null);
 		}
 
 		for (Response response : responses.values()) {
@@ -502,10 +522,13 @@ public class OpenAPIUtil {
 					continue;
 				}
 
-				String javaType = _getJavaType(restTypeMap, schema);
+				Map.Entry<String, String> javaTypeAndSchemaName =
+					_getJavaTypeAndSchemaName(restTypeMap, schema);
+
+				String javaType = javaTypeAndSchemaName.getKey();
 
 				if (javaType.startsWith(Collection.class.getName())) {
-					return javaType;
+					return javaTypeAndSchemaName;
 				}
 
 				String schemaReference = schema.getReference();
@@ -516,15 +539,20 @@ public class OpenAPIUtil {
 					continue;
 				}
 
-				return restTypeMap.get(_getReferenceName(schemaReference));
+				String schemaName = _getReferenceName(schemaReference);
+
+				return new AbstractMap.SimpleImmutableEntry<>(
+					restTypeMap.get(schemaName), schemaName);
 			}
 		}
 
 		if (Get.class.isInstance(operation)) {
-			return String.class.getName();
+			return new AbstractMap.SimpleImmutableEntry<>(
+				String.class.getName(), null);
 		}
 
-		return Boolean.class.getName();
+		return new AbstractMap.SimpleImmutableEntry<>(
+			Boolean.class.getName(), null);
 	}
 
 	private static boolean _isSchemaMethod(
