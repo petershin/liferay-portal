@@ -174,20 +174,23 @@ public class OpenAPIUtil {
 
 		Map<String, Schema> schemas = components.getSchemas();
 
-		for (String schemaName : schemas.keySet()) {
-			for (Map.Entry<String, PathItem> entry : pathItems.entrySet()) {
-				String path = entry.getKey();
-				PathItem pathItem = entry.getValue();
+		for (Map.Entry<String, PathItem> entry : pathItems.entrySet()) {
+			String path = entry.getKey();
+			PathItem pathItem = entry.getValue();
 
-				_visitOperations(
-					pathItem,
-					operation -> {
-						if (!predicate.test(operation)) {
-							return;
-						}
+			_visitOperations(
+				pathItem,
+				operation -> {
+					if (!predicate.test(operation)) {
+						return;
+					}
 
-						String returnType = _getReturnType(
-							operation, restTypeMap);
+					String returnType = _getReturnType(
+						operation, restTypeMap);
+
+					for (String schemaName : schemas.keySet()) {
+
+						// TODO: Instead of calling isSchemaMethod I think we should make a getMethodSchema(operation, restTypeMap, returnType) method
 
 						if (!_isSchemaMethod(
 								operation, restTypeMap, returnType,
@@ -206,8 +209,8 @@ public class OpenAPIUtil {
 							new JavaMethodSignature(
 								path, pathItem, operation, schemaName,
 								javaMethodParameters, methodName, returnType));
-					});
-			}
+					}
+				});
 		}
 
 		return javaMethodSignatures;
