@@ -37,42 +37,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 @GraphQLName("Folder")
 //@JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Folder")
-public class Folder {
+public class Folder  {
 
 	public Long getContentSpaceId() {
 		return contentSpaceId;
-	}
-
-	public Date getDateCreated() {
-		return dateCreated;
-	}
-
-	public Date getDateModified() {
-		return dateModified;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public Boolean getHasDocuments() {
-		return hasDocuments;
-	}
-
-	public Boolean getHasFolders() {
-		return hasFolders;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public String getViewableBy() {
-		return viewableBy;
 	}
 
 	public void setContentSpaceId(Long contentSpaceId) {
@@ -91,6 +59,14 @@ public class Folder {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty
+	protected Long contentSpaceId;
+
+	public Date getDateCreated() {
+		return dateCreated;
+	}
+
 	public void setDateCreated(Date dateCreated) {
 		this.dateCreated = dateCreated;
 	}
@@ -105,6 +81,14 @@ public class Folder {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@GraphQLField
+	@JsonProperty
+	protected Date dateCreated;
+
+	public Date getDateModified() {
+		return dateModified;
 	}
 
 	public void setDateModified(Date dateModified) {
@@ -123,6 +107,14 @@ public class Folder {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty
+	protected Date dateModified;
+
+	public String getDescription() {
+		return description;
+	}
+
 	public void setDescription(String description) {
 		this.description = description;
 	}
@@ -137,6 +129,14 @@ public class Folder {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@GraphQLField
+	@JsonProperty
+	protected String description;
+
+	public Boolean getHasDocuments() {
+		return hasDocuments;
 	}
 
 	public void setHasDocuments(Boolean hasDocuments) {
@@ -155,6 +155,14 @@ public class Folder {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty
+	protected Boolean hasDocuments;
+
+	public Boolean getHasFolders() {
+		return hasFolders;
+	}
+
 	public void setHasFolders(Boolean hasFolders) {
 		this.hasFolders = hasFolders;
 	}
@@ -171,6 +179,14 @@ public class Folder {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty
+	protected Boolean hasFolders;
+
+	public Long getId() {
+		return id;
+	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -185,6 +201,14 @@ public class Folder {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty
+	protected Long id;
+
+	public String getName() {
+		return name;
+	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -197,6 +221,14 @@ public class Folder {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@GraphQLField
+	@JsonProperty
+	protected String name;
+
+	public String getViewableBy() {
+		return viewableBy;
 	}
 
 	public void setViewableBy(String viewableBy) {
@@ -215,8 +247,12 @@ public class Folder {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty
+	protected String viewableBy;
+
 	public String toString() {
-		StringBundler sb = new StringBundler(38);
+		StringBundler sb = new StringBundler();
 
 		sb.append("{");
 
@@ -278,41 +314,5 @@ public class Folder {
 
 		return sb.toString();
 	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Long contentSpaceId;
-
-	@GraphQLField
-	@JsonProperty
-	protected Date dateCreated;
-
-	@GraphQLField
-	@JsonProperty
-	protected Date dateModified;
-
-	@GraphQLField
-	@JsonProperty
-	protected String description;
-
-	@GraphQLField
-	@JsonProperty
-	protected Boolean hasDocuments;
-
-	@GraphQLField
-	@JsonProperty
-	protected Boolean hasFolders;
-
-	@GraphQLField
-	@JsonProperty
-	protected Long id;
-
-	@GraphQLField
-	@JsonProperty
-	protected String name;
-
-	@GraphQLField
-	@JsonProperty
-	protected String viewableBy;
 
 }

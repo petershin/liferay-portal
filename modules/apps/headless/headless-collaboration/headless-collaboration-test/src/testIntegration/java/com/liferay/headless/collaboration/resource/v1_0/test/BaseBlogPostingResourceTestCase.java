@@ -111,6 +111,48 @@ public abstract class BaseBlogPostingResourceTestCase {
 			404, invokeGetBlogPostingResponse(blogPosting.getId()));
 	}
 
+	protected BlogPosting testDeleteBlogPosting_addBlogPosting()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected boolean invokeDeleteBlogPosting(Long blogPostingId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setDelete(true);
+
+		String location =
+			_resourceURL +
+				_toPath("/blog-postings/{blog-posting-id}", blogPostingId);
+
+		options.setLocation(location);
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), Boolean.class);
+	}
+
+	protected Http.Response invokeDeleteBlogPostingResponse(Long blogPostingId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setDelete(true);
+
+		String location =
+			_resourceURL +
+				_toPath("/blog-postings/{blog-posting-id}", blogPostingId);
+
+		options.setLocation(location);
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
 	@Test
 	public void testGetBlogPosting() throws Exception {
 		BlogPosting postBlogPosting = testGetBlogPosting_addBlogPosting();
@@ -120,6 +162,149 @@ public abstract class BaseBlogPostingResourceTestCase {
 
 		assertEquals(postBlogPosting, getBlogPosting);
 		assertValid(getBlogPosting);
+	}
+
+	protected BlogPosting testGetBlogPosting_addBlogPosting() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected BlogPosting invokeGetBlogPosting(Long blogPostingId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath("/blog-postings/{blog-posting-id}", blogPostingId);
+
+		options.setLocation(location);
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), BlogPosting.class);
+	}
+
+	protected Http.Response invokeGetBlogPostingResponse(Long blogPostingId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath("/blog-postings/{blog-posting-id}", blogPostingId);
+
+		options.setLocation(location);
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	@Test
+	public void testPatchBlogPosting() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	protected BlogPosting invokePatchBlogPosting(
+			Long blogPostingId, BlogPosting blogPosting)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath("/blog-postings/{blog-posting-id}", blogPostingId);
+
+		options.setLocation(location);
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), BlogPosting.class);
+	}
+
+	protected Http.Response invokePatchBlogPostingResponse(
+			Long blogPostingId, BlogPosting blogPosting)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath("/blog-postings/{blog-posting-id}", blogPostingId);
+
+		options.setLocation(location);
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	@Test
+	public void testPutBlogPosting() throws Exception {
+		BlogPosting postBlogPosting = testPutBlogPosting_addBlogPosting();
+
+		BlogPosting randomBlogPosting = randomBlogPosting();
+
+		BlogPosting putBlogPosting = invokePutBlogPosting(
+			postBlogPosting.getId(), randomBlogPosting);
+
+		assertEquals(randomBlogPosting, putBlogPosting);
+		assertValid(putBlogPosting);
+
+		BlogPosting getBlogPosting = invokeGetBlogPosting(
+			putBlogPosting.getId());
+
+		assertEquals(randomBlogPosting, getBlogPosting);
+		assertValid(getBlogPosting);
+	}
+
+	protected BlogPosting testPutBlogPosting_addBlogPosting() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected BlogPosting invokePutBlogPosting(
+			Long blogPostingId, BlogPosting blogPosting)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(blogPosting),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+
+		String location =
+			_resourceURL +
+				_toPath("/blog-postings/{blog-posting-id}", blogPostingId);
+
+		options.setLocation(location);
+
+		options.setPut(true);
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), BlogPosting.class);
+	}
+
+	protected Http.Response invokePutBlogPostingResponse(
+			Long blogPostingId, BlogPosting blogPosting)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(blogPosting),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+
+		String location =
+			_resourceURL +
+				_toPath("/blog-postings/{blog-posting-id}", blogPostingId);
+
+		options.setLocation(location);
+
+		options.setPut(true);
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
 	}
 
 	@Test
@@ -362,9 +547,77 @@ public abstract class BaseBlogPostingResourceTestCase {
 		}
 	}
 
-	@Test
-	public void testPatchBlogPosting() throws Exception {
-		Assert.assertTrue(true);
+	protected BlogPosting testGetContentSpaceBlogPostingsPage_addBlogPosting(
+			Long contentSpaceId, BlogPosting blogPosting)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long testGetContentSpaceBlogPostingsPage_getContentSpaceId()
+		throws Exception {
+
+		return testGroup.getGroupId();
+	}
+
+	protected Page<BlogPosting> invokeGetContentSpaceBlogPostingsPage(
+			Long contentSpaceId, String filterString, Pagination pagination,
+			String sortString)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/content-spaces/{content-space-id}/blog-postings",
+					contentSpaceId);
+
+		location = HttpUtil.addParameter(location, "filter", filterString);
+
+		location = HttpUtil.addParameter(
+			location, "page", pagination.getPage());
+		location = HttpUtil.addParameter(
+			location, "pageSize", pagination.getPageSize());
+
+		location = HttpUtil.addParameter(location, "sort", sortString);
+
+		options.setLocation(location);
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options),
+			new TypeReference<Page<BlogPosting>>() {
+			});
+	}
+
+	protected Http.Response invokeGetContentSpaceBlogPostingsPageResponse(
+			Long contentSpaceId, String filterString, Pagination pagination,
+			String sortString)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/content-spaces/{content-space-id}/blog-postings",
+					contentSpaceId);
+
+		location = HttpUtil.addParameter(location, "filter", filterString);
+
+		location = HttpUtil.addParameter(
+			location, "page", pagination.getPage());
+		location = HttpUtil.addParameter(
+			location, "pageSize", pagination.getPageSize());
+
+		location = HttpUtil.addParameter(location, "sort", sortString);
+
+		options.setLocation(location);
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
 	}
 
 	@Test
@@ -378,23 +631,68 @@ public abstract class BaseBlogPostingResourceTestCase {
 		assertValid(postBlogPosting);
 	}
 
-	@Test
-	public void testPutBlogPosting() throws Exception {
-		BlogPosting postBlogPosting = testPutBlogPosting_addBlogPosting();
+	protected BlogPosting testPostContentSpaceBlogPosting_addBlogPosting(
+			BlogPosting blogPosting)
+		throws Exception {
 
-		BlogPosting randomBlogPosting = randomBlogPosting();
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
 
-		BlogPosting putBlogPosting = invokePutBlogPosting(
-			postBlogPosting.getId(), randomBlogPosting);
+	protected BlogPosting invokePostContentSpaceBlogPosting(
+			Long contentSpaceId, BlogPosting blogPosting)
+		throws Exception {
 
-		assertEquals(randomBlogPosting, putBlogPosting);
-		assertValid(putBlogPosting);
+		Http.Options options = _createHttpOptions();
 
-		BlogPosting getBlogPosting = invokeGetBlogPosting(
-			putBlogPosting.getId());
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(blogPosting),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-		assertEquals(randomBlogPosting, getBlogPosting);
-		assertValid(getBlogPosting);
+		String location =
+			_resourceURL +
+				_toPath(
+					"/content-spaces/{content-space-id}/blog-postings",
+					contentSpaceId);
+
+		options.setLocation(location);
+
+		options.setPost(true);
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), BlogPosting.class);
+	}
+
+	protected Http.Response invokePostContentSpaceBlogPostingResponse(
+			Long contentSpaceId, BlogPosting blogPosting)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(blogPosting),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/content-spaces/{content-space-id}/blog-postings",
+					contentSpaceId);
+
+		options.setLocation(location);
+
+		options.setPost(true);
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	protected void assertResponseCode(
+		int expectedResponseCode, Http.Response actualResponse) {
+
+		Assert.assertEquals(
+			expectedResponseCode, actualResponse.getResponseCode());
 	}
 
 	protected void assertEquals(
@@ -439,13 +737,6 @@ public abstract class BaseBlogPostingResourceTestCase {
 		}
 	}
 
-	protected void assertResponseCode(
-		int expectedResponseCode, Http.Response actualResponse) {
-
-		Assert.assertEquals(
-			expectedResponseCode, actualResponse.getResponseCode());
-	}
-
 	protected void assertValid(BlogPosting blogPosting) {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
@@ -458,8 +749,8 @@ public abstract class BaseBlogPostingResourceTestCase {
 
 		int size = blogPostings.size();
 
-		if ((page.getItemsPerPage() > 0) && (page.getLastPageNumber() > 0) &&
-			(page.getPageNumber() > 0) && (page.getTotalCount() > 0) &&
+		if ((page.getLastPage() > 0) && (page.getPage() > 0) &&
+			(page.getPageSize() > 0) && (page.getTotalCount() > 0) &&
 			(size > 0)) {
 
 			valid = true;
@@ -659,258 +950,6 @@ public abstract class BaseBlogPostingResourceTestCase {
 			"Invalid entity field " + entityFieldName);
 	}
 
-	protected boolean invokeDeleteBlogPosting(Long blogPostingId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setDelete(true);
-
-		String location =
-			_resourceURL +
-				_toPath("/blog-postings/{blog-posting-id}", blogPostingId);
-
-		options.setLocation(location);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), Boolean.class);
-	}
-
-	protected Http.Response invokeDeleteBlogPostingResponse(Long blogPostingId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setDelete(true);
-
-		String location =
-			_resourceURL +
-				_toPath("/blog-postings/{blog-posting-id}", blogPostingId);
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
-	protected BlogPosting invokeGetBlogPosting(Long blogPostingId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath("/blog-postings/{blog-posting-id}", blogPostingId);
-
-		options.setLocation(location);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), BlogPosting.class);
-	}
-
-	protected Http.Response invokeGetBlogPostingResponse(Long blogPostingId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath("/blog-postings/{blog-posting-id}", blogPostingId);
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
-	protected Page<BlogPosting> invokeGetContentSpaceBlogPostingsPage(
-			Long contentSpaceId, String filterString, Pagination pagination,
-			String sortString)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/content-spaces/{content-space-id}/blog-postings",
-					contentSpaceId);
-
-		location = HttpUtil.addParameter(location, "filter", filterString);
-
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPageNumber());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getItemsPerPage());
-
-		location = HttpUtil.addParameter(location, "sort", sortString);
-
-		options.setLocation(location);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options),
-			new TypeReference<Page<BlogPosting>>() {
-			});
-	}
-
-	protected Http.Response invokeGetContentSpaceBlogPostingsPageResponse(
-			Long contentSpaceId, String filterString, Pagination pagination,
-			String sortString)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/content-spaces/{content-space-id}/blog-postings",
-					contentSpaceId);
-
-		location = HttpUtil.addParameter(location, "filter", filterString);
-
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPageNumber());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getItemsPerPage());
-
-		location = HttpUtil.addParameter(location, "sort", sortString);
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
-	protected BlogPosting invokePatchBlogPosting(
-			Long blogPostingId, BlogPosting blogPosting)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath("/blog-postings/{blog-posting-id}", blogPostingId);
-
-		options.setLocation(location);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), BlogPosting.class);
-	}
-
-	protected Http.Response invokePatchBlogPostingResponse(
-			Long blogPostingId, BlogPosting blogPosting)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath("/blog-postings/{blog-posting-id}", blogPostingId);
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
-	protected BlogPosting invokePostContentSpaceBlogPosting(
-			Long contentSpaceId, BlogPosting blogPosting)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			_inputObjectMapper.writeValueAsString(blogPosting),
-			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/content-spaces/{content-space-id}/blog-postings",
-					contentSpaceId);
-
-		options.setLocation(location);
-
-		options.setPost(true);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), BlogPosting.class);
-	}
-
-	protected Http.Response invokePostContentSpaceBlogPostingResponse(
-			Long contentSpaceId, BlogPosting blogPosting)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			_inputObjectMapper.writeValueAsString(blogPosting),
-			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/content-spaces/{content-space-id}/blog-postings",
-					contentSpaceId);
-
-		options.setLocation(location);
-
-		options.setPost(true);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
-	protected BlogPosting invokePutBlogPosting(
-			Long blogPostingId, BlogPosting blogPosting)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			_inputObjectMapper.writeValueAsString(blogPosting),
-			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-
-		String location =
-			_resourceURL +
-				_toPath("/blog-postings/{blog-posting-id}", blogPostingId);
-
-		options.setLocation(location);
-
-		options.setPut(true);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), BlogPosting.class);
-	}
-
-	protected Http.Response invokePutBlogPostingResponse(
-			Long blogPostingId, BlogPosting blogPosting)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			_inputObjectMapper.writeValueAsString(blogPosting),
-			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-
-		String location =
-			_resourceURL +
-				_toPath("/blog-postings/{blog-posting-id}", blogPostingId);
-
-		options.setLocation(location);
-
-		options.setPut(true);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
 	protected BlogPosting randomBlogPosting() {
 		return new BlogPosting() {
 			{
@@ -933,45 +972,6 @@ public abstract class BaseBlogPostingResourceTestCase {
 		};
 	}
 
-	protected BlogPosting testDeleteBlogPosting_addBlogPosting()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected BlogPosting testGetBlogPosting_addBlogPosting() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected BlogPosting testGetContentSpaceBlogPostingsPage_addBlogPosting(
-			Long contentSpaceId, BlogPosting blogPosting)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Long testGetContentSpaceBlogPostingsPage_getContentSpaceId()
-		throws Exception {
-
-		return testGroup.getGroupId();
-	}
-
-	protected BlogPosting testPostContentSpaceBlogPosting_addBlogPosting(
-			BlogPosting blogPosting)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected BlogPosting testPutBlogPosting_addBlogPosting() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
 	protected Group testGroup;
 
 	protected static class Page<T> {
@@ -980,16 +980,16 @@ public abstract class BaseBlogPostingResourceTestCase {
 			return new ArrayList<>(items);
 		}
 
-		public long getItemsPerPage() {
-			return itemsPerPage;
+		public long getLastPage() {
+			return lastPage;
 		}
 
-		public long getLastPageNumber() {
-			return lastPageNumber;
+		public long getPage() {
+			return page;
 		}
 
-		public long getPageNumber() {
-			return pageNumber;
+		public long getPageSize() {
+			return pageSize;
 		}
 
 		public long getTotalCount() {
@@ -999,14 +999,14 @@ public abstract class BaseBlogPostingResourceTestCase {
 		@JsonProperty
 		protected Collection<T> items;
 
-		@JsonProperty("pageSize")
-		protected long itemsPerPage;
+		@JsonProperty
+		protected long lastPage;
 
 		@JsonProperty
-		protected long lastPageNumber;
+		protected long page;
 
-		@JsonProperty("page")
-		protected long pageNumber;
+		@JsonProperty
+		protected long pageSize;
 
 		@JsonProperty
 		protected long totalCount;
@@ -1036,12 +1036,12 @@ public abstract class BaseBlogPostingResourceTestCase {
 	}
 
 	private static DateFormat _dateFormat;
-	private static final ObjectMapper _inputObjectMapper = new ObjectMapper() {
+	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {
 		{
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
 		}
 	};
-	private static final ObjectMapper _outputObjectMapper = new ObjectMapper();
+	private final static ObjectMapper _outputObjectMapper = new ObjectMapper();
 
 	@Inject
 	private BlogPostingResource _blogPostingResource;

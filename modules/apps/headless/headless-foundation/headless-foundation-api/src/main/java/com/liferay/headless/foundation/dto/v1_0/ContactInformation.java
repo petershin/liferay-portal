@@ -35,62 +35,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 @GraphQLName("ContactInformation")
 //@JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ContactInformation")
-public class ContactInformation {
+public class ContactInformation  {
 
 	public Email[] getEmail() {
 		return email;
-	}
-
-	public Long[] getEmailIds() {
-		return emailIds;
-	}
-
-	public String getFacebook() {
-		return facebook;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public String getJabber() {
-		return jabber;
-	}
-
-	public PostalAddress[] getPostalAddress() {
-		return postalAddress;
-	}
-
-	public Long[] getPostalAddressIds() {
-		return postalAddressIds;
-	}
-
-	public String getSkype() {
-		return skype;
-	}
-
-	public String getSms() {
-		return sms;
-	}
-
-	public Phone[] getTelephone() {
-		return telephone;
-	}
-
-	public Long[] getTelephoneIds() {
-		return telephoneIds;
-	}
-
-	public String getTwitter() {
-		return twitter;
-	}
-
-	public WebUrl[] getWebUrl() {
-		return webUrl;
-	}
-
-	public Long[] getWebUrlIds() {
-		return webUrlIds;
 	}
 
 	public void setEmail(Email[] email) {
@@ -109,6 +57,14 @@ public class ContactInformation {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty
+	protected Email[] email;
+
+	public Long[] getEmailIds() {
+		return emailIds;
+	}
+
 	public void setEmailIds(Long[] emailIds) {
 		this.emailIds = emailIds;
 	}
@@ -123,6 +79,14 @@ public class ContactInformation {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@GraphQLField
+	@JsonProperty
+	protected Long[] emailIds;
+
+	public String getFacebook() {
+		return facebook;
 	}
 
 	public void setFacebook(String facebook) {
@@ -141,6 +105,14 @@ public class ContactInformation {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty
+	protected String facebook;
+
+	public Long getId() {
+		return id;
+	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -153,6 +125,14 @@ public class ContactInformation {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@GraphQLField
+	@JsonProperty
+	protected Long id;
+
+	public String getJabber() {
+		return jabber;
 	}
 
 	public void setJabber(String jabber) {
@@ -169,6 +149,14 @@ public class ContactInformation {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@GraphQLField
+	@JsonProperty
+	protected String jabber;
+
+	public PostalAddress[] getPostalAddress() {
+		return postalAddress;
 	}
 
 	public void setPostalAddress(PostalAddress[] postalAddress) {
@@ -188,6 +176,14 @@ public class ContactInformation {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty
+	protected PostalAddress[] postalAddress;
+
+	public Long[] getPostalAddressIds() {
+		return postalAddressIds;
+	}
+
 	public void setPostalAddressIds(Long[] postalAddressIds) {
 		this.postalAddressIds = postalAddressIds;
 	}
@@ -202,6 +198,14 @@ public class ContactInformation {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@GraphQLField
+	@JsonProperty
+	protected Long[] postalAddressIds;
+
+	public String getSkype() {
+		return skype;
 	}
 
 	public void setSkype(String skype) {
@@ -220,6 +224,14 @@ public class ContactInformation {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty
+	protected String skype;
+
+	public String getSms() {
+		return sms;
+	}
+
 	public void setSms(String sms) {
 		this.sms = sms;
 	}
@@ -232,6 +244,14 @@ public class ContactInformation {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@GraphQLField
+	@JsonProperty
+	protected String sms;
+
+	public Phone[] getTelephone() {
+		return telephone;
 	}
 
 	public void setTelephone(Phone[] telephone) {
@@ -250,6 +270,14 @@ public class ContactInformation {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty
+	protected Phone[] telephone;
+
+	public Long[] getTelephoneIds() {
+		return telephoneIds;
+	}
+
 	public void setTelephoneIds(Long[] telephoneIds) {
 		this.telephoneIds = telephoneIds;
 	}
@@ -264,6 +292,14 @@ public class ContactInformation {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@GraphQLField
+	@JsonProperty
+	protected Long[] telephoneIds;
+
+	public String getTwitter() {
+		return twitter;
 	}
 
 	public void setTwitter(String twitter) {
@@ -282,6 +318,18 @@ public class ContactInformation {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty
+	protected String twitter;
+
+	public WebUrl[] getWebUrl() {
+		return webUrl;
+	}
+
+	public void setWebUrl(WebUrl[] webUrl) {
+		this.webUrl = webUrl;
+	}
+
 	@JsonIgnore
 	public void setWebUrl(
 		UnsafeSupplier<WebUrl[], Exception> webUrlUnsafeSupplier) {
@@ -294,8 +342,12 @@ public class ContactInformation {
 		}
 	}
 
-	public void setWebUrl(WebUrl[] webUrl) {
-		this.webUrl = webUrl;
+	@GraphQLField
+	@JsonProperty
+	protected WebUrl[] webUrl;
+
+	public Long[] getWebUrlIds() {
+		return webUrlIds;
 	}
 
 	public void setWebUrlIds(Long[] webUrlIds) {
@@ -313,6 +365,10 @@ public class ContactInformation {
 			throw new RuntimeException(e);
 		}
 	}
+
+	@GraphQLField
+	@JsonProperty
+	protected Long[] webUrlIds;
 
 	public String toString() {
 		StringBundler sb = new StringBundler();
@@ -529,61 +585,5 @@ public class ContactInformation {
 
 		return sb.toString();
 	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Email[] email;
-
-	@GraphQLField
-	@JsonProperty
-	protected Long[] emailIds;
-
-	@GraphQLField
-	@JsonProperty
-	protected String facebook;
-
-	@GraphQLField
-	@JsonProperty
-	protected Long id;
-
-	@GraphQLField
-	@JsonProperty
-	protected String jabber;
-
-	@GraphQLField
-	@JsonProperty
-	protected PostalAddress[] postalAddress;
-
-	@GraphQLField
-	@JsonProperty
-	protected Long[] postalAddressIds;
-
-	@GraphQLField
-	@JsonProperty
-	protected String skype;
-
-	@GraphQLField
-	@JsonProperty
-	protected String sms;
-
-	@GraphQLField
-	@JsonProperty
-	protected Phone[] telephone;
-
-	@GraphQLField
-	@JsonProperty
-	protected Long[] telephoneIds;
-
-	@GraphQLField
-	@JsonProperty
-	protected String twitter;
-
-	@GraphQLField
-	@JsonProperty
-	protected WebUrl[] webUrl;
-
-	@GraphQLField
-	@JsonProperty
-	protected Long[] webUrlIds;
 
 }

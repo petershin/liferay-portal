@@ -37,46 +37,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 @GraphQLName("FormStructure")
 //@JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "FormStructure")
-public class FormStructure {
+public class FormStructure  {
 
 	public String[] getAvailableLanguages() {
 		return availableLanguages;
-	}
-
-	public Long getContentSpace() {
-		return contentSpace;
-	}
-
-	public Creator getCreator() {
-		return creator;
-	}
-
-	public Date getDateCreated() {
-		return dateCreated;
-	}
-
-	public Date getDateModified() {
-		return dateModified;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public FormPages[] getFormPages() {
-		return formPages;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public SuccessPage getSuccessPage() {
-		return successPage;
 	}
 
 	public void setAvailableLanguages(String[] availableLanguages) {
@@ -95,6 +59,14 @@ public class FormStructure {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty
+	protected String[] availableLanguages;
+
+	public Long getContentSpace() {
+		return contentSpace;
+	}
+
 	public void setContentSpace(Long contentSpace) {
 		this.contentSpace = contentSpace;
 	}
@@ -109,6 +81,14 @@ public class FormStructure {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@GraphQLField
+	@JsonProperty
+	protected Long contentSpace;
+
+	public Creator getCreator() {
+		return creator;
 	}
 
 	public void setCreator(Creator creator) {
@@ -127,6 +107,14 @@ public class FormStructure {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty
+	protected Creator creator;
+
+	public Date getDateCreated() {
+		return dateCreated;
+	}
+
 	public void setDateCreated(Date dateCreated) {
 		this.dateCreated = dateCreated;
 	}
@@ -141,6 +129,14 @@ public class FormStructure {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@GraphQLField
+	@JsonProperty
+	protected Date dateCreated;
+
+	public Date getDateModified() {
+		return dateModified;
 	}
 
 	public void setDateModified(Date dateModified) {
@@ -159,6 +155,14 @@ public class FormStructure {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty
+	protected Date dateModified;
+
+	public String getDescription() {
+		return description;
+	}
+
 	public void setDescription(String description) {
 		this.description = description;
 	}
@@ -173,6 +177,14 @@ public class FormStructure {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@GraphQLField
+	@JsonProperty
+	protected String description;
+
+	public FormPages[] getFormPages() {
+		return formPages;
 	}
 
 	public void setFormPages(FormPages[] formPages) {
@@ -191,6 +203,14 @@ public class FormStructure {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty
+	protected FormPages[] formPages;
+
+	public Long getId() {
+		return id;
+	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -205,6 +225,14 @@ public class FormStructure {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty
+	protected Long id;
+
+	public String getName() {
+		return name;
+	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -217,6 +245,14 @@ public class FormStructure {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@GraphQLField
+	@JsonProperty
+	protected String name;
+
+	public SuccessPage getSuccessPage() {
+		return successPage;
 	}
 
 	public void setSuccessPage(SuccessPage successPage) {
@@ -234,6 +270,10 @@ public class FormStructure {
 			throw new RuntimeException(e);
 		}
 	}
+
+	@GraphQLField
+	@JsonProperty
+	protected SuccessPage successPage;
 
 	public String toString() {
 		StringBundler sb = new StringBundler();
@@ -335,45 +375,5 @@ public class FormStructure {
 
 		return sb.toString();
 	}
-
-	@GraphQLField
-	@JsonProperty
-	protected String[] availableLanguages;
-
-	@GraphQLField
-	@JsonProperty
-	protected Long contentSpace;
-
-	@GraphQLField
-	@JsonProperty
-	protected Creator creator;
-
-	@GraphQLField
-	@JsonProperty
-	protected Date dateCreated;
-
-	@GraphQLField
-	@JsonProperty
-	protected Date dateModified;
-
-	@GraphQLField
-	@JsonProperty
-	protected String description;
-
-	@GraphQLField
-	@JsonProperty
-	protected FormPages[] formPages;
-
-	@GraphQLField
-	@JsonProperty
-	protected Long id;
-
-	@GraphQLField
-	@JsonProperty
-	protected String name;
-
-	@GraphQLField
-	@JsonProperty
-	protected SuccessPage successPage;
 
 }

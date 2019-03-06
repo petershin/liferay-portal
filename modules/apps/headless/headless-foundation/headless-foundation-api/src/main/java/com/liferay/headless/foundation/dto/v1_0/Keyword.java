@@ -37,34 +37,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 @GraphQLName("Keyword")
 //@JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Keyword")
-public class Keyword {
+public class Keyword  {
 
 	public Long getContentSpace() {
 		return contentSpace;
-	}
-
-	public Creator getCreator() {
-		return creator;
-	}
-
-	public Date getDateCreated() {
-		return dateCreated;
-	}
-
-	public Date getDateModified() {
-		return dateModified;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public Number getKeywordUsageCount() {
-		return keywordUsageCount;
-	}
-
-	public String getName() {
-		return name;
 	}
 
 	public void setContentSpace(Long contentSpace) {
@@ -83,6 +59,14 @@ public class Keyword {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty
+	protected Long contentSpace;
+
+	public Creator getCreator() {
+		return creator;
+	}
+
 	public void setCreator(Creator creator) {
 		this.creator = creator;
 	}
@@ -97,6 +81,14 @@ public class Keyword {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@GraphQLField
+	@JsonProperty
+	protected Creator creator;
+
+	public Date getDateCreated() {
+		return dateCreated;
 	}
 
 	public void setDateCreated(Date dateCreated) {
@@ -115,6 +107,14 @@ public class Keyword {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty
+	protected Date dateCreated;
+
+	public Date getDateModified() {
+		return dateModified;
+	}
+
 	public void setDateModified(Date dateModified) {
 		this.dateModified = dateModified;
 	}
@@ -131,6 +131,14 @@ public class Keyword {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty
+	protected Date dateModified;
+
+	public Long getId() {
+		return id;
+	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -143,6 +151,14 @@ public class Keyword {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@GraphQLField
+	@JsonProperty
+	protected Long id;
+
+	public Number getKeywordUsageCount() {
+		return keywordUsageCount;
 	}
 
 	public void setKeywordUsageCount(Number keywordUsageCount) {
@@ -161,6 +177,14 @@ public class Keyword {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty
+	protected Number keywordUsageCount;
+
+	public String getName() {
+		return name;
+	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -175,8 +199,12 @@ public class Keyword {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty
+	protected String name;
+
 	public String toString() {
-		StringBundler sb = new StringBundler(28);
+		StringBundler sb = new StringBundler();
 
 		sb.append("{");
 
@@ -224,33 +252,5 @@ public class Keyword {
 
 		return sb.toString();
 	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Long contentSpace;
-
-	@GraphQLField
-	@JsonProperty
-	protected Creator creator;
-
-	@GraphQLField
-	@JsonProperty
-	protected Date dateCreated;
-
-	@GraphQLField
-	@JsonProperty
-	protected Date dateModified;
-
-	@GraphQLField
-	@JsonProperty
-	protected Long id;
-
-	@GraphQLField
-	@JsonProperty
-	protected Number keywordUsageCount;
-
-	@GraphQLField
-	@JsonProperty
-	protected String name;
 
 }

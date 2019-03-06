@@ -35,34 +35,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 @GraphQLName("Creator")
 //@JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Creator")
-public class Creator {
+public class Creator  {
 
 	public String getAdditionalName() {
 		return additionalName;
-	}
-
-	public String getFamilyName() {
-		return familyName;
-	}
-
-	public String getGivenName() {
-		return givenName;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public String getImage() {
-		return image;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public String getProfileURL() {
-		return profileURL;
 	}
 
 	public void setAdditionalName(String additionalName) {
@@ -81,6 +57,14 @@ public class Creator {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty
+	protected String additionalName;
+
+	public String getFamilyName() {
+		return familyName;
+	}
+
 	public void setFamilyName(String familyName) {
 		this.familyName = familyName;
 	}
@@ -95,6 +79,14 @@ public class Creator {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@GraphQLField
+	@JsonProperty
+	protected String familyName;
+
+	public String getGivenName() {
+		return givenName;
 	}
 
 	public void setGivenName(String givenName) {
@@ -113,6 +105,14 @@ public class Creator {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty
+	protected String givenName;
+
+	public Long getId() {
+		return id;
+	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -125,6 +125,14 @@ public class Creator {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@GraphQLField
+	@JsonProperty
+	protected Long id;
+
+	public String getImage() {
+		return image;
 	}
 
 	public void setImage(String image) {
@@ -143,6 +151,14 @@ public class Creator {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty
+	protected String image;
+
+	public String getName() {
+		return name;
+	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -155,6 +171,14 @@ public class Creator {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@GraphQLField
+	@JsonProperty
+	protected String name;
+
+	public String getProfileURL() {
+		return profileURL;
 	}
 
 	public void setProfileURL(String profileURL) {
@@ -173,8 +197,12 @@ public class Creator {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty
+	protected String profileURL;
+
 	public String toString() {
-		StringBundler sb = new StringBundler(34);
+		StringBundler sb = new StringBundler();
 
 		sb.append("{");
 
@@ -228,33 +256,5 @@ public class Creator {
 
 		return sb.toString();
 	}
-
-	@GraphQLField
-	@JsonProperty
-	protected String additionalName;
-
-	@GraphQLField
-	@JsonProperty
-	protected String familyName;
-
-	@GraphQLField
-	@JsonProperty
-	protected String givenName;
-
-	@GraphQLField
-	@JsonProperty
-	protected Long id;
-
-	@GraphQLField
-	@JsonProperty
-	protected String image;
-
-	@GraphQLField
-	@JsonProperty
-	protected String name;
-
-	@GraphQLField
-	@JsonProperty
-	protected String profileURL;
 
 }

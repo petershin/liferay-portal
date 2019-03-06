@@ -364,6 +364,80 @@ public abstract class BaseContentStructureResourceTestCase {
 		}
 	}
 
+	protected ContentStructure
+			testGetContentSpaceContentStructuresPage_addContentStructure(
+				Long contentSpaceId, ContentStructure contentStructure)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long testGetContentSpaceContentStructuresPage_getContentSpaceId()
+		throws Exception {
+
+		return testGroup.getGroupId();
+	}
+
+	protected Page<ContentStructure> invokeGetContentSpaceContentStructuresPage(
+			Long contentSpaceId, String filterString, Pagination pagination,
+			String sortString)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/content-spaces/{content-space-id}/content-structures",
+					contentSpaceId);
+
+		location = HttpUtil.addParameter(location, "filter", filterString);
+
+		location = HttpUtil.addParameter(
+			location, "page", pagination.getPage());
+		location = HttpUtil.addParameter(
+			location, "pageSize", pagination.getPageSize());
+
+		location = HttpUtil.addParameter(location, "sort", sortString);
+
+		options.setLocation(location);
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options),
+			new TypeReference<Page<ContentStructure>>() {
+			});
+	}
+
+	protected Http.Response invokeGetContentSpaceContentStructuresPageResponse(
+			Long contentSpaceId, String filterString, Pagination pagination,
+			String sortString)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/content-spaces/{content-space-id}/content-structures",
+					contentSpaceId);
+
+		location = HttpUtil.addParameter(location, "filter", filterString);
+
+		location = HttpUtil.addParameter(
+			location, "page", pagination.getPage());
+		location = HttpUtil.addParameter(
+			location, "pageSize", pagination.getPageSize());
+
+		location = HttpUtil.addParameter(location, "sort", sortString);
+
+		options.setLocation(location);
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
 	@Test
 	public void testGetContentStructure() throws Exception {
 		ContentStructure postContentStructure =
@@ -374,6 +448,57 @@ public abstract class BaseContentStructureResourceTestCase {
 
 		assertEquals(postContentStructure, getContentStructure);
 		assertValid(getContentStructure);
+	}
+
+	protected ContentStructure testGetContentStructure_addContentStructure()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected ContentStructure invokeGetContentStructure(
+			Long contentStructureId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/content-structures/{content-structure-id}",
+					contentStructureId);
+
+		options.setLocation(location);
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), ContentStructure.class);
+	}
+
+	protected Http.Response invokeGetContentStructureResponse(
+			Long contentStructureId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/content-structures/{content-structure-id}",
+					contentStructureId);
+
+		options.setLocation(location);
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	protected void assertResponseCode(
+		int expectedResponseCode, Http.Response actualResponse) {
+
+		Assert.assertEquals(
+			expectedResponseCode, actualResponse.getResponseCode());
 	}
 
 	protected void assertEquals(
@@ -424,13 +549,6 @@ public abstract class BaseContentStructureResourceTestCase {
 		}
 	}
 
-	protected void assertResponseCode(
-		int expectedResponseCode, Http.Response actualResponse) {
-
-		Assert.assertEquals(
-			expectedResponseCode, actualResponse.getResponseCode());
-	}
-
 	protected void assertValid(ContentStructure contentStructure) {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
@@ -443,8 +561,8 @@ public abstract class BaseContentStructureResourceTestCase {
 
 		int size = contentStructures.size();
 
-		if ((page.getItemsPerPage() > 0) && (page.getLastPageNumber() > 0) &&
-			(page.getPageNumber() > 0) && (page.getTotalCount() > 0) &&
+		if ((page.getLastPage() > 0) && (page.getPage() > 0) &&
+			(page.getPageSize() > 0) && (page.getTotalCount() > 0) &&
 			(size > 0)) {
 
 			valid = true;
@@ -567,102 +685,6 @@ public abstract class BaseContentStructureResourceTestCase {
 			"Invalid entity field " + entityFieldName);
 	}
 
-	protected Page<ContentStructure> invokeGetContentSpaceContentStructuresPage(
-			Long contentSpaceId, String filterString, Pagination pagination,
-			String sortString)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/content-spaces/{content-space-id}/content-structures",
-					contentSpaceId);
-
-		location = HttpUtil.addParameter(location, "filter", filterString);
-
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPageNumber());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getItemsPerPage());
-
-		location = HttpUtil.addParameter(location, "sort", sortString);
-
-		options.setLocation(location);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options),
-			new TypeReference<Page<ContentStructure>>() {
-			});
-	}
-
-	protected Http.Response invokeGetContentSpaceContentStructuresPageResponse(
-			Long contentSpaceId, String filterString, Pagination pagination,
-			String sortString)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/content-spaces/{content-space-id}/content-structures",
-					contentSpaceId);
-
-		location = HttpUtil.addParameter(location, "filter", filterString);
-
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPageNumber());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getItemsPerPage());
-
-		location = HttpUtil.addParameter(location, "sort", sortString);
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
-	protected ContentStructure invokeGetContentStructure(
-			Long contentStructureId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/content-structures/{content-structure-id}",
-					contentStructureId);
-
-		options.setLocation(location);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), ContentStructure.class);
-	}
-
-	protected Http.Response invokeGetContentStructureResponse(
-			Long contentStructureId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/content-structures/{content-structure-id}",
-					contentStructureId);
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
 	protected ContentStructure randomContentStructure() {
 		return new ContentStructure() {
 			{
@@ -676,28 +698,6 @@ public abstract class BaseContentStructureResourceTestCase {
 		};
 	}
 
-	protected ContentStructure
-			testGetContentSpaceContentStructuresPage_addContentStructure(
-				Long contentSpaceId, ContentStructure contentStructure)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Long testGetContentSpaceContentStructuresPage_getContentSpaceId()
-		throws Exception {
-
-		return testGroup.getGroupId();
-	}
-
-	protected ContentStructure testGetContentStructure_addContentStructure()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
 	protected Group testGroup;
 
 	protected static class Page<T> {
@@ -706,16 +706,16 @@ public abstract class BaseContentStructureResourceTestCase {
 			return new ArrayList<>(items);
 		}
 
-		public long getItemsPerPage() {
-			return itemsPerPage;
+		public long getLastPage() {
+			return lastPage;
 		}
 
-		public long getLastPageNumber() {
-			return lastPageNumber;
+		public long getPage() {
+			return page;
 		}
 
-		public long getPageNumber() {
-			return pageNumber;
+		public long getPageSize() {
+			return pageSize;
 		}
 
 		public long getTotalCount() {
@@ -725,14 +725,14 @@ public abstract class BaseContentStructureResourceTestCase {
 		@JsonProperty
 		protected Collection<T> items;
 
-		@JsonProperty("pageSize")
-		protected long itemsPerPage;
+		@JsonProperty
+		protected long lastPage;
 
 		@JsonProperty
-		protected long lastPageNumber;
+		protected long page;
 
-		@JsonProperty("page")
-		protected long pageNumber;
+		@JsonProperty
+		protected long pageSize;
 
 		@JsonProperty
 		protected long totalCount;
@@ -762,12 +762,12 @@ public abstract class BaseContentStructureResourceTestCase {
 	}
 
 	private static DateFormat _dateFormat;
-	private static final ObjectMapper _inputObjectMapper = new ObjectMapper() {
+	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {
 		{
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
 		}
 	};
-	private static final ObjectMapper _outputObjectMapper = new ObjectMapper();
+	private final static ObjectMapper _outputObjectMapper = new ObjectMapper();
 
 	@Inject
 	private ContentStructureResource _contentStructureResource;

@@ -37,54 +37,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 @GraphQLName("Category")
 //@JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Category")
-public class Category {
+public class Category  {
 
 	public String[] getAvailableLanguages() {
 		return availableLanguages;
-	}
-
-	public Creator getCreator() {
-		return creator;
-	}
-
-	public Date getDateCreated() {
-		return dateCreated;
-	}
-
-	public Date getDateModified() {
-		return dateModified;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public Boolean getHasCategories() {
-		return hasCategories;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public ParentCategory getParentCategory() {
-		return parentCategory;
-	}
-
-	public ParentVocabulary getParentVocabulary() {
-		return parentVocabulary;
-	}
-
-	public Long getParentVocabularyId() {
-		return parentVocabularyId;
-	}
-
-	public String getViewableBy() {
-		return viewableBy;
 	}
 
 	public void setAvailableLanguages(String[] availableLanguages) {
@@ -103,6 +59,14 @@ public class Category {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty
+	protected String[] availableLanguages;
+
+	public Creator getCreator() {
+		return creator;
+	}
+
 	public void setCreator(Creator creator) {
 		this.creator = creator;
 	}
@@ -117,6 +81,14 @@ public class Category {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@GraphQLField
+	@JsonProperty
+	protected Creator creator;
+
+	public Date getDateCreated() {
+		return dateCreated;
 	}
 
 	public void setDateCreated(Date dateCreated) {
@@ -135,6 +107,14 @@ public class Category {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty
+	protected Date dateCreated;
+
+	public Date getDateModified() {
+		return dateModified;
+	}
+
 	public void setDateModified(Date dateModified) {
 		this.dateModified = dateModified;
 	}
@@ -149,6 +129,14 @@ public class Category {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@GraphQLField
+	@JsonProperty
+	protected Date dateModified;
+
+	public String getDescription() {
+		return description;
 	}
 
 	public void setDescription(String description) {
@@ -167,6 +155,14 @@ public class Category {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty
+	protected String description;
+
+	public Boolean getHasCategories() {
+		return hasCategories;
+	}
+
 	public void setHasCategories(Boolean hasCategories) {
 		this.hasCategories = hasCategories;
 	}
@@ -183,6 +179,14 @@ public class Category {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty
+	protected Boolean hasCategories;
+
+	public Long getId() {
+		return id;
+	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -197,6 +201,14 @@ public class Category {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty
+	protected Long id;
+
+	public String getName() {
+		return name;
+	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -209,6 +221,14 @@ public class Category {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@GraphQLField
+	@JsonProperty
+	protected String name;
+
+	public ParentCategory getParentCategory() {
+		return parentCategory;
 	}
 
 	public void setParentCategory(ParentCategory parentCategory) {
@@ -228,6 +248,14 @@ public class Category {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty
+	protected ParentCategory parentCategory;
+
+	public ParentVocabulary getParentVocabulary() {
+		return parentVocabulary;
+	}
+
 	public void setParentVocabulary(ParentVocabulary parentVocabulary) {
 		this.parentVocabulary = parentVocabulary;
 	}
@@ -243,6 +271,14 @@ public class Category {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@GraphQLField
+	@JsonProperty
+	protected ParentVocabulary parentVocabulary;
+
+	public Long getParentVocabularyId() {
+		return parentVocabularyId;
 	}
 
 	public void setParentVocabularyId(Long parentVocabularyId) {
@@ -261,6 +297,14 @@ public class Category {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty
+	protected Long parentVocabularyId;
+
+	public String getViewableBy() {
+		return viewableBy;
+	}
+
 	public void setViewableBy(String viewableBy) {
 		this.viewableBy = viewableBy;
 	}
@@ -276,6 +320,10 @@ public class Category {
 			throw new RuntimeException(e);
 		}
 	}
+
+	@GraphQLField
+	@JsonProperty
+	protected String viewableBy;
 
 	public String toString() {
 		StringBundler sb = new StringBundler();
@@ -373,53 +421,5 @@ public class Category {
 
 		return sb.toString();
 	}
-
-	@GraphQLField
-	@JsonProperty
-	protected String[] availableLanguages;
-
-	@GraphQLField
-	@JsonProperty
-	protected Creator creator;
-
-	@GraphQLField
-	@JsonProperty
-	protected Date dateCreated;
-
-	@GraphQLField
-	@JsonProperty
-	protected Date dateModified;
-
-	@GraphQLField
-	@JsonProperty
-	protected String description;
-
-	@GraphQLField
-	@JsonProperty
-	protected Boolean hasCategories;
-
-	@GraphQLField
-	@JsonProperty
-	protected Long id;
-
-	@GraphQLField
-	@JsonProperty
-	protected String name;
-
-	@GraphQLField
-	@JsonProperty
-	protected ParentCategory parentCategory;
-
-	@GraphQLField
-	@JsonProperty
-	protected ParentVocabulary parentVocabulary;
-
-	@GraphQLField
-	@JsonProperty
-	protected Long parentVocabularyId;
-
-	@GraphQLField
-	@JsonProperty
-	protected String viewableBy;
 
 }

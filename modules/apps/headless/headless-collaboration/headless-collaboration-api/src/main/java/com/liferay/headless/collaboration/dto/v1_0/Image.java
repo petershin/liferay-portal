@@ -35,18 +35,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 @GraphQLName("Image")
 //@JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Image")
-public class Image {
+public class Image  {
 
 	public String getContentUrl() {
 		return contentUrl;
-	}
-
-	public Long getImageId() {
-		return imageId;
-	}
-
-	public String getName() {
-		return name;
 	}
 
 	public void setContentUrl(String contentUrl) {
@@ -65,6 +57,14 @@ public class Image {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty
+	protected String contentUrl;
+
+	public Long getImageId() {
+		return imageId;
+	}
+
 	public void setImageId(Long imageId) {
 		this.imageId = imageId;
 	}
@@ -81,6 +81,14 @@ public class Image {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty
+	protected Long imageId;
+
+	public String getName() {
+		return name;
+	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -95,8 +103,12 @@ public class Image {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty
+	protected String name;
+
 	public String toString() {
-		StringBundler sb = new StringBundler(14);
+		StringBundler sb = new StringBundler();
 
 		sb.append("{");
 
@@ -122,17 +134,5 @@ public class Image {
 
 		return sb.toString();
 	}
-
-	@GraphQLField
-	@JsonProperty
-	protected String contentUrl;
-
-	@GraphQLField
-	@JsonProperty
-	protected Long imageId;
-
-	@GraphQLField
-	@JsonProperty
-	protected String name;
 
 }

@@ -35,14 +35,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 @GraphQLName("ParentCategory")
 //@JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ParentCategory")
-public class ParentCategory {
+public class ParentCategory  {
 
 	public Long getId() {
 		return id;
-	}
-
-	public String getName() {
-		return name;
 	}
 
 	public void setId(Long id) {
@@ -59,6 +55,14 @@ public class ParentCategory {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty
+	protected Long id;
+
+	public String getName() {
+		return name;
+	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -73,8 +77,12 @@ public class ParentCategory {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty
+	protected String name;
+
 	public String toString() {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler();
 
 		sb.append("{");
 
@@ -93,13 +101,5 @@ public class ParentCategory {
 
 		return sb.toString();
 	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Long id;
-
-	@GraphQLField
-	@JsonProperty
-	protected String name;
 
 }

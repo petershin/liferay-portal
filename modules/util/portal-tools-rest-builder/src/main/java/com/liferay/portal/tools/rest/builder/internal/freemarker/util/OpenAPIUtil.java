@@ -26,10 +26,12 @@ import com.liferay.portal.vulcan.yaml.openapi.OpenAPIYAML;
 import com.liferay.portal.vulcan.yaml.openapi.Operation;
 import com.liferay.portal.vulcan.yaml.openapi.Schema;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
+import java.util.Set;
 import java.util.TreeMap;
 import java.util.function.Predicate;
 import java.util.regex.Matcher;
@@ -92,6 +94,23 @@ public class OpenAPIUtil {
 					entry.getKey());
 
 				allSchemas.put(schemaName, schema);
+
+				if (schema.getOneOfSchemas() != null) {
+					for (Schema oneOfSchema : schema.getOneOfSchemas()) {
+						Map<String, Schema> schemas =
+							oneOfSchema.getPropertySchemas();
+
+						Set<String> keys = schemas.keySet();
+
+						Iterator<String> iterator = keys.iterator();
+
+						allSchemas.put(
+							StringUtil.upperCaseFirstLetter(iterator.next()),
+							oneOfSchema);
+
+						queue.add(schemas);
+					}
+				}
 
 				queue.add(propertySchemas);
 			}

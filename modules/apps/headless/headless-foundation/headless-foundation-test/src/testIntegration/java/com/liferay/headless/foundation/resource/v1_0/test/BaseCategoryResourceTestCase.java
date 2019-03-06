@@ -109,6 +109,42 @@ public abstract class BaseCategoryResourceTestCase {
 		assertResponseCode(404, invokeGetCategoryResponse(category.getId()));
 	}
 
+	protected Category testDeleteCategory_addCategory() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected boolean invokeDeleteCategory(Long categoryId) throws Exception {
+		Http.Options options = _createHttpOptions();
+
+		options.setDelete(true);
+
+		String location =
+			_resourceURL + _toPath("/categories/{category-id}", categoryId);
+
+		options.setLocation(location);
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), Boolean.class);
+	}
+
+	protected Http.Response invokeDeleteCategoryResponse(Long categoryId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setDelete(true);
+
+		String location =
+			_resourceURL + _toPath("/categories/{category-id}", categoryId);
+
+		options.setLocation(location);
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
 	@Test
 	public void testGetCategory() throws Exception {
 		Category postCategory = testGetCategory_addCategory();
@@ -117,6 +153,103 @@ public abstract class BaseCategoryResourceTestCase {
 
 		assertEquals(postCategory, getCategory);
 		assertValid(getCategory);
+	}
+
+	protected Category testGetCategory_addCategory() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Category invokeGetCategory(Long categoryId) throws Exception {
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL + _toPath("/categories/{category-id}", categoryId);
+
+		options.setLocation(location);
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), Category.class);
+	}
+
+	protected Http.Response invokeGetCategoryResponse(Long categoryId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL + _toPath("/categories/{category-id}", categoryId);
+
+		options.setLocation(location);
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	@Test
+	public void testPutCategory() throws Exception {
+		Category postCategory = testPutCategory_addCategory();
+
+		Category randomCategory = randomCategory();
+
+		Category putCategory = invokePutCategory(
+			postCategory.getId(), randomCategory);
+
+		assertEquals(randomCategory, putCategory);
+		assertValid(putCategory);
+
+		Category getCategory = invokeGetCategory(putCategory.getId());
+
+		assertEquals(randomCategory, getCategory);
+		assertValid(getCategory);
+	}
+
+	protected Category testPutCategory_addCategory() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Category invokePutCategory(Long categoryId, Category category)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(category),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+
+		String location =
+			_resourceURL + _toPath("/categories/{category-id}", categoryId);
+
+		options.setLocation(location);
+
+		options.setPut(true);
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), Category.class);
+	}
+
+	protected Http.Response invokePutCategoryResponse(
+			Long categoryId, Category category)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(category),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+
+		String location =
+			_resourceURL + _toPath("/categories/{category-id}", categoryId);
+
+		options.setLocation(location);
+
+		options.setPut(true);
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
 	}
 
 	@Test
@@ -338,6 +471,139 @@ public abstract class BaseCategoryResourceTestCase {
 				Arrays.asList(category2, category1),
 				(List<Category>)descPage.getItems());
 		}
+	}
+
+	protected Category testGetCategoryCategoriesPage_addCategory(
+			Long categoryId, Category category)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long testGetCategoryCategoriesPage_getCategoryId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Page<Category> invokeGetCategoryCategoriesPage(
+			Long categoryId, String filterString, Pagination pagination,
+			String sortString)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath("/categories/{category-id}/categories", categoryId);
+
+		location = HttpUtil.addParameter(location, "filter", filterString);
+
+		location = HttpUtil.addParameter(
+			location, "page", pagination.getPage());
+		location = HttpUtil.addParameter(
+			location, "pageSize", pagination.getPageSize());
+
+		location = HttpUtil.addParameter(location, "sort", sortString);
+
+		options.setLocation(location);
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options),
+			new TypeReference<Page<Category>>() {
+			});
+	}
+
+	protected Http.Response invokeGetCategoryCategoriesPageResponse(
+			Long categoryId, String filterString, Pagination pagination,
+			String sortString)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath("/categories/{category-id}/categories", categoryId);
+
+		location = HttpUtil.addParameter(location, "filter", filterString);
+
+		location = HttpUtil.addParameter(
+			location, "page", pagination.getPage());
+		location = HttpUtil.addParameter(
+			location, "pageSize", pagination.getPageSize());
+
+		location = HttpUtil.addParameter(location, "sort", sortString);
+
+		options.setLocation(location);
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	@Test
+	public void testPostCategoryCategory() throws Exception {
+		Category randomCategory = randomCategory();
+
+		Category postCategory = testPostCategoryCategory_addCategory(
+			randomCategory);
+
+		assertEquals(randomCategory, postCategory);
+		assertValid(postCategory);
+	}
+
+	protected Category testPostCategoryCategory_addCategory(Category category)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Category invokePostCategoryCategory(
+			Long categoryId, Category category)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(category),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+
+		String location =
+			_resourceURL +
+				_toPath("/categories/{category-id}/categories", categoryId);
+
+		options.setLocation(location);
+
+		options.setPost(true);
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), Category.class);
+	}
+
+	protected Http.Response invokePostCategoryCategoryResponse(
+			Long categoryId, Category category)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(category),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+
+		String location =
+			_resourceURL +
+				_toPath("/categories/{category-id}/categories", categoryId);
+
+		options.setLocation(location);
+
+		options.setPost(true);
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
 	}
 
 	@Test
@@ -565,15 +831,76 @@ public abstract class BaseCategoryResourceTestCase {
 		}
 	}
 
-	@Test
-	public void testPostCategoryCategory() throws Exception {
-		Category randomCategory = randomCategory();
+	protected Category testGetVocabularyCategoriesPage_addCategory(
+			Long vocabularyId, Category category)
+		throws Exception {
 
-		Category postCategory = testPostCategoryCategory_addCategory(
-			randomCategory);
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
 
-		assertEquals(randomCategory, postCategory);
-		assertValid(postCategory);
+	protected Long testGetVocabularyCategoriesPage_getVocabularyId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Page<Category> invokeGetVocabularyCategoriesPage(
+			Long vocabularyId, String filterString, Pagination pagination,
+			String sortString)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/vocabularies/{vocabulary-id}/categories", vocabularyId);
+
+		location = HttpUtil.addParameter(location, "filter", filterString);
+
+		location = HttpUtil.addParameter(
+			location, "page", pagination.getPage());
+		location = HttpUtil.addParameter(
+			location, "pageSize", pagination.getPageSize());
+
+		location = HttpUtil.addParameter(location, "sort", sortString);
+
+		options.setLocation(location);
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options),
+			new TypeReference<Page<Category>>() {
+			});
+	}
+
+	protected Http.Response invokeGetVocabularyCategoriesPageResponse(
+			Long vocabularyId, String filterString, Pagination pagination,
+			String sortString)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/vocabularies/{vocabulary-id}/categories", vocabularyId);
+
+		location = HttpUtil.addParameter(location, "filter", filterString);
+
+		location = HttpUtil.addParameter(
+			location, "page", pagination.getPage());
+		location = HttpUtil.addParameter(
+			location, "pageSize", pagination.getPageSize());
+
+		location = HttpUtil.addParameter(location, "sort", sortString);
+
+		options.setLocation(location);
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
 	}
 
 	@Test
@@ -587,22 +914,65 @@ public abstract class BaseCategoryResourceTestCase {
 		assertValid(postCategory);
 	}
 
-	@Test
-	public void testPutCategory() throws Exception {
-		Category postCategory = testPutCategory_addCategory();
+	protected Category testPostVocabularyCategory_addCategory(Category category)
+		throws Exception {
 
-		Category randomCategory = randomCategory();
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
 
-		Category putCategory = invokePutCategory(
-			postCategory.getId(), randomCategory);
+	protected Category invokePostVocabularyCategory(
+			Long vocabularyId, Category category)
+		throws Exception {
 
-		assertEquals(randomCategory, putCategory);
-		assertValid(putCategory);
+		Http.Options options = _createHttpOptions();
 
-		Category getCategory = invokeGetCategory(putCategory.getId());
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(category),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-		assertEquals(randomCategory, getCategory);
-		assertValid(getCategory);
+		String location =
+			_resourceURL +
+				_toPath(
+					"/vocabularies/{vocabulary-id}/categories", vocabularyId);
+
+		options.setLocation(location);
+
+		options.setPost(true);
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), Category.class);
+	}
+
+	protected Http.Response invokePostVocabularyCategoryResponse(
+			Long vocabularyId, Category category)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(category),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/vocabularies/{vocabulary-id}/categories", vocabularyId);
+
+		options.setLocation(location);
+
+		options.setPost(true);
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	protected void assertResponseCode(
+		int expectedResponseCode, Http.Response actualResponse) {
+
+		Assert.assertEquals(
+			expectedResponseCode, actualResponse.getResponseCode());
 	}
 
 	protected void assertEquals(Category category1, Category category2) {
@@ -645,13 +1015,6 @@ public abstract class BaseCategoryResourceTestCase {
 		}
 	}
 
-	protected void assertResponseCode(
-		int expectedResponseCode, Http.Response actualResponse) {
-
-		Assert.assertEquals(
-			expectedResponseCode, actualResponse.getResponseCode());
-	}
-
 	protected void assertValid(Category category) {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
@@ -664,8 +1027,8 @@ public abstract class BaseCategoryResourceTestCase {
 
 		int size = categories.size();
 
-		if ((page.getItemsPerPage() > 0) && (page.getLastPageNumber() > 0) &&
-			(page.getPageNumber() > 0) && (page.getTotalCount() > 0) &&
+		if ((page.getLastPage() > 0) && (page.getPage() > 0) &&
+			(page.getPageSize() > 0) && (page.getTotalCount() > 0) &&
 			(size > 0)) {
 
 			valid = true;
@@ -802,310 +1165,6 @@ public abstract class BaseCategoryResourceTestCase {
 			"Invalid entity field " + entityFieldName);
 	}
 
-	protected boolean invokeDeleteCategory(Long categoryId) throws Exception {
-		Http.Options options = _createHttpOptions();
-
-		options.setDelete(true);
-
-		String location =
-			_resourceURL + _toPath("/categories/{category-id}", categoryId);
-
-		options.setLocation(location);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), Boolean.class);
-	}
-
-	protected Http.Response invokeDeleteCategoryResponse(Long categoryId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setDelete(true);
-
-		String location =
-			_resourceURL + _toPath("/categories/{category-id}", categoryId);
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
-	protected Category invokeGetCategory(Long categoryId) throws Exception {
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL + _toPath("/categories/{category-id}", categoryId);
-
-		options.setLocation(location);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), Category.class);
-	}
-
-	protected Page<Category> invokeGetCategoryCategoriesPage(
-			Long categoryId, String filterString, Pagination pagination,
-			String sortString)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath("/categories/{category-id}/categories", categoryId);
-
-		location = HttpUtil.addParameter(location, "filter", filterString);
-
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPageNumber());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getItemsPerPage());
-
-		location = HttpUtil.addParameter(location, "sort", sortString);
-
-		options.setLocation(location);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options),
-			new TypeReference<Page<Category>>() {
-			});
-	}
-
-	protected Http.Response invokeGetCategoryCategoriesPageResponse(
-			Long categoryId, String filterString, Pagination pagination,
-			String sortString)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath("/categories/{category-id}/categories", categoryId);
-
-		location = HttpUtil.addParameter(location, "filter", filterString);
-
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPageNumber());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getItemsPerPage());
-
-		location = HttpUtil.addParameter(location, "sort", sortString);
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
-	protected Http.Response invokeGetCategoryResponse(Long categoryId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL + _toPath("/categories/{category-id}", categoryId);
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
-	protected Page<Category> invokeGetVocabularyCategoriesPage(
-			Long vocabularyId, String filterString, Pagination pagination,
-			String sortString)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/vocabularies/{vocabulary-id}/categories", vocabularyId);
-
-		location = HttpUtil.addParameter(location, "filter", filterString);
-
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPageNumber());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getItemsPerPage());
-
-		location = HttpUtil.addParameter(location, "sort", sortString);
-
-		options.setLocation(location);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options),
-			new TypeReference<Page<Category>>() {
-			});
-	}
-
-	protected Http.Response invokeGetVocabularyCategoriesPageResponse(
-			Long vocabularyId, String filterString, Pagination pagination,
-			String sortString)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/vocabularies/{vocabulary-id}/categories", vocabularyId);
-
-		location = HttpUtil.addParameter(location, "filter", filterString);
-
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPageNumber());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getItemsPerPage());
-
-		location = HttpUtil.addParameter(location, "sort", sortString);
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
-	protected Category invokePostCategoryCategory(
-			Long categoryId, Category category)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			_inputObjectMapper.writeValueAsString(category),
-			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-
-		String location =
-			_resourceURL +
-				_toPath("/categories/{category-id}/categories", categoryId);
-
-		options.setLocation(location);
-
-		options.setPost(true);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), Category.class);
-	}
-
-	protected Http.Response invokePostCategoryCategoryResponse(
-			Long categoryId, Category category)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			_inputObjectMapper.writeValueAsString(category),
-			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-
-		String location =
-			_resourceURL +
-				_toPath("/categories/{category-id}/categories", categoryId);
-
-		options.setLocation(location);
-
-		options.setPost(true);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
-	protected Category invokePostVocabularyCategory(
-			Long vocabularyId, Category category)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			_inputObjectMapper.writeValueAsString(category),
-			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/vocabularies/{vocabulary-id}/categories", vocabularyId);
-
-		options.setLocation(location);
-
-		options.setPost(true);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), Category.class);
-	}
-
-	protected Http.Response invokePostVocabularyCategoryResponse(
-			Long vocabularyId, Category category)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			_inputObjectMapper.writeValueAsString(category),
-			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/vocabularies/{vocabulary-id}/categories", vocabularyId);
-
-		options.setLocation(location);
-
-		options.setPost(true);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
-	protected Category invokePutCategory(Long categoryId, Category category)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			_inputObjectMapper.writeValueAsString(category),
-			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-
-		String location =
-			_resourceURL + _toPath("/categories/{category-id}", categoryId);
-
-		options.setLocation(location);
-
-		options.setPut(true);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), Category.class);
-	}
-
-	protected Http.Response invokePutCategoryResponse(
-			Long categoryId, Category category)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			_inputObjectMapper.writeValueAsString(category),
-			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-
-		String location =
-			_resourceURL + _toPath("/categories/{category-id}", categoryId);
-
-		options.setLocation(location);
-
-		options.setPut(true);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
 	protected Category randomCategory() {
 		return new Category() {
 			{
@@ -1121,65 +1180,6 @@ public abstract class BaseCategoryResourceTestCase {
 		};
 	}
 
-	protected Category testDeleteCategory_addCategory() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Category testGetCategory_addCategory() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Category testGetCategoryCategoriesPage_addCategory(
-			Long categoryId, Category category)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Long testGetCategoryCategoriesPage_getCategoryId()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Category testGetVocabularyCategoriesPage_addCategory(
-			Long vocabularyId, Category category)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Long testGetVocabularyCategoriesPage_getVocabularyId()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Category testPostCategoryCategory_addCategory(Category category)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Category testPostVocabularyCategory_addCategory(Category category)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Category testPutCategory_addCategory() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
 	protected Group testGroup;
 
 	protected static class Page<T> {
@@ -1188,16 +1188,16 @@ public abstract class BaseCategoryResourceTestCase {
 			return new ArrayList<>(items);
 		}
 
-		public long getItemsPerPage() {
-			return itemsPerPage;
+		public long getLastPage() {
+			return lastPage;
 		}
 
-		public long getLastPageNumber() {
-			return lastPageNumber;
+		public long getPage() {
+			return page;
 		}
 
-		public long getPageNumber() {
-			return pageNumber;
+		public long getPageSize() {
+			return pageSize;
 		}
 
 		public long getTotalCount() {
@@ -1207,14 +1207,14 @@ public abstract class BaseCategoryResourceTestCase {
 		@JsonProperty
 		protected Collection<T> items;
 
-		@JsonProperty("pageSize")
-		protected long itemsPerPage;
+		@JsonProperty
+		protected long lastPage;
 
 		@JsonProperty
-		protected long lastPageNumber;
+		protected long page;
 
-		@JsonProperty("page")
-		protected long pageNumber;
+		@JsonProperty
+		protected long pageSize;
 
 		@JsonProperty
 		protected long totalCount;
@@ -1244,12 +1244,12 @@ public abstract class BaseCategoryResourceTestCase {
 	}
 
 	private static DateFormat _dateFormat;
-	private static final ObjectMapper _inputObjectMapper = new ObjectMapper() {
+	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {
 		{
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
 		}
 	};
-	private static final ObjectMapper _outputObjectMapper = new ObjectMapper();
+	private final static ObjectMapper _outputObjectMapper = new ObjectMapper();
 
 	@Inject
 	private CategoryResource _categoryResource;

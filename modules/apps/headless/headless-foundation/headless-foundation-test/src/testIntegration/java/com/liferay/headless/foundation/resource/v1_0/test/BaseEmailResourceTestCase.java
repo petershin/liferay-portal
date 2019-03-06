@@ -94,16 +94,6 @@ public abstract class BaseEmailResourceTestCase {
 	}
 
 	@Test
-	public void testGetEmail() throws Exception {
-		Email postEmail = testGetEmail_addEmail();
-
-		Email getEmail = invokeGetEmail(postEmail.getId());
-
-		assertEquals(postEmail, getEmail);
-		assertValid(getEmail);
-	}
-
-	@Test
 	public void testGetGenericParentEmailsPage() throws Exception {
 		Object genericParentId =
 			testGetGenericParentEmailsPage_getGenericParentId();
@@ -163,6 +153,109 @@ public abstract class BaseEmailResourceTestCase {
 			});
 	}
 
+	protected Email testGetGenericParentEmailsPage_addEmail(
+			Object genericParentId, Email email)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Object testGetGenericParentEmailsPage_getGenericParentId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Page<Email> invokeGetGenericParentEmailsPage(
+			Object genericParentId, Pagination pagination)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location = _resourceURL + _toPath("/emails", genericParentId);
+
+		location = HttpUtil.addParameter(
+			location, "page", pagination.getPage());
+		location = HttpUtil.addParameter(
+			location, "pageSize", pagination.getPageSize());
+
+		options.setLocation(location);
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options),
+			new TypeReference<Page<Email>>() {
+			});
+	}
+
+	protected Http.Response invokeGetGenericParentEmailsPageResponse(
+			Object genericParentId, Pagination pagination)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location = _resourceURL + _toPath("/emails", genericParentId);
+
+		location = HttpUtil.addParameter(
+			location, "page", pagination.getPage());
+		location = HttpUtil.addParameter(
+			location, "pageSize", pagination.getPageSize());
+
+		options.setLocation(location);
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	@Test
+	public void testGetEmail() throws Exception {
+		Email postEmail = testGetEmail_addEmail();
+
+		Email getEmail = invokeGetEmail(postEmail.getId());
+
+		assertEquals(postEmail, getEmail);
+		assertValid(getEmail);
+	}
+
+	protected Email testGetEmail_addEmail() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Email invokeGetEmail(Long emailId) throws Exception {
+		Http.Options options = _createHttpOptions();
+
+		String location = _resourceURL + _toPath("/emails/{email-id}", emailId);
+
+		options.setLocation(location);
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), Email.class);
+	}
+
+	protected Http.Response invokeGetEmailResponse(Long emailId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location = _resourceURL + _toPath("/emails/{email-id}", emailId);
+
+		options.setLocation(location);
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	protected void assertResponseCode(
+		int expectedResponseCode, Http.Response actualResponse) {
+
+		Assert.assertEquals(
+			expectedResponseCode, actualResponse.getResponseCode());
+	}
+
 	protected void assertEquals(Email email1, Email email2) {
 		Assert.assertTrue(
 			email1 + " does not equal " + email2, equals(email1, email2));
@@ -200,13 +293,6 @@ public abstract class BaseEmailResourceTestCase {
 		}
 	}
 
-	protected void assertResponseCode(
-		int expectedResponseCode, Http.Response actualResponse) {
-
-		Assert.assertEquals(
-			expectedResponseCode, actualResponse.getResponseCode());
-	}
-
 	protected void assertValid(Email email) {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
@@ -219,8 +305,8 @@ public abstract class BaseEmailResourceTestCase {
 
 		int size = emails.size();
 
-		if ((page.getItemsPerPage() > 0) && (page.getLastPageNumber() > 0) &&
-			(page.getPageNumber() > 0) && (page.getTotalCount() > 0) &&
+		if ((page.getLastPage() > 0) && (page.getPage() > 0) &&
+			(page.getPageSize() > 0) && (page.getTotalCount() > 0) &&
 			(size > 0)) {
 
 			valid = true;
@@ -307,72 +393,6 @@ public abstract class BaseEmailResourceTestCase {
 			"Invalid entity field " + entityFieldName);
 	}
 
-	protected Email invokeGetEmail(Long emailId) throws Exception {
-		Http.Options options = _createHttpOptions();
-
-		String location = _resourceURL + _toPath("/emails/{email-id}", emailId);
-
-		options.setLocation(location);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), Email.class);
-	}
-
-	protected Http.Response invokeGetEmailResponse(Long emailId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location = _resourceURL + _toPath("/emails/{email-id}", emailId);
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
-	protected Page<Email> invokeGetGenericParentEmailsPage(
-			Object genericParentId, Pagination pagination)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location = _resourceURL + _toPath("/emails", genericParentId);
-
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPageNumber());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getItemsPerPage());
-
-		options.setLocation(location);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options),
-			new TypeReference<Page<Email>>() {
-			});
-	}
-
-	protected Http.Response invokeGetGenericParentEmailsPageResponse(
-			Object genericParentId, Pagination pagination)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location = _resourceURL + _toPath("/emails", genericParentId);
-
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPageNumber());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getItemsPerPage());
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
 	protected Email randomEmail() {
 		return new Email() {
 			{
@@ -383,26 +403,6 @@ public abstract class BaseEmailResourceTestCase {
 		};
 	}
 
-	protected Email testGetEmail_addEmail() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Email testGetGenericParentEmailsPage_addEmail(
-			Object genericParentId, Email email)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Object testGetGenericParentEmailsPage_getGenericParentId()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
 	protected Group testGroup;
 
 	protected static class Page<T> {
@@ -411,16 +411,16 @@ public abstract class BaseEmailResourceTestCase {
 			return new ArrayList<>(items);
 		}
 
-		public long getItemsPerPage() {
-			return itemsPerPage;
+		public long getLastPage() {
+			return lastPage;
 		}
 
-		public long getLastPageNumber() {
-			return lastPageNumber;
+		public long getPage() {
+			return page;
 		}
 
-		public long getPageNumber() {
-			return pageNumber;
+		public long getPageSize() {
+			return pageSize;
 		}
 
 		public long getTotalCount() {
@@ -430,14 +430,14 @@ public abstract class BaseEmailResourceTestCase {
 		@JsonProperty
 		protected Collection<T> items;
 
-		@JsonProperty("pageSize")
-		protected long itemsPerPage;
+		@JsonProperty
+		protected long lastPage;
 
 		@JsonProperty
-		protected long lastPageNumber;
+		protected long page;
 
-		@JsonProperty("page")
-		protected long pageNumber;
+		@JsonProperty
+		protected long pageSize;
 
 		@JsonProperty
 		protected long totalCount;
@@ -467,12 +467,12 @@ public abstract class BaseEmailResourceTestCase {
 	}
 
 	private static DateFormat _dateFormat;
-	private static final ObjectMapper _inputObjectMapper = new ObjectMapper() {
+	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {
 		{
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
 		}
 	};
-	private static final ObjectMapper _outputObjectMapper = new ObjectMapper();
+	private final static ObjectMapper _outputObjectMapper = new ObjectMapper();
 
 	@Inject
 	private EmailResource _emailResource;
