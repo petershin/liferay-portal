@@ -31,6 +31,9 @@ import java.util.Set;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
+import org.osgi.framework.PrototypeServiceFactory;
+import org.osgi.framework.ServiceFactory;
+import org.osgi.framework.ServiceObjects;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.ComponentConstants;
@@ -69,19 +72,6 @@ public class AopServiceRegistrar {
 		TransactionExecutor transactionExecutor,
 		ServiceMonitoringControl serviceMonitoringControl) {
 
-		_aopInvocationHandler = AopCacheManager.create(
-			_aopService,
-			AopCacheManager.createChainableMethodAdvices(
-				transactionExecutor, serviceMonitoringControl));
-
-		Class<? extends AopService> aopServiceClass = _aopService.getClass();
-
-		Object aopProxy = ProxyUtil.newProxyInstance(
-			aopServiceClass.getClassLoader(), _aopServiceInterfaces,
-			_aopInvocationHandler);
-
-		_aopService.setAopProxy(aopProxy);
-
 		Bundle bundle = _serviceReference.getBundle();
 
 		BundleContext bundleContext = bundle.getBundleContext();
@@ -92,15 +82,55 @@ public class AopServiceRegistrar {
 			aopServiceNames[i] = _aopServiceInterfaces[i].getName();
 		}
 
+		String serviceScope = (String)_serviceReference.getProperty(
+			Constants.SERVICE_SCOPE);
+
+		Object service = null;
+
+		if (Constants.SCOPE_SINGLETON.equals(serviceScope)) {
+			_aopInvocationHandler = AopCacheManager.create(
+				_aopService,
+				AopCacheManager.createChainableMethodAdvices(
+					transactionExecutor, serviceMonitoringControl));
+
+			Class<? extends AopService> aopServiceClass =
+				_aopService.getClass();
+
+			Object aopProxy = ProxyUtil.newProxyInstance(
+				aopServiceClass.getClassLoader(), _aopServiceInterfaces,
+				_aopInvocationHandler);
+
+			_aopService.setAopProxy(aopProxy);
+
+			service = aopProxy;
+		}
+		else {
+			ServiceObjects<AopService> serviceObjects =
+				bundleContext.getServiceObjects(_serviceReference);
+
+			if (Constants.SCOPE_BUNDLE.equals(serviceScope)) {
+				service = new AopServiceServiceFactory(
+					serviceObjects, transactionExecutor,
+					serviceMonitoringControl);
+			}
+			else {
+				service = new AopServicePrototypeServiceFactory(
+					serviceObjects, transactionExecutor,
+					serviceMonitoringControl);
+			}
+		}
+
 		_serviceRegistration = bundleContext.registerService(
-			aopServiceNames, aopProxy, _getProperties(_serviceReference));
+			aopServiceNames, service, _getProperties(_serviceReference));
 	}
 
 	public void unregister() {
 		if (_serviceRegistration != null) {
-			AopCacheManager.destroy(_aopInvocationHandler);
+			if (_aopInvocationHandler != null) {
+				AopCacheManager.destroy(_aopInvocationHandler);
 
-			_aopInvocationHandler = null;
+				_aopInvocationHandler = null;
+			}
 
 			_serviceRegistration.unregister();
 
@@ -147,5 +177,80 @@ public class AopServiceRegistrar {
 	private final boolean _liferayService;
 	private final ServiceReference<AopService> _serviceReference;
 	private ServiceRegistration<?> _serviceRegistration;
+
+	private class AopServicePrototypeServiceFactory
+		extends AopServiceServiceFactory
+		implements PrototypeServiceFactory<Object> {
+
+		private AopServicePrototypeServiceFactory(
+			ServiceObjects<AopService> serviceObjects,
+			TransactionExecutor transactionExecutor,
+			ServiceMonitoringControl serviceMonitoringControl) {
+
+			super(
+				serviceObjects, transactionExecutor, serviceMonitoringControl);
+		}
+
+	}
+
+	private class AopServiceServiceFactory implements ServiceFactory<Object> {
+
+		@Override
+		public Object getService(
+			Bundle bundle, ServiceRegistration<Object> serviceRegistration) {
+
+			AopService aopService = _serviceObjects.getService();
+
+			AopInvocationHandler aopInvocationHandler = AopCacheManager.create(
+				aopService,
+				AopCacheManager.createChainableMethodAdvices(
+					_transactionExecutor, _serviceMonitoringControl));
+
+			Class<? extends AopService> aopServiceClass = aopService.getClass();
+
+			Object aopProxy = ProxyUtil.newProxyInstance(
+				aopServiceClass.getClassLoader(), _aopServiceInterfaces,
+				aopInvocationHandler);
+
+			aopService.setAopProxy(aopProxy);
+
+			return aopProxy;
+		}
+
+		@Override
+		public void ungetService(
+			Bundle bundle, ServiceRegistration<Object> serviceRegistration,
+			Object aopProxy) {
+
+			AopInvocationHandler aopInvocationHandler =
+				ProxyUtil.fetchInvocationHandler(
+					aopProxy, AopInvocationHandler.class);
+
+			if (aopInvocationHandler == null) {
+				throw new NullPointerException(
+					"Missing AopInvocationHandler for " + aopProxy);
+			}
+
+			AopCacheManager.destroy(aopInvocationHandler);
+
+			_serviceObjects.ungetService(
+				(AopService)aopInvocationHandler.getTarget());
+		}
+
+		private AopServiceServiceFactory(
+			ServiceObjects<AopService> serviceObjects,
+			TransactionExecutor transactionExecutor,
+			ServiceMonitoringControl serviceMonitoringControl) {
+
+			_serviceObjects = serviceObjects;
+			_transactionExecutor = transactionExecutor;
+			_serviceMonitoringControl = serviceMonitoringControl;
+		}
+
+		private final ServiceMonitoringControl _serviceMonitoringControl;
+		private final ServiceObjects<AopService> _serviceObjects;
+		private final TransactionExecutor _transactionExecutor;
+
+	}
 
 }
