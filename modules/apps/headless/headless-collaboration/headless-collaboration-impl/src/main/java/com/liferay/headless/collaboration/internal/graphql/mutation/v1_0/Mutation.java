@@ -37,7 +37,9 @@ import graphql.annotations.annotationTypes.GraphQLName;
 import javax.annotation.Generated;
 
 import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceObjects;
 import org.osgi.util.tracker.ServiceTracker;
 
 /**
@@ -385,7 +387,7 @@ public class Mutation {
 		throws Exception {
 
 		BlogPostingResource blogPostingResource =
-			_blogPostingResourceServiceTracker.getService();
+			_blogPostingResourceServiceObjects.getService();
 
 		blogPostingResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
@@ -394,9 +396,8 @@ public class Mutation {
 		return blogPostingResource;
 	}
 
-	private static final ServiceTracker
-		<BlogPostingResource, BlogPostingResource>
-			_blogPostingResourceServiceTracker;
+	private static final ServiceObjects<BlogPostingResource>
+		_blogPostingResourceServiceObjects;
 
 	private static BlogPostingImageResource _createBlogPostingImageResource()
 		throws Exception {
@@ -486,13 +487,12 @@ public class Mutation {
 	static {
 		Bundle bundle = FrameworkUtil.getBundle(Mutation.class);
 
-		ServiceTracker<BlogPostingResource, BlogPostingResource>
-			blogPostingResourceServiceTracker = new ServiceTracker<>(
-				bundle.getBundleContext(), BlogPostingResource.class, null);
+		BundleContext bundleContext = bundle.getBundleContext();
 
-		blogPostingResourceServiceTracker.open();
+		_blogPostingResourceServiceObjects =
+			bundleContext.getServiceObjects(
+				bundleContext.getServiceReference(BlogPostingResource.class));
 
-		_blogPostingResourceServiceTracker = blogPostingResourceServiceTracker;
 		ServiceTracker<BlogPostingImageResource, BlogPostingImageResource>
 			blogPostingImageResourceServiceTracker = new ServiceTracker<>(
 				bundle.getBundleContext(), BlogPostingImageResource.class,
