@@ -1858,6 +1858,14 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		String jsonVersion = (String)map.get("version");
 
+		int pos = jsonVersion.indexOf("-hotfix");
+
+		if (pos != -1) {
+			jsonVersion =
+				jsonVersion.substring(0, pos) + "." +
+					jsonVersion.substring(pos + 1);
+		}
+
 		if (Validator.isNotNull(jsonVersion) &&
 			!jsonVersion.equals(String.valueOf(project.getVersion()))) {
 
