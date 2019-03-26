@@ -4674,10 +4674,10 @@ log.sanitizer.enabled=false</echo>
 							<arg value="-Dbuild.exclude.dirs=private/apps/osb-lcs,third-party" />
 						</gradle-execute>
 
-						<loadresource property="modules.test.class.group">
+						<loadresource property="assemble.modules.test.class.group">
 							<filterchain>
-								<linecontainsregexp>
-									<regexp pattern="^:" />
+								<linecontainsregexp negate="true">
+									<regexp pattern="^:.*-test\s*$" />
 								</linecontainsregexp>
 
 								<suffixlines suffix=":assemble " />
@@ -4686,6 +4686,21 @@ log.sanitizer.enabled=false</echo>
 							</filterchain>
 							<propertyresource name="modules.project.paths" />
 						</loadresource>
+
+						<loadresource property="compile.modules.test.class.group">
+							<filterchain>
+								<linecontainsregexp>
+									<regexp pattern="^:.*-test\s*$" />
+								</linecontainsregexp>
+
+								<suffixlines suffix=":compile " />
+
+								<striplinebreaks />
+							</filterchain>
+							<propertyresource name="modules.project.paths" />
+						</loadresource>
+
+						<var name="modules.test.class.group" value="${assemble.modules.test.class.group}${compile.modules.test.class.group}" />
 					</then>
 				</if>
 
