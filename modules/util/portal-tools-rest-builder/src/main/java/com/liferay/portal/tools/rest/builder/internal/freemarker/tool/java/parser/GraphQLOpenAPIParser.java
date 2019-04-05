@@ -14,7 +14,6 @@
 
 package com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parser;
 
-import com.liferay.portal.kernel.util.CamelCaseUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaMethodParameter;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaMethodSignature;
@@ -25,7 +24,6 @@ import com.liferay.portal.vulcan.yaml.config.ConfigYAML;
 import com.liferay.portal.vulcan.yaml.openapi.Components;
 import com.liferay.portal.vulcan.yaml.openapi.OpenAPIYAML;
 import com.liferay.portal.vulcan.yaml.openapi.Operation;
-import com.liferay.portal.vulcan.yaml.openapi.Parameter;
 import com.liferay.portal.vulcan.yaml.openapi.Schema;
 
 import java.util.ArrayList;
@@ -94,18 +92,8 @@ public class GraphQLOpenAPIParser {
 		StringBuilder sb = new StringBuilder();
 
 		for (JavaMethodParameter javaMethodParameter : javaMethodParameters) {
-			String parameterAnnotation = null;
-
-			if (annotation) {
-				parameterAnnotation = _getParameterAnnotation(
-					javaMethodParameter, operation);
-			}
-
-			String parameter = OpenAPIParserUtil.getParameter(
-				javaMethodParameter, parameterAnnotation);
-
-			sb.append(parameter);
-
+			sb.append(
+				OpenAPIParserUtil.getParameter(javaMethodParameter, null));
 			sb.append(',');
 		}
 
@@ -220,53 +208,6 @@ public class GraphQLOpenAPIParser {
 		}
 
 		return "@GraphQLName(\"" + sb.toString() + "\")";
-	}
-
-	private static String _getParameterAnnotation(
-		JavaMethodParameter javaMethodParameter, Operation operation) {
-
-		for (Parameter parameter : operation.getParameters()) {
-			String parameterName = CamelCaseUtil.toCamelCase(
-				parameter.getName());
-
-			if (!Objects.equals(
-					parameterName, javaMethodParameter.getParameterName())) {
-
-				continue;
-			}
-
-			Schema schema = parameter.getSchema();
-
-			if (schema.getType() != null) {
-				StringBuilder sb = new StringBuilder();
-
-				sb.append("@GraphQLName(\"");
-				sb.append(parameter.getName());
-				sb.append("\")");
-
-				return sb.toString();
-			}
-		}
-
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("@GraphQLName(\"");
-
-		String name = javaMethodParameter.getParameterType();
-
-		if (name.startsWith("[")) {
-			name = OpenAPIParserUtil.getElementClassName(name) + "[]";
-		}
-
-		if (name.lastIndexOf('.') != -1) {
-			name = name.substring(name.lastIndexOf(".") + 1);
-		}
-
-		sb.append(name);
-
-		sb.append("\")");
-
-		return sb.toString();
 	}
 
 }
