@@ -31,7 +31,6 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLInvokeDetached;
-import graphql.annotations.annotationTypes.GraphQLName;
 
 import java.util.Collection;
 
@@ -81,9 +80,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<Form> getContentSpaceFormsPage(
-			@GraphQLName("contentSpaceId") Long contentSpaceId,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
+			Long contentSpaceId, int pageSize, int page)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -99,7 +96,7 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Form getForm(@GraphQLName("formId") Long formId) throws Exception {
+	public Form getForm(Long formId) throws Exception {
 		return _applyComponentServiceObjects(
 			_formResourceComponentServiceObjects,
 			this::_populateResourceContext,
@@ -108,10 +105,7 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public FormDocument getFormDocument(
-			@GraphQLName("formDocumentId") Long formDocumentId)
-		throws Exception {
-
+	public FormDocument getFormDocument(Long formDocumentId) throws Exception {
 		return _applyComponentServiceObjects(
 			_formDocumentResourceComponentServiceObjects,
 			this::_populateResourceContext,
@@ -121,10 +115,7 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public FormRecord getFormRecord(
-			@GraphQLName("formRecordId") Long formRecordId)
-		throws Exception {
-
+	public FormRecord getFormRecord(Long formRecordId) throws Exception {
 		return _applyComponentServiceObjects(
 			_formRecordResourceComponentServiceObjects,
 			this::_populateResourceContext,
@@ -134,10 +125,7 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public FormRecord getFormFetchLatestDraft(
-			@GraphQLName("formId") Long formId)
-		throws Exception {
-
+	public FormRecord getFormFetchLatestDraft(Long formId) throws Exception {
 		return _applyComponentServiceObjects(
 			_formRecordResourceComponentServiceObjects,
 			this::_populateResourceContext,
@@ -148,9 +136,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<FormRecord> getFormFormRecordsPage(
-			@GraphQLName("formId") Long formId,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
+			Long formId, int pageSize, int page)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -167,9 +153,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<FormStructure> getContentSpaceFormStructuresPage(
-			@GraphQLName("contentSpaceId") Long contentSpaceId,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
+			Long contentSpaceId, int pageSize, int page)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -186,8 +170,7 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public FormStructure getFormStructure(
-			@GraphQLName("formStructureId") Long formStructureId)
+	public FormStructure getFormStructure(Long formStructureId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(

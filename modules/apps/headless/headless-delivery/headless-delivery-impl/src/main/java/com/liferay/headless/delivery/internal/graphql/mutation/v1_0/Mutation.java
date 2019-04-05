@@ -179,10 +179,7 @@ public class Mutation {
 	}
 
 	@GraphQLInvokeDetached
-	public void deleteBlogPosting(
-			@GraphQLName("blogPostingId") Long blogPostingId)
-		throws Exception {
-
+	public void deleteBlogPosting(Long blogPostingId) throws Exception {
 		_applyVoidComponentServiceObjects(
 			_blogPostingResourceComponentServiceObjects,
 			this::_populateResourceContext,
@@ -192,8 +189,7 @@ public class Mutation {
 
 	@GraphQLInvokeDetached
 	public BlogPosting patchBlogPosting(
-			@GraphQLName("blogPostingId") Long blogPostingId,
-			@GraphQLName("BlogPosting") BlogPosting blogPosting)
+			Long blogPostingId, BlogPosting blogPosting)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -205,8 +201,7 @@ public class Mutation {
 
 	@GraphQLInvokeDetached
 	public BlogPosting putBlogPosting(
-			@GraphQLName("blogPostingId") Long blogPostingId,
-			@GraphQLName("BlogPosting") BlogPosting blogPosting)
+			Long blogPostingId, BlogPosting blogPosting)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -217,10 +212,7 @@ public class Mutation {
 	}
 
 	@GraphQLInvokeDetached
-	public void deleteBlogPostingMyRating(
-			@GraphQLName("blogPostingId") Long blogPostingId)
-		throws Exception {
-
+	public void deleteBlogPostingMyRating(Long blogPostingId) throws Exception {
 		_applyVoidComponentServiceObjects(
 			_blogPostingResourceComponentServiceObjects,
 			this::_populateResourceContext,
@@ -230,9 +222,7 @@ public class Mutation {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Rating postBlogPostingMyRating(
-			@GraphQLName("blogPostingId") Long blogPostingId,
-			@GraphQLName("Rating") Rating rating)
+	public Rating postBlogPostingMyRating(Long blogPostingId, Rating rating)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -243,9 +233,7 @@ public class Mutation {
 	}
 
 	@GraphQLInvokeDetached
-	public Rating putBlogPostingMyRating(
-			@GraphQLName("blogPostingId") Long blogPostingId,
-			@GraphQLName("Rating") Rating rating)
+	public Rating putBlogPostingMyRating(Long blogPostingId, Rating rating)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -258,8 +246,7 @@ public class Mutation {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public BlogPosting postContentSpaceBlogPosting(
-			@GraphQLName("contentSpaceId") Long contentSpaceId,
-			@GraphQLName("BlogPosting") BlogPosting blogPosting)
+			Long contentSpaceId, BlogPosting blogPosting)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -271,8 +258,7 @@ public class Mutation {
 	}
 
 	@GraphQLInvokeDetached
-	public void deleteBlogPostingImage(
-			@GraphQLName("blogPostingImageId") Long blogPostingImageId)
+	public void deleteBlogPostingImage(Long blogPostingImageId)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
@@ -287,8 +273,7 @@ public class Mutation {
 	@GraphQLInvokeDetached
 	@GraphQLName("postContentSpaceBlogPostingImageContentSpaceIdMultipartBody")
 	public BlogPostingImage postContentSpaceBlogPostingImage(
-			@GraphQLName("contentSpaceId") Long contentSpaceId,
-			@GraphQLName("MultipartBody") MultipartBody multipartBody)
+			Long contentSpaceId, MultipartBody multipartBody)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -301,9 +286,7 @@ public class Mutation {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Comment postBlogPostingComment(
-			@GraphQLName("blogPostingId") Long blogPostingId,
-			@GraphQLName("Comment") Comment comment)
+	public Comment postBlogPostingComment(Long blogPostingId, Comment comment)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -314,9 +297,7 @@ public class Mutation {
 	}
 
 	@GraphQLInvokeDetached
-	public void deleteComment(@GraphQLName("commentId") Long commentId)
-		throws Exception {
-
+	public void deleteComment(Long commentId) throws Exception {
 		_applyVoidComponentServiceObjects(
 			_commentResourceComponentServiceObjects,
 			this::_populateResourceContext,
@@ -324,9 +305,7 @@ public class Mutation {
 	}
 
 	@GraphQLInvokeDetached
-	public Comment putComment(
-			@GraphQLName("commentId") Long commentId,
-			@GraphQLName("Comment") Comment comment)
+	public Comment putComment(Long commentId, Comment comment)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -337,9 +316,7 @@ public class Mutation {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Comment postCommentComment(
-			@GraphQLName("parentCommentId") Long parentCommentId,
-			@GraphQLName("Comment") Comment comment)
+	public Comment postCommentComment(Long parentCommentId, Comment comment)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -351,9 +328,7 @@ public class Mutation {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Comment postDocumentComment(
-			@GraphQLName("documentId") Long documentId,
-			@GraphQLName("Comment") Comment comment)
+	public Comment postDocumentComment(Long documentId, Comment comment)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -366,8 +341,7 @@ public class Mutation {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Comment postStructuredContentComment(
-			@GraphQLName("structuredContentId") Long structuredContentId,
-			@GraphQLName("Comment") Comment comment)
+			Long structuredContentId, Comment comment)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -381,8 +355,7 @@ public class Mutation {
 	@GraphQLInvokeDetached
 	@GraphQLName("postContentSpaceDocumentContentSpaceIdMultipartBody")
 	public Document postContentSpaceDocument(
-			@GraphQLName("contentSpaceId") Long contentSpaceId,
-			@GraphQLName("MultipartBody") MultipartBody multipartBody)
+			Long contentSpaceId, MultipartBody multipartBody)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -396,8 +369,7 @@ public class Mutation {
 	@GraphQLInvokeDetached
 	@GraphQLName("postDocumentFolderDocumentDocumentFolderIdMultipartBody")
 	public Document postDocumentFolderDocument(
-			@GraphQLName("documentFolderId") Long documentFolderId,
-			@GraphQLName("MultipartBody") MultipartBody multipartBody)
+			Long documentFolderId, MultipartBody multipartBody)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -408,9 +380,7 @@ public class Mutation {
 	}
 
 	@GraphQLInvokeDetached
-	public void deleteDocument(@GraphQLName("documentId") Long documentId)
-		throws Exception {
-
+	public void deleteDocument(Long documentId) throws Exception {
 		_applyVoidComponentServiceObjects(
 			_documentResourceComponentServiceObjects,
 			this::_populateResourceContext,
@@ -419,9 +389,7 @@ public class Mutation {
 
 	@GraphQLInvokeDetached
 	@GraphQLName("patchDocumentDocumentIdMultipartBody")
-	public Document patchDocument(
-			@GraphQLName("documentId") Long documentId,
-			@GraphQLName("MultipartBody") MultipartBody multipartBody)
+	public Document patchDocument(Long documentId, MultipartBody multipartBody)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -433,9 +401,7 @@ public class Mutation {
 
 	@GraphQLInvokeDetached
 	@GraphQLName("putDocumentDocumentIdMultipartBody")
-	public Document putDocument(
-			@GraphQLName("documentId") Long documentId,
-			@GraphQLName("MultipartBody") MultipartBody multipartBody)
+	public Document putDocument(Long documentId, MultipartBody multipartBody)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -446,10 +412,7 @@ public class Mutation {
 	}
 
 	@GraphQLInvokeDetached
-	public void deleteDocumentMyRating(
-			@GraphQLName("documentId") Long documentId)
-		throws Exception {
-
+	public void deleteDocumentMyRating(Long documentId) throws Exception {
 		_applyVoidComponentServiceObjects(
 			_documentResourceComponentServiceObjects,
 			this::_populateResourceContext,
@@ -459,9 +422,7 @@ public class Mutation {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Rating postDocumentMyRating(
-			@GraphQLName("documentId") Long documentId,
-			@GraphQLName("Rating") Rating rating)
+	public Rating postDocumentMyRating(Long documentId, Rating rating)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -472,9 +433,7 @@ public class Mutation {
 	}
 
 	@GraphQLInvokeDetached
-	public Rating putDocumentMyRating(
-			@GraphQLName("documentId") Long documentId,
-			@GraphQLName("Rating") Rating rating)
+	public Rating putDocumentMyRating(Long documentId, Rating rating)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -487,8 +446,7 @@ public class Mutation {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public DocumentFolder postContentSpaceDocumentFolder(
-			@GraphQLName("contentSpaceId") Long contentSpaceId,
-			@GraphQLName("DocumentFolder") DocumentFolder documentFolder)
+			Long contentSpaceId, DocumentFolder documentFolder)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -500,10 +458,7 @@ public class Mutation {
 	}
 
 	@GraphQLInvokeDetached
-	public void deleteDocumentFolder(
-			@GraphQLName("documentFolderId") Long documentFolderId)
-		throws Exception {
-
+	public void deleteDocumentFolder(Long documentFolderId) throws Exception {
 		_applyVoidComponentServiceObjects(
 			_documentFolderResourceComponentServiceObjects,
 			this::_populateResourceContext,
@@ -513,8 +468,7 @@ public class Mutation {
 
 	@GraphQLInvokeDetached
 	public DocumentFolder patchDocumentFolder(
-			@GraphQLName("documentFolderId") Long documentFolderId,
-			@GraphQLName("DocumentFolder") DocumentFolder documentFolder)
+			Long documentFolderId, DocumentFolder documentFolder)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -527,8 +481,7 @@ public class Mutation {
 
 	@GraphQLInvokeDetached
 	public DocumentFolder putDocumentFolder(
-			@GraphQLName("documentFolderId") Long documentFolderId,
-			@GraphQLName("DocumentFolder") DocumentFolder documentFolder)
+			Long documentFolderId, DocumentFolder documentFolder)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -541,8 +494,7 @@ public class Mutation {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public DocumentFolder postDocumentFolderDocumentFolder(
-			@GraphQLName("parentDocumentFolderId") Long parentDocumentFolderId,
-			@GraphQLName("DocumentFolder") DocumentFolder documentFolder)
+			Long parentDocumentFolderId, DocumentFolder documentFolder)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -556,9 +508,7 @@ public class Mutation {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public KnowledgeBaseArticle postContentSpaceKnowledgeBaseArticle(
-			@GraphQLName("contentSpaceId") Long contentSpaceId,
-			@GraphQLName("KnowledgeBaseArticle") KnowledgeBaseArticle
-				knowledgeBaseArticle)
+			Long contentSpaceId, KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -571,8 +521,7 @@ public class Mutation {
 	}
 
 	@GraphQLInvokeDetached
-	public void deleteKnowledgeBaseArticle(
-			@GraphQLName("knowledgeBaseArticleId") Long knowledgeBaseArticleId)
+	public void deleteKnowledgeBaseArticle(Long knowledgeBaseArticleId)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
@@ -585,9 +534,8 @@ public class Mutation {
 
 	@GraphQLInvokeDetached
 	public KnowledgeBaseArticle patchKnowledgeBaseArticle(
-			@GraphQLName("knowledgeBaseArticleId") Long knowledgeBaseArticleId,
-			@GraphQLName("KnowledgeBaseArticle") KnowledgeBaseArticle
-				knowledgeBaseArticle)
+			Long knowledgeBaseArticleId,
+			KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -600,9 +548,8 @@ public class Mutation {
 
 	@GraphQLInvokeDetached
 	public KnowledgeBaseArticle putKnowledgeBaseArticle(
-			@GraphQLName("knowledgeBaseArticleId") Long knowledgeBaseArticleId,
-			@GraphQLName("KnowledgeBaseArticle") KnowledgeBaseArticle
-				knowledgeBaseArticle)
+			Long knowledgeBaseArticleId,
+			KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -614,8 +561,7 @@ public class Mutation {
 	}
 
 	@GraphQLInvokeDetached
-	public void deleteKnowledgeBaseArticleMyRating(
-			@GraphQLName("knowledgeBaseArticleId") Long knowledgeBaseArticleId)
+	public void deleteKnowledgeBaseArticleMyRating(Long knowledgeBaseArticleId)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
@@ -629,8 +575,7 @@ public class Mutation {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Rating postKnowledgeBaseArticleMyRating(
-			@GraphQLName("knowledgeBaseArticleId") Long knowledgeBaseArticleId,
-			@GraphQLName("Rating") Rating rating)
+			Long knowledgeBaseArticleId, Rating rating)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -643,8 +588,7 @@ public class Mutation {
 
 	@GraphQLInvokeDetached
 	public Rating putKnowledgeBaseArticleMyRating(
-			@GraphQLName("knowledgeBaseArticleId") Long knowledgeBaseArticleId,
-			@GraphQLName("Rating") Rating rating)
+			Long knowledgeBaseArticleId, Rating rating)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -658,10 +602,8 @@ public class Mutation {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public KnowledgeBaseArticle postKnowledgeBaseArticleKnowledgeBaseArticle(
-			@GraphQLName("parentKnowledgeBaseArticleId") Long
-				parentKnowledgeBaseArticleId,
-			@GraphQLName("KnowledgeBaseArticle") KnowledgeBaseArticle
-				knowledgeBaseArticle)
+			Long parentKnowledgeBaseArticleId,
+			KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -676,9 +618,8 @@ public class Mutation {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public KnowledgeBaseArticle postKnowledgeBaseFolderKnowledgeBaseArticle(
-			@GraphQLName("knowledgeBaseFolderId") Long knowledgeBaseFolderId,
-			@GraphQLName("KnowledgeBaseArticle") KnowledgeBaseArticle
-				knowledgeBaseArticle)
+			Long knowledgeBaseFolderId,
+			KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -697,9 +638,7 @@ public class Mutation {
 	)
 	public KnowledgeBaseAttachment
 			postKnowledgeBaseArticleKnowledgeBaseAttachment(
-				@GraphQLName("knowledgeBaseArticleId") Long
-					knowledgeBaseArticleId,
-				@GraphQLName("MultipartBody") MultipartBody multipartBody)
+				Long knowledgeBaseArticleId, MultipartBody multipartBody)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -712,9 +651,7 @@ public class Mutation {
 	}
 
 	@GraphQLInvokeDetached
-	public void deleteKnowledgeBaseAttachment(
-			@GraphQLName("knowledgeBaseAttachmentId") Long
-				knowledgeBaseAttachmentId)
+	public void deleteKnowledgeBaseAttachment(Long knowledgeBaseAttachmentId)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
@@ -728,9 +665,7 @@ public class Mutation {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public KnowledgeBaseFolder postContentSpaceKnowledgeBaseFolder(
-			@GraphQLName("contentSpaceId") Long contentSpaceId,
-			@GraphQLName("KnowledgeBaseFolder") KnowledgeBaseFolder
-				knowledgeBaseFolder)
+			Long contentSpaceId, KnowledgeBaseFolder knowledgeBaseFolder)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -742,8 +677,7 @@ public class Mutation {
 	}
 
 	@GraphQLInvokeDetached
-	public void deleteKnowledgeBaseFolder(
-			@GraphQLName("knowledgeBaseFolderId") Long knowledgeBaseFolderId)
+	public void deleteKnowledgeBaseFolder(Long knowledgeBaseFolderId)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
@@ -756,9 +690,7 @@ public class Mutation {
 
 	@GraphQLInvokeDetached
 	public KnowledgeBaseFolder patchKnowledgeBaseFolder(
-			@GraphQLName("knowledgeBaseFolderId") Long knowledgeBaseFolderId,
-			@GraphQLName("KnowledgeBaseFolder") KnowledgeBaseFolder
-				knowledgeBaseFolder)
+			Long knowledgeBaseFolderId, KnowledgeBaseFolder knowledgeBaseFolder)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -771,9 +703,7 @@ public class Mutation {
 
 	@GraphQLInvokeDetached
 	public KnowledgeBaseFolder putKnowledgeBaseFolder(
-			@GraphQLName("knowledgeBaseFolderId") Long knowledgeBaseFolderId,
-			@GraphQLName("KnowledgeBaseFolder") KnowledgeBaseFolder
-				knowledgeBaseFolder)
+			Long knowledgeBaseFolderId, KnowledgeBaseFolder knowledgeBaseFolder)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -787,10 +717,8 @@ public class Mutation {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public KnowledgeBaseFolder postKnowledgeBaseFolderKnowledgeBaseFolder(
-			@GraphQLName("parentKnowledgeBaseFolderId") Long
-				parentKnowledgeBaseFolderId,
-			@GraphQLName("KnowledgeBaseFolder") KnowledgeBaseFolder
-				knowledgeBaseFolder)
+			Long parentKnowledgeBaseFolderId,
+			KnowledgeBaseFolder knowledgeBaseFolder)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -803,9 +731,7 @@ public class Mutation {
 	}
 
 	@GraphQLInvokeDetached
-	public void deleteMessageBoardAttachment(
-			@GraphQLName("messageBoardAttachmentId") Long
-				messageBoardAttachmentId)
+	public void deleteMessageBoardAttachment(Long messageBoardAttachmentId)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
@@ -822,8 +748,7 @@ public class Mutation {
 		"postMessageBoardMessageMessageBoardAttachmentMessageBoardMessageIdMultipartBody"
 	)
 	public MessageBoardAttachment postMessageBoardMessageMessageBoardAttachment(
-			@GraphQLName("messageBoardMessageId") Long messageBoardMessageId,
-			@GraphQLName("MultipartBody") MultipartBody multipartBody)
+			Long messageBoardMessageId, MultipartBody multipartBody)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -841,8 +766,7 @@ public class Mutation {
 		"postMessageBoardThreadMessageBoardAttachmentMessageBoardThreadIdMultipartBody"
 	)
 	public MessageBoardAttachment postMessageBoardThreadMessageBoardAttachment(
-			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId,
-			@GraphQLName("MultipartBody") MultipartBody multipartBody)
+			Long messageBoardThreadId, MultipartBody multipartBody)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -855,8 +779,7 @@ public class Mutation {
 	}
 
 	@GraphQLInvokeDetached
-	public void deleteMessageBoardMessage(
-			@GraphQLName("messageBoardMessageId") Long messageBoardMessageId)
+	public void deleteMessageBoardMessage(Long messageBoardMessageId)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
@@ -869,9 +792,7 @@ public class Mutation {
 
 	@GraphQLInvokeDetached
 	public MessageBoardMessage patchMessageBoardMessage(
-			@GraphQLName("messageBoardMessageId") Long messageBoardMessageId,
-			@GraphQLName("MessageBoardMessage") MessageBoardMessage
-				messageBoardMessage)
+			Long messageBoardMessageId, MessageBoardMessage messageBoardMessage)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -884,9 +805,7 @@ public class Mutation {
 
 	@GraphQLInvokeDetached
 	public MessageBoardMessage putMessageBoardMessage(
-			@GraphQLName("messageBoardMessageId") Long messageBoardMessageId,
-			@GraphQLName("MessageBoardMessage") MessageBoardMessage
-				messageBoardMessage)
+			Long messageBoardMessageId, MessageBoardMessage messageBoardMessage)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -898,8 +817,7 @@ public class Mutation {
 	}
 
 	@GraphQLInvokeDetached
-	public void deleteMessageBoardMessageMyRating(
-			@GraphQLName("messageBoardMessageId") Long messageBoardMessageId)
+	public void deleteMessageBoardMessageMyRating(Long messageBoardMessageId)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
@@ -913,8 +831,7 @@ public class Mutation {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Rating postMessageBoardMessageMyRating(
-			@GraphQLName("messageBoardMessageId") Long messageBoardMessageId,
-			@GraphQLName("Rating") Rating rating)
+			Long messageBoardMessageId, Rating rating)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -927,8 +844,7 @@ public class Mutation {
 
 	@GraphQLInvokeDetached
 	public Rating putMessageBoardMessageMyRating(
-			@GraphQLName("messageBoardMessageId") Long messageBoardMessageId,
-			@GraphQLName("Rating") Rating rating)
+			Long messageBoardMessageId, Rating rating)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -942,10 +858,8 @@ public class Mutation {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public MessageBoardMessage postMessageBoardMessageMessageBoardMessage(
-			@GraphQLName("parentMessageBoardMessageId") Long
-				parentMessageBoardMessageId,
-			@GraphQLName("MessageBoardMessage") MessageBoardMessage
-				messageBoardMessage)
+			Long parentMessageBoardMessageId,
+			MessageBoardMessage messageBoardMessage)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -960,9 +874,7 @@ public class Mutation {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public MessageBoardMessage postMessageBoardThreadMessageBoardMessage(
-			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId,
-			@GraphQLName("MessageBoardMessage") MessageBoardMessage
-				messageBoardMessage)
+			Long messageBoardThreadId, MessageBoardMessage messageBoardMessage)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -977,9 +889,7 @@ public class Mutation {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public MessageBoardSection postContentSpaceMessageBoardSection(
-			@GraphQLName("contentSpaceId") Long contentSpaceId,
-			@GraphQLName("MessageBoardSection") MessageBoardSection
-				messageBoardSection)
+			Long contentSpaceId, MessageBoardSection messageBoardSection)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -991,8 +901,7 @@ public class Mutation {
 	}
 
 	@GraphQLInvokeDetached
-	public void deleteMessageBoardSection(
-			@GraphQLName("messageBoardSectionId") Long messageBoardSectionId)
+	public void deleteMessageBoardSection(Long messageBoardSectionId)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
@@ -1005,9 +914,7 @@ public class Mutation {
 
 	@GraphQLInvokeDetached
 	public MessageBoardSection patchMessageBoardSection(
-			@GraphQLName("messageBoardSectionId") Long messageBoardSectionId,
-			@GraphQLName("MessageBoardSection") MessageBoardSection
-				messageBoardSection)
+			Long messageBoardSectionId, MessageBoardSection messageBoardSection)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -1020,9 +927,7 @@ public class Mutation {
 
 	@GraphQLInvokeDetached
 	public MessageBoardSection putMessageBoardSection(
-			@GraphQLName("messageBoardSectionId") Long messageBoardSectionId,
-			@GraphQLName("MessageBoardSection") MessageBoardSection
-				messageBoardSection)
+			Long messageBoardSectionId, MessageBoardSection messageBoardSection)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -1036,10 +941,8 @@ public class Mutation {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public MessageBoardSection postMessageBoardSectionMessageBoardSection(
-			@GraphQLName("parentMessageBoardSectionId") Long
-				parentMessageBoardSectionId,
-			@GraphQLName("MessageBoardSection") MessageBoardSection
-				messageBoardSection)
+			Long parentMessageBoardSectionId,
+			MessageBoardSection messageBoardSection)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -1054,9 +957,7 @@ public class Mutation {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public MessageBoardThread postContentSpaceMessageBoardThread(
-			@GraphQLName("contentSpaceId") Long contentSpaceId,
-			@GraphQLName("MessageBoardThread") MessageBoardThread
-				messageBoardThread)
+			Long contentSpaceId, MessageBoardThread messageBoardThread)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -1070,9 +971,7 @@ public class Mutation {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public MessageBoardThread postMessageBoardSectionMessageBoardThread(
-			@GraphQLName("messageBoardSectionId") Long messageBoardSectionId,
-			@GraphQLName("MessageBoardThread") MessageBoardThread
-				messageBoardThread)
+			Long messageBoardSectionId, MessageBoardThread messageBoardThread)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -1085,8 +984,7 @@ public class Mutation {
 	}
 
 	@GraphQLInvokeDetached
-	public void deleteMessageBoardThread(
-			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId)
+	public void deleteMessageBoardThread(Long messageBoardThreadId)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
@@ -1099,9 +997,7 @@ public class Mutation {
 
 	@GraphQLInvokeDetached
 	public MessageBoardThread patchMessageBoardThread(
-			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId,
-			@GraphQLName("MessageBoardThread") MessageBoardThread
-				messageBoardThread)
+			Long messageBoardThreadId, MessageBoardThread messageBoardThread)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -1114,9 +1010,7 @@ public class Mutation {
 
 	@GraphQLInvokeDetached
 	public MessageBoardThread putMessageBoardThread(
-			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId,
-			@GraphQLName("MessageBoardThread") MessageBoardThread
-				messageBoardThread)
+			Long messageBoardThreadId, MessageBoardThread messageBoardThread)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -1128,8 +1022,7 @@ public class Mutation {
 	}
 
 	@GraphQLInvokeDetached
-	public void deleteMessageBoardThreadMyRating(
-			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId)
+	public void deleteMessageBoardThreadMyRating(Long messageBoardThreadId)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
@@ -1143,8 +1036,7 @@ public class Mutation {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Rating postMessageBoardThreadMyRating(
-			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId,
-			@GraphQLName("Rating") Rating rating)
+			Long messageBoardThreadId, Rating rating)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -1157,8 +1049,7 @@ public class Mutation {
 
 	@GraphQLInvokeDetached
 	public Rating putMessageBoardThreadMyRating(
-			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId,
-			@GraphQLName("Rating") Rating rating)
+			Long messageBoardThreadId, Rating rating)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -1172,9 +1063,7 @@ public class Mutation {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public StructuredContent postContentSpaceStructuredContent(
-			@GraphQLName("contentSpaceId") Long contentSpaceId,
-			@GraphQLName("StructuredContent") StructuredContent
-				structuredContent)
+			Long contentSpaceId, StructuredContent structuredContent)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -1188,10 +1077,7 @@ public class Mutation {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public StructuredContent postStructuredContentFolderStructuredContent(
-			@GraphQLName("structuredContentFolderId") Long
-				structuredContentFolderId,
-			@GraphQLName("StructuredContent") StructuredContent
-				structuredContent)
+			Long structuredContentFolderId, StructuredContent structuredContent)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -1204,8 +1090,7 @@ public class Mutation {
 	}
 
 	@GraphQLInvokeDetached
-	public void deleteStructuredContent(
-			@GraphQLName("structuredContentId") Long structuredContentId)
+	public void deleteStructuredContent(Long structuredContentId)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
@@ -1218,9 +1103,7 @@ public class Mutation {
 
 	@GraphQLInvokeDetached
 	public StructuredContent patchStructuredContent(
-			@GraphQLName("structuredContentId") Long structuredContentId,
-			@GraphQLName("StructuredContent") StructuredContent
-				structuredContent)
+			Long structuredContentId, StructuredContent structuredContent)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -1233,9 +1116,7 @@ public class Mutation {
 
 	@GraphQLInvokeDetached
 	public StructuredContent putStructuredContent(
-			@GraphQLName("structuredContentId") Long structuredContentId,
-			@GraphQLName("StructuredContent") StructuredContent
-				structuredContent)
+			Long structuredContentId, StructuredContent structuredContent)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -1247,8 +1128,7 @@ public class Mutation {
 	}
 
 	@GraphQLInvokeDetached
-	public void deleteStructuredContentMyRating(
-			@GraphQLName("structuredContentId") Long structuredContentId)
+	public void deleteStructuredContentMyRating(Long structuredContentId)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
@@ -1262,8 +1142,7 @@ public class Mutation {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Rating postStructuredContentMyRating(
-			@GraphQLName("structuredContentId") Long structuredContentId,
-			@GraphQLName("Rating") Rating rating)
+			Long structuredContentId, Rating rating)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -1276,8 +1155,7 @@ public class Mutation {
 
 	@GraphQLInvokeDetached
 	public Rating putStructuredContentMyRating(
-			@GraphQLName("structuredContentId") Long structuredContentId,
-			@GraphQLName("Rating") Rating rating)
+			Long structuredContentId, Rating rating)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -1291,9 +1169,8 @@ public class Mutation {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public StructuredContentFolder postContentSpaceStructuredContentFolder(
-			@GraphQLName("contentSpaceId") Long contentSpaceId,
-			@GraphQLName("StructuredContentFolder") StructuredContentFolder
-				structuredContentFolder)
+			Long contentSpaceId,
+			StructuredContentFolder structuredContentFolder)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -1309,10 +1186,8 @@ public class Mutation {
 	@GraphQLInvokeDetached
 	public StructuredContentFolder
 			postStructuredContentFolderStructuredContentFolder(
-				@GraphQLName("parentStructuredContentFolderId") Long
-					parentStructuredContentFolderId,
-				@GraphQLName("StructuredContentFolder") StructuredContentFolder
-					structuredContentFolder)
+				Long parentStructuredContentFolderId,
+				StructuredContentFolder structuredContentFolder)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -1326,9 +1201,7 @@ public class Mutation {
 	}
 
 	@GraphQLInvokeDetached
-	public void deleteStructuredContentFolder(
-			@GraphQLName("structuredContentFolderId") Long
-				structuredContentFolderId)
+	public void deleteStructuredContentFolder(Long structuredContentFolderId)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
@@ -1341,10 +1214,8 @@ public class Mutation {
 
 	@GraphQLInvokeDetached
 	public StructuredContentFolder patchStructuredContentFolder(
-			@GraphQLName("structuredContentFolderId") Long
-				structuredContentFolderId,
-			@GraphQLName("StructuredContentFolder") StructuredContentFolder
-				structuredContentFolder)
+			Long structuredContentFolderId,
+			StructuredContentFolder structuredContentFolder)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -1357,10 +1228,8 @@ public class Mutation {
 
 	@GraphQLInvokeDetached
 	public StructuredContentFolder putStructuredContentFolder(
-			@GraphQLName("structuredContentFolderId") Long
-				structuredContentFolderId,
-			@GraphQLName("StructuredContentFolder") StructuredContentFolder
-				structuredContentFolder)
+			Long structuredContentFolderId,
+			StructuredContentFolder structuredContentFolder)
 		throws Exception {
 
 		return _applyComponentServiceObjects(

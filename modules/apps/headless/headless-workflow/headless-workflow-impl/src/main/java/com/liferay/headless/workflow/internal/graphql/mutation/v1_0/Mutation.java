@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLInvokeDetached;
-import graphql.annotations.annotationTypes.GraphQLName;
 
 import javax.annotation.Generated;
 
@@ -50,9 +49,7 @@ public class Mutation {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public WorkflowTask postWorkflowTaskAssignToMe(
-			@GraphQLName("workflowTaskId") Long workflowTaskId,
-			@GraphQLName("WorkflowTaskAssignToMe") WorkflowTaskAssignToMe
-				workflowTaskAssignToMe)
+			Long workflowTaskId, WorkflowTaskAssignToMe workflowTaskAssignToMe)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -66,9 +63,8 @@ public class Mutation {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public WorkflowTask postWorkflowTaskAssignToUser(
-			@GraphQLName("workflowTaskId") Long workflowTaskId,
-			@GraphQLName("WorkflowTaskAssignToUser") WorkflowTaskAssignToUser
-				workflowTaskAssignToUser)
+			Long workflowTaskId,
+			WorkflowTaskAssignToUser workflowTaskAssignToUser)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -82,8 +78,7 @@ public class Mutation {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public WorkflowTask postWorkflowTaskChangeTransition(
-			@GraphQLName("workflowTaskId") Long workflowTaskId,
-			@GraphQLName("ChangeTransition") ChangeTransition changeTransition)
+			Long workflowTaskId, ChangeTransition changeTransition)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -97,9 +92,7 @@ public class Mutation {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public WorkflowTask postWorkflowTaskUpdateDueDate(
-			@GraphQLName("workflowTaskId") Long workflowTaskId,
-			@GraphQLName("WorkflowTaskAssignToMe") WorkflowTaskAssignToMe
-				workflowTaskAssignToMe)
+			Long workflowTaskId, WorkflowTaskAssignToMe workflowTaskAssignToMe)
 		throws Exception {
 
 		return _applyComponentServiceObjects(

@@ -77,9 +77,7 @@ public class Mutation {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Keyword postContentSpaceKeyword(
-			@GraphQLName("contentSpaceId") Long contentSpaceId,
-			@GraphQLName("Keyword") Keyword keyword)
+	public Keyword postContentSpaceKeyword(Long contentSpaceId, Keyword keyword)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -90,9 +88,7 @@ public class Mutation {
 	}
 
 	@GraphQLInvokeDetached
-	public void deleteKeyword(@GraphQLName("keywordId") Long keywordId)
-		throws Exception {
-
+	public void deleteKeyword(Long keywordId) throws Exception {
 		_applyVoidComponentServiceObjects(
 			_keywordResourceComponentServiceObjects,
 			this::_populateResourceContext,
@@ -100,9 +96,7 @@ public class Mutation {
 	}
 
 	@GraphQLInvokeDetached
-	public Keyword putKeyword(
-			@GraphQLName("keywordId") Long keywordId,
-			@GraphQLName("Keyword") Keyword keyword)
+	public Keyword putKeyword(Long keywordId, Keyword keyword)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -114,9 +108,7 @@ public class Mutation {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public TaxonomyCategory postTaxonomyCategoryTaxonomyCategory(
-			@GraphQLName("parentTaxonomyCategoryId") Long
-				parentTaxonomyCategoryId,
-			@GraphQLName("TaxonomyCategory") TaxonomyCategory taxonomyCategory)
+			Long parentTaxonomyCategoryId, TaxonomyCategory taxonomyCategory)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -128,8 +120,7 @@ public class Mutation {
 	}
 
 	@GraphQLInvokeDetached
-	public void deleteTaxonomyCategory(
-			@GraphQLName("taxonomyCategoryId") Long taxonomyCategoryId)
+	public void deleteTaxonomyCategory(Long taxonomyCategoryId)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
@@ -142,8 +133,7 @@ public class Mutation {
 
 	@GraphQLInvokeDetached
 	public TaxonomyCategory patchTaxonomyCategory(
-			@GraphQLName("taxonomyCategoryId") Long taxonomyCategoryId,
-			@GraphQLName("TaxonomyCategory") TaxonomyCategory taxonomyCategory)
+			Long taxonomyCategoryId, TaxonomyCategory taxonomyCategory)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -156,8 +146,7 @@ public class Mutation {
 
 	@GraphQLInvokeDetached
 	public TaxonomyCategory putTaxonomyCategory(
-			@GraphQLName("taxonomyCategoryId") Long taxonomyCategoryId,
-			@GraphQLName("TaxonomyCategory") TaxonomyCategory taxonomyCategory)
+			Long taxonomyCategoryId, TaxonomyCategory taxonomyCategory)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -171,8 +160,7 @@ public class Mutation {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public TaxonomyCategory postTaxonomyVocabularyTaxonomyCategory(
-			@GraphQLName("taxonomyVocabularyId") Long taxonomyVocabularyId,
-			@GraphQLName("TaxonomyCategory") TaxonomyCategory taxonomyCategory)
+			Long taxonomyVocabularyId, TaxonomyCategory taxonomyCategory)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -186,9 +174,7 @@ public class Mutation {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public TaxonomyVocabulary postContentSpaceTaxonomyVocabulary(
-			@GraphQLName("contentSpaceId") Long contentSpaceId,
-			@GraphQLName("TaxonomyVocabulary") TaxonomyVocabulary
-				taxonomyVocabulary)
+			Long contentSpaceId, TaxonomyVocabulary taxonomyVocabulary)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -200,8 +186,7 @@ public class Mutation {
 	}
 
 	@GraphQLInvokeDetached
-	public void deleteTaxonomyVocabulary(
-			@GraphQLName("taxonomyVocabularyId") Long taxonomyVocabularyId)
+	public void deleteTaxonomyVocabulary(Long taxonomyVocabularyId)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
@@ -214,9 +199,7 @@ public class Mutation {
 
 	@GraphQLInvokeDetached
 	public TaxonomyVocabulary patchTaxonomyVocabulary(
-			@GraphQLName("taxonomyVocabularyId") Long taxonomyVocabularyId,
-			@GraphQLName("TaxonomyVocabulary") TaxonomyVocabulary
-				taxonomyVocabulary)
+			Long taxonomyVocabularyId, TaxonomyVocabulary taxonomyVocabulary)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -229,9 +212,7 @@ public class Mutation {
 
 	@GraphQLInvokeDetached
 	public TaxonomyVocabulary putTaxonomyVocabulary(
-			@GraphQLName("taxonomyVocabularyId") Long taxonomyVocabularyId,
-			@GraphQLName("TaxonomyVocabulary") TaxonomyVocabulary
-				taxonomyVocabulary)
+			Long taxonomyVocabularyId, TaxonomyVocabulary taxonomyVocabulary)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -244,8 +225,7 @@ public class Mutation {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public UserAccount postUserAccount(
-			@GraphQLName("UserAccount") UserAccount userAccount)
+	public UserAccount postUserAccount(UserAccount userAccount)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -258,8 +238,7 @@ public class Mutation {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	@GraphQLName("postUserAccountMultipartBody")
-	public UserAccount postUserAccount(
-			@GraphQLName("MultipartBody") MultipartBody multipartBody)
+	public UserAccount postUserAccount(MultipartBody multipartBody)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -270,10 +249,7 @@ public class Mutation {
 	}
 
 	@GraphQLInvokeDetached
-	public void deleteUserAccount(
-			@GraphQLName("userAccountId") Long userAccountId)
-		throws Exception {
-
+	public void deleteUserAccount(Long userAccountId) throws Exception {
 		_applyVoidComponentServiceObjects(
 			_userAccountResourceComponentServiceObjects,
 			this::_populateResourceContext,
@@ -283,8 +259,7 @@ public class Mutation {
 
 	@GraphQLInvokeDetached
 	public UserAccount putUserAccount(
-			@GraphQLName("userAccountId") Long userAccountId,
-			@GraphQLName("UserAccount") UserAccount userAccount)
+			Long userAccountId, UserAccount userAccount)
 		throws Exception {
 
 		return _applyComponentServiceObjects(

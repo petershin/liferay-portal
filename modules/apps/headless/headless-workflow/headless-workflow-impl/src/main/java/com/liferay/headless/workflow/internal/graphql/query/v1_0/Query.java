@@ -27,7 +27,6 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLInvokeDetached;
-import graphql.annotations.annotationTypes.GraphQLName;
 
 import java.util.Collection;
 
@@ -60,10 +59,7 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public WorkflowLog getWorkflowLog(
-			@GraphQLName("workflowLogId") Long workflowLogId)
-		throws Exception {
-
+	public WorkflowLog getWorkflowLog(Long workflowLogId) throws Exception {
 		return _applyComponentServiceObjects(
 			_workflowLogResourceComponentServiceObjects,
 			this::_populateResourceContext,
@@ -74,9 +70,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<WorkflowLog> getWorkflowTaskWorkflowLogsPage(
-			@GraphQLName("workflowTaskId") Long workflowTaskId,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
+			Long workflowTaskId, int pageSize, int page)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -94,9 +88,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<WorkflowTask> getRoleWorkflowTasksPage(
-			@GraphQLName("roleId") Long roleId,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
+			Long roleId, int pageSize, int page)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -114,8 +106,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<WorkflowTask> getWorkflowTasksAssignedToMePage(
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
+			int pageSize, int page)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -133,8 +124,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<WorkflowTask> getWorkflowTasksAssignedToMyRolesPage(
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
+			int pageSize, int page)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -151,10 +141,7 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public WorkflowTask getWorkflowTask(
-			@GraphQLName("workflowTaskId") Long workflowTaskId)
-		throws Exception {
-
+	public WorkflowTask getWorkflowTask(Long workflowTaskId) throws Exception {
 		return _applyComponentServiceObjects(
 			_workflowTaskResourceComponentServiceObjects,
 			this::_populateResourceContext,
