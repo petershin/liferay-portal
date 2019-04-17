@@ -5411,6 +5411,12 @@ version 2.0.9.
 - [LPS-84119]: Update the [Liferay Gradle Plugins] dependency to version
 3.13.63.
 
+## 5.5.174 - 2019-01-21
+
+### Added
+- [LPS-89135]: Add the plugin `com.liferay.go.defaults` to configure Go projects
+according to Liferay defaults.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle Dependency Management]: https://github.com/spring-gradle-plugins/dependency-management-plugin
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
@@ -5421,6 +5427,7 @@ version 2.0.9.
 [Liferay Gradle Plugins Cache]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-cache
 [Liferay Gradle Plugins Change Log Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-change-log-builder
 [Liferay Gradle Plugins Dependency Checker]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-dependency-checker
+[Liferay Gradle Plugins Go]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-go
 [Liferay Gradle Plugins JSDoc]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-jsdoc
 [Liferay Gradle Plugins Lang Merger]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-lang-merger
 [Liferay Gradle Plugins Node]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-node
@@ -5956,6 +5963,7 @@ version 2.0.9.
 [LPS-88903]: https://issues.liferay.com/browse/LPS-88903
 [LPS-88909]: https://issues.liferay.com/browse/LPS-88909
 [LPS-89126]: https://issues.liferay.com/browse/LPS-89126
+[LPS-89135]: https://issues.liferay.com/browse/LPS-89135
 [LPS-89228]: https://issues.liferay.com/browse/LPS-89228
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
