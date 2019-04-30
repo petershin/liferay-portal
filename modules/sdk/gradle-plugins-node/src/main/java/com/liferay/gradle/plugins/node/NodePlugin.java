@@ -601,7 +601,9 @@ public class NodePlugin implements Plugin<Project> {
 
 			SourceSetOutput sourceSetOutput = sourceSet.getOutput();
 
-			File classesDir = sourceSetOutput.getClassesDir();
+			FileCollection classesDirs = sourceSetOutput.getClassesDirs();
+
+			File classesDir = classesDirs.getSingleFile();
 
 			if (!classesDir.exists()) {
 				TaskOutputs taskOutputs = npmRunTask.getOutputs();
