@@ -99,14 +99,16 @@ setUpYarn {
 	doFirst {
 		String cacheDir = project.findProperty("build.binaries.cache.dir")
 
-		if (cacheDir) {
-			File yarnCacheDir = new File(rootDir.parentFile, cacheDir + "/.yarn")
+		if (cacheDir && cacheDir.equals("../liferay-binaries-cache-2017")) {
+			String cacheFolder = "../../liferay-binaries-cache-2017/.yarn"
 
-			if (yarnCacheDir.parentFile.exists()) {
+			File yarnCacheDir = new File(projectDir, cacheFolder)
+
+			if (yarnCacheDir.exists()) {
 				logger.lifecycle "Using cache {}", yarnCacheDir
 
 				args "--cache-folder"
-				args yarnCacheDir
+				args cacheFolder
 			}
 		}
 
