@@ -549,7 +549,6 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 					jarBuilder.withProperties(properties);
 					jarBuilder.withResources(new File[0]);
 					jarBuilder.withSourcepath(BundleUtils.getSources(project));
-					jarBuilder.withTrace(bundleExtension.isTrace());
 					jarBuilder.withVersion(BundleUtils.getVersion(project));
 
 					TaskOutputs taskOutputs = task.getOutputs();

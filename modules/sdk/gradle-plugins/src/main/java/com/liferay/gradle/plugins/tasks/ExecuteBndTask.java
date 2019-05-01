@@ -79,13 +79,6 @@ public class ExecuteBndTask extends DefaultTask {
 		jarBuilder.withVersion(
 			properties.getProperty(Constants.BUNDLE_VERSION));
 
-		if (logger.isInfoEnabled()) {
-			jarBuilder.withTrace(true);
-		}
-		else {
-			jarBuilder.withTrace(true);
-		}
-
 		File outputFile = getOutputFile();
 
 		if (isWriteManifest()) {
