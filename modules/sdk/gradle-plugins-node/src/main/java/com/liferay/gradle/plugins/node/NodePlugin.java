@@ -36,7 +36,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -447,7 +447,8 @@ public class NodePlugin implements Plugin<Project> {
 				rootProject, taskName, nodeExtension);
 		}
 
-		downloadNodeTask.setActions(Arrays.asList());
+		downloadNodeTask.setActions(Collections.emptyList());
+
 		downloadNodeTask.dependsOn(rootDownloadNodeTask);
 	}
 
