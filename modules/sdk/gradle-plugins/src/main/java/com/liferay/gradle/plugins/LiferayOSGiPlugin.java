@@ -84,13 +84,13 @@ import org.dm.gradle.plugins.bundle.BundleExtension;
 import org.dm.gradle.plugins.bundle.BundlePlugin;
 import org.dm.gradle.plugins.bundle.BundleUtils;
 import org.dm.gradle.plugins.bundle.JarBuilder;
+
 import org.gradle.api.Action;
 import org.gradle.api.GradleException;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
-import org.gradle.api.file.ConfigurableFileCollection;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.SourceDirectorySet;
@@ -506,7 +506,8 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 					Project project = task.getProject();
 
 					try (JarBuilder jarBuilder = new JarBuilder()) {
-						Map<String, String> properties = _getProperties(project);
+						Map<String, String> properties = _getProperties(
+							project);
 
 						jarBuilder.withBase(BundleUtils.getBase(project));
 						jarBuilder.withClasspath(_getClasspath(project));
@@ -515,7 +516,8 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 							properties.get(Constants.BUNDLE_SYMBOLICNAME));
 						jarBuilder.withProperties(properties);
 						jarBuilder.withResources(new File[0]);
-						jarBuilder.withSourcepath(BundleUtils.getSources(project));
+						jarBuilder.withSourcepath(
+							BundleUtils.getSources(project));
 						jarBuilder.withVersion(BundleUtils.getVersion(project));
 
 						TaskOutputs taskOutputs = task.getOutputs();
@@ -525,7 +527,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 						jarBuilder.writeJarTo(fileCollection.getSingleFile());
 					}
 					catch (Exception e) {
-						throw new GradleException("Failed to build jar", e);
+						throw new GradleException("Unable to build jar", e);
 					}
 				}
 
@@ -535,13 +537,13 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 					SourceSetOutput sourceSetOutput = sourceSet.getOutput();
 
-					ConfigurableFileCollection files = project.files(
+					FileCollection fileCollection = project.files(
 						sourceSetOutput.getClassesDirs(),
 						sourceSetOutput.getResourcesDir());
 
-					Set<File> fileSet = files.getFiles();
+					Set<File> files = fileCollection.getFiles();
 
-					return fileSet.toArray(new File[0]);
+					return files.toArray(new File[files.size()]);
 				}
 
 				private Map<String, String> _getProperties(Project project) {
