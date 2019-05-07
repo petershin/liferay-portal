@@ -20,9 +20,9 @@ import aQute.bnd.main.bnd;
 import aQute.bnd.osgi.Domain;
 
 import com.liferay.maven.executor.MavenExecutor;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.project.templates.internal.ProjectGenerator;
 import com.liferay.project.templates.internal.util.FileUtil;
+import com.liferay.project.templates.internal.util.ListUtil;
 import com.liferay.project.templates.internal.util.ProjectTemplatesUtil;
 import com.liferay.project.templates.internal.util.Validator;
 import com.liferay.project.templates.util.DirectoryComparator;
