@@ -543,7 +543,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 					Set<File> files = fileCollection.getFiles();
 
-					return files.toArray(new File[0]);
+					return files.toArray(new File[files.size()]);
 				}
 
 				private Map<String, String> _getProperties(Project project) {
