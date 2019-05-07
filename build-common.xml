@@ -855,6 +855,39 @@ information.
 				</else>
 			</if>
 
+			<var name="gradle.opts" value="@{gradleopts}" />
+
+			<if>
+				<isset property="env.JENKINS_HOME" />
+				<then>
+					<propertyregex
+						input="@{gradleopts}"
+						override="true"
+						property="max.memory"
+						regexp="Xmx(\d+)m"
+						select="\1"
+					/>
+
+					<math
+						datatype="int"
+						operand1="${max.memory}"
+						operand2="256"
+						operation="+"
+						result="max.memory"
+					/>
+
+					<propertyregex
+						input="@{gradleopts}"
+						override="true"
+						property="gradle.opts"
+						regexp="Xmx(\d+)m"
+						replace="Xmx${max.memory}m"
+					/>
+
+					<echo>GRADLE_OPTS: ${gradle.opts}</echo>
+				</then>
+			</if>
+
 			<local name="task.available" />
 
 			<if>
@@ -875,7 +908,7 @@ information.
 						<arg if:set="env.JENKINS_HOME" value="-Dorg.gradle.internal.http.socketTimeout=120000" />
 						<arg value="tasks" />
 						<arg value="--all" />
-						<env key="GRADLE_OPTS" value="@{gradleopts}" />
+						<env key="GRADLE_OPTS" value="${gradle.opts}" />
 						<redirector errorproperty="@{outputproperty}.error" outputproperty="tasks.output" unless:blank="tasks.output" />
 					</exec>
 
@@ -916,7 +949,7 @@ information.
 								<arg if:set="env.JENKINS_HOME" value="-Dorg.gradle.internal.http.connectionTimeout=120000" />
 								<arg if:set="env.JENKINS_HOME" value="-Dorg.gradle.internal.http.socketTimeout=120000" />
 								<arg line="@{task}" />
-								<env key="GRADLE_OPTS" value="@{gradleopts}" />
+								<env key="GRADLE_OPTS" value="${gradle.opts}" />
 								<redirector errorproperty="@{outputproperty}.error" outputproperty="@{outputproperty}" unless:blank="@{outputproperty}" />
 							</exec>
 						</try>
