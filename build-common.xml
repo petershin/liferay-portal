@@ -871,7 +871,7 @@ information.
 					<math
 						datatype="int"
 						operand1="${max.memory}"
-						operand2="256"
+						operand2="512"
 						operation="+"
 						result="max.memory"
 					/>
