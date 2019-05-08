@@ -44,6 +44,10 @@ public class Arquillian extends Runner implements Filterable {
 		_clazz = clazz;
 
 		_testMethods = _scanTestMethods(clazz);
+
+		System.out.println("!!!!!!!!!!!!!! Value of system property \"liferay.arquillian.passcode\": " + System.getProperty("liferay.arquillian.passcode"));
+		System.out.println("!!!!!!!!!!!!!! Value of system property \"junit.java.integration.gc\": " + System.getProperty("junit.java.integration.gc"));
+		System.out.println("!!!!!!!!!!!!!! Value of system property \"user.timezone\": " + System.getProperty("user.timezone"));
 	}
 
 	@Override
@@ -86,6 +90,10 @@ public class Arquillian extends Runner implements Filterable {
 
 	@Override
 	public void run(RunNotifier runNotifier) {
+		if (true) {
+			return;
+		}
+
 		_testMethods.removeIf(
 			method -> {
 				if (method.getAnnotation(Ignore.class) != null) {
