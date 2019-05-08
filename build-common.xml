@@ -812,7 +812,7 @@ information.
 		<attribute default="${basedir}" name="dir" />
 		<attribute default="true" name="failonerror" />
 		<attribute default="true" name="forcedcacheenabled" />
-		<attribute default="${env.ANT_OPTS}" name="gradleopts" />
+		<attribute default="" name="gradleopts" />
 		<attribute default="" name="outputproperty" />
 		<attribute default="" name="refreshdependencies" />
 		<attribute default="true" name="setupbinariescache" />
@@ -840,6 +840,37 @@ information.
 				</then>
 			</if>
 
+			<local name="task.gradle.opts" />
+
+			<if>
+				<not>
+					<equals arg1="@{gradleopts}" arg2="" />
+				</not>
+				<then>
+					<property name="task.gradle.opts" value="@{gradleopts}" />
+				</then>
+				<elseif>
+					<isset property="env.GRADLE_OPTS" />
+					<then>
+						<property name="task.gradle.opts" value="${env.GRADLE_OPTS}" />
+					</then>
+				</elseif>
+				<elseif>
+					<isset property="env.ANT_OPTS" />
+					<then>
+						<property name="task.gradle.opts" value="${env.ANT_OPTS}" />
+					</then>
+				</elseif>
+			</if>
+
+			<if>
+				<isset property="env.JENKINS_HOME" />
+				<then>
+					<echo>ANT_OPTS: ${env.ANT_OPTS}</echo>
+					<echo>GRADLE_OPTS: ${env.GRADLE_OPTS}</echo>
+				</then>
+			</if>
+
 			<if>
 				<os family="unix" />
 				<then>
@@ -853,40 +884,6 @@ information.
 				<else>
 					<property name="gradlew.suffix" value=".bat" />
 				</else>
-			</if>
-
-			<var name="gradle.opts" value="@{gradleopts}" />
-
-			<if>
-				<isset property="env.JENKINS_HOME" />
-				<then>
-					<propertyregex
-						input="@{gradleopts}"
-						override="true"
-						property="max.memory"
-						regexp="Xmx(\d+)m"
-						select="\1"
-					/>
-
-					<math
-						datatype="int"
-						operand1="${max.memory}"
-						operand2="512"
-						operation="+"
-						result="max.memory"
-					/>
-
-					<propertyregex
-						input="@{gradleopts}"
-						override="true"
-						property="gradle.opts"
-						regexp="Xmx(\d+)m"
-						replace="Xmx${max.memory}m"
-					/>
-
-					<echo>ANT_OPTS: ${env.ANT_OPTS}</echo>
-					<echo>GRADLE_OPTS: ${gradle.opts}</echo>
-				</then>
 			</if>
 
 			<local name="task.available" />
@@ -909,7 +906,7 @@ information.
 						<arg if:set="env.JENKINS_HOME" value="-Dorg.gradle.internal.http.socketTimeout=120000" />
 						<arg value="tasks" />
 						<arg value="--all" />
-						<env key="GRADLE_OPTS" value="${gradle.opts}" />
+						<env key="GRADLE_OPTS" value="${task.gradle.opts}" />
 						<redirector errorproperty="@{outputproperty}.error" outputproperty="tasks.output" unless:blank="tasks.output" />
 					</exec>
 
@@ -950,7 +947,7 @@ information.
 								<arg if:set="env.JENKINS_HOME" value="-Dorg.gradle.internal.http.connectionTimeout=120000" />
 								<arg if:set="env.JENKINS_HOME" value="-Dorg.gradle.internal.http.socketTimeout=120000" />
 								<arg line="@{task}" />
-								<env key="GRADLE_OPTS" value="${gradle.opts}" />
+								<env key="GRADLE_OPTS" value="${task.gradle.opts}" />
 								<redirector errorproperty="@{outputproperty}.error" outputproperty="@{outputproperty}" unless:blank="@{outputproperty}" />
 							</exec>
 						</try>
