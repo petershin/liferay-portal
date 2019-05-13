@@ -14,7 +14,7 @@
 
 package com.liferay.gradle.plugins.css.builder;
 
-import com.liferay.gradle.util.GradleUtil;
+import com.liferay.gradle.plugins.css.builder.util.GradleUtil;
 
 import java.io.File;
 
@@ -52,6 +52,8 @@ public class CSSBuilderPlugin implements Plugin<Project> {
 
 	@Override
 	public void apply(Project project) {
+		GradleUtil.addTmpMavenArtifactRepository(project);
+
 		Configuration cssBuilderConfiguration = _addConfigurationCSSBuilder(
 			project);
 		Configuration portalCommonCSSConfiguration =

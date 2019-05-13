@@ -134,6 +134,8 @@ public class CSSBuilder implements AutoCloseable {
 	}
 
 	public void execute() throws Exception {
+		System.out.println("#### Executing CSS Builder ####");
+
 		List<String> fileNames = new ArrayList<>();
 
 		File baseDir = _cssBuilderArgs.getBaseDir();
