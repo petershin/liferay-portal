@@ -47,9 +47,8 @@
 					<description/>
 				</parameter>
 				<parameter>
-					<name>docrootDirName</name>
+					<name>excludes</name>
 					<type>java.lang.String</type>
-					<deprecated>As of 2.1.0, replaced by {@link #setBaseDir(File)}</deprecated>
 					<required>false</required>
 					<editable>true</editable>
 					<description/>
@@ -71,14 +70,6 @@
 				<parameter>
 					<name>outputDirName</name>
 					<type>java.lang.String</type>
-					<required>false</required>
-					<editable>true</editable>
-					<description/>
-				</parameter>
-				<parameter>
-					<name>portalCommonPath</name>
-					<type>java.io.File</type>
-					<deprecated>As of 2.1.0, replaced by {@link #setImportDir(File)}</deprecated>
 					<required>false</required>
 					<editable>true</editable>
 					<description/>
