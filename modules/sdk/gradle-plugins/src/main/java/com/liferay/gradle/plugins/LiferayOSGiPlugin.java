@@ -104,6 +104,7 @@ import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.SourceDirectorySet;
+import org.gradle.api.java.archives.Manifest;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.logging.Logging;
 import org.gradle.api.plugins.ApplicationPlugin;
@@ -1078,6 +1079,19 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 						new File("$$$DOESNOTEXIST$$$"));
 
 					bundleTaskConvention.setBnd(instructions);
+
+					JavaCompile javaCompile = (JavaCompile)GradleUtil.getTask(
+						project, JavaPlugin.COMPILE_JAVA_TASK_NAME);
+
+					File manifestFile = new File(
+						javaCompile.getDestinationDir(),
+						"META-INF/MANIFEST.MF");
+
+					if (manifestFile.exists()) {
+						Manifest manifest = jar.getManifest();
+
+						manifest.from(manifestFile);
+					}
 				}
 
 			});
