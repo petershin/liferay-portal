@@ -10,11 +10,11 @@ task copyBundle(type: Copy)
 task copyGradleTestDependencies(type: Copy)
 task downloadBundle(type: Download)
 
-String bundleUrl = "https://releases-cdn.liferay.com/portal/7.1.2-ga3/liferay-ce-portal-tomcat-7.1.2-ga3-20190107144105508.tar.gz"
+String bundleUrl = "https://releases-cdn.liferay.com/portal/7.2.0-ga1/liferay-ce-portal-tomcat-7.2.0-ga1-20190531153709761.tar.gz"
 String gradleVersion = "4.10.2"
 
 if (System.properties["http.proxyHost"] == "squid.lax.liferay.com") {
-	bundleUrl = "http://mirrors.liferay.com/releases.liferay.com/portal/7.1.2-ga3/liferay-ce-portal-tomcat-7.1.2-ga3-20190107144105508.tar.gz"
+	bundleUrl = "http://mirrors.liferay.com/releases.liferay.com/portal/7.2.0-ga1/liferay-ce-portal-tomcat-7.2.0-ga1-20190531153709761.tar.gz"
 }
 
 tasks.eclipse {
