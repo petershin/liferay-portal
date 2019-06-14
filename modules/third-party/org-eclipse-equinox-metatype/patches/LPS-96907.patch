@@ -1,0 +1,84 @@
+diff --git a/org/eclipse/equinox/metatype/impl/MetaTypeProviderImpl.java b/org/eclipse/equinox/metatype/impl/MetaTypeProviderImpl.java
+index 58dfc50..30c5fb6 100644
+--- a/org/eclipse/equinox/metatype/impl/MetaTypeProviderImpl.java
++++ b/org/eclipse/equinox/metatype/impl/MetaTypeProviderImpl.java
+@@ -40,8 +40,8 @@ public class MetaTypeProviderImpl implements MetaTypeProvider {
+ 
+ 	Bundle _bundle;
+ 
+-	Hashtable<String, ObjectClassDefinitionImpl> _allPidOCDs = new Hashtable<String, ObjectClassDefinitionImpl>(7);
+-	Hashtable<String, ObjectClassDefinitionImpl> _allFPidOCDs = new Hashtable<String, ObjectClassDefinitionImpl>(7);
++	Map<String, ObjectClassDefinitionImpl> _allPidOCDs = new HashMap<>();
++	Map<String, ObjectClassDefinitionImpl> _allFPidOCDs = new HashMap<>();
+ 
+ 	String[] _locales;
+ 	boolean _isThereMeta = false;
+@@ -169,17 +169,13 @@ public class MetaTypeProviderImpl implements MetaTypeProvider {
+ 			return checkForDefault(_locales);
+ 		Vector<String> localizationFiles = new Vector<String>(7);
+ 		// get all the localization resources for PIDS
+-		Enumeration<ObjectClassDefinitionImpl> ocds = _allPidOCDs.elements();
+-		while (ocds.hasMoreElements()) {
+-			ObjectClassDefinitionImpl ocd = ocds.nextElement();
++		for (ObjectClassDefinitionImpl ocd : _allPidOCDs.values()) {
+ 			String localization = ocd.getLocalization();
+ 			if (localization != null && !localizationFiles.contains(localization))
+ 				localizationFiles.add(localization);
+ 		}
+ 		// get all the localization resources for FPIDS
+-		ocds = _allFPidOCDs.elements();
+-		while (ocds.hasMoreElements()) {
+-			ObjectClassDefinitionImpl ocd = ocds.nextElement();
++		for (ObjectClassDefinitionImpl ocd : _allFPidOCDs.values()) {
+ 			String localization = ocd.getLocalization();
+ 			if (localization != null && !localizationFiles.contains(localization))
+ 				localizationFiles.add(localization);
+@@ -231,3 +227,4 @@ public class MetaTypeProviderImpl implements MetaTypeProvider {
+ 		return locales;
+ 	}
+ }
++/* @generated */
+\ No newline at end of file
+diff --git a/org/eclipse/equinox/metatype/impl/MetaTypeServiceImpl.java b/org/eclipse/equinox/metatype/impl/MetaTypeServiceImpl.java
+index 8d9c536..b71ddcf 100644
+--- a/org/eclipse/equinox/metatype/impl/MetaTypeServiceImpl.java
++++ b/org/eclipse/equinox/metatype/impl/MetaTypeServiceImpl.java
+@@ -15,7 +15,8 @@ package org.eclipse.equinox.metatype.impl;
+ 
+ import java.security.AccessController;
+ import java.security.PrivilegedAction;
+-import java.util.Hashtable;
++import java.util.Map;
++import java.util.concurrent.ConcurrentHashMap;
+ import javax.xml.parsers.*;
+ import org.eclipse.equinox.metatype.EquinoxMetaTypeInformation;
+ import org.eclipse.equinox.metatype.EquinoxMetaTypeService;
+@@ -31,7 +32,7 @@ import org.xml.sax.SAXException;
+ public class MetaTypeServiceImpl implements EquinoxMetaTypeService, SynchronousBundleListener {
+ 
+ 	SAXParserFactory _parserFactory;
+-	private Hashtable<Long, EquinoxMetaTypeInformation> _mtps = new Hashtable<Long, EquinoxMetaTypeInformation>(7);
++	private final Map<Long, EquinoxMetaTypeInformation> _mtps = new ConcurrentHashMap<>();
+ 
+ 	private final LogTracker logger;
+ 	private final ServiceTracker<Object, Object> metaTypeProviderTracker;
+@@ -62,6 +63,13 @@ public class MetaTypeServiceImpl implements EquinoxMetaTypeService, SynchronousB
+ 		final LogTracker loggerTemp = this.logger;
+ 		final ServiceTracker<Object, Object> tracker = this.metaTypeProviderTracker;
+ 		Long bID = Long.valueOf(b.getBundleId());
++
++		EquinoxMetaTypeInformation equinoxMetaTypeInformation = _mtps.get(bID);
++
++		if (equinoxMetaTypeInformation != null) {
++			return equinoxMetaTypeInformation;
++		}
++
+ 		synchronized (_mtps) {
+ 			if (_mtps.containsKey(bID))
+ 				return _mtps.get(bID);
+@@ -136,3 +144,4 @@ public class MetaTypeServiceImpl implements EquinoxMetaTypeService, SynchronousB
+ 		}
+ 	}
+ }
++/* @generated */
+\ No newline at end of file
