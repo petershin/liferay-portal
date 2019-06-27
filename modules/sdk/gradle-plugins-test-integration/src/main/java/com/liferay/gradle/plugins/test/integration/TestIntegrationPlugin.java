@@ -32,6 +32,8 @@ import groovy.lang.Closure;
 
 import java.io.File;
 
+import java.nio.file.Path;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -50,6 +52,7 @@ import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.execution.TaskExecutionGraph;
+import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileCopyDetails;
 import org.gradle.api.file.FileTree;
 import org.gradle.api.file.SourceDirectorySet;
@@ -61,6 +64,7 @@ import org.gradle.api.plugins.WarPlugin;
 import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.SourceSet;
+import org.gradle.api.tasks.SourceSetOutput;
 import org.gradle.api.tasks.StopExecutionException;
 import org.gradle.api.tasks.TaskOutputs;
 import org.gradle.api.tasks.testing.Test;
@@ -735,6 +739,29 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 			"-Djava.net.preferIPv4Stack=true", "-Dliferay.mode=test",
 			"-Duser.timezone=GMT");
 
+		SourceSetOutput sourceSetOutput = testIntegrationSourceSet.getOutput();
+
+		FileCollection classesDirFileCollection =
+			sourceSetOutput.getClassesDirs();
+
+		Set<File> files = classesDirFileCollection.getFiles();
+
+		Project project = test.getProject();
+
+		if (!files.isEmpty()) {
+			Iterator<File> iterator = files.iterator();
+
+			File classesDir = iterator.next();
+
+			File projectDir = project.getProjectDir();
+
+			Path projectPath = projectDir.toPath();
+
+			test.jvmArgs(
+				"-Dliferay.arquillian.test.classes.path=\"" +
+					projectPath.relativize(classesDir.toPath()) + "\"");
+		}
+
 		Properties systemProperties = System.getProperties();
 
 		for (String propertyName : systemProperties.stringPropertyNames()) {
@@ -749,8 +776,6 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 				test.jvmArgs(sb.toString());
 			}
 		}
-
-		Project project = test.getProject();
 
 		project.afterEvaluate(
 			new Action<Project>() {
