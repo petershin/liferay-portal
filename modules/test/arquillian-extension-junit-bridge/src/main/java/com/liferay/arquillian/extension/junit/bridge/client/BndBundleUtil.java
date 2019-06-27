@@ -160,9 +160,6 @@ public class BndBundleUtil {
 		String testClassesPath = System.getProperty(
 			"liferay.arquillian.test.classes.path", "test-classes/integration");
 
-		System.out.println(
-			"adding include resource path at " + testClassesPath);
-
 		includeResources.add(testClassesPath);
 
 		ProtectionDomain protectionDomain =
