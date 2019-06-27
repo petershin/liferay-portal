@@ -744,11 +744,13 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 		FileCollection classesDirFileCollection =
 			sourceSetOutput.getClassesDirs();
 
-		Set<File> files = classesDirFileCollection.getFiles();
+		FileTree classesDirFileTree = classesDirFileCollection.getAsFileTree();
 
 		Project project = test.getProject();
 
-		if (!files.isEmpty()) {
+		if (!classesDirFileTree.isEmpty()) {
+			Set<File> files = classesDirFileCollection.getFiles();
+
 			Iterator<File> iterator = files.iterator();
 
 			File classesDir = iterator.next();
