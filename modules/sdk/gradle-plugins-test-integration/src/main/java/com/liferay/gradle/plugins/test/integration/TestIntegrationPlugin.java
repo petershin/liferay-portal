@@ -52,7 +52,6 @@ import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.execution.TaskExecutionGraph;
-import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileCopyDetails;
 import org.gradle.api.file.FileTree;
 import org.gradle.api.file.SourceDirectorySet;
@@ -64,7 +63,6 @@ import org.gradle.api.plugins.WarPlugin;
 import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.SourceSet;
-import org.gradle.api.tasks.SourceSetOutput;
 import org.gradle.api.tasks.StopExecutionException;
 import org.gradle.api.tasks.TaskOutputs;
 import org.gradle.api.tasks.testing.Test;
@@ -739,29 +737,19 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 			"-Djava.net.preferIPv4Stack=true", "-Dliferay.mode=test",
 			"-Duser.timezone=GMT");
 
-		SourceSetOutput sourceSetOutput = testIntegrationSourceSet.getOutput();
-
-		FileCollection classesDirFileCollection =
-			sourceSetOutput.getClassesDirs();
-
-		FileTree classesDirFileTree = classesDirFileCollection.getAsFileTree();
-
 		Project project = test.getProject();
 
-		if (!classesDirFileTree.isEmpty()) {
-			Set<File> files = classesDirFileCollection.getFiles();
+		File javaClassesDir = FileUtil.getJavaClassesDir(
+			testIntegrationSourceSet);
 
-			Iterator<File> iterator = files.iterator();
-
-			File classesDir = iterator.next();
-
+		if (javaClassesDir.exists()) {
 			File projectDir = project.getProjectDir();
 
 			Path projectPath = projectDir.toPath();
 
 			test.jvmArgs(
 				"-Dliferay.arquillian.test.classes.path=\"" +
-					projectPath.relativize(classesDir.toPath()) + "\"");
+					projectPath.relativize(javaClassesDir.toPath()) + "\"");
 		}
 
 		Properties systemProperties = System.getProperties();
