@@ -791,6 +791,7 @@ information.
 		<attribute default="" name="outputproperty" />
 		<attribute default="" name="refreshdependencies" />
 		<attribute default="true" name="setupbinariescache" />
+		<attribute default="" name="skipprojectpaths" />
 		<attribute name="task" />
 		<element implicit="true" name="args" optional="true" />
 
@@ -853,6 +854,34 @@ information.
 				</else>
 			</if>
 
+			<local name="task.gradle.excluded.tasks" />
+
+			<if>
+				<not>
+					<equals arg1="@{skipprojectpaths}" arg2="" />
+				</not>
+				<then>
+					<propertyregex
+						global="true"
+						input="@{skipprojectpaths}"
+						override="true"
+						property="task.skip.project.paths"
+						regexp=","
+						replace="${line.separator}"
+					/>
+
+					<loadresource property="task.gradle.excluded.tasks">
+						<filterchain>
+							<prefixlines prefix="--exclude-task "/>
+							<suffixlines suffix=":@{task} " />
+
+							<striplinebreaks />
+						</filterchain>
+						<propertyresource name="task.skip.project.paths" />
+					</loadresource>
+				</then>
+			</if>
+
 			<local name="task.available" />
 
 			<if>
@@ -908,6 +937,7 @@ information.
 						<try>
 							<exec dir="@{dir}" executable="${project.dir}/gradlew${gradlew.suffix}" failonerror="@{failonerror}">
 								<args />
+								<arg if:set="task.gradle.excluded.tasks" line="${task.gradle.excluded.tasks}" />
 								<arg if:set="env.JENKINS_HOME" value="--max-workers=${gradle.ci.max.workers}" />
 								<arg value="--no-daemon" />
 								<arg if:true="${gradle.profile.enabled}" value="--profile" />
