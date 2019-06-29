@@ -386,10 +386,36 @@ message.
 
 		<stopwatch name="modules.stopwatch" />
 
+		<pathconvert pathsep="," property="lfrbuild.portal.skip.deploy.dirs" targetos="unix">
+			<path>
+				<fileset
+					dir="${project.dir}/modules/apps/trash"
+					excludes="**/.gradle/,**/bin/,**/build/,**/classes/,**/node_modules/,**/tmp/"
+					includes="**/.lfrbuild-portal-skip-deploy"
+				/>
+			</path>
+			<globmapper
+				from="${project.dir.native}/modules/*/.lfrbuild-portal-skip-deploy"
+				handledirsep="true"
+				to="/*"
+			/>
+		</pathconvert>
+
+		<var name="skip.deploy.project.paths" value="" />
+
+		<propertyregex
+			global="true"
+			input="${lfrbuild.portal.skip.deploy.dirs}"
+			override="true"
+			property="skip.deploy.project.paths"
+			regexp="\Q/\E"
+			replace=":"
+		/>
+
 		<if>
 			<equals arg1="${build.marketplace.apps.enabled}" arg2="true" />
 			<then>
-				<gradle-execute dir="${project.dir}/modules" task="deploy">
+				<gradle-execute dir="${project.dir}/modules" skipprojectpaths="${skip.deploy.project.paths}" task="deploy">
 					<arg value="--parallel" />
 					<arg value="-Dbuild.profile=portal-pre" />
 				</gradle-execute>
@@ -404,7 +430,7 @@ message.
 						</not>
 					</or>
 					<then>
-						<gradle-execute dir="${project.dir}/modules" task="deploy">
+						<gradle-execute dir="${project.dir}/modules" skipprojectpaths="${skip.deploy.project.paths}" task="deploy">
 							<arg value="--parallel" />
 							<arg value="-Dbuild.exclude.dirs=${build.exclude.dirs}" />
 							<arg value="-Dbuild.include.dirs=${build.include.dirs}" />
@@ -426,7 +452,7 @@ message.
 								<equals arg1="${private.modules.project.paths}" arg2="" />
 							</not>
 							<then>
-								<gradle-execute checktask="true" dir="${project.dir}/modules/private" task="deploy">
+								<gradle-execute checktask="true" dir="${project.dir}/modules/private" skipprojectpaths="${skip.deploy.project.paths}" task="deploy">
 									<arg value="-Dbuild.exclude.dirs=${build.exclude.dirs}" />
 									<arg value="-Dbuild.include.dirs=${build.include.dirs}" />
 									<arg value="-Dbuild.profile=${build.profile}" />
@@ -443,7 +469,7 @@ message.
 								</not>
 							</and>
 							<then>
-								<gradle-execute dir="${project.dir}/modules" task="deploy">
+								<gradle-execute dir="${project.dir}/modules" skipprojectpaths="${skip.deploy.project.paths}" task="deploy">
 									<arg value="--parallel" />
 									<arg value="-Dbuild.exclude.dirs=private,${build.exclude.dirs}" />
 									<arg value="-Dbuild.include.dirs=${build.include.dirs}" />
@@ -452,7 +478,7 @@ message.
 								</gradle-execute>
 							</then>
 							<else>
-								<gradle-execute dir="${project.dir}/modules" task="deploy">
+								<gradle-execute dir="${project.dir}/modules" skipprojectpaths="${skip.deploy.project.paths}" task="deploy">
 									<arg value="--parallel" />
 									<arg value="-Dbuild.exclude.dirs=private" />
 									<arg value="-Dbuild.include.dirs=${build.include.dirs}" />
@@ -475,7 +501,7 @@ message.
 								/>
 							</resourcecount>
 							<then>
-								<gradle-execute dir="${project.dir}/modules" task="deploy">
+								<gradle-execute dir="${project.dir}/modules" skipprojectpaths="${skip.deploy.project.paths}" task="deploy">
 									<arg value="--parallel" />
 									<arg value="-Ddeploy.only.profile=ci" />
 								</gradle-execute>
@@ -485,7 +511,7 @@ message.
 				</if>
 			</then>
 			<else>
-				<gradle-execute dir="${project.dir}/modules/core" task="deploy">
+				<gradle-execute dir="${project.dir}/modules/core" skipprojectpaths="${skip.deploy.project.paths}" task="deploy">
 					<arg value="--parallel" />
 					<arg value="-Dbuild.exclude.dirs=${build.exclude.dirs}" />
 					<arg value="-Dbuild.include.dirs=${build.include.dirs}" />
@@ -502,7 +528,7 @@ message.
 				<if>
 					<isset property="build.app.server.lib.marker.files" />
 					<then>
-						<gradle-execute dir="${project.dir}/modules" task="deployTool">
+						<gradle-execute dir="${project.dir}/modules" skipprojectpaths="${skip.deploy.project.paths}" task="deployTool">
 							<arg value="--parallel" />
 							<arg value="-Dbuild.exclude.dirs=${build.exclude.dirs}" />
 							<arg value="-Dbuild.include.dirs=${build.include.dirs}" />
@@ -513,7 +539,7 @@ message.
 						</gradle-execute>
 					</then>
 					<else>
-						<gradle-execute dir="${project.dir}/modules" task="deployTool">
+						<gradle-execute dir="${project.dir}/modules" skipprojectpaths="${skip.deploy.project.paths}" task="deployTool">
 							<arg value="--parallel" />
 							<arg value="-Dbuild.exclude.dirs=${build.exclude.dirs}" />
 							<arg value="-Dbuild.include.dirs=${build.include.dirs}" />
@@ -542,7 +568,7 @@ message.
 								</not>
 							</or>
 							<then>
-								<gradle-execute dir="${project.dir}/modules" task="compileJSP">
+								<gradle-execute dir="${project.dir}/modules" skipprojectpaths="${skip.deploy.project.paths}" task="compileJSP">
 									<arg value="--parallel" />
 									<arg value="-Dbuild.exclude.dirs=${build.exclude.dirs}" />
 									<arg value="-Dbuild.include.dirs=${build.include.dirs}" />
@@ -550,7 +576,7 @@ message.
 								</gradle-execute>
 							</then>
 							<else>
-								<gradle-execute dir="${project.dir}/modules/private" task="compileJSP">
+								<gradle-execute dir="${project.dir}/modules/private" skipprojectpaths="${skip.deploy.project.paths}" task="compileJSP">
 									<arg value="-Dbuild.exclude.dirs=${build.exclude.dirs}" />
 									<arg value="-Dbuild.include.dirs=${build.include.dirs}" />
 									<arg value="-Dbuild.profile=${build.profile}" />
@@ -564,7 +590,7 @@ message.
 										</not>
 									</and>
 									<then>
-										<gradle-execute dir="${project.dir}/modules" task="compileJSP">
+										<gradle-execute dir="${project.dir}/modules" skipprojectpaths="${skip.deploy.project.paths}" task="compileJSP">
 											<arg value="--parallel" />
 											<arg value="-Dbuild.exclude.dirs=private,${build.exclude.dirs}" />
 											<arg value="-Dbuild.include.dirs=${build.include.dirs}" />
@@ -572,7 +598,7 @@ message.
 										</gradle-execute>
 									</then>
 									<else>
-										<gradle-execute dir="${project.dir}/modules" task="compileJSP">
+										<gradle-execute dir="${project.dir}/modules" skipprojectpaths="${skip.deploy.project.paths}" task="compileJSP">
 											<arg value="--parallel" />
 											<arg value="-Dbuild.exclude.dirs=private" />
 											<arg value="-Dbuild.include.dirs=${build.include.dirs}" />
@@ -584,7 +610,7 @@ message.
 						</if>
 					</then>
 					<else>
-						<gradle-execute dir="${project.dir}/modules" task="compileJSP">
+						<gradle-execute dir="${project.dir}/modules" skipprojectpaths="${skip.deploy.project.paths}" task="compileJSP">
 							<arg value="-Dbuild.exclude.dirs=${build.exclude.dirs}" />
 							<arg value="-Dbuild.include.dirs=${build.include.dirs}" />
 							<arg value="-Dbuild.profile=${build.profile}" />
