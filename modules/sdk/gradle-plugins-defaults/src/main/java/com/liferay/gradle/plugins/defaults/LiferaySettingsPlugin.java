@@ -93,7 +93,9 @@ public class LiferaySettingsPlugin implements Plugin<Settings> {
 		Set<Path> dirPaths = new HashSet<>();
 
 		for (String dirName : dirNamesString.split(",")) {
-			dirPaths.add(rootDirPath.resolve(dirName));
+			if (Validator.isNotNull(dirName)) {
+				dirPaths.add(rootDirPath.resolve(dirName));
+			}
 		}
 
 		return dirPaths;
