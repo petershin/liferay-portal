@@ -32,6 +32,8 @@ import groovy.lang.Closure;
 
 import java.io.File;
 
+import java.nio.file.Path;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -735,6 +737,21 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 			"-Djava.net.preferIPv4Stack=true", "-Dliferay.mode=test",
 			"-Duser.timezone=GMT");
 
+		Project project = test.getProject();
+
+		File javaClassesDir = FileUtil.getJavaClassesDir(
+			testIntegrationSourceSet);
+
+		if (javaClassesDir.exists()) {
+			File projectDir = project.getProjectDir();
+
+			Path projectPath = projectDir.toPath();
+
+			test.jvmArgs(
+				"-Dliferay.arquillian.test.classes.path=\"" +
+					projectPath.relativize(javaClassesDir.toPath()) + "\"");
+		}
+
 		Properties systemProperties = System.getProperties();
 
 		for (String propertyName : systemProperties.stringPropertyNames()) {
@@ -749,8 +766,6 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 				test.jvmArgs(sb.toString());
 			}
 		}
-
-		Project project = test.getProject();
 
 		project.afterEvaluate(
 			new Action<Project>() {

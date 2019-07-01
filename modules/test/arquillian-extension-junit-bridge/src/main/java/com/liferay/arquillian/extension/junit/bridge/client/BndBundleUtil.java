@@ -157,7 +157,10 @@ public class BndBundleUtil {
 
 		Set<String> includeResources = new LinkedHashSet<>();
 
-		includeResources.add("test-classes/integration");
+		String testClassesPath = System.getProperty(
+			"liferay.arquillian.test.classes.path", "test-classes/integration");
+
+		includeResources.add(testClassesPath);
 
 		ProtectionDomain protectionDomain =
 			BndBundleUtil.class.getProtectionDomain();
