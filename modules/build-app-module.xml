@@ -458,6 +458,7 @@
 
 	<target depends="get-artifact-properties" name="move-artifact" unless="artifact.exclude">
 		<move
+			failonerror="false"
 			file="${artifact.location.src}"
 			tofile="${artifact.location.dest}"
 		/>
