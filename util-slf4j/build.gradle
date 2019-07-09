@@ -1,1 +1,13 @@
 apply from: "../modules/build-portal.gradle"
+
+dependencies {
+	compileOnly group: "org.slf4j", name: "slf4j-api", transitive: false, version: "1.7.2"
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+}
+
+jar {
+	enabled = true
+}
+
+liferay {
+}

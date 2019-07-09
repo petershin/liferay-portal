@@ -22,7 +22,6 @@ classes {
 jar {
 	archiveName = "${project.name}.jar"
 	destinationDir = projectDir
-	enabled = false
 }
 
 reporting {

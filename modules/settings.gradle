@@ -26,3 +26,7 @@ if (testClassGroupIndex) {
 	gradle.ext.testClassGroupIndex = testClassGroupIndex
 	gradle.ext.testClassGroups = properties["TEST_CLASS_GROUPS"]
 }
+
+include ':util-slf4j'
+
+project(':util-slf4j').projectDir = file('../util-slf4j')

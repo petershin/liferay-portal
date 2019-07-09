@@ -278,9 +278,9 @@ message.
 				<ant dir="util-java" inheritAll="false" target="compile" />
 				<ant dir="util-taglib" inheritAll="false" target="compile" />
 			</sequential>
-
-			<ant dir="util-slf4j" inheritAll="false" target="compile" />
 		</parallel>
+
+		<gradle-execute dir="${project.dir}/util-slf4j" task="compileJava" />
 
 		<ant dir="portal-impl" inheritAll="false" target="compile" />
 
@@ -337,8 +337,16 @@ message.
 
 		<ant dir="util-bridges" inheritAll="false" target="deploy" />
 		<ant dir="util-java" inheritAll="false" target="deploy" />
-		<ant dir="util-slf4j" inheritAll="false" target="deploy" />
 		<ant dir="util-taglib" inheritAll="false" target="deploy" />
+
+		<ant dir="util-slf4j" inheritAll="false" target="deploy" />
+
+		<gradle-execute dir="${project.dir}/modules" task="deploy">
+			<arg value="--parallel" />
+			<arg value="-Dbuild.profile=portal-pre" />
+		</gradle-execute>
+
+
 
 		<ant dir="portal-impl" inheritAll="false" target="deploy" />
 		<ant dir="portal-test" inheritAll="false" target="deploy" />

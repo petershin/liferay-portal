@@ -1,10 +1,9 @@
-Bundle-Name: ${manifest.bundle.name}
-Bundle-SymbolicName: ${manifest.bundle.symbolic.name}
-Bundle-Version: 5.0.0
-Export-Package: com.liferay.util.slf4j
+Bundle-Name: Liferay Util SLF4J
+Bundle-SymbolicName: com.liferay.util.slf4j
+Bundle-Version: 4.0.0
+Export-Package: com.liferay.util.sl4fj
 Import-Package:\
-	com.liferay.*,\
-	\
-	*;resolution:=optional
+    com.liferay.*,\
+    \
+    *;resolution:=optional
 Include-Resource: classes
--include ../common.bnd
