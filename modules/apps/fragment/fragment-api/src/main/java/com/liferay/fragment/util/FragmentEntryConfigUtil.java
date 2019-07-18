@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 /**
  * @author Rubén Pulido
@@ -57,9 +58,6 @@ public class FragmentEntryConfigUtil {
 			JSONObject configurationFieldSetJSONObject =
 				fieldSetsJSONArray.getJSONObject(i);
 
-			JSONObject defaultValuesFieldSetJSONObject =
-				JSONFactoryUtil.createJSONObject();
-
 			JSONArray configurationFieldSetFieldsJSONArray =
 				configurationFieldSetJSONObject.getJSONArray("fields");
 
@@ -74,27 +72,36 @@ public class FragmentEntryConfigUtil {
 					configurationFieldSetFieldJSONObject.getString(
 						"defaultValue"));
 
-				defaultValuesFieldSetJSONObject.put(
+				defaultValuesJSONObject.put(
 					configurationFieldSetFieldJSONObject.getString("name"),
 					fieldDefaultValue);
 			}
-
-			defaultValuesJSONObject.put(
-				configurationFieldSetJSONObject.getString("name"),
-				defaultValuesFieldSetJSONObject);
 		}
 
 		return defaultValuesJSONObject;
 	}
 
 	private static Object _getFieldValue(String dataType, String value) {
-		if (dataType.equals("double")) {
+		if (StringUtil.equalsIgnoreCase(dataType, "bool")) {
+			return GetterUtil.getBoolean(value);
+		}
+		else if (StringUtil.equalsIgnoreCase(dataType, "double")) {
 			return GetterUtil.getDouble(value);
 		}
-		else if (dataType.equals("int")) {
+		else if (StringUtil.equalsIgnoreCase(dataType, "int")) {
 			return GetterUtil.getInteger(value);
 		}
-		else if (dataType.equals("string")) {
+		else if (StringUtil.equalsIgnoreCase(dataType, "object")) {
+			try {
+				return JSONFactoryUtil.createJSONObject(value);
+			}
+			catch (JSONException jsone) {
+				_log.error(
+					"Unable to parse configuration JSON object: " + value,
+					jsone);
+			}
+		}
+		else if (StringUtil.equalsIgnoreCase(dataType, "string")) {
 			return value;
 		}
 

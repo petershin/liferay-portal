@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import org.apache.avro.JsonProperties;
@@ -80,6 +81,16 @@ public class SchemaUtils {
 		rejectFields.add(field);
 
 		return newSchema(inputSchema, "rejectOutput", rejectFields);
+	}
+
+	public static Schema.Field getField(String name, Schema schema) {
+		for (Schema.Field field : schema.getFields()) {
+			if (Objects.equals(name, field.name())) {
+				return field;
+			}
+		}
+
+		return null;
 	}
 
 	/**
@@ -234,9 +245,8 @@ public class SchemaUtils {
 			newSchemaName, metadataSchema.getDoc(),
 			metadataSchema.getNamespace(), metadataSchema.isError());
 
-		List<Schema.Field> fields = metadataSchema.getFields();
-
-		List<Schema.Field> copyFieldList = _cloneFieldsAndResetPosition(fields);
+		List<Schema.Field> copyFieldList = _cloneFieldsAndResetPosition(
+			metadataSchema.getFields());
 
 		copyFieldList.addAll(insertPoint, moreFields);
 

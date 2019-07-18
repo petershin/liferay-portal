@@ -232,7 +232,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 						assertHttpResponseStatusCode(404, ${schemaVarName}Resource.get${javaMethodSignature.methodName?remove_beginning("delete")}HttpResponse(0L));
 					</#if>
 				<#else>
-					Assert.assertTrue(true);
+					Assert.assertTrue(false);
 				</#if>
 			}
 
@@ -259,7 +259,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 			<#if (javaMethodSignature.javaMethodParameters?size == 0) || stringUtil.equals(javaMethodSignature.javaMethodParameters[0].parameterName, "filter") || stringUtil.equals(javaMethodSignature.javaMethodParameters[0].parameterName, "pagination") || stringUtil.equals(javaMethodSignature.javaMethodParameters[0].parameterName, "sorts")>
 				@Test
 				public void test${javaMethodSignature.methodName?cap_first}() throws Exception {
-					Assert.assertTrue(true);
+					Assert.assertTrue(false);
 				}
 			<#else>
 				@Test
@@ -379,6 +379,11 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 					assertEqualsIgnoringOrder(Arrays.asList(${schemaVarName}1, ${schemaVarName}2), (List<${schemaName}>)page.getItems());
 					assertValid(page);
+
+					<#if freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "delete" + schemaName) && properties?keys?seq_contains("id")>
+						${schemaVarName}Resource.delete${schemaName}(${schemaVarName}1.getId());
+						${schemaVarName}Resource.delete${schemaName}(${schemaVarName}2.getId());
+					</#if>
 				}
 
 				<#if parameters?contains("Filter filter")>
@@ -579,7 +584,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 						);
 
-					assertEqualsIgnoringOrder(
+						assertEqualsIgnoringOrder(
 							Arrays.asList(${schemaVarName}1, ${schemaVarName}2, ${schemaVarName}3),
 							(List<${schemaName}>)page3.getItems());
 					}
@@ -794,7 +799,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 					assertEquals(post${schemaName}, get${schemaName});
 					assertValid(get${schemaName});
 				<#else>
-					Assert.assertTrue(true);
+					Assert.assertTrue(false);
 				</#if>
 			}
 
@@ -821,7 +826,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 			@Test
 			public void test${javaMethodSignature.methodName?cap_first}() throws Exception {
 				<#if !properties?keys?seq_contains("id")>
-					Assert.assertTrue(true);
+					Assert.assertTrue(false);
 				<#else>
 					${schemaName} post${schemaName} = test${javaMethodSignature.methodName?cap_first}_add${schemaName}();
 
@@ -932,7 +937,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 			@Test
 			public void test${javaMethodSignature.methodName?cap_first}() throws Exception {
 				<#if !properties?keys?seq_contains("id")>
-					Assert.assertTrue(true);
+					Assert.assertTrue(false);
 				<#else>
 					${schemaName} post${schemaName} = test${javaMethodSignature.methodName?cap_first}_add${schemaName}();
 
@@ -983,12 +988,62 @@ public abstract class Base${schemaName}ResourceTestCase {
 					</#if>
 				}
 			</#if>
-		<#else>
+		<#elseif !freeMarkerTool.isReturnTypeRelatedSchema(javaMethodSignature, relatedSchemaNames)>
 			@Test
 			public void test${javaMethodSignature.methodName?cap_first}() throws Exception {
-				Assert.assertTrue(true);
+				Assert.assertTrue(false);
 			}
 		</#if>
+	</#list>
+
+	<#list relatedSchemaNames as relatedSchemaName>
+		<#assign
+			relatedSchemaProperties = freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, relatedSchemaName)
+			relatedSchemaVarName = freeMarkerTool.getSchemaVarName(relatedSchemaName)
+		/>
+
+		<#list javaMethodSignatures as javaMethodSignature>
+			<#if freeMarkerTool.hasHTTPMethod(javaMethodSignature, "get") && javaMethodSignature.returnType?ends_with("." + relatedSchemaName)>
+				@Test
+				public void test${javaMethodSignature.methodName?cap_first}() throws Exception {
+					${schemaName} post${schemaName} = testGet${schemaName}_add${schemaName}();
+
+					${relatedSchemaName} post${relatedSchemaName} = test${javaMethodSignature.methodName?cap_first}_add${relatedSchemaName}(post${schemaName}.getId(), random${relatedSchemaName}());
+
+					${relatedSchemaName} get${relatedSchemaName} = ${schemaVarName}Resource.${javaMethodSignature.methodName}(post${schemaName}.getId());
+
+					assertEquals(post${relatedSchemaName}, get${relatedSchemaName});
+					assertValid(get${relatedSchemaName});
+				}
+
+				protected ${relatedSchemaName} test${javaMethodSignature.methodName?cap_first}_add${relatedSchemaName}(long ${schemaVarName}Id, ${relatedSchemaName} ${relatedSchemaVarName}) throws Exception {
+					return ${schemaVarName}Resource.${javaMethodSignature.methodName?replace("get", "post")}(${schemaVarName}Id, ${relatedSchemaVarName});
+				}
+			<#elseif freeMarkerTool.hasHTTPMethod(javaMethodSignature, "post") && javaMethodSignature.returnType?ends_with("." + relatedSchemaName)>
+				@Test
+				public void test${javaMethodSignature.methodName?cap_first}() throws Exception {
+					Assert.assertTrue(true);
+				}
+			<#elseif freeMarkerTool.hasHTTPMethod(javaMethodSignature, "put") && javaMethodSignature.returnType?ends_with("." + relatedSchemaName)>
+				@Test
+				public void test${javaMethodSignature.methodName?cap_first}() throws Exception {
+					${schemaName} post${schemaName} = testPut${schemaName}_add${schemaName}();
+
+					test${javaMethodSignature.methodName?cap_first}_add${relatedSchemaName}(post${schemaName}.getId(), random${relatedSchemaName}());
+
+					${relatedSchemaName} random${relatedSchemaName} = random${relatedSchemaName}();
+
+					${relatedSchemaName} put${relatedSchemaName} = ${schemaVarName}Resource.${javaMethodSignature.methodName}(post${schemaName}.getId(), random${relatedSchemaName});
+
+					assertEquals(random${relatedSchemaName}, put${relatedSchemaName});
+					assertValid(put${relatedSchemaName});
+				}
+
+				protected ${relatedSchemaName} test${javaMethodSignature.methodName?cap_first}_add${relatedSchemaName}(long ${schemaVarName}Id, ${relatedSchemaName} ${relatedSchemaVarName}) throws Exception {
+					return ${schemaVarName}Resource.${javaMethodSignature.methodName?replace("put", "post")}(${schemaVarName}Id, ${relatedSchemaVarName});
+				}
+			</#if>
+		</#list>
 	</#list>
 
 	protected void assertHttpResponseStatusCode(int expectedHttpResponseStatusCode, HttpInvoker.HttpResponse actualHttpResponse) {
@@ -1009,6 +1064,17 @@ public abstract class Base${schemaName}ResourceTestCase {
 			assertEquals(${schemaVarName}1, ${schemaVarName}2);
 		}
 	}
+
+	<#list relatedSchemaNames as relatedSchemaName>
+		<#assign
+			relatedSchemaProperties = freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, relatedSchemaName)
+			relatedSchemaVarName = freeMarkerTool.getSchemaVarName(relatedSchemaName)
+		/>
+
+		protected void assertEquals(${relatedSchemaName} ${relatedSchemaVarName}1, ${relatedSchemaName} ${relatedSchemaVarName}2) {
+			Assert.assertTrue(${relatedSchemaVarName}1 + " does not equal " + ${relatedSchemaVarName}2, equals(${relatedSchemaVarName}1, ${relatedSchemaVarName}2));
+		}
+	</#list>
 
 	protected void assertEqualsIgnoringOrder(List<${schemaName}> ${schemaVarNames}1, List<${schemaName}> ${schemaVarNames}2) {
 		Assert.assertEquals(${schemaVarNames}1.size(), ${schemaVarNames}2.size());
@@ -1106,9 +1172,80 @@ public abstract class Base${schemaName}ResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
+	<#list relatedSchemaNames as relatedSchemaName>
+		<#assign
+			relatedSchemaProperties = freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, relatedSchemaName)
+			relatedSchemaVarName = freeMarkerTool.getSchemaVarName(relatedSchemaName)
+		/>
+
+		protected void assertValid(${configYAML.apiPackagePath}.client.dto.${escapedVersion}.${relatedSchemaName} ${relatedSchemaVarName}) {
+			boolean valid = true;
+
+			<#if relatedSchemaProperties?keys?seq_contains("dateCreated")>
+				if (${relatedSchemaVarName}.getDateCreated() == null) {
+					valid = false;
+				}
+			</#if>
+
+			<#if relatedSchemaProperties?keys?seq_contains("dateModified")>
+				if (${relatedSchemaVarName}.getDateModified() == null) {
+					valid = false;
+				}
+			</#if>
+
+			<#if relatedSchemaProperties?keys?seq_contains("id")>
+				if (${relatedSchemaVarName}.getId() == null) {
+					valid = false;
+				}
+			</#if>
+
+			<#if relatedSchemaProperties?keys?seq_contains("siteId")>
+				if (!Objects.equals(${relatedSchemaVarName}.getSiteId(), testGroup.getGroupId())) {
+					valid = false;
+				}
+			</#if>
+
+			for (String additionalAssertFieldName : getAdditional${relatedSchemaName}AssertFieldNames()) {
+				<#list relatedSchemaProperties?keys as propertyName>
+					<#if stringUtil.equals(propertyName, "dateCreated") ||
+						 stringUtil.equals(propertyName, "dateModified") ||
+						 stringUtil.equals(propertyName, "id") ||
+						 stringUtil.equals(propertyName, "siteId")>
+
+						 <#continue>
+					</#if>
+
+					if (Objects.equals("${propertyName}", additionalAssertFieldName)) {
+						<#assign capitalizedPropertyName = propertyName?cap_first />
+
+						<#if enumSchemas?keys?seq_contains(relatedSchemaProperties[propertyName])>
+							<#assign capitalizedPropertyName = relatedSchemaProperties[propertyName] />
+						</#if>
+
+						if (${relatedSchemaVarName}.get${capitalizedPropertyName}() == null) {
+							valid = false;
+						}
+
+						continue;
+					}
+				</#list>
+
+				throw new IllegalArgumentException("Invalid additional assert field name " + additionalAssertFieldName);
+			}
+
+			Assert.assertTrue(valid);
+		}
+	</#list>
+
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[0];
 	}
+
+	<#list relatedSchemaNames as relatedSchemaName>
+		protected String[] getAdditional${relatedSchemaName}AssertFieldNames() {
+			return new String[0];
+		}
+	</#list>
 
 	protected String[] getIgnoredEntityFieldNames() {
 		return new String[0];
@@ -1151,6 +1288,41 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 		return true;
 	}
+
+	<#list relatedSchemaNames as relatedSchemaName>
+		<#assign
+			relatedSchemaProperties = freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, relatedSchemaName)
+			relatedSchemaVarName = freeMarkerTool.getSchemaVarName(relatedSchemaName)
+		/>
+
+		protected boolean equals(${relatedSchemaName} ${relatedSchemaVarName}1, ${relatedSchemaName} ${relatedSchemaVarName}2) {
+			if (${relatedSchemaVarName}1 == ${relatedSchemaVarName}2) {
+				return true;
+			}
+
+			for (String additionalAssertFieldName : getAdditional${relatedSchemaName}AssertFieldNames()) {
+				<#list relatedSchemaProperties?keys as propertyName>
+					if (Objects.equals("${propertyName}", additionalAssertFieldName)) {
+						<#assign capitalizedPropertyName = propertyName?cap_first />
+
+						<#if enumSchemas?keys?seq_contains(relatedSchemaProperties[propertyName])>
+							<#assign capitalizedPropertyName = relatedSchemaProperties[propertyName] />
+						</#if>
+
+						if (!Objects.deepEquals(${relatedSchemaVarName}1.get${capitalizedPropertyName}(), ${relatedSchemaVarName}2.get${capitalizedPropertyName}())) {
+							return false;
+						}
+
+						continue;
+					}
+				</#list>
+
+				throw new IllegalArgumentException("Invalid additional assert field name " + additionalAssertFieldName);
+			}
+
+			return true;
+		}
+	</#list>
 
 	protected java.util.Collection<EntityField> getEntityFields() throws Exception {
 		if (!(_${schemaVarName}Resource instanceof EntityModelResource)) {
@@ -1268,6 +1440,24 @@ public abstract class Base${schemaName}ResourceTestCase {
 	protected ${schemaName} randomPatch${schemaName}() throws Exception {
 		return random${schemaName}();
 	}
+
+	<#list relatedSchemaNames as relatedSchemaName>
+		protected ${relatedSchemaName} random${relatedSchemaName}() throws Exception {
+			return new ${relatedSchemaName}() {
+				{
+					<#assign relatedSchemaProperties = freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, relatedSchemaName) />
+
+					<#list relatedSchemaProperties?keys as propertyName>
+						<#if randomDataTypes?seq_contains(relatedSchemaProperties[propertyName])>
+							${propertyName} = RandomTestUtil.random${relatedSchemaProperties[propertyName]}();
+						<#elseif stringUtil.equals(relatedSchemaProperties[propertyName], "Date")>
+							${propertyName} = RandomTestUtil.nextDate();
+						</#if>
+					</#list>
+				}
+			};
+		}
+	</#list>
 
 	protected ${schemaName}Resource ${schemaVarName}Resource;
 	protected Group irrelevantGroup;

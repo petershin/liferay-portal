@@ -32,15 +32,19 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface SEOCompanyConfiguration {
 
 	/**
-	 * Sets the type of configuration to be used with the localized URL
-	 *
-	 * @review
+	 * Sets the configuration type to use with the localized URL.
 	 */
 	@Meta.AD(
-		deflt = "default", name = "seo-configuration-localized-url",
-		optionLabels = {"default", "classic"},
-		optionValues = {"default", "classic"}, required = false
+		deflt = "default-language-url",
+		description = "seo-configuration-canonical-url-description",
+		name = "seo-configuration-canonical-url",
+		optionLabels = {
+			"seo-configuration-page-default-language-url",
+			"seo-configuration-page-localized-url"
+		},
+		optionValues = {"default-language-url", "localized-url"},
+		required = false
 	)
-	public String configuration();
+	public String canonicalURL();
 
 }

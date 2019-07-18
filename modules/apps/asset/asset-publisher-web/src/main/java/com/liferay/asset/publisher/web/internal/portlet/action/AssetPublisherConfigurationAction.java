@@ -212,13 +212,10 @@ public class AssetPublisherConfigurationAction
 		}
 		else if (cmd.equals(Constants.UPDATE)) {
 			try {
-				HttpServletRequest httpServletRequest =
-					portal.getHttpServletRequest(actionRequest);
-
 				AssetPublisherPortletInstanceConfiguration
 					assetPublisherPortletInstanceConfiguration =
 						_getAssetPublisherPortletInstanceConfiguration(
-							httpServletRequest);
+							portal.getHttpServletRequest(actionRequest));
 
 				boolean emailAssetEntryAddedEnabled = GetterUtil.getBoolean(
 					getParameter(actionRequest, "emailAssetEntryAddedEnabled"),
@@ -379,11 +376,10 @@ public class AssetPublisherConfigurationAction
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Layout layout = themeDisplay.getLayout();
-
 		if (!assetPublisherWebUtil.isScopeIdSelectable(
 				themeDisplay.getPermissionChecker(), scopeId,
-				themeDisplay.getCompanyGroupId(), layout, true)) {
+				themeDisplay.getCompanyGroupId(), themeDisplay.getLayout(),
+				true)) {
 
 			throw new PrincipalException();
 		}
@@ -410,11 +406,9 @@ public class AssetPublisherConfigurationAction
 			return null;
 		}
 
-		String className = portal.getClassName(defaultAssetTypeId);
-
 		AssetRendererFactory<?> assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-				className);
+				portal.getClassName(defaultAssetTypeId));
 
 		return assetPublisherWebUtil.getClassName(assetRendererFactory);
 	}
@@ -679,10 +673,9 @@ public class AssetPublisherConfigurationAction
 			LayoutSetBranch layoutSetBranch =
 				LayoutStagingUtil.getLayoutSetBranch(layout.getLayoutSet());
 
-			long layoutSetBranchId = layoutSetBranch.getLayoutSetBranchId();
-
 			long layoutRevisionId = staging.getRecentLayoutRevisionId(
-				httpServletRequest, layoutSetBranchId, layout.getPlid());
+				httpServletRequest, layoutSetBranch.getLayoutSetBranchId(),
+				layout.getPlid());
 
 			LayoutRevision layoutRevision =
 				layoutRevisionLocalService.getLayoutRevision(layoutRevisionId);

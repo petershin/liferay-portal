@@ -34,6 +34,8 @@ export const EDIT_SEGMENTS_EXPERIENCE = 'EDIT_SEGMENTS_EXPERIENCE';
 export const UPDATE_SEGMENTS_EXPERIENCE_PRIORITY =
 	'UPDATE_SEGMENTS_EXPERIENCE_PRIORITY';
 
+export const CREATE_SEGMENTS_EXPERIMENT = 'CREATE_SEGMENTS_EXPERIMENT';
+
 export const ADD_ROW = 'addRow';
 export const MOVE_ROW = 'moveRow';
 export const REMOVE_ROW = 'removeRow';
@@ -51,6 +53,8 @@ export const UPDATE_ROW_COLUMNS_NUMBER_SUCCESS =
 	'UPDATE_ROW_COLUMNS_NUMBER_SUCCESS';
 
 export const ADD_FRAGMENT_ENTRY_LINK = 'addFragmentEntryLink';
+export const ADD_FRAGMENT_ENTRY_LINK_COMMENT =
+	'ADD_FRAGMENT_ENTRY_LINK_COMMENT';
 export const ADD_PORTLET = 'addPortlet';
 export const MOVE_FRAGMENT_ENTRY_LINK = 'moveFragmentEntryLink';
 export const REMOVE_FRAGMENT_ENTRY_LINK = 'removeFragmentEntryLink';
@@ -59,6 +63,9 @@ export const UPDATE_CONFIG_ATTRIBUTES = 'updateConfigAttributes';
 export const UPDATE_EDITABLE_VALUE_ERROR = 'UPDATE_EDITABLE_VALUE_ERROR';
 export const UPDATE_EDITABLE_VALUE_LOADING = 'UPDATE_EDITABLE_VALUE_LOADING';
 export const UPDATE_EDITABLE_VALUE_SUCCESS = 'UPDATE_EDITABLE_VALUE_SUCCESS';
+
+export const UPDATE_FRAGMENT_ENTRY_LINK_CONTENT =
+	'updateFragmentEntryLinkContent';
 
 export const CLEAR_ACTIVE_ITEM = 'clearActiveItem';
 export const CLEAR_DROP_TARGET = 'clearDragTarget';

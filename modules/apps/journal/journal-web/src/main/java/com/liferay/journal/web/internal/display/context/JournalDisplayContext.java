@@ -368,9 +368,7 @@ public class JournalDisplayContext {
 	}
 
 	public List<DDMStructure> getDDMStructures() throws PortalException {
-		Integer restrictionType = getRestrictionType();
-
-		return getDDMStructures(restrictionType);
+		return getDDMStructures(getRestrictionType());
 	}
 
 	public List<DDMStructure> getDDMStructures(Integer restrictionType)
@@ -485,10 +483,8 @@ public class JournalDisplayContext {
 			return _folderId;
 		}
 
-		JournalFolder folder = getFolder();
-
 		_folderId = BeanParamUtil.getLong(
-			folder, _httpServletRequest, "folderId",
+			getFolder(), _httpServletRequest, "folderId",
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		return _folderId;
@@ -648,8 +644,14 @@ public class JournalDisplayContext {
 		_orderByCol = ParamUtil.getString(_httpServletRequest, "orderByCol");
 
 		if (Validator.isNull(_orderByCol)) {
+			String defaultOrderByCol = "modified-date";
+
+			if (isSearch()) {
+				defaultOrderByCol = "relevance";
+			}
+
 			_orderByCol = _portalPreferences.getValue(
-				JournalPortletKeys.JOURNAL, "order-by-col", "modified-date");
+				JournalPortletKeys.JOURNAL, "order-by-col", defaultOrderByCol);
 		}
 		else {
 			boolean saveOrderBy = ParamUtil.getBoolean(
@@ -669,7 +671,9 @@ public class JournalDisplayContext {
 			return _orderByType;
 		}
 
-		if (isNavigationRecent()) {
+		if (isNavigationRecent() ||
+			Objects.equals(getOrderByCol(), "relevance")) {
+
 			return "desc";
 		}
 
@@ -695,6 +699,10 @@ public class JournalDisplayContext {
 	public String[] getOrderColumns() {
 		String[] orderColumns = {"display-date", "modified-date", "title"};
 
+		if (isSearch()) {
+			orderColumns = ArrayUtil.append(orderColumns, "relevance");
+		}
+
 		if (!_journalWebConfiguration.journalArticleForceAutogenerateId()) {
 			orderColumns = ArrayUtil.append(orderColumns, "id");
 		}
@@ -703,10 +711,9 @@ public class JournalDisplayContext {
 	}
 
 	public String getOriginalAuthor(JournalArticle article) {
-		long classPK = JournalArticleAssetRenderer.getClassPK(article);
-
 		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
-			JournalArticle.class.getName(), classPK);
+			JournalArticle.class.getName(),
+			JournalArticleAssetRenderer.getClassPK(article));
 
 		if (assetEntry != null) {
 			return assetEntry.getUserName();
@@ -924,6 +931,9 @@ public class JournalDisplayContext {
 				sort = new Sort(
 					Field.MODIFIED_DATE, Sort.LONG_TYPE, !orderByAsc);
 			}
+			else if (Objects.equals(getOrderByCol(), "relevance")) {
+				sort = new Sort(null, Sort.SCORE_TYPE, false);
+			}
 			else if (Objects.equals(getOrderByCol(), "title")) {
 				sort = new Sort("title", Sort.STRING_TYPE, !orderByAsc);
 			}
@@ -987,10 +997,8 @@ public class JournalDisplayContext {
 					}
 				}
 				else if (className.equals(JournalFolder.class.getName())) {
-					JournalFolder folder =
-						JournalFolderLocalServiceUtil.getFolder(classPK);
-
-					results.add(folder);
+					results.add(
+						JournalFolderLocalServiceUtil.getFolder(classPK));
 				}
 			}
 

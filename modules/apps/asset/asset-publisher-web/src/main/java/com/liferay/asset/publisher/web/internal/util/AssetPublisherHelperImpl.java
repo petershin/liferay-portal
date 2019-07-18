@@ -518,11 +518,9 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 		LiferayPortletResponse liferayPortletResponse, AssetEntry assetEntry,
 		boolean viewInContext) {
 
-		AssetRenderer<?> assetRenderer = assetEntry.getAssetRenderer();
-
 		return getAssetViewURL(
-			liferayPortletRequest, liferayPortletResponse, assetRenderer,
-			assetEntry, viewInContext);
+			liferayPortletRequest, liferayPortletResponse,
+			assetEntry.getAssetRenderer(), assetEntry, viewInContext);
 	}
 
 	@Override
@@ -992,10 +990,9 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 				baseModelSearchResult.getBaseModels();
 
 			if (!assetEntries.isEmpty() && (start < groupTotal)) {
-				String title = assetCategory.getTitle(locale);
-
 				assetEntryResults.add(
-					new AssetEntryResult(title, assetEntries));
+					new AssetEntryResult(
+						assetCategory.getTitle(locale), assetEntries));
 			}
 
 			if (groupTotal > 0) {

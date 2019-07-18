@@ -13,6 +13,7 @@
  */
 
 import {
+	addFragmentEntryLinkCommentReducer,
 	addFragmentEntryLinkReducer,
 	clearFragmentEditorReducer,
 	disableFragmentEditorReducer,
@@ -20,7 +21,8 @@ import {
 	moveFragmentEntryLinkReducer,
 	removeFragmentEntryLinkReducer,
 	updateEditableValueReducer,
-	updateFragmentEntryLinkConfigReducer
+	updateFragmentEntryLinkConfigReducer,
+	updateFragmentEntryLinkContentReducer
 } from './fragments.es';
 import {addMappingAssetEntry} from './mapping.es';
 import {addPortletReducer} from './portlets.es';
@@ -54,12 +56,14 @@ import {
 	updateDropTargetReducer,
 	updateHoveredItemReducer
 } from './placeholders.es';
+import {createSegmentsExperimentsReducer} from './segmentsExperiments.es';
 
 /**
  * List of reducers
  * @type {function[]}
  */
 const reducers = [
+	addFragmentEntryLinkCommentReducer,
 	addFragmentEntryLinkReducer,
 	addMappingAssetEntry,
 	addPortletReducer,
@@ -87,11 +91,13 @@ const reducers = [
 	updateDropTargetReducer,
 	updateEditableValueReducer,
 	updateFragmentEntryLinkConfigReducer,
+	updateFragmentEntryLinkContentReducer,
 	updateHoveredItemReducer,
 	updateRowColumnsNumberReducer,
 	updateRowColumnsReducer,
 	updateRowConfigReducer,
-	updateSelectedSidebarPanelId
+	updateSelectedSidebarPanelId,
+	createSegmentsExperimentsReducer
 ];
 
 export {reducers};

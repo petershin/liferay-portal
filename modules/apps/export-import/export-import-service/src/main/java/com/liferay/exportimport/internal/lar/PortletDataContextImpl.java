@@ -233,6 +233,12 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 		populateClassNameAttribute(classedModel, element);
 
+		Serializable classPK = ExportImportClassedModelUtil.getPrimaryKeyObj(
+			classedModel);
+
+		long classNameId = ExportImportClassedModelUtil.getClassNameId(
+			classedModel);
+
 		if (!hasPrimaryKey(String.class, path)) {
 			if (classedModel instanceof AuditedModel) {
 				AuditedModel auditedModel = (AuditedModel)classedModel;
@@ -241,15 +247,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 			}
 
 			if (isResourceMain(classedModel)) {
-				Serializable classPK =
-					ExportImportClassedModelUtil.getPrimaryKeyObj(classedModel);
-
-				long classNameId = ExportImportClassedModelUtil.getClassNameId(
-					classedModel);
-
 				_addAssetLinks(classNameId, GetterUtil.getLong(classPK));
-				_addAssetPriority(
-					element, classNameId, GetterUtil.getLong(classPK));
 
 				addExpando(element, path, classedModel, clazz);
 				addLocks(clazz, String.valueOf(classPK));
@@ -262,7 +260,16 @@ public class PortletDataContextImpl implements PortletDataContext {
 		if (classedModel instanceof AuditedModel) {
 			AuditedModel auditedModel = (AuditedModel)classedModel;
 
-			_addUserUuid(element, auditedModel.getUserUuid());
+			element.addAttribute("user-uuid", auditedModel.getUserUuid());
+		}
+
+		if (isResourceMain(classedModel)) {
+			double assetEntryPriority =
+				AssetEntryLocalServiceUtil.getEntryPriority(
+					classNameId, GetterUtil.getLong(classPK));
+
+			element.addAttribute(
+				"asset-entry-priority", String.valueOf(assetEntryPriority));
 		}
 
 		_addWorkflowDefinitionLink(classedModel);
@@ -1064,6 +1071,18 @@ public class PortletDataContextImpl implements PortletDataContext {
 	@Override
 	public List<Layout> getNewLayouts() {
 		return _newLayouts;
+	}
+
+	@Override
+	public Object getNewPrimaryKey(Class<?> clazz, Object newPrimaryKey) {
+		return getNewPrimaryKey(clazz.getName(), newPrimaryKey);
+	}
+
+	@Override
+	public Object getNewPrimaryKey(String className, Object newPrimaryKey) {
+		Map<?, ?> primaryKeys = getNewPrimaryKeysMap(className);
+
+		return primaryKeys.get(newPrimaryKey);
 	}
 
 	@Override
@@ -2510,7 +2529,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 		}
 
 		Element groupElement = (Element)_importDataRootElement.selectSingleNode(
-			".//" + name);
+			"//" + name);
 
 		if (groupElement == null) {
 			return SAXReaderUtil.createElement("EMPTY-ELEMENT");
@@ -2661,9 +2680,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 	protected long getUserId(AuditedModel auditedModel) {
 		try {
-			String userUuid = auditedModel.getUserUuid();
-
-			return getUserId(userUuid);
+			return getUserId(auditedModel.getUserUuid());
 		}
 		catch (SystemException se) {
 			_log.error(se, se);
@@ -2817,20 +2834,6 @@ public class PortletDataContextImpl implements PortletDataContext {
 		}
 	}
 
-	private void _addAssetPriority(
-		Element element, long classNameId, long classPK) {
-
-		double assetEntryPriority = AssetEntryLocalServiceUtil.getEntryPriority(
-			classNameId, classPK);
-
-		element.addAttribute(
-			"asset-entry-priority", String.valueOf(assetEntryPriority));
-	}
-
-	private void _addUserUuid(Element element, String userUuid) {
-		element.addAttribute("user-uuid", userUuid);
-	}
-
 	private void _addWorkflowDefinitionLink(ClassedModel classedModel)
 		throws PortletDataException {
 
@@ -2840,16 +2843,15 @@ public class PortletDataContextImpl implements PortletDataContext {
 			StagedGroupedModel stagedGroupedModel =
 				(StagedGroupedModel)classedModel;
 
-			String className = ExportImportClassedModelUtil.getClassName(
-				stagedGroupedModel);
-			long classPK = ExportImportClassedModelUtil.getClassPK(
-				stagedGroupedModel);
-
 			List<WorkflowDefinitionLink> workflowDefinitionLinks =
 				WorkflowDefinitionLinkLocalServiceUtil.
 					fetchWorkflowDefinitionLinks(
 						stagedGroupedModel.getCompanyId(),
-						stagedGroupedModel.getGroupId(), className, classPK);
+						stagedGroupedModel.getGroupId(),
+						ExportImportClassedModelUtil.getClassName(
+							stagedGroupedModel),
+						ExportImportClassedModelUtil.getClassPK(
+							stagedGroupedModel));
 
 			for (WorkflowDefinitionLink workflowDefinitionLink :
 					workflowDefinitionLinks) {

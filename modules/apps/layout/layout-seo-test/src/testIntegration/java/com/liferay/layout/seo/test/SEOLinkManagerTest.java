@@ -54,7 +54,7 @@ public class SEOLinkManagerTest {
 		throws Exception {
 
 		_testWithSEOCompanyConfiguration(
-			"classic",
+			"default-language-url",
 			() -> {
 				List<SEOLink> seoLinks = _seoLinkManager.getLocalizedSEOLinks(
 					TestPropsValues.getCompanyId(), LocaleUtil.US,
@@ -75,7 +75,7 @@ public class SEOLinkManagerTest {
 		throws Exception {
 
 		_testWithSEOCompanyConfiguration(
-			"classic",
+			"default-language-url",
 			() -> {
 				List<SEOLink> seoLinks = _seoLinkManager.getLocalizedSEOLinks(
 					TestPropsValues.getCompanyId(), LocaleUtil.SPAIN,
@@ -96,7 +96,7 @@ public class SEOLinkManagerTest {
 		throws Exception {
 
 		_testWithSEOCompanyConfiguration(
-			"default",
+			"localized-url",
 			() -> {
 				List<SEOLink> seoLinks = _seoLinkManager.getLocalizedSEOLinks(
 					TestPropsValues.getCompanyId(), LocaleUtil.US,
@@ -116,7 +116,7 @@ public class SEOLinkManagerTest {
 		throws Exception {
 
 		_testWithSEOCompanyConfiguration(
-			"default",
+			"localized-url",
 			() -> {
 				List<SEOLink> seoLinks = _seoLinkManager.getLocalizedSEOLinks(
 					TestPropsValues.getCompanyId(), LocaleUtil.SPAIN,
@@ -221,7 +221,7 @@ public class SEOLinkManagerTest {
 	}
 
 	private void _testWithSEOCompanyConfiguration(
-			String configuration, UnsafeRunnable<Exception> unsafeRunnable)
+			String canonicalURL, UnsafeRunnable<Exception> unsafeRunnable)
 		throws Exception {
 
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
@@ -229,7 +229,7 @@ public class SEOLinkManagerTest {
 					_SEO_CONFIGURATION_PID,
 					new HashMapDictionary<String, Object>() {
 						{
-							put("configuration", configuration);
+							put("canonicalURL", canonicalURL);
 						}
 					})) {
 

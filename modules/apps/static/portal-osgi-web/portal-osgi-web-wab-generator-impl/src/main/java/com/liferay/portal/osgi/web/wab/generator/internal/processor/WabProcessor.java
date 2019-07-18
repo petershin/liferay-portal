@@ -22,7 +22,6 @@ import aQute.bnd.make.component.ServiceComponent;
 import aQute.bnd.osgi.Analyzer;
 import aQute.bnd.osgi.Builder;
 import aQute.bnd.osgi.Constants;
-import aQute.bnd.osgi.Descriptors;
 import aQute.bnd.osgi.FileResource;
 import aQute.bnd.osgi.Jar;
 import aQute.bnd.osgi.Packages;
@@ -151,10 +150,8 @@ public class WabProcessor {
 	}
 
 	protected File autoDeploy() {
-		String webContextpath = getWebContextPath();
-
 		AutoDeploymentContext autoDeploymentContext =
-			buildAutoDeploymentContext(webContextpath);
+			buildAutoDeploymentContext(getWebContextPath());
 
 		executeAutoDeployers(autoDeploymentContext);
 
@@ -524,9 +521,7 @@ public class WabProcessor {
 
 		String packageName = value.substring(0, index);
 
-		Descriptors.PackageRef packageRef = analyzer.getPackageRef(packageName);
-
-		packages.put(packageRef, new Attrs());
+		packages.put(analyzer.getPackageRef(packageName), new Attrs());
 	}
 
 	protected void processDeclarativeReferences(Analyzer analyzer)

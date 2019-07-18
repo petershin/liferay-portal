@@ -209,6 +209,12 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 							targetType = classLoader.loadClass(modelClassName);
 						}
 						catch (ClassNotFoundException cnfe) {
+							Class<?> actionClass =
+								_jsonWebServiceActionConfig.getActionClass();
+
+							classLoader = actionClass.getClassLoader();
+
+							targetType = classLoader.loadClass(modelClassName);
 						}
 					}
 
@@ -480,9 +486,8 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 
 		Method actionMethod = _jsonWebServiceActionConfig.getActionMethod();
 
-		Class<?> actionClass = _jsonWebServiceActionConfig.getActionClass();
-
-		Object[] parameters = _prepareParameters(actionClass);
+		Object[] parameters = _prepareParameters(
+			_jsonWebServiceActionConfig.getActionClass());
 
 		if (_jsonWebServiceActionConfig.isDeprecated() &&
 			_log.isWarnEnabled()) {

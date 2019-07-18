@@ -66,6 +66,14 @@ const INITIAL_STATE = {
 	activeItemType: Config.string().value(''),
 
 	/**
+	 * URL for adding a comment to a FragmentEntryLink
+	 * @default ''
+	 * @review
+	 * @type {string}
+	 */
+	addFragmentEntryLinkCommentURL: Config.string().value(''),
+
+	/**
 	 * URL for associating fragment entries to the underlying model.
 	 * @default ''
 	 * @review
@@ -107,6 +115,15 @@ const INITIAL_STATE = {
 			languageLabel: Config.string()
 		})
 	).value({}),
+
+	availableAssets: Config.arrayOf(
+		Config.shapeOf({
+			assetBrowserURL: Config.string(),
+			className: Config.string(),
+			classNameId: Config.string(),
+			name: Config.string()
+		})
+	).value([]),
 
 	/**
 	 * List of available segments
@@ -293,6 +310,23 @@ const INITIAL_STATE = {
 				})
 			).required(),
 			name: Config.string().required()
+		})
+	).value([]),
+
+	/**
+	 * The list of Experiments available for this Content Page
+	 *
+	 * @default []
+	 * @review
+	 * @type {array}
+	 */
+	availableSegmentsExperiments: Config.arrayOf(
+		Config.shapeOf({
+			segmentsExperimentId: Config.string().required(),
+			name: Config.string().required(),
+			description: Config.string(),
+			segmentsExperienceId: Config.string().required(),
+			status: Config.number().required()
 		})
 	).value([]),
 

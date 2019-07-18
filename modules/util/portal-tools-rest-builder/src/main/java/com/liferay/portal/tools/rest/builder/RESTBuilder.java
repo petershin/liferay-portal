@@ -193,7 +193,7 @@ public class RESTBuilder {
 				Schema schema = entry.getValue();
 				String schemaName = entry.getKey();
 
-				_putSchema(context, schema, schemaName);
+				_putSchema(context, schema, schemaName, new HashSet<>());
 
 				_createDTOFile(context, escapedVersion, schemaName);
 
@@ -207,7 +207,8 @@ public class RESTBuilder {
 			for (Map.Entry<String, Schema> entry :
 					globalEnumSchemas.entrySet()) {
 
-				_putSchema(context, entry.getValue(), entry.getKey());
+				_putSchema(
+					context, entry.getValue(), entry.getKey(), new HashSet<>());
 
 				_createEnumFile(context, escapedVersion, entry.getKey());
 
@@ -232,7 +233,9 @@ public class RESTBuilder {
 
 				Schema schema = entry.getValue();
 
-				_putSchema(context, schema, schemaName);
+				_putSchema(
+					context, schema, schemaName,
+					_getRelatedSchemaNames(allSchemas, javaMethodSignatures));
 
 				_createBaseResourceImplFile(
 					context, escapedVersion, schemaName);
@@ -1389,8 +1392,34 @@ public class RESTBuilder {
 		return operations;
 	}
 
+	private Set<String> _getRelatedSchemaNames(
+		Map<String, Schema> schemas,
+		List<JavaMethodSignature> javaMethodSignatures) {
+
+		Set<String> relatedSchemaNames = new HashSet<>();
+
+		for (JavaMethodSignature javaMethodSignature : javaMethodSignatures) {
+			String returnType = javaMethodSignature.getReturnType();
+
+			String[] returnTypeParts = returnType.split("\\.");
+
+			if (returnTypeParts.length > 0) {
+				String string = returnTypeParts[returnTypeParts.length - 1];
+
+				if (!string.equals(javaMethodSignature.getSchemaName()) &&
+					schemas.containsKey(string)) {
+
+					relatedSchemaNames.add(string);
+				}
+			}
+		}
+
+		return relatedSchemaNames;
+	}
+
 	private void _putSchema(
-		Map<String, Object> context, Schema schema, String schemaName) {
+		Map<String, Object> context, Schema schema, String schemaName,
+		Set<String> relatedSchemaNames) {
 
 		context.put("schema", schema);
 		context.put("schemaName", schemaName);
@@ -1403,10 +1432,12 @@ public class RESTBuilder {
 		context.put("schemaVarName", schemaVarName);
 		context.put(
 			"schemaVarNames", TextFormatter.formatPlural(schemaVarName));
+
+		context.put("relatedSchemaNames", relatedSchemaNames);
 	}
 
-	private void _validate(String s) {
-		OpenAPIYAML openAPIYAML = YAMLUtil.loadOpenAPIYAML(s);
+	private void _validate(String string) {
+		OpenAPIYAML openAPIYAML = YAMLUtil.loadOpenAPIYAML(string);
 
 		Components components = openAPIYAML.getComponents();
 

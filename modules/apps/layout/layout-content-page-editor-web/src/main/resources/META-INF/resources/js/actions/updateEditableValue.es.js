@@ -17,7 +17,10 @@ import {
 	enableSavingChangesStatusAction,
 	updateLastSaveDateAction
 } from './saveChanges.es';
-import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../utils/constants';
+import {
+	EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+	FREEMARKER_FRAGMENT_ENTRY_PROCESSOR
+} from '../utils/constants';
 import {
 	deleteIn,
 	setIn,
@@ -26,10 +29,13 @@ import {
 import {
 	UPDATE_EDITABLE_VALUE_ERROR,
 	UPDATE_EDITABLE_VALUE_LOADING,
-	UPDATE_EDITABLE_VALUE_SUCCESS
+	UPDATE_EDITABLE_VALUE_SUCCESS,
+	UPDATE_FRAGMENT_ENTRY_LINK_CONTENT
 } from './actions.es';
 import {updateEditableValues} from '../utils/FragmentsEditorFetchUtils.es';
 import debouncedAlert from '../utils/debouncedAlert.es';
+import {prefixSegmentsExperienceId} from '../utils/prefixSegmentsExperienceId.es';
+import {getFragmentEntryLinkContent} from '../reducers/fragments.es';
 
 /**
  * @type {number}
@@ -77,6 +83,74 @@ const debouncedUpdateEditableValues = debouncedAlert(
 
 	UPDATE_EDITABLE_VALUES_DELAY
 );
+
+/**
+ * @param {number} fragmentEntryLinkId
+ * @param {object} configurationValues
+ * @param {number} segmentsExperienceId
+ * @review
+ */
+function updateConfigurationValueAction(
+	fragmentEntryLinkId,
+	configurationValues,
+	segmentsExperienceId
+) {
+	return function(dispatch, getState) {
+		const state = getState();
+
+		const prefixedSegmentsExperienceId = prefixSegmentsExperienceId(
+			segmentsExperienceId
+		);
+
+		const previousEditableValues =
+			state.fragmentEntryLinks[fragmentEntryLinkId].editableValues;
+
+		const keyPath = prefixedSegmentsExperienceId
+			? [
+					FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+					prefixedSegmentsExperienceId
+			  ]
+			: [FREEMARKER_FRAGMENT_ENTRY_PROCESSOR];
+
+		const nextEditableValues = setIn(
+			previousEditableValues,
+			keyPath,
+			configurationValues
+		);
+
+		dispatch(
+			updateEditableValueLoadingAction(
+				fragmentEntryLinkId,
+				nextEditableValues
+			)
+		);
+
+		dispatch(enableSavingChangesStatusAction());
+
+		updateEditableValues(fragmentEntryLinkId, nextEditableValues)
+			.then(() => {
+				dispatch(updateEditableValueSuccessAction());
+				dispatch(disableSavingChangesStatusAction());
+				dispatch(updateLastSaveDateAction());
+				dispatch(
+					updateFragmentEntryLinkContent(
+						fragmentEntryLinkId,
+						segmentsExperienceId
+					)
+				);
+			})
+			.catch(() => {
+				dispatch(
+					updateEditableValueErrorAction(
+						fragmentEntryLinkId,
+						previousEditableValues
+					)
+				);
+
+				dispatch(disableSavingChangesStatusAction());
+			});
+	};
+}
 
 /**
  * @param {!object} data
@@ -247,7 +321,40 @@ function updateEditableValueSuccessAction(date = new Date()) {
 	};
 }
 
+/**
+ * @param {number} fragmentEntryLinkId
+ * @param {number} segmentsExperienceId
+ * @review
+ */
+function updateFragmentEntryLinkContent(
+	fragmentEntryLinkId,
+	segmentsExperienceId
+) {
+	return function(dispatch, getState) {
+		const state = getState();
+
+		const fragmentEntryLink = state.fragmentEntryLinks[fragmentEntryLinkId];
+
+		getFragmentEntryLinkContent(
+			state.renderFragmentEntryURL,
+			fragmentEntryLink,
+			state.portletNamespace,
+			segmentsExperienceId
+		).then(response => {
+			const {fragmentEntryLinkId, content} = response;
+
+			dispatch({
+				fragmentEntryLinkContent: content,
+				fragmentEntryLinkId,
+				type: UPDATE_FRAGMENT_ENTRY_LINK_CONTENT
+			});
+		});
+	};
+}
+
 export {
+	updateConfigurationValueAction,
+	updateFragmentEntryLinkContent,
 	updateEditableValueAction,
 	updateEditableValuesAction,
 	updateEditableValueSuccessAction

@@ -15,6 +15,7 @@
 package com.liferay.talend.resource;
 
 import com.liferay.talend.LiferayBaseComponentDefinition;
+import com.liferay.talend.common.oas.constants.OASConstants;
 import com.liferay.talend.common.schema.SchemaUtils;
 import com.liferay.talend.properties.ExceptionUtils;
 import com.liferay.talend.runtime.LiferaySourceOrSinkRuntime;
@@ -30,8 +31,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import javax.ws.rs.HttpMethod;
-
 import org.apache.avro.Schema;
 
 import org.slf4j.Logger;
@@ -44,6 +43,7 @@ import org.talend.daikon.exception.TalendRuntimeException;
 import org.talend.daikon.i18n.GlobalI18N;
 import org.talend.daikon.i18n.I18nMessageProvider;
 import org.talend.daikon.i18n.I18nMessages;
+import org.talend.daikon.properties.Properties;
 import org.talend.daikon.properties.ValidationResult;
 import org.talend.daikon.properties.ValidationResultMutable;
 import org.talend.daikon.properties.presentation.Form;
@@ -63,6 +63,10 @@ public class LiferayOutputResourceProperties
 
 		_schemaFlow = schemaFlow;
 		_schemaReject = schemaReject;
+
+		if (_logger.isTraceEnabled()) {
+			_logger.trace("Instantiated " + System.identityHashCode(this));
+		}
 	}
 
 	public ValidationResult afterOperations() {
@@ -115,12 +119,14 @@ public class LiferayOutputResourceProperties
 
 		try {
 			Set<String> endpoints = liferaySourceOrSinkRuntime.getEndpointList(
-				HttpMethod.POST);
+				OASConstants.OPERATION_POST);
 
 			endpoints.addAll(
-				liferaySourceOrSinkRuntime.getEndpointList(HttpMethod.PATCH));
+				liferaySourceOrSinkRuntime.getEndpointList(
+					OASConstants.OPERATION_PATCH));
 			endpoints.addAll(
-				liferaySourceOrSinkRuntime.getEndpointList(HttpMethod.DELETE));
+				liferaySourceOrSinkRuntime.getEndpointList(
+					OASConstants.OPERATION_DELETE));
 
 			List<NamedThing> endpointsNamedThing = new ArrayList<>();
 
@@ -144,6 +150,17 @@ public class LiferayOutputResourceProperties
 		}
 
 		return null;
+	}
+
+	@Override
+	public Properties init() {
+		Properties properties = super.init();
+
+		if (_logger.isTraceEnabled()) {
+			_logger.trace("Initialized " + System.identityHashCode(this));
+		}
+
+		return properties;
 	}
 
 	@Override
@@ -177,6 +194,10 @@ public class LiferayOutputResourceProperties
 
 		operations.setPossibleValues((List<?>)null);
 		operations.setTaggedValue(_ADD_QUOTES, true);
+
+		if (_logger.isTraceEnabled()) {
+			_logger.trace("Properties set " + System.identityHashCode(this));
+		}
 	}
 
 	@Override

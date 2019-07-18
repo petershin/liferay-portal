@@ -202,9 +202,9 @@ public class FreeMarkerTool {
 
 			sb.append(StringUtil.upperCaseFirstLetter(schemaName));
 
-			String methodName = javaMethodSignature.getMethodName();
+			if (!Objects.equals(
+					javaMethodSignature.getMethodName(), sb.toString())) {
 
-			if (!Objects.equals(methodName, sb.toString())) {
 				continue;
 			}
 
@@ -399,6 +399,23 @@ public class FreeMarkerTool {
 		JavaMethodParameter javaMethodParameter, Operation operation) {
 
 		return isParameter(javaMethodParameter, operation, "query");
+	}
+
+	public boolean isReturnTypeRelatedSchema(
+		JavaMethodSignature javaMethodSignature,
+		List<String> relatedSchemaNames) {
+
+		String returnType = javaMethodSignature.getReturnType();
+
+		String[] returnTypeParts = returnType.split("\\.");
+
+		if (returnTypeParts.length > 0) {
+			String string = returnTypeParts[returnTypeParts.length - 1];
+
+			return relatedSchemaNames.contains(string);
+		}
+
+		return false;
 	}
 
 	private FreeMarkerTool() {

@@ -130,6 +130,52 @@ public class LayoutSetPrototypePropagationTest
 	}
 
 	@Test
+	public void testLayoutDeleteAndReaddWithSameFriendlyURL() throws Exception {
+		setLinkEnabled(true);
+
+		Layout layout = LayoutTestUtil.addLayout(
+			_layoutSetPrototypeGroup.getGroupId(), "test", true);
+
+		String friendlyURL = layout.getFriendlyURL();
+
+		Assert.assertEquals(
+			_initialPrototypeLayoutCount, getGroupLayoutCount());
+
+		propagateChanges(group);
+
+		Assert.assertEquals(
+			_initialPrototypeLayoutCount + 1, getGroupLayoutCount());
+
+		LayoutLocalServiceUtil.deleteLayout(
+			layout, true, ServiceContextTestUtil.getServiceContext());
+
+		Layout newLayout = LayoutTestUtil.addLayout(
+			_layoutSetPrototypeGroup.getGroupId(), "test", true);
+
+		Assert.assertEquals(friendlyURL, newLayout.getFriendlyURL());
+
+		Assert.assertEquals(
+			_initialPrototypeLayoutCount + 1, getGroupLayoutCount());
+
+		propagateChanges(group);
+
+		Assert.assertEquals(
+			_initialPrototypeLayoutCount + 1, getGroupLayoutCount());
+
+		Layout propagatedLayout =
+			LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
+				newLayout.getUuid(), group.getGroupId(), false);
+
+		Assert.assertNotNull(
+			"Deleted and readded layout could not be found on propagated site",
+			propagatedLayout);
+
+		Assert.assertEquals(
+			"Friendly URLs of the source and target layouts should match",
+			friendlyURL, propagatedLayout.getFriendlyURL());
+	}
+
+	@Test
 	public void testLayoutPermissionPropagationWithLinkEnabled()
 		throws Exception {
 
@@ -740,19 +786,15 @@ public class LayoutSetPrototypePropagationTest
 		if ((layout != null) && (_layout != null)) {
 			layout = LayoutLocalServiceUtil.getLayout(layout.getPlid());
 
-			Layout draftLayout = LayoutLocalServiceUtil.getDraft(layout);
+			layout.setLayoutPrototypeLinkEnabled(linkEnabled);
 
-			draftLayout.setLayoutPrototypeLinkEnabled(linkEnabled);
-
-			layout = LayoutLocalServiceUtil.publishDraft(draftLayout);
+			LayoutLocalServiceUtil.updateLayout(layout);
 
 			_layout = LayoutLocalServiceUtil.getLayout(_layout.getPlid());
 
-			draftLayout = LayoutLocalServiceUtil.getDraft(_layout);
+			_layout.setLayoutPrototypeLinkEnabled(linkEnabled);
 
-			draftLayout.setLayoutPrototypeLinkEnabled(linkEnabled);
-
-			_layout = LayoutLocalServiceUtil.updateLayout(draftLayout);
+			LayoutLocalServiceUtil.updateLayout(_layout);
 		}
 
 		MergeLayoutPrototypesThreadLocal.clearMergeComplete();

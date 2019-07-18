@@ -285,7 +285,8 @@ public class LiferayWriter
 				String stringFieldValue = (String)indexedRecord.get(fieldPos);
 
 				if (Objects.equals("true", field.getProp("oas.dictionary")) ||
-					Objects.equals("Dictionary", fieldSchema.getName())) {
+					Objects.equals("Dictionary", fieldSchema.getName()) ||
+					_isJsonFormattedString(stringFieldValue)) {
 
 					StringReader stringReader = new StringReader(
 						stringFieldValue);
@@ -324,15 +325,7 @@ public class LiferayWriter
 	}
 
 	private Schema.Field _getByName(String name, IndexedRecord indexedRecord) {
-		Schema schema = indexedRecord.getSchema();
-
-		for (Schema.Field field : schema.getFields()) {
-			if (Objects.equals(name, field.name())) {
-				return field;
-			}
-		}
-
-		return null;
+		return SchemaUtils.getField(name, indexedRecord.getSchema());
 	}
 
 	private void _handleFailedIndexedRecord(Exception exception)
@@ -395,6 +388,14 @@ public class LiferayWriter
 	private void _handleSuccessRecord(IndexedRecord indexedRecord) {
 		_result.successCount++;
 		_successWrites.add(indexedRecord);
+	}
+
+	private boolean _isJsonFormattedString(String value) {
+		if (value.startsWith("{") && value.endsWith("}")) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private boolean _isNestedFieldName(String fieldName) {

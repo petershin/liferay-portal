@@ -52,6 +52,10 @@ public class LiferayConnectionProperties
 
 	public LiferayConnectionProperties(String name) {
 		super(name);
+
+		if (_logger.isTraceEnabled()) {
+			_logger.trace("Instantiated " + System.identityHashCode(this));
+		}
 	}
 
 	public void afterLoginType() {
@@ -129,6 +133,17 @@ public class LiferayConnectionProperties
 		return _getValue(basicAuthorizationProperties.userId);
 	}
 
+	@Override
+	public Properties init() {
+		Properties properties = super.init();
+
+		if (_logger.isTraceEnabled()) {
+			_logger.trace("Initialized " + System.identityHashCode(this));
+		}
+
+		return properties;
+	}
+
 	public boolean isBasicAuthorization() {
 		if (loginType.getValue() == LoginType.BASIC) {
 			return true;
@@ -196,6 +211,10 @@ public class LiferayConnectionProperties
 			basicAuthorizationPropertiesForm.setVisible(true);
 			oAuthAuthorizationPropertiesForm.setVisible(false);
 		}
+
+		if (_logger.isTraceEnabled()) {
+			_logger.trace("Refreshed " + System.identityHashCode(this));
+		}
 	}
 
 	@Override
@@ -239,6 +258,10 @@ public class LiferayConnectionProperties
 			_createAdvancedForm(
 				this, connectTimeout, readTimeout, itemsPerPage,
 				followRedirects, forceHttps));
+
+		if (_logger.isTraceEnabled()) {
+			_logger.trace("Layout set " + System.identityHashCode(this));
+		}
 	}
 
 	@Override
@@ -249,6 +272,10 @@ public class LiferayConnectionProperties
 		followRedirects.setValue(true);
 		forceHttps.setValue(false);
 		loginType.setValue(LoginType.BASIC);
+
+		if (_logger.isTraceEnabled()) {
+			_logger.trace("Properties set " + System.identityHashCode(this));
+		}
 	}
 
 	public ValidationResult validateTestConnection() {
