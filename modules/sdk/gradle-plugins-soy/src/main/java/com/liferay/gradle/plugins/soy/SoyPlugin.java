@@ -14,7 +14,6 @@
 
 package com.liferay.gradle.plugins.soy;
 
-import com.liferay.gradle.plugins.soy.internal.SoyPluginConstants;
 import com.liferay.gradle.plugins.soy.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.soy.tasks.BuildSoyTask;
 import com.liferay.gradle.plugins.soy.tasks.WrapSoyAlloyTemplateTask;
@@ -115,7 +114,6 @@ public class SoyPlugin implements Plugin<Project> {
 		return buildSoyTask;
 	}
 
-	@SuppressWarnings("rawtypes")
 	private WrapSoyAlloyTemplateTask _addTaskWrapSoyAlloyTemplate(
 		Project project) {
 
@@ -132,18 +130,6 @@ public class SoyPlugin implements Plugin<Project> {
 			Collections.singleton("**/*.soy.js"));
 
 		PluginContainer pluginContainer = project.getPlugins();
-
-		pluginContainer.withId(
-			SoyPluginConstants.JS_TRANSPILER_PLUGIN_ID,
-			new Action<Plugin>() {
-
-				@Override
-				public void execute(Plugin plugin) {
-					wrapSoyAlloyTemplateTask.dependsOn(
-						SoyPluginConstants.TRANSPILE_JS_TASK_NAME);
-				}
-
-			});
 
 		pluginContainer.withType(
 			JavaPlugin.class,
