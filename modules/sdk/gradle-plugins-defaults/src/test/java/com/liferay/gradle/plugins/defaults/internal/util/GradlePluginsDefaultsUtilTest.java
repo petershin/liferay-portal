@@ -42,15 +42,6 @@ public class GradlePluginsDefaultsUtilTest {
 			"portal", true, ".lfrbuild-portal", ".lfrbuild-portal-public");
 
 		_testGetBuildProfileFileNames(
-			"portal-deprecated", false, ".lfrbuild-portal",
-			".lfrbuild-portal-deprecated",
-			".lfrbuild-portal-deprecated-private", ".lfrbuild-portal-private");
-		_testGetBuildProfileFileNames(
-			"portal-deprecated", true, ".lfrbuild-portal",
-			".lfrbuild-portal-deprecated", ".lfrbuild-portal-deprecated-public",
-			".lfrbuild-portal-public");
-
-		_testGetBuildProfileFileNames(
 			"portal-foo", false, ".lfrbuild-portal-foo",
 			".lfrbuild-portal-foo-private");
 		_testGetBuildProfileFileNames(
