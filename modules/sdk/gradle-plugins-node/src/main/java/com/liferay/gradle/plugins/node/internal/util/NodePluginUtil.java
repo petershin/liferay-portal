@@ -14,7 +14,13 @@
 
 package com.liferay.gradle.plugins.node.internal.util;
 
+import com.liferay.gradle.plugins.node.NodePlugin;
+import com.liferay.gradle.plugins.node.tasks.NpmInstallTask;
+
 import java.io.File;
+import java.io.FileFilter;
+
+import org.gradle.api.Project;
 
 /**
  * @author Andrea Di Giorgi
@@ -41,6 +47,23 @@ public class NodePluginUtil {
 		return new File(nodeModulesDir, "npm");
 	}
 
+	public static File getRootYarnScriptFile(Project project) {
+		NpmInstallTask npmInstallTask = GradleUtil.fetchTask(
+			project, NodePlugin.NPM_INSTALL_TASK_NAME, NpmInstallTask.class);
+
+		if (npmInstallTask == null) {
+			return null;
+		}
+
+		if (npmInstallTask.getPackageLockJsonFile() != null) {
+			return null;
+		}
+
+		File projectDir = project.getProjectDir();
+
+		return _getRootYarnScriptFile(projectDir);
+	}
+
 	public static boolean isYarnScriptFile(File scriptFile) {
 		if (scriptFile == null) {
 			return false;
@@ -55,6 +78,60 @@ public class NodePluginUtil {
 		}
 
 		return true;
+	}
+
+	private static File[] _getFiles(
+		File dir, final String prefix, final String suffix) {
+
+		return dir.listFiles(
+			new FileFilter() {
+
+				@Override
+				public boolean accept(File file) {
+					if (file.isDirectory()) {
+						return false;
+					}
+
+					String name = file.getName();
+
+					if (!name.startsWith(prefix)) {
+						return false;
+					}
+
+					if (!name.endsWith(suffix)) {
+						return false;
+					}
+
+					return true;
+				}
+
+			});
+	}
+
+	private static File _getRootYarnScriptFile(File dir) {
+		while (true) {
+			File yarnScriptFile = _getYarnScriptFile(dir);
+
+			if (yarnScriptFile != null) {
+				return yarnScriptFile;
+			}
+
+			dir = dir.getParentFile();
+
+			if (dir == null) {
+				return null;
+			}
+		}
+	}
+
+	private static File _getYarnScriptFile(File dir) {
+		File[] files = _getFiles(dir, "yarn-", ".js");
+
+		if ((files == null) || (files.length == 0)) {
+			return null;
+		}
+
+		return files[0];
 	}
 
 }
