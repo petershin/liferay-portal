@@ -14,6 +14,9 @@
 
 package com.liferay.gradle.plugins.defaults.internal;
 
+import aQute.bnd.osgi.Constants;
+
+import com.liferay.gradle.plugins.LiferayYarnPlugin;
 import com.liferay.gradle.plugins.cache.CachePlugin;
 import com.liferay.gradle.plugins.defaults.internal.util.CIUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
@@ -22,44 +25,65 @@ import com.liferay.gradle.plugins.node.tasks.DownloadNodeTask;
 import com.liferay.gradle.plugins.node.tasks.ExecuteNodeTask;
 import com.liferay.gradle.plugins.node.tasks.ExecuteNpmTask;
 import com.liferay.gradle.plugins.node.tasks.NpmInstallTask;
+import com.liferay.gradle.plugins.node.tasks.YarnInstallTask;
 import com.liferay.gradle.plugins.test.integration.TestIntegrationBasePlugin;
 import com.liferay.gradle.plugins.test.integration.TestIntegrationPlugin;
 import com.liferay.gradle.util.Validator;
 
 import java.io.File;
+import java.io.IOException;
 
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
+import java.util.Properties;
 
 import org.gradle.api.Action;
 import org.gradle.api.GradleException;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
+import org.gradle.api.UncheckedIOException;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.artifacts.ProjectDependency;
+import org.gradle.api.file.FileTree;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.TaskOutputs;
+import org.gradle.util.GUtil;
 
 /**
  * @author Andrea Di Giorgi
  */
 public class LiferayCIPlugin implements Plugin<Project> {
 
+	public static final String APPEND_HOTFIX_QUALIFIER_TASK_NAME =
+		"appendHotfixQualifier";
+
 	public static final Plugin<Project> INSTANCE = new LiferayCIPlugin();
+
+	public static final String REMOVE_HOTFIX_QUALIFIER_TASK_NAME =
+		"removeHotfixQualifier";
 
 	@Override
 	public void apply(final Project project) {
+		Task appendHotfixQualifierTask = _addTaskAppendHotfixQualifier(project);
+		Task removeHotfixQualifierTask = _addTaskRemoveHotfixQualifier(project);
+
 		_configureTasksDownloadNode(project);
 		_configureTasksExecuteNode(project);
 		_configureTasksExecuteNpm(project);
 		_configureTasksNpmInstall(project);
+		_configureTasksYarnInstall(
+			project, appendHotfixQualifierTask, removeHotfixQualifierTask);
 
 		GradleUtil.withPlugin(
 			project, TestIntegrationPlugin.class,
@@ -86,6 +110,145 @@ public class LiferayCIPlugin implements Plugin<Project> {
 	}
 
 	private LiferayCIPlugin() {
+	}
+
+	private Task _addTaskAppendHotfixQualifier(final Project project) {
+		Task task = project.task(APPEND_HOTFIX_QUALIFIER_TASK_NAME);
+
+		task.doLast(
+			new Action<Task>() {
+
+				@Override
+				public void execute(Task task) {
+					Project project = task.getProject();
+
+					for (String dirName : _PATCHER_DIRS.split(",")) {
+						File bndBndFile = new File(
+							new File(project.getProjectDir(), dirName),
+							"bnd.bnd");
+
+						if (!bndBndFile.exists()) {
+							continue;
+						}
+
+						Properties properties = GUtil.loadProperties(
+							bndBndFile);
+
+						String version = properties.getProperty(
+							Constants.BUNDLE_VERSION);
+
+						if ((version != null) &&
+							(version.indexOf(_PATCHER_QUALIFIER) == -1)) {
+
+							_updateBndBndFile(version, bndBndFile);
+
+							Logger logger = project.getLogger();
+
+							if (logger.isLifecycleEnabled()) {
+								logger.lifecycle(
+									"Appended {}:{}",
+									project.relativePath(bndBndFile),
+									_PATCHER_QUALIFIER);
+							}
+						}
+					}
+				}
+
+				private void _updateBndBndFile(
+					String version, File bndBndFile) {
+
+					try {
+						String text = new String(
+							Files.readAllBytes(bndBndFile.toPath()),
+							StandardCharsets.UTF_8);
+
+						text = text.replaceAll(
+							"^" + Constants.BUNDLE_VERSION + ": .*$",
+							Constants.BUNDLE_VERSION + ": " + version +
+								_PATCHER_QUALIFIER);
+
+						Files.write(
+							bndBndFile.toPath(),
+							text.getBytes(StandardCharsets.UTF_8));
+					}
+					catch (IOException ioe) {
+						throw new UncheckedIOException(ioe);
+					}
+				}
+
+			});
+
+		return task;
+	}
+
+	private Task _addTaskRemoveHotfixQualifier(final Project project) {
+		Task task = project.task(REMOVE_HOTFIX_QUALIFIER_TASK_NAME);
+
+		task.doLast(
+			new Action<Task>() {
+
+				@Override
+				public void execute(Task task) {
+					Project project = task.getProject();
+
+					for (String dirName : _PATCHER_DIRS.split(",")) {
+						File bndBndFile = new File(
+							new File(project.getProjectDir(), dirName),
+							"bnd.bnd");
+
+						if (!bndBndFile.exists()) {
+							continue;
+						}
+
+						Properties properties = GUtil.loadProperties(
+							bndBndFile);
+
+						String version = properties.getProperty(
+							Constants.BUNDLE_VERSION);
+
+						if ((version != null) &&
+							(version.indexOf(_PATCHER_QUALIFIER) != -1)) {
+
+							_updateBndBndFile(version, bndBndFile);
+
+							Logger logger = project.getLogger();
+
+							if (logger.isLifecycleEnabled()) {
+								logger.lifecycle(
+									"Removed {}:{}",
+									project.relativePath(bndBndFile),
+									_PATCHER_QUALIFIER);
+							}
+						}
+					}
+				}
+
+				private void _updateBndBndFile(
+					String version, File bndBndFile) {
+
+					try {
+						String text = new String(
+							Files.readAllBytes(bndBndFile.toPath()),
+							StandardCharsets.UTF_8);
+
+						int x = version.length();
+						int y = _PATCHER_QUALIFIER.length();
+
+						text = text.replaceAll(
+							version + "$", version.substring(0, x - y));
+
+						Files.write(
+							bndBndFile.toPath(),
+							text.getBytes(StandardCharsets.UTF_8));
+					}
+					catch (IOException ioe) {
+						throw new UncheckedIOException(ioe);
+					}
+				}
+
+			});
+
+		return task;
 	}
 
 	private void _configureTaskDownloadNode(DownloadNodeTask downloadNodeTask) {
@@ -222,9 +385,7 @@ public class LiferayCIPlugin implements Plugin<Project> {
 
 					String taskName = executeNpmTask.getName();
 
-					if (Objects.equals(
-							taskName, NodePlugin.NPM_RUN_BUILD_TASK_NAME)) {
-
+					if (taskName.equals(NodePlugin.NPM_RUN_BUILD_TASK_NAME)) {
 						_configureTaskNpmRunBuild(executeNpmTask);
 					}
 				}
@@ -267,6 +428,38 @@ public class LiferayCIPlugin implements Plugin<Project> {
 						npmInstallTask,
 						Collections.singletonMap(
 							_SASS_BINARY_SITE_ARG, ciSassBinarySite));
+				}
+
+			});
+	}
+
+	private void _configureTasksYarnInstall(
+		Project project, final Task appendHotfixQualifierTask,
+		final Task removeHotfixQualifierTask) {
+
+		final String ciRegistry = GradleUtil.getProperty(
+			project, "nodejs.npm.ci.registry", (String)null);
+
+		TaskContainer taskContainer = project.getTasks();
+
+		taskContainer.withType(
+			YarnInstallTask.class,
+			new Action<YarnInstallTask>() {
+
+				@Override
+				public void execute(YarnInstallTask yarnInstallTask) {
+					appendHotfixQualifierTask.mustRunAfter(yarnInstallTask);
+
+					String taskName = yarnInstallTask.getName();
+
+					if (taskName.equals(
+							LiferayYarnPlugin.YARN_INSTALL_TASK_NAME)) {
+
+						_configureTaskYarnInstall(
+							appendHotfixQualifierTask,
+							removeHotfixQualifierTask, yarnInstallTask,
+							ciRegistry);
+					}
 				}
 
 			});
@@ -345,11 +538,81 @@ public class LiferayCIPlugin implements Plugin<Project> {
 		testIntegrationTask.doFirst(action);
 	}
 
+	private void _configureTaskYarnInstall(
+		Task appendHotfixQualifierTask, Task removeHotfixQualifierTask,
+		YarnInstallTask yarnInstallTask, final String registry) {
+
+		if (Validator.isNotNull(_PATCHER_DIRS) &&
+			Validator.isNotNull(_PATCHER_QUALIFIER)) {
+
+			yarnInstallTask.dependsOn(removeHotfixQualifierTask);
+			yarnInstallTask.finalizedBy(appendHotfixQualifierTask);
+		}
+
+		yarnInstallTask.doFirst(
+			new Action<Task>() {
+
+				@Override
+				public void execute(Task task) {
+					Project project = task.getProject();
+
+					Logger logger = project.getLogger();
+
+					if (logger.isLifecycleEnabled()) {
+						logger.lifecycle("Using registry {}", registry);
+					}
+
+					Map<String, Object> args = new HashMap<>();
+
+					args.put("dir", project.getProjectDir());
+					args.put("excludes", _excludes);
+					args.put("includes", _includes);
+
+					FileTree fileTree = project.fileTree(args);
+
+					fileTree.forEach(
+						yarnLockFile -> _updateYarnLockFile(yarnLockFile));
+				}
+
+				private void _updateYarnLockFile(File yarnLockFile) {
+					try {
+						String text = new String(
+							Files.readAllBytes(yarnLockFile.toPath()),
+							StandardCharsets.UTF_8);
+
+						text = text.replaceAll(
+							"https://registry.yarnpkg.com", registry);
+
+						Files.write(
+							yarnLockFile.toPath(),
+							text.getBytes(StandardCharsets.UTF_8));
+					}
+					catch (IOException ioe) {
+						throw new UncheckedIOException(ioe);
+					}
+				}
+
+			});
+	}
+
 	private static final File _NODE_MODULES_CACHE_DIR = new File(
 		System.getProperty("user.home"), ".liferay/node-modules-cache");
 
 	private static final int _NPM_INSTALL_RETRIES = 3;
 
+	private static final String _PATCHER_DIRS = System.getProperty(
+		"patcher.hotfix.dirs");
+
+	private static final String _PATCHER_QUALIFIER = System.getProperty(
+		"patcher.hotfix.qualifier");
+
 	private static final String _SASS_BINARY_SITE_ARG = "--sass-binary-site=";
+
+	private static final List<String> _excludes = Arrays.asList(
+		"**/bin/", "**/build/", "**/classes/", "**/node_modules/",
+		"**/node_modules_cache/", "**/test-classes/", "**/tmp/");
+	private static final List<String> _includes = Arrays.asList(
+		"yarn.lock", "private/yarn.lock", "apps/*/yarn.lock",
+		"private/apps/*/yarn.lock");
 
 }
