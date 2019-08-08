@@ -82,6 +82,13 @@ public class ExecuteNpmTask extends ExecuteNodeScriptTask {
 
 				@Override
 				public File call() throws Exception {
+					File yarnScriptFile = NodePluginUtil.getRootYarnScriptFile(
+						getProject());
+
+					if (yarnScriptFile != null) {
+						return yarnScriptFile;
+					}
+
 					File nodeDir = getNodeDir();
 
 					if (nodeDir == null) {
