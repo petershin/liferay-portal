@@ -71,7 +71,6 @@ public class LiferayYarnPlugin implements Plugin<Project> {
 
 		executeNpmTask.args("checkFormat");
 		executeNpmTask.setDescription("Runs the \"checkFormat\" Yarn script.");
-		executeNpmTask.setGroup("formatting");
 		executeNpmTask.setWorkingDir(yarnLockDir);
 
 		return executeNpmTask;
@@ -110,7 +109,6 @@ public class LiferayYarnPlugin implements Plugin<Project> {
 
 		executeNpmTask.args("format");
 		executeNpmTask.setDescription("Runs the \"format\" Yarn script.");
-		executeNpmTask.setGroup("formatting");
 		executeNpmTask.setWorkingDir(yarnLockDir);
 
 		return executeNpmTask;
@@ -137,26 +135,6 @@ public class LiferayYarnPlugin implements Plugin<Project> {
 		return task;
 	}
 
-	private YarnInstallTask _addTaskYarnInstall(
-		String taskName, File yarnLockFile, boolean frozenLockFile,
-		Project project) {
-
-		File yarnLockDir = yarnLockFile.getParentFile();
-
-		String suffix = StringUtil.camelCase(yarnLockDir.getName(), true);
-
-		YarnInstallTask yarnInstallTask = GradleUtil.addTask(
-			project, taskName + suffix, YarnInstallTask.class);
-
-		yarnInstallTask.setDescription(
-			"Installs Node packages from package.json.");
-		yarnInstallTask.setFrozenLockFile(frozenLockFile);
-		yarnInstallTask.setGroup(BasePlugin.BUILD_GROUP);
-		yarnInstallTask.setWorkingDir(yarnLockDir);
-
-		return yarnInstallTask;
-	}
-
 	private Task _addTaskYarnInstall(
 		String taskName, boolean frozenLockFile, Project project) {
 
@@ -179,6 +157,25 @@ public class LiferayYarnPlugin implements Plugin<Project> {
 					taskName, yarnLockFile, frozenLockFile, project)));
 
 		return task;
+	}
+
+	private YarnInstallTask _addTaskYarnInstall(
+		String taskName, File yarnLockFile, boolean frozenLockFile,
+		Project project) {
+
+		File yarnLockDir = yarnLockFile.getParentFile();
+
+		String suffix = StringUtil.camelCase(yarnLockDir.getName(), true);
+
+		YarnInstallTask yarnInstallTask = GradleUtil.addTask(
+			project, taskName + suffix, YarnInstallTask.class);
+
+		yarnInstallTask.setDescription(
+			"Installs Node packages from package.json.");
+		yarnInstallTask.setFrozenLockFile(frozenLockFile);
+		yarnInstallTask.setWorkingDir(yarnLockDir);
+
+		return yarnInstallTask;
 	}
 
 	private static final List<String> _excludes = Arrays.asList(

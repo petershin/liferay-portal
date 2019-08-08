@@ -14,6 +14,7 @@
 
 package com.liferay.gradle.plugins.node;
 
+import com.liferay.gradle.plugins.node.internal.NodePluginConstants;
 import com.liferay.gradle.plugins.node.internal.util.FileUtil;
 import com.liferay.gradle.plugins.node.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.node.internal.util.NodePluginUtil;
@@ -97,8 +98,11 @@ public class NodePlugin implements Plugin<Project> {
 
 		Delete cleanNpmTask = _addTaskCleanNpm(project);
 
+		File portalRootDir = GradleUtil.getRootDir(
+			project.getRootProject(), "portal-impl");
+
 		NpmInstallTask npmInstallTask = _addTaskNpmInstall(
-			project, cleanNpmTask);
+			project, portalRootDir, cleanNpmTask);
 
 		Map<String, Object> packageJsonMap = null;
 
@@ -210,7 +214,7 @@ public class NodePlugin implements Plugin<Project> {
 	}
 
 	private NpmInstallTask _addTaskNpmInstall(
-		Project project, Delete cleanNpmTask) {
+		Project project, File portalRootDir, Delete cleanNpmTask) {
 
 		NpmInstallTask npmInstallTask = GradleUtil.addTask(
 			project, NPM_INSTALL_TASK_NAME, NpmInstallTask.class);
@@ -219,6 +223,20 @@ public class NodePlugin implements Plugin<Project> {
 		npmInstallTask.setDescription(
 			"Installs Node packages from package.json.");
 		npmInstallTask.setNpmInstallRetries(2);
+
+		if ((portalRootDir != null) ||
+			!NodePluginUtil.isYarnScriptFile(npmInstallTask.getScriptFile())) {
+
+			return npmInstallTask;
+		}
+
+		Task yarnInstallTask = GradleUtil.fetchTask(
+			project.getRootProject(),
+			NodePluginConstants.YARN_INSTALL_TASK_NAME, Task.class);
+
+		if (yarnInstallTask != null) {
+			npmInstallTask.finalizedBy(yarnInstallTask);
+		}
 
 		return npmInstallTask;
 	}

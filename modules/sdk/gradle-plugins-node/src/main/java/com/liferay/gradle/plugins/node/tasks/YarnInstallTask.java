@@ -20,8 +20,18 @@ import com.liferay.gradle.plugins.node.internal.util.GradleUtil;
 import java.io.File;
 import java.io.IOException;
 
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+import org.gradle.api.Project;
+import org.gradle.api.logging.Logger;
+import org.gradle.api.tasks.Input;
+import org.gradle.api.tasks.InputFile;
+import org.gradle.api.tasks.OutputFile;
 
 /**
  * @author Peter Shin
@@ -29,16 +39,50 @@ import java.util.List;
 public class YarnInstallTask extends ExecuteNpmTask {
 
 	@Override
-	public void executeNode() throws Exception {
-		File yarnrcFile = _getYarnrcFile();
+	public synchronized void executeNode() throws Exception {
+		File packageJsonFile = getPackageJsonFile();
+
+		if (!packageJsonFile.exists()) {
+			packageJsonFile.createNewFile();
+		}
+
+		File yarnrcFile = getYarnrcFile();
 
 		if (!yarnrcFile.exists()) {
 			_createYarnrcFile(yarnrcFile);
 		}
 
+		List<File> files = Arrays.asList(packageJsonFile, yarnrcFile);
+
+		String digest = FileUtil.getDigest(files);
+
 		super.executeNode();
+
+		_writeDigestFile(digest.getBytes(StandardCharsets.UTF_8));
 	}
 
+	@OutputFile
+	public File getDigestFile() {
+		Project project = getProject();
+
+		return new File(project.getBuildDir(), "/node/yarn-install/.digest");
+	}
+
+	@InputFile
+	public File getPackageJsonFile() {
+		Project project = getProject();
+
+		return project.file("package.json");
+	}
+
+	@InputFile
+	public File getYarnrcFile() {
+		File scriptFile = getScriptFile();
+
+		return new File(scriptFile.getParentFile(), ".yarnrc");
+	}
+
+	@Input
 	public boolean isFrozenLockFile() {
 		return GradleUtil.toBoolean(_frozenLockFile);
 	}
@@ -70,10 +114,22 @@ public class YarnInstallTask extends ExecuteNpmTask {
 		FileUtil.write(yarnrcFile, contents);
 	}
 
-	private File _getYarnrcFile() {
-		File scriptFile = getScriptFile();
+	private void _writeDigestFile(byte[] bytes) throws Exception {
+		File file = getDigestFile();
 
-		return new File(scriptFile.getParentFile(), ".yarnrc");
+		File dir = file.getParentFile();
+
+		if (dir != null) {
+			Files.createDirectories(dir.toPath());
+		}
+
+		Files.write(file.toPath(), bytes);
+
+		Logger logger = getLogger();
+
+		if (logger.isLifecycleEnabled()) {
+			logger.lifecycle("Added digest for {} at {}", getProject(), file);
+		}
 	}
 
 	private Object _frozenLockFile;
