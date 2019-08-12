@@ -236,7 +236,6 @@ public class NodePlugin implements Plugin<Project> {
 		npmLinkTask.dependsOn(npmInstallTask);
 		npmLinkTask.setDescription(
 			"Links the \"" + dependencyName + "\" NPM dependency.");
-		npmLinkTask.setGroup(BasePlugin.BUILD_GROUP);
 		npmLinkTask.setDependencyName(dependencyName);
 
 		return npmLinkTask;

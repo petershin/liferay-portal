@@ -50,6 +50,7 @@ import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.invocation.Gradle;
 import org.gradle.api.plugins.BasePluginConvention;
 import org.gradle.api.plugins.PluginContainer;
+import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.TaskOutputs;
 
 /**
@@ -111,6 +112,21 @@ public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 			project.getConfigurations();
 
 		return configurationContainer.findByName(name);
+	}
+
+	@SuppressWarnings("unchecked")
+	public static <T extends Task> T fetchTask(
+		Project project, String taskName, Class<T> clazz) {
+
+		TaskContainer taskContainer = project.getTasks();
+
+		Task task = taskContainer.findByName(taskName);
+
+		if (clazz.isInstance(task)) {
+			return (T)task;
+		}
+
+		return null;
 	}
 
 	public static String getArchivesBaseName(Project project) {
