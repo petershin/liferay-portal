@@ -95,8 +95,8 @@ export default ({
 				actions={refetchOnActions}
 				columns={columns}
 				emptyState={emptyState}
-				isEmpty={totalCount === 0}
 				isLoading={state.isLoading}
+				isEmpty={totalCount === 0}
 				items={formattedItems}
 				keywords={state.query.keywords}
 				totalCount={totalCount}
