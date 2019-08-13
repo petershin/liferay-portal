@@ -37,7 +37,6 @@ import com.liferay.gradle.plugins.internal.DBSupportDefaultsPlugin;
 import com.liferay.gradle.plugins.internal.EclipseDefaultsPlugin;
 import com.liferay.gradle.plugins.internal.FindBugsDefaultsPlugin;
 import com.liferay.gradle.plugins.internal.IdeaDefaultsPlugin;
-import com.liferay.gradle.plugins.internal.JSModuleConfigGeneratorDefaultsPlugin;
 import com.liferay.gradle.plugins.internal.JavadocFormatterDefaultsPlugin;
 import com.liferay.gradle.plugins.internal.JspCDefaultsPlugin;
 import com.liferay.gradle.plugins.internal.RESTBuilderDefaultsPlugin;
@@ -54,17 +53,11 @@ import com.liferay.gradle.plugins.internal.util.IncludeResourceCompileIncludeIns
 import com.liferay.gradle.plugins.internal.util.copy.RenameDependencyAction;
 import com.liferay.gradle.plugins.jasper.jspc.JspCPlugin;
 import com.liferay.gradle.plugins.javadoc.formatter.JavadocFormatterPlugin;
-import com.liferay.gradle.plugins.js.module.config.generator.JSModuleConfigGeneratorPlugin;
-import com.liferay.gradle.plugins.js.transpiler.JSTranspilerBasePlugin;
-import com.liferay.gradle.plugins.js.transpiler.JSTranspilerPlugin;
 import com.liferay.gradle.plugins.lang.builder.LangBuilderPlugin;
 import com.liferay.gradle.plugins.node.NodePlugin;
 import com.liferay.gradle.plugins.node.tasks.DownloadNodeModuleTask;
 import com.liferay.gradle.plugins.node.tasks.NpmInstallTask;
 import com.liferay.gradle.plugins.source.formatter.SourceFormatterPlugin;
-import com.liferay.gradle.plugins.soy.SoyPlugin;
-import com.liferay.gradle.plugins.soy.SoyTranslationPlugin;
-import com.liferay.gradle.plugins.soy.tasks.BuildSoyTask;
 import com.liferay.gradle.plugins.tasks.DirectDeployTask;
 import com.liferay.gradle.plugins.test.integration.TestIntegrationPlugin;
 import com.liferay.gradle.plugins.tld.formatter.TLDFormatterPlugin;
@@ -826,22 +819,11 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 		GradleUtil.applyPlugin(project, NodePlugin.class);
 
-		if (GradleUtil.hasTask(project, NodePlugin.NPM_RUN_BUILD_TASK_NAME)) {
-			GradleUtil.applyPlugin(project, JSTranspilerBasePlugin.class);
-		}
-		else {
-			GradleUtil.applyPlugin(
-				project, JSModuleConfigGeneratorPlugin.class);
-			GradleUtil.applyPlugin(project, JSTranspilerPlugin.class);
-		}
-
 		GradleUtil.applyPlugin(project, EclipsePlugin.class);
 		GradleUtil.applyPlugin(project, JavadocFormatterPlugin.class);
 		GradleUtil.applyPlugin(project, JspCPlugin.class);
 		GradleUtil.applyPlugin(project, LangBuilderPlugin.class);
 		GradleUtil.applyPlugin(project, SourceFormatterPlugin.class);
-		GradleUtil.applyPlugin(project, SoyPlugin.class);
-		GradleUtil.applyPlugin(project, SoyTranslationPlugin.class);
 		GradleUtil.applyPlugin(project, TLDDocBuilderPlugin.class);
 		GradleUtil.applyPlugin(project, TLDFormatterPlugin.class);
 		GradleUtil.applyPlugin(project, TestIntegrationPlugin.class);
@@ -853,7 +835,6 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		EclipseDefaultsPlugin.INSTANCE.apply(project);
 		FindBugsDefaultsPlugin.INSTANCE.apply(project);
 		IdeaDefaultsPlugin.INSTANCE.apply(project);
-		JSModuleConfigGeneratorDefaultsPlugin.INSTANCE.apply(project);
 		JavadocFormatterDefaultsPlugin.INSTANCE.apply(project);
 		JspCDefaultsPlugin.INSTANCE.apply(project);
 		RESTBuilderDefaultsPlugin.INSTANCE.apply(project);
@@ -1072,7 +1053,6 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 						taskName.equals("eclipseClasspath") ||
 						taskName.equals("eclipseProject") ||
 						taskName.equals("ideaModule") ||
-						(task instanceof BuildSoyTask) ||
 						(task instanceof DownloadNodeModuleTask) ||
 						(task instanceof NpmInstallTask)) {
 

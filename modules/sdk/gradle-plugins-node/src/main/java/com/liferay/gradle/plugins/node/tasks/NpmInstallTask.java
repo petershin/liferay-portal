@@ -52,9 +52,22 @@ import org.gradle.api.tasks.OutputDirectory;
 public class NpmInstallTask extends ExecuteNpmTask {
 
 	public NpmInstallTask() {
-		Project project = getProject();
+		_nodeModulesDir = new Callable<File>() {
 
-		_nodeModulesDir = project.file("node_modules");
+			@Override
+			public File call() throws Exception {
+				File scriptFile = getScriptFile();
+
+				if (NodePluginUtil.isYarnScriptFile(scriptFile)) {
+					return new File(scriptFile.getParent(), "node_modules");
+				}
+
+				Project project = getProject();
+
+				return project.file("node_modules");
+			}
+
+		};
 
 		_removeShrinkwrappedUrls = new Callable<Boolean>() {
 
@@ -74,6 +87,10 @@ public class NpmInstallTask extends ExecuteNpmTask {
 
 				@Override
 				public boolean isSatisfiedBy(Task task) {
+					if (NodePluginUtil.isYarnScriptFile(getScriptFile())) {
+						return false;
+					}
+
 					NpmInstallTask npmInstallTask = (NpmInstallTask)task;
 
 					File packageJsonFile = npmInstallTask.getPackageJsonFile();

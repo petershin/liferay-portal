@@ -15,8 +15,10 @@
 package com.liferay.gradle.plugins.node.tasks;
 
 import com.liferay.gradle.plugins.node.internal.util.GradleUtil;
+import com.liferay.gradle.plugins.node.internal.util.NodePluginUtil;
 
 import java.util.List;
+import java.util.concurrent.Callable;
 
 import org.gradle.api.Project;
 import org.gradle.api.tasks.Input;
@@ -30,7 +32,20 @@ public class NpmRunTask extends BaseNpmCommandTask {
 	public NpmRunTask() {
 		exclude(_EXCLUDE_DIR_NAMES);
 		include(_INCLUDES);
-		setNpmCommand(_NPM_COMMAND);
+
+		setNpmCommand(
+			new Callable<String>() {
+
+				@Override
+				public String call() throws Exception {
+					if (NodePluginUtil.isYarnScriptFile(getScriptFile())) {
+						return "run";
+					}
+
+					return "run-script";
+				}
+
+			});
 
 		Project project = getProject();
 
@@ -64,8 +79,6 @@ public class NpmRunTask extends BaseNpmCommandTask {
 	private static final String[] _INCLUDES = {
 		"**/*.*rc", "**/*.css", "**/*.js", "**/*.json", "**/*.jsx", "**/*.soy"
 	};
-
-	private static final String _NPM_COMMAND = "run-script";
 
 	private Object _scriptName;
 
