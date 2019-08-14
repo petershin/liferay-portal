@@ -36,7 +36,7 @@ import org.gradle.api.tasks.OutputFile;
 /**
  * @author Peter Shin
  */
-public class YarnInstallTask extends ExecuteNpmTask {
+public class YarnInstallTask extends ExecutePackageManagerTask {
 
 	@Override
 	public synchronized void executeNode() throws Exception {

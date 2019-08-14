@@ -21,7 +21,7 @@ import com.liferay.gradle.plugins.node.internal.util.StringUtil;
 import com.liferay.gradle.plugins.node.tasks.DownloadNodeModuleTask;
 import com.liferay.gradle.plugins.node.tasks.DownloadNodeTask;
 import com.liferay.gradle.plugins.node.tasks.ExecuteNodeTask;
-import com.liferay.gradle.plugins.node.tasks.ExecuteNpmTask;
+import com.liferay.gradle.plugins.node.tasks.ExecutePackageManagerTask;
 import com.liferay.gradle.plugins.node.tasks.NpmInstallTask;
 import com.liferay.gradle.plugins.node.tasks.NpmLinkTask;
 import com.liferay.gradle.plugins.node.tasks.NpmRunTask;
@@ -120,7 +120,7 @@ public class NodePlugin implements Plugin<Project> {
 
 		_configureTasksExecuteNode(
 			project, nodeExtension, GradleUtil.isRunningInsideDaemon());
-		_configureTasksExecuteNpm(project, nodeExtension);
+		_configureTasksExecutePackageManager(project, nodeExtension);
 
 		_configureTasksPublishNodeModule(project);
 
@@ -223,7 +223,7 @@ public class NodePlugin implements Plugin<Project> {
 		return npmInstallTask;
 	}
 
-	private ExecuteNpmTask _addTaskNpmLink(
+	private ExecutePackageManagerTask _addTaskNpmLink(
 		String dependencyName, NpmInstallTask npmInstallTask) {
 
 		Project project = npmInstallTask.getProject();
@@ -289,7 +289,7 @@ public class NodePlugin implements Plugin<Project> {
 		return task;
 	}
 
-	private ExecuteNpmTask _addTaskNpmRun(
+	private ExecutePackageManagerTask _addTaskNpmRun(
 		String scriptName, NpmInstallTask npmInstallTask) {
 
 		Project project = npmInstallTask.getProject();
@@ -526,8 +526,8 @@ public class NodePlugin implements Plugin<Project> {
 		executeNodeTask.setUseGradleExec(useGradleExec);
 	}
 
-	private void _configureTaskExecuteNpm(
-		final ExecuteNpmTask executeNpmTask,
+	private void _configureTaskExecutePackageManager(
+		final ExecutePackageManagerTask executePackageManagerTask,
 		final NodeExtension nodeExtension) {
 
 		final Callable<Boolean> useGlobalConcurrentCacheCallable =
@@ -549,9 +549,9 @@ public class NodePlugin implements Plugin<Project> {
 
 			};
 
-		executeNpmTask.setCacheConcurrent(useGlobalConcurrentCacheCallable);
+		executePackageManagerTask.setCacheConcurrent(useGlobalConcurrentCacheCallable);
 
-		executeNpmTask.setCacheDir(
+		executePackageManagerTask.setCacheDir(
 			new Callable<File>() {
 
 				@Override
@@ -560,7 +560,7 @@ public class NodePlugin implements Plugin<Project> {
 						return null;
 					}
 
-					File nodeDir = executeNpmTask.getNodeDir();
+					File nodeDir = executePackageManagerTask.getNodeDir();
 
 					if (nodeDir == null) {
 						return null;
@@ -573,10 +573,13 @@ public class NodePlugin implements Plugin<Project> {
 	}
 
 	private void _configureTaskExecuteNpmArgs(
-		ExecuteNpmTask executeNpmTask, NodeExtension nodeExtension) {
+		ExecutePackageManagerTask executePackageManagerTask,
+		NodeExtension nodeExtension) {
 
-		if (!NodePluginUtil.isYarnScriptFile(executeNpmTask.getScriptFile())) {
-			executeNpmTask.args(nodeExtension.getNpmArgs());
+		if (!NodePluginUtil.isYarnScriptFile(
+				executePackageManagerTask.getScriptFile())) {
+
+			executePackageManagerTask.args(nodeExtension.getNpmArgs());
 		}
 	}
 
@@ -701,12 +704,13 @@ public class NodePlugin implements Plugin<Project> {
 	}
 
 	private void _configureTaskNpmRunTestForLifecycleBasePlugin(
-		ExecuteNpmTask executeNpmTask) {
+		ExecutePackageManagerTask executePackageManagerTask) {
 
 		Task checkTask = GradleUtil.getTask(
-			executeNpmTask.getProject(), LifecycleBasePlugin.CHECK_TASK_NAME);
+			executePackageManagerTask.getProject(),
+			LifecycleBasePlugin.CHECK_TASK_NAME);
 
-		checkTask.dependsOn(executeNpmTask);
+		checkTask.dependsOn(executePackageManagerTask);
 	}
 
 	private void _configureTaskPublishNodeModule(
@@ -796,18 +800,21 @@ public class NodePlugin implements Plugin<Project> {
 			});
 	}
 
-	private void _configureTasksExecuteNpm(
+	private void _configureTasksExecutePackageManager(
 		Project project, final NodeExtension nodeExtension) {
 
 		TaskContainer taskContainer = project.getTasks();
 
 		taskContainer.withType(
-			ExecuteNpmTask.class,
-			new Action<ExecuteNpmTask>() {
+			ExecutePackageManagerTask.class,
+			new Action<ExecutePackageManagerTask>() {
 
 				@Override
-				public void execute(ExecuteNpmTask executeNpmTask) {
-					_configureTaskExecuteNpm(executeNpmTask, nodeExtension);
+				public void execute(
+					ExecutePackageManagerTask executePackageManagerTask) {
+
+					_configureTaskExecutePackageManager(
+						executePackageManagerTask, nodeExtension);
 				}
 
 			});
@@ -819,12 +826,15 @@ public class NodePlugin implements Plugin<Project> {
 		TaskContainer taskContainer = project.getTasks();
 
 		taskContainer.withType(
-			ExecuteNpmTask.class,
-			new Action<ExecuteNpmTask>() {
+			ExecutePackageManagerTask.class,
+			new Action<ExecutePackageManagerTask>() {
 
 				@Override
-				public void execute(ExecuteNpmTask executeNpmTask) {
-					_configureTaskExecuteNpmArgs(executeNpmTask, nodeExtension);
+				public void execute(
+					ExecutePackageManagerTask executePackageManagerTask) {
+
+					_configureTaskExecuteNpmArgs(
+						executePackageManagerTask, nodeExtension);
 				}
 
 			});
