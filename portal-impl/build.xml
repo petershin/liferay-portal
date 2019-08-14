@@ -12,6 +12,13 @@
 	<property name="manifest.bundle.symbolic.name" value="com.liferay.portal.impl;singleton:=true" />
 	<property name="service.file" value="service.xml" />
 
+	<target name="a">
+		<gradle-execute dir="${project.dir}/modules" task="yarnCheckFormat">
+			<arg value="--build-file=${project.dir}/modules/util.gradle" />
+			<env key="LIFERAY_NPM_SCRIPTS_WORKING_BRANCH_NAME" value="${git.working.branch.name}" />
+		</gradle-execute>
+	</target>
+
 	<target name="build-alloy-taglib-jar">
 		<if>
 			<not>
