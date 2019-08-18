@@ -4192,9 +4192,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 			destinationDir, WorkspaceUtil.WORKSPACE, "test-workspace");
 	}
 
-	private void _configureExecutePackageManagerTask(File projectDir)
-		throws Exception {
-
+	private void _configureExecuteNpmTask(File projectDir) throws Exception {
 		File buildGradleFile = testContains(
 			projectDir, "build.gradle", "com.liferay.gradle.plugins",
 			"com.liferay.plugin");
@@ -4206,11 +4204,10 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 		sb.append(lineSeparator);
 
 		sb.append(
-			"import com.liferay.gradle.plugins.node.tasks." +
-				"ExecutePackageManagerTask");
+			"import com.liferay.gradle.plugins.node.tasks.ExecuteNpmTask");
 		sb.append(lineSeparator);
 
-		sb.append("tasks.withType(ExecutePackageManagerTask) {");
+		sb.append("tasks.withType(ExecuteNpmTask) {");
 		sb.append(lineSeparator);
 
 		sb.append("\tregistry = '");
@@ -4220,11 +4217,11 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 
 		sb.append('}');
 
-		String executePackageManagerTaskScript = sb.toString();
+		String executeNpmTaskScript = sb.toString();
 
 		Files.write(
 			buildGradleFile.toPath(),
-			executePackageManagerTaskScript.getBytes(StandardCharsets.UTF_8),
+			executeNpmTaskScript.getBytes(StandardCharsets.UTF_8),
 			StandardOpenOption.APPEND);
 	}
 
@@ -4342,7 +4339,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 		if (Validator.isNotNull(System.getenv("JENKINS_HOME"))) {
 			_addNpmrc(gradleProjectDir);
 			_addNpmrc(mavenProjectDir);
-			_configureExecutePackageManagerTask(gradleProjectDir);
+			_configureExecuteNpmTask(gradleProjectDir);
 			_configurePomNpmConfiguration(mavenProjectDir);
 		}
 
@@ -4388,7 +4385,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 		if (Validator.isNotNull(System.getenv("JENKINS_HOME"))) {
 			_addNpmrc(gradleProjectDir);
 			_addNpmrc(mavenProjectDir);
-			_configureExecutePackageManagerTask(gradleProjectDir);
+			_configureExecuteNpmTask(gradleProjectDir);
 			_configurePomNpmConfiguration(mavenProjectDir);
 		}
 
@@ -4422,7 +4419,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 		if (Validator.isNotNull(System.getenv("JENKINS_HOME"))) {
 			_addNpmrc(gradleProjectDir);
 			_addNpmrc(mavenProjectDir);
-			_configureExecutePackageManagerTask(gradleProjectDir);
+			_configureExecuteNpmTask(gradleProjectDir);
 			_configurePomNpmConfiguration(mavenProjectDir);
 		}
 
@@ -4456,7 +4453,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 		if (Validator.isNotNull(System.getenv("JENKINS_HOME"))) {
 			_addNpmrc(gradleProjectDir);
 			_addNpmrc(mavenProjectDir);
-			_configureExecutePackageManagerTask(gradleProjectDir);
+			_configureExecuteNpmTask(gradleProjectDir);
 			_configurePomNpmConfiguration(mavenProjectDir);
 		}
 
