@@ -112,6 +112,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplate() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			null, "hello-world-portlet");
@@ -138,6 +139,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateActivator() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"activator", "bar-activator");
@@ -175,6 +177,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateActivatorInWorkspace() throws Exception {
 		_testBuildTemplateWithWorkspace(
 			"activator", "bar-activator", "build/libs/bar.activator-1.0.0.jar",
@@ -182,6 +185,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateApi() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle("api", "foo");
 
@@ -219,6 +223,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateApiContainsCorrectAuthor() throws Exception {
 		String author = "Test Author";
 
@@ -239,6 +244,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateApiInWorkspace() throws Exception {
 		_testBuildTemplateWithWorkspace(
 			"api", "foo", "build/libs/foo-1.0.0.jar",
@@ -246,6 +252,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateContentDTDVersionLayoutTemplate70()
 		throws Exception {
 
@@ -259,6 +266,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateContentDTDVersionLayoutTemplate71()
 		throws Exception {
 
@@ -272,6 +280,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateContentDTDVersionLayoutTemplate72()
 		throws Exception {
 
@@ -285,6 +294,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateContentDTDVersionServiceBuilder70()
 		throws Exception {
 
@@ -297,6 +307,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateContentDTDVersionServiceBuilder71()
 		throws Exception {
 
@@ -309,6 +320,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateContentDTDVersionServiceBuilder72()
 		throws Exception {
 
@@ -321,6 +333,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateContentDTDVersionWarHook70() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"war-hook", "foo-bar", "--liferay-version", "7.0");
@@ -331,6 +344,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateContentDTDVersionWarHook71() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"war-hook", "foo-bar", "--liferay-version", "7.1");
@@ -341,6 +355,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateContentDTDVersionWarHook72() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"war-hook", "foo-bar", "--liferay-version", "7.2");
@@ -351,6 +366,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateContentDTDVersionWarMVCPortlet70()
 		throws Exception {
 
@@ -367,6 +383,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateContentDTDVersionWarMVCPortlet71()
 		throws Exception {
 
@@ -383,6 +400,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateContentDTDVersionWarMVCPortlet72()
 		throws Exception {
 
@@ -399,6 +417,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateContentTargetingReport70() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"content-targeting-report", "foo-bar", "--liferay-version", "7.0");
@@ -417,6 +436,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateContentTargetingReport71() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"content-targeting-report", "foo-bar", "--liferay-version", "7.1");
@@ -444,6 +464,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateContentTargetingReportInWorkspace()
 		throws Exception {
 
@@ -454,6 +475,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateContentTargetingRule70() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"content-targeting-rule", "foo-bar", "--liferay-version", "7.0");
@@ -470,6 +492,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateContentTargetingRule71() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"content-targeting-rule", "foo-bar", "--liferay-version", "7.1");
@@ -495,6 +518,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateContentTargetingRuleInWorkspace()
 		throws Exception {
 
@@ -504,6 +528,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateContentTargetingTrackingAction70()
 		throws Exception {
 
@@ -523,6 +548,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateContentTargetingTrackingAction71()
 		throws Exception {
 
@@ -554,6 +580,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateContentTargetingTrackingActionInWorkspace()
 		throws Exception {
 
@@ -564,6 +591,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateControlMenuEntry70() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"control-menu-entry", "foo-bar", "--liferay-version", "7.0");
@@ -589,6 +617,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateControlMenuEntry71() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"control-menu-entry", "foo-bar", "--liferay-version", "7.1");
@@ -608,6 +637,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateControlMenuEntry72() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"control-menu-entry", "foo-bar", "--liferay-version", "7.2");
@@ -627,6 +657,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateControlMenuEntryInWorkspace()
 		throws Exception {
 
@@ -636,6 +667,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateFormField70() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"form-field", "foobar", "--liferay-version", "7.0");
@@ -686,8 +718,8 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 		_buildProjects(gradleProjectDir, mavenProjectDir);
 	}
 
-	@Ignore
 	@Test
+	@Ignore
 	public void testBuildTemplateFormField71() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"form-field", "foobar", "--liferay-version", "7.1");
@@ -753,8 +785,8 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 		_buildProjects(gradleProjectDir, mavenProjectDir);
 	}
 
-	@Ignore
 	@Test
+	@Ignore
 	public void testBuildTemplateFormField71WithHyphen() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"form-field", "foo-bar", "--liferay-version", "7.1");
@@ -821,6 +853,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateFormFieldInWorkspace() throws Exception {
 		_testBuildTemplateWithWorkspace(
 			"form-field", "foobar", "build/libs/foobar-1.0.0.jar",
@@ -828,6 +861,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateFragment() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"fragment", "loginhook", "--host-bundle-symbolic-name",
@@ -864,6 +898,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateFreeMarkerPortlet70() throws Exception {
 		File gradleProjectDir = _testBuildTemplatePortlet70(
 			"freemarker-portlet", "FreeMarkerPortlet", "templates/init.ftl",
@@ -875,6 +910,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateFreeMarkerPortlet71() throws Exception {
 		_testBuildTemplatePortlet71(
 			"freemarker-portlet", "FreeMarkerPortlet", "templates/init.ftl",
@@ -882,6 +918,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateFreeMarkerPortlet72() throws Exception {
 		_testBuildTemplatePortlet72(
 			"freemarker-portlet", "FreeMarkerPortlet", "templates/init.ftl",
@@ -889,6 +926,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateFreeMarkerPortletInWorkspace()
 		throws Exception {
 
@@ -898,6 +936,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateFreeMarkerPortletWithPackage70()
 		throws Exception {
 
@@ -911,6 +950,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateFreeMarkerPortletWithPackage71()
 		throws Exception {
 
@@ -924,6 +964,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateFreeMarkerPortletWithPackage72()
 		throws Exception {
 
@@ -937,6 +978,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateFreeMarkerPortletWithPortletName70()
 		throws Exception {
 
@@ -950,6 +992,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateFreeMarkerPortletWithPortletName71()
 		throws Exception {
 
@@ -963,6 +1006,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateFreeMarkerPortletWithPortletName72()
 		throws Exception {
 
@@ -976,6 +1020,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateFreeMarkerPortletWithPortletSuffix70()
 		throws Exception {
 
@@ -989,6 +1034,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateFreeMarkerPortletWithPortletSuffix71()
 		throws Exception {
 
@@ -1002,6 +1048,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateFreeMarkerPortletWithPortletSuffix72()
 		throws Exception {
 
@@ -1015,6 +1062,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateInWorkspace() throws Exception {
 		_testBuildTemplateWithWorkspace(
 			null, "hello-world-portlet",
@@ -1023,6 +1071,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateLayoutTemplate() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"layout-template", "foo");
@@ -1073,18 +1122,21 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateLiferayVersionValid70() throws Exception {
 		_buildTemplateWithGradle(
 			"mvc-portlet", "test", "--liferay-version", "7.0");
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateLiferayVersionValid712() throws Exception {
 		_buildTemplateWithGradle(
 			"mvc-portlet", "test", "--liferay-version", "7.1.2");
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateModuleExt() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"modules-ext", "loginExt", "--original-module-name",
@@ -1116,6 +1168,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateModuleExtInWorkspace() throws Exception {
 		File workspaceDir = _buildWorkspace();
 
@@ -1146,6 +1199,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateModulesExtGradle() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"modules-ext", "foo-ext", "--original-module-name",
@@ -1172,6 +1226,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateModulesExtMaven() throws Exception {
 		String groupId = "com.test";
 		String name = "foo-ext";
@@ -1219,6 +1274,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateMVCPortlet70() throws Exception {
 		_testBuildTemplatePortlet70(
 			"mvc-portlet", "MVCPortlet", "META-INF/resources/init.jsp",
@@ -1226,6 +1282,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateMVCPortlet71() throws Exception {
 		_testBuildTemplatePortlet71(
 			"mvc-portlet", "MVCPortlet", "META-INF/resources/init.jsp",
@@ -1233,6 +1290,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateMVCPortlet72() throws Exception {
 		_testBuildTemplatePortlet72(
 			"mvc-portlet", "MVCPortlet", "META-INF/resources/init.jsp",
@@ -1240,6 +1298,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateMVCPortletInWorkspace() throws Exception {
 		_testBuildTemplateWithWorkspace(
 			"mvc-portlet", "foo", "build/libs/foo-1.0.0.jar",
@@ -1247,6 +1306,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateMVCPortletWithPackage70() throws Exception {
 		_testBuildTemplatePortletWithPackage70(
 			"mvc-portlet", "MVCPortlet", "META-INF/resources/init.jsp",
@@ -1254,6 +1314,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateMVCPortletWithPackage71() throws Exception {
 		_testBuildTemplatePortletWithPackage71(
 			"mvc-portlet", "MVCPortlet", "META-INF/resources/init.jsp",
@@ -1261,6 +1322,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateMVCPortletWithPackage72() throws Exception {
 		_testBuildTemplatePortletWithPackage72(
 			"mvc-portlet", "MVCPortlet", "META-INF/resources/init.jsp",
@@ -1268,6 +1330,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateMVCPortletWithPortletName70()
 		throws Exception {
 
@@ -1277,6 +1340,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateMVCPortletWithPortletName71()
 		throws Exception {
 
@@ -1286,6 +1350,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateMVCPortletWithPortletName72()
 		throws Exception {
 
@@ -1295,6 +1360,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateMVCPortletWithPortletSuffix70()
 		throws Exception {
 
@@ -1304,6 +1370,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateMVCPortletWithPortletSuffix71()
 		throws Exception {
 
@@ -1313,6 +1380,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateMVCPortletWithPortletSuffix72()
 		throws Exception {
 
@@ -1322,6 +1390,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateNAPortletWithBOM() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"npm-angular-portlet", "angular-dependency-management",
@@ -1340,17 +1409,20 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateNpmAngularPortlet71() throws Exception {
 		_testBuildTemplateNpmAngular71(
 			"npm-angular-portlet", "foo", "foo", "Foo");
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateNpmAngularPortlet72() throws Exception {
 		_testBuildTemplateNpmProject72("npm-angular-portlet");
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateNpmAngularPortletWithDashes70()
 		throws Exception {
 
@@ -1359,6 +1431,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateNpmAngularPortletWithDashes71()
 		throws Exception {
 
@@ -1367,21 +1440,25 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateNpmReactPortlet70() throws Exception {
 		_testBuildTemplateNpm70("npm-react-portlet", "foo", "foo", "Foo");
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateNpmReactPortlet71() throws Exception {
 		_testBuildTemplateNpm71("npm-react-portlet", "foo", "foo", "Foo");
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateNpmReactPortlet72() throws Exception {
 		_testBuildTemplateNpmProject72("npm-react-portlet");
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateNpmReactPortletWithBOM() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"npm-react-portlet", "react-portlet-dependency-management",
@@ -1394,6 +1471,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateNpmReactPortletWithDashes70()
 		throws Exception {
 
@@ -1402,6 +1480,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateNpmReactPortletWithDashes71()
 		throws Exception {
 
@@ -1410,21 +1489,25 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateNpmVuejsPortlet70() throws Exception {
 		_testBuildTemplateNpm70("npm-vuejs-portlet", "foo", "foo", "Foo");
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateNpmVuejsPortlet71() throws Exception {
 		_testBuildTemplateNpm71("npm-vuejs-portlet", "foo", "foo", "Foo");
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateNpmVuejsPortlet72() throws Exception {
 		_testBuildTemplateNpmProject72("npm-vuejs-portlet");
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateNpmVuejsPortletWithBOM() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"npm-vuejs-portlet", "vuejs-portlet-dependency-management",
@@ -1437,6 +1520,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateNpmVuejsPortletWithDashes70()
 		throws Exception {
 
@@ -1445,6 +1529,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateNpmVuejsPortletWithDashes71()
 		throws Exception {
 
@@ -1461,6 +1546,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplatePanelApp70() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"panel-app", "gradle.test", "--class-name", "Foo",
@@ -1510,6 +1596,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplatePanelApp71() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"panel-app", "gradle.test", "--class-name", "Foo",
@@ -1541,6 +1628,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplatePanelApp72() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"panel-app", "gradle.test", "--class-name", "Foo",
@@ -1572,6 +1660,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplatePanelAppInWorkspace() throws Exception {
 		_testBuildTemplateWithWorkspace(
 			"panel-app", "gradle.test", "build/libs/gradle.test-1.0.0.jar",
@@ -1579,6 +1668,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplatePorletProviderInWorkspace() throws Exception {
 		_testBuildTemplateWithWorkspace(
 			"portlet-provider", "provider.test",
@@ -1587,6 +1677,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplatePortlet70() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"portlet", "foo.test", "--class-name", "Foo", "--liferay-version",
@@ -1618,6 +1709,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplatePortlet71() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"portlet", "foo.test", "--class-name", "Foo", "--liferay-version",
@@ -1649,6 +1741,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplatePortlet72() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"portlet", "foo.test", "--class-name", "Foo", "--liferay-version",
@@ -1680,6 +1773,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplatePortletConfigurationIcon70() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"portlet-configuration-icon", "icontest", "--package-name",
@@ -1707,6 +1801,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplatePortletConfigurationIcon71() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"portlet-configuration-icon", "icontest", "--package-name",
@@ -1729,6 +1824,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplatePortletConfigurationIcon72() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"portlet-configuration-icon", "icontest", "--package-name",
@@ -1751,6 +1847,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplatePortletConfigurationIconInWorkspace()
 		throws Exception {
 
@@ -1761,6 +1858,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplatePortletInWorkspace() throws Exception {
 		_testBuildTemplateWithWorkspace(
 			"portlet", "foo.test", "build/libs/foo.test-1.0.0.jar",
@@ -1768,6 +1866,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplatePortletProvider70() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"portlet-provider", "provider.test", "--liferay-version", "7.0");
@@ -1816,6 +1915,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplatePortletProvider71() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"portlet-provider", "provider.test", "--liferay-version", "7.1");
@@ -1847,6 +1947,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplatePortletProvider72() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"portlet-provider", "provider.test", "--liferay-version", "7.2");
@@ -1878,6 +1979,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplatePortletToolbarContributor70()
 		throws Exception {
 
@@ -1907,6 +2009,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplatePortletToolbarContributor71()
 		throws Exception {
 
@@ -1931,6 +2034,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplatePortletToolbarContributor72()
 		throws Exception {
 
@@ -1955,6 +2059,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplatePortletToolbarContributorInWorkspace()
 		throws Exception {
 
@@ -1965,6 +2070,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplatePortletWithPortletName() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle("portlet", "portlet");
 
@@ -1987,6 +2093,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateRest70() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"rest", "my-rest", "--liferay-version", "7.0");
@@ -2035,6 +2142,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateRest71() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"rest", "my-rest", "--liferay-version", "7.1");
@@ -2080,6 +2188,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateRest72() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"rest", "my-rest", "--liferay-version", "7.2");
@@ -2125,6 +2234,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateRestInWorkspace70() throws Exception {
 		_testBuildTemplateWithWorkspace(
 			"rest", "my-rest", "build/libs/my.rest-1.0.0.jar",
@@ -2132,6 +2242,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateRestInWorkspace71() throws Exception {
 		_testBuildTemplateWithWorkspace(
 			"rest", "my-rest", "build/libs/my.rest-1.0.0.jar",
@@ -2139,6 +2250,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateRestInWorkspace72() throws Exception {
 		_testBuildTemplateWithWorkspace(
 			"rest", "my-rest", "build/libs/my.rest-1.0.0.jar",
@@ -2146,6 +2258,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateService70() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"service", "servicepreaction", "--class-name", "FooAction",
@@ -2174,6 +2287,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateService71() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"service", "servicepreaction", "--class-name", "FooAction",
@@ -2200,6 +2314,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateService72() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"service", "servicepreaction", "--class-name", "FooAction",
@@ -2226,6 +2341,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateServiceBuilder70() throws Exception {
 		String name = "guestbook";
 		String packageName = "com.liferay.docs.guestbook";
@@ -2263,6 +2379,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateServiceBuilder71() throws Exception {
 		String name = "guestbook";
 		String packageName = "com.liferay.docs.guestbook";
@@ -2298,6 +2415,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateServiceBuilder72() throws Exception {
 		String name = "guestbook";
 		String packageName = "com.liferay.docs.guestbook";
@@ -2344,6 +2462,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateServiceBuilder72Spring() throws Exception {
 		String name = "guestbook";
 		String packageName = "com.liferay.docs.guestbook";
@@ -2386,6 +2505,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateServiceBuilderCheckExports() throws Exception {
 		String name = "guestbook";
 		String packageName = "com.liferay.docs.guestbook";
@@ -2443,6 +2563,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateServiceBuilderNestedPath70() throws Exception {
 		File workspaceProjectDir = _buildTemplateWithGradle(
 			WorkspaceUtil.WORKSPACE, "ws-nested-path");
@@ -2472,6 +2593,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateServiceBuilderNestedPath71() throws Exception {
 		File workspaceProjectDir = _buildTemplateWithGradle(
 			WorkspaceUtil.WORKSPACE, "ws-nested-path");
@@ -2501,6 +2623,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateServiceBuilderNestedPath72() throws Exception {
 		File workspaceProjectDir = _buildTemplateWithGradle(
 			WorkspaceUtil.WORKSPACE, "ws-nested-path");
@@ -2530,6 +2653,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateServiceBuilderTargetPlatformEnabled70()
 		throws Exception {
 
@@ -2575,6 +2699,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateServiceBuilderTargetPlatformEnabled71()
 		throws Exception {
 
@@ -2620,6 +2745,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateServiceBuilderTargetPlatformEnabled72()
 		throws Exception {
 
@@ -2666,6 +2792,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateServiceBuilderWithDashes70() throws Exception {
 		String name = "backend-integration";
 		String packageName = "com.liferay.docs.guestbook";
@@ -2693,6 +2820,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateServiceBuilderWithDashes71() throws Exception {
 		String name = "backend-integration";
 		String packageName = "com.liferay.docs.guestbook";
@@ -2720,6 +2848,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateServiceBuilderWithDashes72() throws Exception {
 		String name = "backend-integration";
 		String packageName = "com.liferay.docs.guestbook";
@@ -2747,6 +2876,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateServiceInWorkspace() throws Exception {
 		File workspaceDir = _buildWorkspace();
 
@@ -2778,6 +2908,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateServiceWrapper70() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"service-wrapper", "serviceoverride", "--service",
@@ -2810,6 +2941,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateServiceWrapper71() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"service-wrapper", "serviceoverride", "--service",
@@ -2831,6 +2963,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateServiceWrapper72() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"service-wrapper", "serviceoverride", "--service",
@@ -2852,6 +2985,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateServiceWrapperInWorkspace() throws Exception {
 		File workspaceDir = _buildWorkspace();
 
@@ -2880,6 +3014,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateSimulationPanelEntry70() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"simulation-panel-entry", "simulator", "--package-name",
@@ -2907,6 +3042,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateSimulationPanelEntry71() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"simulation-panel-entry", "simulator", "--package-name",
@@ -2928,6 +3064,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateSimulationPanelEntry72() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"simulation-panel-entry", "simulator", "--package-name",
@@ -2949,6 +3086,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateSimulationPanelEntryInWorkspace()
 		throws Exception {
 
@@ -2966,6 +3104,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateSocialBookmark71() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"social-bookmark", "foo", "--package-name", "com.liferay.test",
@@ -3005,6 +3144,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateTemplateContextContributor70()
 		throws Exception {
 
@@ -3035,6 +3175,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateTemplateContextContributor71()
 		throws Exception {
 
@@ -3058,6 +3199,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateTemplateContextContributor72()
 		throws Exception {
 
@@ -3081,6 +3223,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateTemplateContextContributorInWorkspace()
 		throws Exception {
 
@@ -3091,6 +3234,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateTheme70() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"theme", "theme-test", "--liferay-version", "7.0");
@@ -3115,6 +3259,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateTheme71() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"theme", "theme-test", "--liferay-version", "7.1");
@@ -3139,6 +3284,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateTheme72() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"theme", "theme-test", "--liferay-version", "7.2");
@@ -3163,6 +3309,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateThemeContributorCustom() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"theme-contributor", "my-contributor-custom", "--contributor-type",
@@ -3195,6 +3342,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateThemeContributorCustom71() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"theme-contributor", "my-contributor-custom", "--contributor-type",
@@ -3228,6 +3376,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateThemeContributorCustom72() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"theme-contributor", "my-contributor-custom", "--contributor-type",
@@ -3261,6 +3410,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateThemeContributorDefaults() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"theme-contributor", "my-contributor-default");
@@ -3272,6 +3422,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateThemeContributorinWorkspace()
 		throws Exception {
 
@@ -3282,6 +3433,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateThemeInWorkspace() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle("theme", "theme-test");
 
@@ -3320,6 +3472,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateWarCoreExt() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"war-core-ext", "test-war-core-ext");
@@ -3334,6 +3487,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateWarCoreExtInWorkspace() throws Exception {
 		File modulesDir = new File(_buildWorkspace(), "modules");
 
@@ -3348,6 +3502,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateWarHook70() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"war-hook", "WarHook", "--liferay-version", "7.0");
@@ -3381,6 +3536,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateWarHook71() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"war-hook", "WarHook", "--liferay-version", "7.1");
@@ -3397,6 +3553,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateWarHook72() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"war-hook", "WarHook", "--liferay-version", "7.2");
@@ -3413,11 +3570,13 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateWarHookInWorkspace() throws Exception {
 		_testBuildTemplateProjectWarInWorkspace("war-hook", "WarHook");
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateWarMVCPortlet70() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"war-mvc-portlet", "WarMVCPortlet", "--liferay-version", "7.0");
@@ -3448,6 +3607,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateWarMVCPortlet71() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"war-mvc-portlet", "WarMVCPortlet", "--liferay-version", "7.1");
@@ -3465,6 +3625,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateWarMVCPortlet72() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"war-mvc-portlet", "WarMVCPortlet", "--liferay-version", "7.2");
@@ -3482,12 +3643,14 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateWarMVCPortletInWorkspace() throws Exception {
 		_testBuildTemplateProjectWarInWorkspace(
 			"war-mvc-portlet", "WarMVCPortlet");
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateWarMVCPortletWithPackage() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"war-mvc-portlet", "WarMVCPortlet", "--package-name",
@@ -3513,6 +3676,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateWarMVCPortletWithPortletName()
 		throws Exception {
 
@@ -3539,6 +3703,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateWarMVCPortletWithPortletSuffix()
 		throws Exception {
 
@@ -3565,6 +3730,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateWithGradle() throws Exception {
 		buildTemplateWithGradle(
 			temporaryFolder.newFolder(), null, "foo-portlet", false, false);
@@ -3577,6 +3743,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateWithPackageName() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"", "barfoo", "--package-name", "foo.bar");
@@ -3600,6 +3767,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateWorkspace() throws Exception {
 		File workspaceProjectDir = _buildTemplateWithGradle(
 			WorkspaceUtil.WORKSPACE, "foows");
@@ -3639,6 +3807,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateWorkspaceForce() throws Exception {
 		File destinationDir = temporaryFolder.newFolder("existing-file");
 
@@ -3649,6 +3818,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateWorkspaceLocalProperties() throws Exception {
 		File workspaceProjectDir = _buildTemplateWithGradle(
 			WorkspaceUtil.WORKSPACE, "foo");
@@ -3686,6 +3856,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateWorkspaceWith70() throws Exception {
 		File gradleWorkspaceProjectDir = _buildTemplateWithGradle(
 			WorkspaceUtil.WORKSPACE, "withportlet", "--liferay-version", "7.0");
@@ -3710,6 +3881,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateWorkspaceWith71() throws Exception {
 		File gradleWorkspaceProjectDir = _buildTemplateWithGradle(
 			WorkspaceUtil.WORKSPACE, "withportlet", "--liferay-version", "7.1");
@@ -3734,6 +3906,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateWorkspaceWith72() throws Exception {
 		File gradleWorkspaceProjectDir = _buildTemplateWithGradle(
 			WorkspaceUtil.WORKSPACE, "withportlet", "--liferay-version", "7.2");
@@ -3758,6 +3931,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testBuildTemplateWorkspaceWithPortlet() throws Exception {
 		File gradleWorkspaceProjectDir = _buildTemplateWithGradle(
 			WorkspaceUtil.WORKSPACE, "withportlet");
@@ -3793,6 +3967,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testCompareGradlePluginVersions() throws Exception {
 		String template = "mvc-portlet";
 		String name = "foo";
@@ -3835,6 +4010,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testCompareServiceBuilderPluginVersions() throws Exception {
 		String name = "sample";
 		String packageName = "com.test.sample";
@@ -3877,6 +4053,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testListTemplates() throws Exception {
 		final Map<String, String> expectedTemplates = new TreeMap<>();
 
@@ -3905,6 +4082,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testListTemplatesWithCustomArchetypesDir() throws Exception {
 		Properties archetypesProperties =
 			ProjectTemplatesUtil.getProjectTemplateJarVersionsProperties();
