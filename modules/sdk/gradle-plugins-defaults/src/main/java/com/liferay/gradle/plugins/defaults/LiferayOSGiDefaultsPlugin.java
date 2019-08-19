@@ -50,6 +50,7 @@ import com.liferay.gradle.plugins.dependency.checker.DependencyCheckerExtension;
 import com.liferay.gradle.plugins.dependency.checker.DependencyCheckerPlugin;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.extensions.LiferayOSGiExtension;
+import com.liferay.gradle.plugins.JspCDefaultsPlugin;
 import com.liferay.gradle.plugins.jasper.jspc.CompileJSPTask;
 import com.liferay.gradle.plugins.jasper.jspc.JspCPlugin;
 import com.liferay.gradle.plugins.js.transpiler.JSTranspilerPlugin;
@@ -3076,7 +3077,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		Project project, Jar jarJSPsTask, LiferayExtension liferayExtension) {
 
 		boolean compileJspInclude = GradleUtil.getProperty(
-			project, JspCPlugin.COMPILE_JSP_INCLUDE_PROPERTY_NAME, false);
+			project, JspCDefaultsPlugin.COMPILE_JSP_INCLUDE_PROPERTY_NAME,
+			false);
 
 		if (!compileJspInclude) {
 			return;
@@ -3248,7 +3250,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		Project project, LiferayExtension liferayExtension) {
 
 		boolean compileJspInclude = GradleUtil.getProperty(
-			project, JspCPlugin.COMPILE_JSP_INCLUDE_PROPERTY_NAME, false);
+			project, JspCDefaultsPlugin.COMPILE_JSP_INCLUDE_PROPERTY_NAME,
+			false);
 
 		if (!compileJspInclude) {
 			return;
