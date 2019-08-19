@@ -29,7 +29,9 @@ import org.gradle.api.logging.Logger;
 
 /**
  * @author Andrea Di Giorgi
+ * @deprecated As of Mueller (7.2.x)
  */
+@Deprecated
 public class ExecuteNpmTask extends ExecuteNodeScriptTask {
 
 	public ExecuteNpmTask() {

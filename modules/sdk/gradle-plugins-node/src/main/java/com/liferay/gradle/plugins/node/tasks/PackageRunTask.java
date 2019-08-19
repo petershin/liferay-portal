@@ -15,29 +15,16 @@
 package com.liferay.gradle.plugins.node.tasks;
 
 import com.liferay.gradle.plugins.node.internal.util.GradleUtil;
+import com.liferay.gradle.plugins.node.internal.util.NodePluginUtil;
 
 import java.util.List;
-
-import org.gradle.api.Project;
-import org.gradle.api.tasks.Input;
 
 /**
  * @author David Truong
  * @author Peter Shin
  */
-public class NpmRunTask extends BaseNpmCommandTask {
+public class PackageRunTask extends ExecutePackageManagerTask {
 
-	public NpmRunTask() {
-		exclude(_EXCLUDE_DIR_NAMES);
-		include(_INCLUDES);
-		setNpmCommand(_NPM_COMMAND);
-
-		Project project = getProject();
-
-		setSourceDir(project.getProjectDir());
-	}
-
-	@Input
 	public String getScriptName() {
 		return GradleUtil.toString(_scriptName);
 	}
@@ -50,22 +37,17 @@ public class NpmRunTask extends BaseNpmCommandTask {
 	protected List<String> getCompleteArgs() {
 		List<String> completeArgs = super.getCompleteArgs();
 
-		completeArgs.add(getNpmCommand());
+		if (NodePluginUtil.isYarnScriptFile(getScriptFile())) {
+			completeArgs.add("run");
+		}
+		else {
+			completeArgs.add("run-script");
+		}
+
 		completeArgs.add(getScriptName());
 
 		return completeArgs;
 	}
-
-	private static final String[] _EXCLUDE_DIR_NAMES = {
-		"bin", "build", "classes", "node_modules", "node_modules_cache",
-		"test-classes", "tmp"
-	};
-
-	private static final String[] _INCLUDES = {
-		"**/*.*rc", "**/*.css", "**/*.js", "**/*.json", "**/*.jsx", "**/*.soy"
-	};
-
-	private static final String _NPM_COMMAND = "run-script";
 
 	private Object _scriptName;
 
