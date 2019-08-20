@@ -14,18 +14,22 @@
 
 package com.liferay.gradle.plugins.defaults;
 
+import com.liferay.gradle.plugins.LiferayYarnPlugin;
 import com.liferay.gradle.plugins.SourceFormatterDefaultsPlugin;
 import com.liferay.gradle.plugins.defaults.internal.util.FileUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.GradlePluginsDefaultsUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
+import com.liferay.gradle.plugins.node.tasks.NpmInstallTask;
 import com.liferay.gradle.plugins.source.formatter.SourceFormatterPlugin;
 
 import java.io.File;
 
 import java.util.Map;
 
+import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
+import org.gradle.api.tasks.TaskContainer;
 
 /**
  * @author Andrea Di Giorgi
@@ -53,6 +57,57 @@ public class LiferayRootDefaultsPlugin implements Plugin<Project> {
 				GradleUtil.applyPlugin(subproject, LiferayDefaultsPlugin.class);
 			}
 		}
+
+		if ((portalRootDir == null) && _hasYarnScriptFile(project)) {
+			GradleUtil.applyPlugin(project, LiferayYarnPlugin.class);
+
+			for (Project subproject : project.getSubprojects()) {
+				_configureTasksNpmInstall(subproject);
+			}
+		}
+	}
+
+	private void _configureTaskNpmInstall(NpmInstallTask npmInstallTask) {
+		File scriptFile = npmInstallTask.getScriptFile();
+
+		if (scriptFile == null) {
+			return;
+		}
+
+		String fileName = scriptFile.getName();
+
+		if (!fileName.startsWith("yarn-") || !fileName.endsWith(".js")) {
+			return;
+		}
+
+		npmInstallTask.finalizedBy(LiferayYarnPlugin.YARN_INSTALL_TASK_NAME);
+	}
+
+	private void _configureTasksNpmInstall(Project project) {
+		TaskContainer taskContainer = project.getTasks();
+
+		taskContainer.withType(
+			NpmInstallTask.class,
+			new Action<NpmInstallTask>() {
+
+				@Override
+				public void execute(NpmInstallTask npmInstallTask) {
+					_configureTaskNpmInstall(npmInstallTask);
+				}
+
+			});
+	}
+
+	private boolean _hasYarnScriptFile(Project project) {
+		File projectDir = project.getProjectDir();
+
+		File[] files = FileUtil.getFiles(projectDir, "yarn-", ".js");
+
+		if ((files != null) && (files.length > 0)) {
+			return true;
+		}
+
+		return false;
 	}
 
 }
