@@ -27,13 +27,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.file.FileTree;
+import org.gradle.api.logging.Logger;
 import org.gradle.api.plugins.BasePlugin;
-import org.gradle.api.specs.Spec;
-import org.gradle.api.tasks.TaskOutputs;
 
 /**
  * @author Peter Shin
@@ -86,14 +86,18 @@ public class LiferayYarnPlugin implements Plugin<Project> {
 		task.setDescription("Runs the \"checkFormat\" Yarn script.");
 		task.setGroup("formatting");
 
-		TaskOutputs taskOutputs = task.getOutputs();
-
-		taskOutputs.upToDateWhen(
-			new Spec<Task>() {
+		task.doFirst(
+			new Action<Task>() {
 
 				@Override
-				public boolean isSatisfiedBy(Task task) {
-					return false;
+				public void execute(Task task) {
+					Project project = task.getProject();
+
+					Logger logger = project.getLogger();
+
+					if (logger.isLifecycleEnabled()) {
+						logger.lifecycle("Running \"checkFormat\"");
+					}
 				}
 
 			});
@@ -133,14 +137,18 @@ public class LiferayYarnPlugin implements Plugin<Project> {
 		task.setDescription("Runs the \"format\" Yarn script.");
 		task.setGroup("formatting");
 
-		TaskOutputs taskOutputs = task.getOutputs();
-
-		taskOutputs.upToDateWhen(
-			new Spec<Task>() {
+		task.doFirst(
+			new Action<Task>() {
 
 				@Override
-				public boolean isSatisfiedBy(Task task) {
-					return false;
+				public void execute(Task task) {
+					Project project = task.getProject();
+
+					Logger logger = project.getLogger();
+
+					if (logger.isLifecycleEnabled()) {
+						logger.lifecycle("Running \"format\"");
+					}
 				}
 
 			});
@@ -160,14 +168,18 @@ public class LiferayYarnPlugin implements Plugin<Project> {
 		task.setDescription("Installs Node.js packages from package.json.");
 		task.setGroup(BasePlugin.BUILD_GROUP);
 
-		TaskOutputs taskOutputs = task.getOutputs();
-
-		taskOutputs.upToDateWhen(
-			new Spec<Task>() {
+		task.doFirst(
+			new Action<Task>() {
 
 				@Override
-				public boolean isSatisfiedBy(Task task) {
-					return false;
+				public void execute(Task task) {
+					Project project = task.getProject();
+
+					Logger logger = project.getLogger();
+
+					if (logger.isLifecycleEnabled()) {
+						logger.lifecycle("Installing Node.js packages");
+					}
 				}
 
 			});
@@ -207,14 +219,18 @@ public class LiferayYarnPlugin implements Plugin<Project> {
 				"yarn.lock file");
 		task.setGroup(BasePlugin.BUILD_GROUP);
 
-		TaskOutputs taskOutputs = task.getOutputs();
-
-		taskOutputs.upToDateWhen(
-			new Spec<Task>() {
+		task.doFirst(
+			new Action<Task>() {
 
 				@Override
-				public boolean isSatisfiedBy(Task task) {
-					return false;
+				public void execute(Task task) {
+					Project project = task.getProject();
+
+					Logger logger = project.getLogger();
+
+					if (logger.isLifecycleEnabled()) {
+						logger.lifecycle("Installing Node.js packages");
+					}
 				}
 
 			});

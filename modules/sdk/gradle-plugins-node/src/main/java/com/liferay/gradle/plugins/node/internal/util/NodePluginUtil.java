@@ -51,7 +51,7 @@ public class NodePluginUtil {
 		while (true) {
 			File[] files = FileUtil.getFiles(dir, "yarn-", ".js");
 
-			if ((files != null) && (files.length >= 0)) {
+			if ((files != null) && (files.length > 0)) {
 				return files[0];
 			}
 

@@ -108,7 +108,7 @@ public class ExecutePackageManagerTask extends ExecuteNodeScriptTask {
 
 					Project project = getProject();
 
-					if (project.file("package-lock.json") == null) {
+					if (!FileUtil.exists(project, "package-lock.json")) {
 						File dir = project.getProjectDir();
 
 						File scriptFile = NodePluginUtil.getYarnScriptFile(dir);
