@@ -61,11 +61,11 @@ public class LiferayYarnPlugin implements Plugin<Project> {
 	}
 
 	private ExecutePackageManagerTask _addTaskYarnCheckFormat(
-		File yarnScriptFile, Project project) {
+		File yarnLockFile, Project project) {
 
-		File yarnScriptDir = yarnScriptFile.getParentFile();
+		File workingDir = yarnLockFile.getParentFile();
 
-		String suffix = StringUtil.camelCase(yarnScriptDir.getName(), true);
+		String suffix = StringUtil.camelCase(workingDir.getName(), true);
 
 		ExecutePackageManagerTask executePackageManagerTask =
 			GradleUtil.addTask(
@@ -75,7 +75,7 @@ public class LiferayYarnPlugin implements Plugin<Project> {
 		executePackageManagerTask.args("checkFormat");
 		executePackageManagerTask.setDescription(
 			"Runs the \"checkFormat\" Yarn script.");
-		executePackageManagerTask.setWorkingDir(yarnScriptDir);
+		executePackageManagerTask.setWorkingDir(workingDir);
 
 		return executePackageManagerTask;
 	}
@@ -102,21 +102,21 @@ public class LiferayYarnPlugin implements Plugin<Project> {
 
 			});
 
-		FileTree yarnScriptFiles = _getYarnScriptFiles(project);
+		FileTree yarnLockFiles = _getYarnLockFiles(project);
 
-		yarnScriptFiles.forEach(
-			yarnScriptFile -> task.finalizedBy(
-				_addTaskYarnCheckFormat(yarnScriptFile, project)));
+		yarnLockFiles.forEach(
+			yarnLockFile -> task.finalizedBy(
+				_addTaskYarnCheckFormat(yarnLockFile, project)));
 
 		return task;
 	}
 
 	private ExecutePackageManagerTask _addTaskYarnFormat(
-		File yarnScriptFile, Project project) {
+		File yarnLockFile, Project project) {
 
-		File yarnScriptDir = yarnScriptFile.getParentFile();
+		File workingDir = yarnLockFile.getParentFile();
 
-		String suffix = StringUtil.camelCase(yarnScriptDir.getName(), true);
+		String suffix = StringUtil.camelCase(workingDir.getName(), true);
 
 		ExecutePackageManagerTask executePackageManagerTask =
 			GradleUtil.addTask(
@@ -126,7 +126,7 @@ public class LiferayYarnPlugin implements Plugin<Project> {
 		executePackageManagerTask.args("format");
 		executePackageManagerTask.setDescription(
 			"Runs the \"format\" Yarn script.");
-		executePackageManagerTask.setWorkingDir(yarnScriptDir);
+		executePackageManagerTask.setWorkingDir(workingDir);
 
 		return executePackageManagerTask;
 	}
@@ -153,11 +153,11 @@ public class LiferayYarnPlugin implements Plugin<Project> {
 
 			});
 
-		FileTree yarnScriptFiles = _getYarnScriptFiles(project);
+		FileTree yarnLockFiles = _getYarnLockFiles(project);
 
-		yarnScriptFiles.forEach(
-			yarnScriptFile -> task.finalizedBy(
-				_addTaskYarnFormat(yarnScriptFile, project)));
+		yarnLockFiles.forEach(
+			yarnLockFile -> task.finalizedBy(
+				_addTaskYarnFormat(yarnLockFile, project)));
 
 		return task;
 	}
@@ -184,21 +184,21 @@ public class LiferayYarnPlugin implements Plugin<Project> {
 
 			});
 
-		FileTree yarnScriptFiles = _getYarnScriptFiles(project);
+		FileTree yarnLockFiles = _getYarnLockFiles(project);
 
-		yarnScriptFiles.forEach(
-			yarnScriptFile -> task.finalizedBy(
-				_addTaskYarnInstall(task, yarnScriptFile, true)));
+		yarnLockFiles.forEach(
+			yarnLockFile -> task.finalizedBy(
+				_addTaskYarnInstall(task, yarnLockFile, true)));
 
 		return task;
 	}
 
 	private YarnInstallTask _addTaskYarnInstall(
-		Task task, File yarnScriptFile, boolean frozenLockFile) {
+		Task task, File yarnLockFile, boolean frozenLockFile) {
 
-		File yarnScriptDir = yarnScriptFile.getParentFile();
+		File workingDir = yarnLockFile.getParentFile();
 
-		String suffix = StringUtil.camelCase(yarnScriptDir.getName(), true);
+		String suffix = StringUtil.camelCase(workingDir.getName(), true);
 
 		YarnInstallTask yarnInstallTask = GradleUtil.addTask(
 			task.getProject(), task.getName() + suffix, YarnInstallTask.class);
@@ -206,7 +206,7 @@ public class LiferayYarnPlugin implements Plugin<Project> {
 		yarnInstallTask.setDescription(
 			"Installs Node.js packages from package.json.");
 		yarnInstallTask.setFrozenLockFile(frozenLockFile);
-		yarnInstallTask.setWorkingDir(yarnScriptDir);
+		yarnInstallTask.setWorkingDir(workingDir);
 
 		return yarnInstallTask;
 	}
@@ -235,16 +235,16 @@ public class LiferayYarnPlugin implements Plugin<Project> {
 
 			});
 
-		FileTree yarnScriptFiles = _getYarnScriptFiles(project);
+		FileTree yarnLockFiles = _getYarnLockFiles(project);
 
-		yarnScriptFiles.forEach(
-			yarnScriptFile -> task.finalizedBy(
-				_addTaskYarnInstall(task, yarnScriptFile, false)));
+		yarnLockFiles.forEach(
+			yarnLockFile -> task.finalizedBy(
+				_addTaskYarnInstall(task, yarnLockFile, false)));
 
 		return task;
 	}
 
-	private FileTree _getYarnScriptFiles(Project project) {
+	private FileTree _getYarnLockFiles(Project project) {
 		Map<String, Object> args = new HashMap<>();
 
 		args.put("dir", project.getProjectDir());
@@ -258,7 +258,7 @@ public class LiferayYarnPlugin implements Plugin<Project> {
 		"**/bin/", "**/build/", "**/classes/", "**/node_modules/",
 		"**/node_modules_cache/", "**/test-classes/", "**/tmp/");
 	private static final List<String> _includes = Arrays.asList(
-		"yarn-*.js", "private/yarn-*.js", "apps/*/yarn-*.js",
-		"private/apps/*/yarn-*.js");
+		"yarn.lock", "private/yarn.lock", "apps/*/yarn.lock",
+		"private/apps/*/yarn.lock");
 
 }
