@@ -29,6 +29,7 @@ import java.util.Map;
 import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
+import org.gradle.api.Task;
 import org.gradle.api.tasks.TaskContainer;
 
 /**
@@ -37,7 +38,7 @@ import org.gradle.api.tasks.TaskContainer;
 public class LiferayRootDefaultsPlugin implements Plugin<Project> {
 
 	@Override
-	public void apply(Project project) {
+	public void apply(final Project project) {
 		if (FileUtil.exists(project, "app.bnd")) {
 			GradleUtil.applyPlugin(project, LiferayAppDefaultsPlugin.class);
 		}
@@ -62,12 +63,14 @@ public class LiferayRootDefaultsPlugin implements Plugin<Project> {
 			GradleUtil.applyPlugin(project, LiferayYarnPlugin.class);
 
 			for (Project subproject : project.getSubprojects()) {
-				_configureTasksNpmInstall(subproject);
+				_configureTasksNpmInstall(project, subproject);
 			}
 		}
 	}
 
-	private void _configureTaskNpmInstall(NpmInstallTask npmInstallTask) {
+	private void _configureTaskNpmInstall(
+		Project rootProject, NpmInstallTask npmInstallTask) {
+
 		File scriptFile = npmInstallTask.getScriptFile();
 
 		if (scriptFile == null) {
@@ -80,10 +83,19 @@ public class LiferayRootDefaultsPlugin implements Plugin<Project> {
 			return;
 		}
 
-		npmInstallTask.finalizedBy(LiferayYarnPlugin.YARN_INSTALL_TASK_NAME);
+		TaskContainer taskContainer = rootProject.getTasks();
+
+		Task yarnInstallTask = taskContainer.findByName(
+			LiferayYarnPlugin.YARN_INSTALL_TASK_NAME);
+
+		if (yarnInstallTask != null) {
+			npmInstallTask.finalizedBy(yarnInstallTask);
+		}
 	}
 
-	private void _configureTasksNpmInstall(Project project) {
+	private void _configureTasksNpmInstall(
+		final Project rootProject, Project project) {
+
 		TaskContainer taskContainer = project.getTasks();
 
 		taskContainer.withType(
@@ -92,7 +104,7 @@ public class LiferayRootDefaultsPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(NpmInstallTask npmInstallTask) {
-					_configureTaskNpmInstall(npmInstallTask);
+					_configureTaskNpmInstall(rootProject, npmInstallTask);
 				}
 
 			});
