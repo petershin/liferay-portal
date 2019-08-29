@@ -35,8 +35,6 @@ import com.liferay.gradle.plugins.defaults.tasks.MergeFilesTask;
 import com.liferay.gradle.plugins.defaults.tasks.ReplaceRegexTask;
 import com.liferay.gradle.plugins.defaults.tasks.WriteArtifactPublishCommandsTask;
 import com.liferay.gradle.plugins.defaults.tasks.WritePropertiesTask;
-import com.liferay.gradle.plugins.js.transpiler.JSTranspilerBasePlugin;
-import com.liferay.gradle.plugins.js.transpiler.JSTranspilerPlugin;
 import com.liferay.gradle.plugins.node.NodePlugin;
 import com.liferay.gradle.util.Validator;
 
@@ -927,12 +925,7 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 		for (Configuration configuration : project.getConfigurations()) {
 			String name = configuration.getName();
 
-			if (name.equals(
-					JSTranspilerBasePlugin.JS_COMPILE_CONFIGURATION_NAME) ||
-				name.equals(
-					JSTranspilerPlugin.SOY_COMPILE_CONFIGURATION_NAME) ||
-				name.startsWith("test")) {
-
+			if (name.startsWith("test")) {
 				continue;
 			}
 
