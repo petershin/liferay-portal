@@ -164,6 +164,7 @@ public class ProjectGenerator {
 
 		ProjectTemplateCustomizer projectTemplateCustomizer =
 			_getProjectTemplateCustomizer(
+				template,
 				archetypeArtifactManager.getArchetypeFile(
 					archetypeGenerationRequest.getArchetypeGroupId(),
 					archetypeGenerationRequest.getArchetypeArtifactId(),
@@ -201,7 +202,7 @@ public class ProjectGenerator {
 	}
 
 	private ProjectTemplateCustomizer _getProjectTemplateCustomizer(
-			File archetypeFile)
+			String templateName, File archetypeFile)
 		throws MalformedURLException {
 
 		URI uri = archetypeFile.toURI();
@@ -214,8 +215,15 @@ public class ProjectGenerator {
 
 		Iterator<ProjectTemplateCustomizer> iterator = serviceLoader.iterator();
 
-		if (iterator.hasNext()) {
-			return iterator.next();
+		while (iterator.hasNext()) {
+			ProjectTemplateCustomizer projectTemplateCustomizer =
+				iterator.next();
+
+			if (templateName.equals(
+					projectTemplateCustomizer.getTemplateName())) {
+
+				return projectTemplateCustomizer;
+			}
 		}
 
 		return null;
