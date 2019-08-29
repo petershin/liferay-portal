@@ -39,11 +39,6 @@ classes {
 	dependsOn buildSoy
 }
 
-transpileJS {
-	soySrcIncludes = ""
-	srcIncludes = "**/*.es.js"
-}
-
 wrapSoyAlloyTemplate {
 	enabled = true
 	moduleName = "${artifactId}-form-field-template"
