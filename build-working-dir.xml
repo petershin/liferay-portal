@@ -633,4 +633,24 @@
 			if:true="${prepare.working.dir.private}"
 		/>
 	</target>
+
+	<target if="working.dir.checkout.master.dir" name="symlink-private-apps">
+		<condition else="false" property="os.windows" value="true">
+			<os family="windows" />
+		</condition>
+
+		<loadresource property="working.dir.checkout.master.dir.windows">
+			<propertyresource name="working.dir.checkout.master.dir" />
+			<filterchain>
+				<replacestring from="/" to="\\" />
+			</filterchain>
+		</loadresource>
+
+		<exec executable="cmd" if:true="${os.windows}">
+			<arg value="/c" />
+			<arg line="mklink /D ${working.dir.checkout.master.dir.windows}\\modules\\private ${basedir}\\modules\\private" />
+		</exec>
+
+		<symlink link="${basedir}/modules/private" resource="${working.dir.checkout.master.dir.windows}/modules/private" unless:true="${os.windows}" />
+	</target>
 </project>
