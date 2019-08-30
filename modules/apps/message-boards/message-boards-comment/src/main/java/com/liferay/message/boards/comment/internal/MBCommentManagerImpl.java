@@ -159,36 +159,6 @@ public class MBCommentManagerImpl implements CommentManager {
 	}
 
 	@Override
-	public Discussion copyDiscussion(
-			long userId, long groupId, String className, long classPK,
-			long newClassPK,
-			Function<String, ServiceContext> serviceContextFunction)
-		throws PortalException {
-
-		if (!hasDiscussion(className, classPK)) {
-			return null;
-		}
-
-		MBMessage newRootMBMessage = _copyRootMessage(
-			userId, groupId, className, classPK, newClassPK,
-			serviceContextFunction);
-
-		List<Comment> rootComments = getRootComments(
-			className, classPK, WorkflowConstants.STATUS_ANY, 0,
-			getRootCommentsCount(
-				className, classPK, WorkflowConstants.STATUS_ANY));
-
-		for (Comment rootComment : rootComments) {
-			_duplicateComment(
-				rootComment, newRootMBMessage.getMessageId(), newClassPK,
-				serviceContextFunction);
-		}
-
-		return getDiscussion(
-			userId, groupId, className, newClassPK, serviceContextFunction);
-	}
-
-	@Override
 	public void deleteComment(long commentId) throws PortalException {
 		_mbMessageLocalService.deleteDiscussionMessage(commentId);
 	}
