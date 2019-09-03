@@ -1012,9 +1012,27 @@ information.
 		<element implicit="true" name="attach-files" optional="true" />
 
 		<sequential>
+			<local name="jar.basename" />
+
+			<basename file="@{snapshot.bundle.jar.file}" property="jar.basename" suffix=".jar" />
+
 			<local name="artifact.name" />
 
-			<basename file="@{snapshot.bundle.jar.file}" property="artifact.name" suffix=".jar" />
+			<if>
+				<matches pattern="^com\.liferay\.portal\.test$" string="${jar.basename}" />
+				<then>
+					<property name="artifact.name" value="portal-test" />
+				</then>
+				<elseif>
+					<matches pattern="^com\.liferay\.portal\.test\.integration$" string="${jar.basename}" />
+					<then>
+						<property name="artifact.name" value="portal-test-integration" />
+					</then>
+				</elseif>
+				<else>
+					<property name="artifact.name" value="${jar.basename}" />
+				</else>
+			</if>
 
 			<prepare-snapshot-bundle-artifact-pom artifact.name="${artifact.name}" />
 
@@ -1240,6 +1258,8 @@ information.
 			<if>
 				<available file="@{artifact.name}/bnd.bnd" />
 				<then>
+					<var name="Bundle-Version" unset="true" />
+
 					<property file="@{artifact.name}/bnd.bnd" />
 
 					<property name="artifact.version" value="${Bundle-Version}-SNAPSHOT" />
