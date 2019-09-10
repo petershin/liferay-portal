@@ -31,7 +31,7 @@ import java.nio.file.Files;
 	commandDescription = "Delete a file from the deploy directory of a Liferay bundle.",
 	commandNames = "clean"
 )
-public class CleanCommand extends BaseCommand {
+public class CleanCommand extends AbstractBundleCommand {
 
 	@Override
 	public void execute() throws Exception {

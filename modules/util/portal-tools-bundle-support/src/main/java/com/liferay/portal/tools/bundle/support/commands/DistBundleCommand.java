@@ -32,7 +32,7 @@ import java.nio.file.Path;
 	commandDescription = "Turn a Liferay home into an distributable archive.",
 	commandNames = "distBundle"
 )
-public class DistBundleCommand extends BaseCommand {
+public class DistBundleCommand extends AbstractBundleCommand {
 
 	@Override
 	public void execute() throws Exception {

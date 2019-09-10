@@ -34,7 +34,7 @@ import java.nio.file.Path;
 	commandDescription = "Deploy a file to a Liferay bundle.",
 	commandNames = "deploy"
 )
-public class DeployCommand extends BaseCommand {
+public class DeployCommand extends AbstractBundleCommand {
 
 	@Override
 	public void execute() throws Exception {

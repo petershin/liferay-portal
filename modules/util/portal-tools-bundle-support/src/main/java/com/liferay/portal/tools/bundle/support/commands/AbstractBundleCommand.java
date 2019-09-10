@@ -21,7 +21,7 @@ import java.io.File;
 /**
  * @author David Truong
  */
-public abstract class BaseCommand implements Command {
+public abstract class AbstractBundleCommand implements Command {
 
 	public File getLiferayHomeDir() {
 		return _liferayHomeDir;

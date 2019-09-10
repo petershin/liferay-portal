@@ -38,7 +38,7 @@ import java.util.Objects;
  * @author Andrea Di Giorgi
  */
 @Parameters(commandDescription = "Download a file.", commandNames = "download")
-public class DownloadCommand extends BaseCommand implements StreamLogger {
+public class DownloadCommand extends AbstractBundleCommand implements StreamLogger {
 
 	@Override
 	public void execute() throws Exception {
