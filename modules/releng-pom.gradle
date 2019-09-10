@@ -406,6 +406,15 @@ private void _testPom(String artifactId, String version, Boolean excludeLiferayD
 		assert it.artifactId.text().matches(dependencyArtifactIdPattern)
 		assert it.groupId.text().matches(dependencyGroupIdPattern)
 		assert it.version.text().matches(/\d(?:[a-z\d.-]*[a-z\d])?/)
+
+		String groupPath = it.groupId.text().replaceAll(/\./, "/")
+
+		String dependencyURL = "https://repository.liferay.com/nexus/content/groups/public/${groupPath}/${it.artifactId.text()}/${it.version.text()}/${it.artifactId.text()}-${it.version.text()}.jar"
+
+		exec {
+			args dependencyURL, "--spider"
+			executable "wget"
+		}
 	}
 
 	pomNode.developers.developer.each {
