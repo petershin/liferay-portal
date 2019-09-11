@@ -38,7 +38,7 @@ public class CleanCommand extends AbstractBundleCommand {
 		String fileName;
 
 		if (File.separatorChar != '/') {
-			fileName = _fileName.replace(File.separatorChar, '/');
+			_fileName = _fileName.replace(File.separatorChar, '/');
 		}
 
 		fileName = _fileName.substring(_fileName.lastIndexOf('/') + 1);
