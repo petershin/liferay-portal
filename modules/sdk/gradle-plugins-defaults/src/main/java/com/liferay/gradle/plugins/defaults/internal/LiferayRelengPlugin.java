@@ -770,21 +770,7 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 
 				@Override
 				public boolean isSatisfiedBy(Task task) {
-					Properties artifactProperties;
-
-					File artifactPropertiesFile =
-						recordArtifactTask.getOutputFile();
-
-					if (artifactPropertiesFile.exists()) {
-						artifactProperties = GUtil.loadProperties(
-							artifactPropertiesFile);
-					}
-					else {
-						artifactProperties = new Properties();
-					}
-
-					return _isStale(
-						recordArtifactTask.getProject(), artifactProperties);
+					return _isStale(recordArtifactTask);
 				}
 
 			});
@@ -962,10 +948,23 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 		return false;
 	}
 
-	private boolean _isStale(
-		final Project project, Properties artifactProperties) {
+	private boolean _isStale(WritePropertiesTask recordArtifactTask) {
+		Project project = recordArtifactTask.getProject();
 
 		Logger logger = project.getLogger();
+
+		File artifactPropertiesFile = recordArtifactTask.getOutputFile();
+
+		if (!artifactPropertiesFile.exists()) {
+			if (logger.isInfoEnabled()) {
+				logger.info("{} has never been published", project);
+			}
+
+			return true;
+		}
+
+		Properties artifactProperties = GUtil.loadProperties(
+			artifactPropertiesFile);
 
 		final String artifactGitId = artifactProperties.getProperty(
 			"artifact.git.id");
