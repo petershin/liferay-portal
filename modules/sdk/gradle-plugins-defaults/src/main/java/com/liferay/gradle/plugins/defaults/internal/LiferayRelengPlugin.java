@@ -328,8 +328,8 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 						return false;
 					}
 
-					if (_hasProjectDependencies(project) ||
-						_hasStaleDigestFile(task.getProject())) {
+					if (_hasStaleDigestFile(task.getProject()) ||
+						_hasStaleProjectDependencies(project)) {
 
 						return true;
 					}
@@ -549,7 +549,7 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 
 					@Override
 					public boolean isSatisfiedBy(Task task) {
-						if (_hasProjectDependencies(task.getProject())) {
+						if (_hasStaleProjectDependencies(task.getProject())) {
 							return false;
 						}
 
@@ -911,9 +911,7 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 		return sb.toString();
 	}
 
-	private boolean _hasProjectDependencies(Project project) {
-		Logger logger = project.getLogger();
-
+	private boolean _hasStaleProjectDependencies(Project project) {
 		for (Configuration configuration : project.getConfigurations()) {
 			String name = configuration.getName();
 
@@ -928,35 +926,17 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 
 			for (Dependency dependency : configuration.getDependencies()) {
 				if (dependency instanceof ProjectDependency) {
-					if (logger.isQuietEnabled()) {
-						ProjectDependency projectDependency =
-							(ProjectDependency)dependency;
+					ProjectDependency projectDependency =
+						(ProjectDependency)dependency;
 
-						Project dependencyProject =
-							projectDependency.getDependencyProject();
+					WritePropertiesTask writePropertiesTask =
+						(WritePropertiesTask)GradleUtil.getTask(
+							projectDependency.getDependencyProject(),
+							RECORD_ARTIFACT_TASK_NAME);
 
-						logger.quiet(
-							"Project {} has project dependency {}.",
-							project.getPath(), dependencyProject.getPath());
+					if (_isStale(writePropertiesTask)) {
+						return true;
 					}
-
-					return true;
-				}
-
-				if (!name.startsWith("compile")) {
-					continue;
-				}
-
-				String version = dependency.getVersion();
-
-				if ((version != null) && version.equals("default")) {
-					if (logger.isQuietEnabled()) {
-						logger.quiet(
-							"Project {} has version \"default\" in {}.",
-							project.getPath(), dependency);
-					}
-
-					return true;
 				}
 			}
 		}
