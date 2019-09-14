@@ -911,39 +911,6 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 		return sb.toString();
 	}
 
-	private boolean _hasStaleProjectDependencies(Project project) {
-		for (Configuration configuration : project.getConfigurations()) {
-			String name = configuration.getName();
-
-			if (name.equals(
-					JSTranspilerBasePlugin.JS_COMPILE_CONFIGURATION_NAME) ||
-				name.equals(
-					JSTranspilerPlugin.SOY_COMPILE_CONFIGURATION_NAME) ||
-				name.startsWith("test")) {
-
-				continue;
-			}
-
-			for (Dependency dependency : configuration.getDependencies()) {
-				if (dependency instanceof ProjectDependency) {
-					ProjectDependency projectDependency =
-						(ProjectDependency)dependency;
-
-					WritePropertiesTask writePropertiesTask =
-						(WritePropertiesTask)GradleUtil.getTask(
-							projectDependency.getDependencyProject(),
-							RECORD_ARTIFACT_TASK_NAME);
-
-					if (_isStale(writePropertiesTask)) {
-						return true;
-					}
-				}
-			}
-		}
-
-		return false;
-	}
-
 	private boolean _hasStaleDigestFile(Project project) {
 		Logger logger = project.getLogger();
 
@@ -1013,6 +980,39 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 				}
 
 				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private boolean _hasStaleProjectDependencies(Project project) {
+		for (Configuration configuration : project.getConfigurations()) {
+			String name = configuration.getName();
+
+			if (name.equals(
+					JSTranspilerBasePlugin.JS_COMPILE_CONFIGURATION_NAME) ||
+				name.equals(
+					JSTranspilerPlugin.SOY_COMPILE_CONFIGURATION_NAME) ||
+				name.startsWith("test")) {
+
+				continue;
+			}
+
+			for (Dependency dependency : configuration.getDependencies()) {
+				if (dependency instanceof ProjectDependency) {
+					ProjectDependency projectDependency =
+						(ProjectDependency)dependency;
+
+					WritePropertiesTask writePropertiesTask =
+						(WritePropertiesTask)GradleUtil.getTask(
+							projectDependency.getDependencyProject(),
+							RECORD_ARTIFACT_TASK_NAME);
+
+					if (_isStale(writePropertiesTask)) {
+						return true;
+					}
+				}
 			}
 		}
 
