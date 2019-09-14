@@ -964,67 +964,6 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 		return false;
 	}
 
-	private boolean _isStale(WritePropertiesTask recordArtifactTask) {
-		Project project = recordArtifactTask.getProject();
-
-		Logger logger = project.getLogger();
-
-		File artifactPropertiesFile = recordArtifactTask.getOutputFile();
-
-		if (!artifactPropertiesFile.exists()) {
-			if (logger.isQuietEnabled()) {
-				logger.quiet("{} has never been published", project);
-			}
-
-			return true;
-		}
-
-		Properties artifactProperties = GUtil.loadProperties(
-			artifactPropertiesFile);
-
-		String artifactGitId = artifactProperties.getProperty(
-			"artifact.git.id");
-
-		if (Validator.isNull(artifactGitId)) {
-			if (logger.isQuietEnabled()) {
-				logger.quiet("{} has never been published", project);
-			}
-
-			return true;
-		}
-
-		String result = GitUtil.getGitResult(
-			project, "log", "--format=%s", artifactGitId + "..HEAD", ".");
-
-		String[] lines = result.split("\\r?\\n");
-
-		for (String line : lines) {
-			if (logger.isInfoEnabled()) {
-				logger.info(line);
-			}
-
-			if (Validator.isNull(line)) {
-				continue;
-			}
-
-			if (!line.contains(
-					WriteArtifactPublishCommandsTask.IGNORED_MESSAGE_PATTERN)) {
-
-				if (logger.isQuietEnabled()) {
-					logger.quiet("{} has new commits", project);
-				}
-
-				return true;
-			}
-		}
-
-		if (_hasStaleDigestFile(project)) {
-			return true;
-		}
-
-		return false;
-	}
-
 	private boolean _hasStaleDigestFile(Project project) {
 		Logger logger = project.getLogger();
 
@@ -1095,6 +1034,67 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 
 				return true;
 			}
+		}
+
+		return false;
+	}
+
+	private boolean _isStale(WritePropertiesTask recordArtifactTask) {
+		Project project = recordArtifactTask.getProject();
+
+		Logger logger = project.getLogger();
+
+		File artifactPropertiesFile = recordArtifactTask.getOutputFile();
+
+		if (!artifactPropertiesFile.exists()) {
+			if (logger.isQuietEnabled()) {
+				logger.quiet("{} has never been published", project);
+			}
+
+			return true;
+		}
+
+		Properties artifactProperties = GUtil.loadProperties(
+			artifactPropertiesFile);
+
+		String artifactGitId = artifactProperties.getProperty(
+			"artifact.git.id");
+
+		if (Validator.isNull(artifactGitId)) {
+			if (logger.isQuietEnabled()) {
+				logger.quiet("{} has never been published", project);
+			}
+
+			return true;
+		}
+
+		String result = GitUtil.getGitResult(
+			project, "log", "--format=%s", artifactGitId + "..HEAD", ".");
+
+		String[] lines = result.split("\\r?\\n");
+
+		for (String line : lines) {
+			if (logger.isInfoEnabled()) {
+				logger.info(line);
+			}
+
+			if (Validator.isNull(line)) {
+				continue;
+			}
+
+			if (!line.contains(
+					WriteArtifactPublishCommandsTask.IGNORED_MESSAGE_PATTERN)) {
+
+				if (logger.isQuietEnabled()) {
+					logger.quiet("{} has new commits", project);
+				}
+
+				return true;
+			}
+		}
+
+		if (_hasStaleDigestFile(project)) {
+			return true;
 		}
 
 		return false;
