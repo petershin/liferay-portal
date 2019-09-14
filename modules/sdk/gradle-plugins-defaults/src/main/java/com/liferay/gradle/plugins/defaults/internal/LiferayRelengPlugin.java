@@ -928,6 +928,18 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 
 			for (Dependency dependency : configuration.getDependencies()) {
 				if (dependency instanceof ProjectDependency) {
+					if (logger.isQuietEnabled()) {
+						ProjectDependency projectDependency =
+							(ProjectDependency)dependency;
+
+						Project dependencyProject =
+							projectDependency.getDependencyProject();
+
+						logger.quiet(
+							"Project {} has project dependency {}.",
+							project.getPath(), dependencyProject.getPath());
+					}
+
 					return true;
 				}
 
@@ -940,8 +952,8 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 				if ((version != null) && version.equals("default")) {
 					if (logger.isQuietEnabled()) {
 						logger.quiet(
-							"{} has version \"default\" in {}.", project,
-							dependency);
+							"Project {} has version \"default\" in {}.",
+							project.getPath(), dependency);
 					}
 
 					return true;
@@ -960,8 +972,8 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 		File artifactPropertiesFile = recordArtifactTask.getOutputFile();
 
 		if (!artifactPropertiesFile.exists()) {
-			if (logger.isInfoEnabled()) {
-				logger.info("{} has never been published", project);
+			if (logger.isQuietEnabled()) {
+				logger.quiet("{} has never been published", project);
 			}
 
 			return true;
@@ -974,8 +986,8 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 			"artifact.git.id");
 
 		if (Validator.isNull(artifactGitId)) {
-			if (logger.isInfoEnabled()) {
-				logger.info("{} has never been published", project);
+			if (logger.isQuietEnabled()) {
+				logger.quiet("{} has never been published", project);
 			}
 
 			return true;
@@ -997,6 +1009,10 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 
 			if (!line.contains(
 					WriteArtifactPublishCommandsTask.IGNORED_MESSAGE_PATTERN)) {
+
+				if (logger.isQuietEnabled()) {
+					logger.quiet("{} has new commits", project);
+				}
 
 				return true;
 			}
@@ -1029,6 +1045,11 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 			}
 
 			if (!Objects.equals(digest, oldDigest)) {
+				if (logger.isQuietEnabled()) {
+					logger.quiet(
+						"Parent theme for {} has new commits", project);
+				}
+
 				return true;
 			}
 		}
@@ -1057,6 +1078,21 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 			}
 
 			if (!Objects.equals(digest, oldDigest)) {
+				if (logger.isQuietEnabled()) {
+					StringBuilder sb = new StringBuilder();
+
+					sb.append("Included source files for ");
+					sb.append(project.getPath());
+					sb.append(" have new commits");
+
+					for (File file : sourceFiles.getFiles()) {
+						sb.append("\n- ");
+						sb.append(file);
+					}
+
+					logger.quiet(sb.toString());
+				}
+
 				return true;
 			}
 		}
