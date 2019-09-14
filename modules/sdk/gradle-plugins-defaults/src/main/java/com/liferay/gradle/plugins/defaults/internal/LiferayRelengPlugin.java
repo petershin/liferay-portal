@@ -982,7 +982,7 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 		Properties artifactProperties = GUtil.loadProperties(
 			artifactPropertiesFile);
 
-		final String artifactGitId = artifactProperties.getProperty(
+		String artifactGitId = artifactProperties.getProperty(
 			"artifact.git.id");
 
 		if (Validator.isNull(artifactGitId)) {
