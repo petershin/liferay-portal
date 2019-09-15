@@ -36,6 +36,10 @@ ext {
 	]
 }
 
+if (Boolean.getBoolean("snapshot.bundle.dependencies.enabled")) {
+	apply from: "build-snapshot-bundle.gradle"
+}
+
 Set<File> bndPrintJarFiles = null
 
 if (Boolean.getBoolean("build.bnd.print.enabled")) {

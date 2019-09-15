@@ -511,6 +511,56 @@ information.
 		</sequential>
 	</macrodef>
 
+	<macrodef name="download-latest-snapshot">
+		<attribute name="snapshot.bundle.file" />
+
+		<sequential>
+			<antelope:stringutil property="snapshot.bundle.file.beginindex" string="${snapshot.bundle.url}">
+				<antelope:lastindexof string="/" />
+			</antelope:stringutil>
+
+			<antelope:math
+				datatype="int"
+				operand1="${snapshot.bundle.file.beginindex}"
+				operand2="1"
+				operation="+"
+				result="snapshot.bundle.file.beginindex"
+			/>
+
+			<antelope:stringutil property="snapshot.bundle.file" string="${snapshot.bundle.url}">
+				<antelope:substring beginindex="${snapshot.bundle.file.beginindex}" />
+			</antelope:stringutil>
+
+			<property name="snapshot.bundle.sha256.original" value="${project.dir}/tmp/${snapshot.bundle.file}.snapshot.bundle.sha256.original" />
+			<property name="snapshot.bundle.sha256.new" value="${project.dir}/tmp/${snapshot.bundle.file}.snapshot.bundle.sha256.new" />
+
+			<mirrors-get
+				dest="${snapshot.bundle.sha256.original}"
+				force="false"
+				skipChecksum="true"
+				src="${snapshot.bundle.url}.sha256"
+			/>
+
+			<mirrors-get
+				dest="${snapshot.bundle.sha256.new}"
+				force="true"
+				skipChecksum="true"
+				src="${snapshot.bundle.url}.sha256"
+			/>
+
+			<condition else="true" property="snapshot.bundle.force" value="false">
+				<filesmatch file1="${snapshot.bundle.sha256.original}" file2="${snapshot.bundle.sha256.new}" />
+			</condition>
+
+			<mirrors-get
+				dest="${project.dir}/tmp/${snapshot.bundle.file}"
+				force="${snapshot.bundle.force}"
+				skipChecksum="true"
+				src="${snapshot.bundle.url}"
+			/>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="execute">
 		<attribute default="." name="dir" />
 		<attribute default="true" name="failonerror" />
@@ -956,6 +1006,48 @@ information.
 		</sequential>
 	</macrodef>
 
+	<macrodef name="install-snapshot-bundle-artifact">
+		<attribute name="snapshot.bundle.jar.file" />
+
+		<element implicit="true" name="attach-files" optional="true" />
+
+		<sequential>
+			<local name="jar.basename" />
+
+			<basename file="@{snapshot.bundle.jar.file}" property="jar.basename" suffix=".jar" />
+
+			<local name="artifact.name" />
+
+			<if>
+				<matches pattern="^com\.liferay\.portal\.test$" string="${jar.basename}" />
+				<then>
+					<property name="artifact.name" value="portal-test" />
+				</then>
+				<elseif>
+					<matches pattern="^com\.liferay\.portal\.test\.integration$" string="${jar.basename}" />
+					<then>
+						<property name="artifact.name" value="portal-test-integration" />
+					</then>
+				</elseif>
+				<else>
+					<property name="artifact.name" value="${jar.basename}" />
+				</else>
+			</if>
+
+			<prepare-snapshot-bundle-artifact-pom artifact.name="${artifact.name}" />
+
+			<delete dir="${project.dir}/.m2-tmp/com/liferay/snapshot/bundle/${artifact.name}" />
+
+			<artifact:install file="@{snapshot.bundle.jar.file}">
+				<attach-files />
+				<localRepository path="${project.dir}/.m2-tmp" />
+				<pom file="${project.dir}/tmp/${artifact.name}.xml" />
+			</artifact:install>
+
+			<delete file="${project.dir}/tmp/${artifact.name}.xml" />
+		</sequential>
+	</macrodef>
+
 	<macrodef name="jacoco-report">
 		<attribute name="exec.file" />
 		<element name="class.files" />
@@ -1152,6 +1244,41 @@ information.
 				</filterchain>
 				<filterset>
 					<filter token="version" value="${artifact.version}@{snapshot.version.suffix}" />
+				</filterset>
+			</copy>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="prepare-snapshot-bundle-artifact-pom">
+		<attribute name="artifact.name" />
+
+		<sequential>
+			<local name="artifact.version" />
+
+			<if>
+				<available file="@{artifact.name}/bnd.bnd" />
+				<then>
+					<var name="Bundle-Version" unset="true" />
+
+					<property file="@{artifact.name}/bnd.bnd" />
+
+					<property name="artifact.version" value="${Bundle-Version}-SNAPSHOT" />
+				</then>
+				<else>
+					<property name="artifact.version" value="1.0.0-SNAPSHOT" />
+				</else>
+			</if>
+
+			<copy
+				file="${project.dir}/tools/maven/snapshot-bundle.xml"
+				tofile="${project.dir}/tmp/@{artifact.name}.xml"
+			>
+				<filterchain>
+					<expandproperties />
+				</filterchain>
+				<filterset>
+					<filter token="artifact.name" value="@{artifact.name}" />
+					<filter token="artifact.version" value="${artifact.version}" />
 				</filterset>
 			</copy>
 		</sequential>
@@ -1884,6 +2011,7 @@ rerun your task.
 				<entry key="systemProp.repository.private.password" value="${build.repository.private.password}" />
 				<entry key="systemProp.repository.private.url" value="${build.repository.private.proxied.url}" />
 				<entry key="systemProp.repository.private.username" value="${build.repository.private.username}" />
+				<entry key="systemProp.snapshot.bundle.dependencies.enabled" value="${snapshot.bundle.install.artifacts}" />
 			</propertyfile>
 
 			<replaceregexp
