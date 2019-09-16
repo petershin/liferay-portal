@@ -91,6 +91,8 @@
 	</macrodef>
 
 	<target name="all">
+		<property name="gradle.execute.silent" value="true" />
+
 		<if>
 			<not>
 				<or>

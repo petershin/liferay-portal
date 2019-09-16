@@ -19,6 +19,7 @@ import com.liferay.gradle.plugins.defaults.internal.util.GradlePluginsDefaultsUt
 import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.node.NodeExtension;
 import com.liferay.gradle.plugins.node.NodePlugin;
+import com.liferay.gradle.plugins.node.tasks.ExecuteNodeTask;
 import com.liferay.gradle.plugins.node.tasks.ExecutePackageManagerTask;
 import com.liferay.gradle.plugins.node.tasks.NpmInstallTask;
 import com.liferay.gradle.plugins.node.tasks.PackageRunTestTask;
@@ -28,6 +29,7 @@ import com.liferay.gradle.util.Validator;
 
 import java.io.File;
 
+import java.util.Objects;
 import java.util.concurrent.Callable;
 
 import org.gradle.api.Action;
@@ -52,6 +54,7 @@ public class NodeDefaultsPlugin extends BaseDefaultsPlugin<NodePlugin> {
 		_configureTaskExecutePackageManager(project);
 		_configureTaskPackageRunTest(project);
 		_configureTasksPublishNodeModule(project);
+		_configureTasksExecuteNode(project);
 	}
 
 	@Override
@@ -76,6 +79,15 @@ public class NodeDefaultsPlugin extends BaseDefaultsPlugin<NodePlugin> {
 
 			nodeExtension.setNodeVersion("8.10.0");
 			nodeExtension.setNpmVersion("5.7.1");
+		}
+	}
+
+	private void _configureTaskExecuteNode(ExecuteNodeTask executeNodeTask) {
+		String silent = GradleUtil.getTaskPrefixedProperty(
+			executeNodeTask, "silent");
+
+		if (Boolean.parseBoolean(silent)) {
+			executeNodeTask.setSilent(true);
 		}
 	}
 
@@ -172,6 +184,21 @@ public class NodeDefaultsPlugin extends BaseDefaultsPlugin<NodePlugin> {
 			});
 
 		publishNodeModuleTask.setOverriddenPackageJsonKeys("version");
+	}
+
+	private void _configureTasksExecuteNode(Project project) {
+		TaskContainer taskContainer = project.getTasks();
+
+		taskContainer.withType(
+			ExecuteNodeTask.class,
+			new Action<ExecuteNodeTask>() {
+
+				@Override
+				public void execute(ExecuteNodeTask executeNodeTask) {
+					_configureTaskExecuteNode(executeNodeTask);
+				}
+
+			});
 	}
 
 	private void _configureTasksPublishNodeModule(Project project) {
