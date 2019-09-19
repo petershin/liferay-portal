@@ -28,7 +28,7 @@
     <dependency>
       <groupId>biz.aQute.bnd</groupId>
       <artifactId>biz.aQute.bnd.gradle</artifactId>
-      <version>3.5.0</version>
+      <version>4.3.0-SNAPSHOT</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
