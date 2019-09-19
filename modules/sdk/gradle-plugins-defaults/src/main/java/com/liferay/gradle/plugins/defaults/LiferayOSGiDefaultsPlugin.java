@@ -2083,27 +2083,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		DependencySet dependencySet = configuration.getDependencies();
 
 		dependencySet.withType(
-			ExternalDependency.class,
-			new Action<ExternalDependency>() {
-
-				@Override
-				public void execute(ExternalDependency externalDependency) {
-					String version = externalDependency.getVersion();
-
-					if (Validator.isNotNull(version) &&
-						version.endsWith(
-							GradlePluginsDefaultsUtil.
-								SNAPSHOT_VERSION_SUFFIX)) {
-
-						throw new GradleException(
-							"Please use a timestamp version for " +
-								externalDependency);
-					}
-				}
-
-			});
-
-		dependencySet.withType(
 			ModuleDependency.class,
 			new Action<ModuleDependency>() {
 
