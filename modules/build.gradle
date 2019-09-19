@@ -236,6 +236,10 @@ gradle.beforeProject {
 				xmltask
 			}
 
+			bundle {
+				instruction "-noclassforname", "true"
+			}
+
 			dependencies {
 				xmltask rootProject.files("../lib/development/xmltask.jar")
 			}
