@@ -27,6 +27,10 @@ repositories {
 	}
 
 	maven {
+		url "https://bndtools.jfrog.io/bndtools/libs-snapshot"
+	}
+
+	maven {
 		url System.properties["repository.url"] ?: "https://repository-cdn.liferay.com/nexus/content/groups/public"
 	}
 }
