@@ -81,6 +81,10 @@ public class GradlePluginsDefaultsUtil {
 			}
 		}
 
+		GradleUtil.addMavenArtifactRepository(
+			repositoryHandler,
+			"https://bndtools.jfrog.io/bndtools/libs-snapshot");
+
 		String url = System.getProperty(
 			"repository.url", DEFAULT_REPOSITORY_URL);
 

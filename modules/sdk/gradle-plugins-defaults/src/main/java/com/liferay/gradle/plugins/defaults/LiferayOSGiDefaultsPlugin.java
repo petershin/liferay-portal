@@ -149,7 +149,6 @@ import org.gradle.api.artifacts.DependencyResolveDetails;
 import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.artifacts.DependencySubstitutions;
 import org.gradle.api.artifacts.ExcludeRule;
-import org.gradle.api.artifacts.ExternalDependency;
 import org.gradle.api.artifacts.ExternalModuleDependency;
 import org.gradle.api.artifacts.LenientConfiguration;
 import org.gradle.api.artifacts.ModuleDependency;
@@ -2085,27 +2084,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 	private void _configureConfiguration(Configuration configuration) {
 		DependencySet dependencySet = configuration.getDependencies();
-
-		dependencySet.withType(
-			ExternalDependency.class,
-			new Action<ExternalDependency>() {
-
-				@Override
-				public void execute(ExternalDependency externalDependency) {
-					String version = externalDependency.getVersion();
-
-					if (Validator.isNotNull(version) &&
-						version.endsWith(
-							GradlePluginsDefaultsUtil.
-								SNAPSHOT_VERSION_SUFFIX)) {
-
-						throw new GradleException(
-							"Please use a timestamp version for " +
-								externalDependency);
-					}
-				}
-
-			});
 
 		dependencySet.withType(
 			ModuleDependency.class,
