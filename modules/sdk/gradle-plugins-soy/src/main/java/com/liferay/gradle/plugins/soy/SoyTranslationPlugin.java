@@ -57,7 +57,6 @@ public class SoyTranslationPlugin implements Plugin<Project> {
 				ReplaceSoyTranslationTask.class);
 
 		replaceSoyTranslationTask.mustRunAfter(
-			new OptionalTaskCallable(project, _CONFIG_JS_MODULES_TASK_NAME),
 			new OptionalTaskCallable(project, _TRANSPILE_JS_TASK_NAME));
 		replaceSoyTranslationTask.setDescription(
 			"Replaces 'goog.getMsg' definitions.");
@@ -66,18 +65,6 @@ public class SoyTranslationPlugin implements Plugin<Project> {
 			Collections.singleton("**/*.soy.js"));
 
 		PluginContainer pluginContainer = project.getPlugins();
-
-		pluginContainer.withId(
-			SoyPluginConstants.JS_MODULE_CONFIG_GENERATOR_PLUGIN_ID,
-			new Action<Plugin>() {
-
-				@Override
-				public void execute(Plugin plugin) {
-					replaceSoyTranslationTask.dependsOn(
-						SoyPluginConstants.CONFIG_JS_MODULES_TASK_NAME);
-				}
-
-			});
 
 		pluginContainer.withId(
 			SoyPluginConstants.JS_TRANSPILER_PLUGIN_ID,
@@ -134,9 +121,6 @@ public class SoyTranslationPlugin implements Plugin<Project> {
 
 		classesTask.dependsOn(replaceSoyTranslationTask);
 	}
-
-	private static final String _CONFIG_JS_MODULES_TASK_NAME =
-		"configJSModules";
 
 	private static final String _TRANSPILE_JS_TASK_NAME = "transpileJS";
 
