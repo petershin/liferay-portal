@@ -7,7 +7,7 @@
 	<description/>
 	<groupId>com.liferay</groupId>
 	<artifactId>com.liferay.portal.tools.bundle.support</artifactId>
-	<version>3.4.3</version>
+	<version>3.4.4</version>
 	<goalPrefix>bundle-support</goalPrefix>
 	<mojos>
 		<mojo>
@@ -44,6 +44,49 @@
 			<configuration>
 				<_liferayHome implementation="java.lang.String" default-value="bundles">${liferayHome}</_liferayHome>
 				<fileName default-value="${project.artifactId}.${project.packaging}" implementation="java.lang.String" />
+			</configuration>
+		</mojo>
+		<mojo>
+			<goal>copy-configs</goal>
+			<requiresDirectInvocation>false</requiresDirectInvocation>
+			<requiresProject>true</requiresProject>
+			<requiresReports>false</requiresReports>
+			<aggregator>false</aggregator>
+			<requiresOnline>false</requiresOnline>
+			<inheritedByDefault>false</inheritedByDefault>
+			<implementation>com.liferay.portal.tools.bundle.support.maven.CopyConfigsMojo</implementation>
+			<language>java</language>
+			<instantiationStrategy>per-lookup</instantiationStrategy>
+			<executionStrategy>once-per-session</executionStrategy>
+			<threadSafe>false</threadSafe>
+			<parameters>
+				<parameter>
+					<name>_liferayHome</name>
+					<alias>liferayHome</alias>
+					<type>java.lang.String</type>
+					<required>true</required>
+					<editable>true</editable>
+					<description/>
+				</parameter>
+				<parameter>
+					<name>configs</name>
+					<type>java.lang.String</type>
+					<required>false</required>
+					<editable>true</editable>
+					<description/>
+				</parameter>
+				<parameter>
+					<name>environment</name>
+					<type>java.lang.String</type>
+					<required>false</required>
+					<editable>true</editable>
+					<description/>
+				</parameter>
+			</parameters>
+			<configuration>
+				<_liferayHome implementation="java.lang.String" default-value="bundles">${liferayHome}</_liferayHome>
+				<configs default-value="configs" implementation="java.lang.String" />
+				<environment default-value="${liferay.workspace.environment}" implementation="java.lang.String" />
 			</configuration>
 		</mojo>
 		<mojo>
