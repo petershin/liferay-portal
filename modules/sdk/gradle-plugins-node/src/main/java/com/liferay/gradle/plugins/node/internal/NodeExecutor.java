@@ -216,7 +216,9 @@ public class NodeExecutor {
 		String line = null;
 
 		while ((line = bufferedReader.readLine()) != null) {
-			System.out.println(line);
+			if (!isSilent()) {
+				System.out.println(line);
+			}
 
 			sb.append(line + System.lineSeparator());
 		}

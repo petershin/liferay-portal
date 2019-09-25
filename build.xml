@@ -90,6 +90,24 @@
 		</sequential>
 	</macrodef>
 
+	<target name="a">
+		<property name="gradle.execute.silent" value="true" />
+
+		<gradle-execute dir="${project.dir}/modules/apps/blogs/blogs-web" setupbinariescache="false" task="deploy">
+			<arg value="-Dorg.gradle.debug=true" />
+		</gradle-execute>
+	</target>
+
+	<target name="b">
+		<property name="gradle.execute.silent" value="true" />
+
+		<gradle-execute dir="${project.dir}/modules/apps/blogs/blogs-web" setupbinariescache="false" task="deploy" />
+	</target>
+
+	<target name="c">
+		<gradle-execute dir="${project.dir}/modules/apps/blogs/blogs-web" setupbinariescache="false" task="deploy" />
+	</target>
+
 	<target name="all">
 		<property name="gradle.execute.silent" value="true" />
 
