@@ -12972,17 +12972,6 @@ metal-keyboard-focus@2.0.1:
     metal "^2.0.0"
     metal-events "^2.2.3"
 
-metal-modal@^2.0.1:
-  version "2.0.5"
-  resolved "https://registry.yarnpkg.com/metal-modal/-/metal-modal-2.0.5.tgz#45baf6b7dcdae298948d3b0a4aba4bd37df95f45"
-  integrity sha1-Rbr2t9za4piUjTsKSrpL0335X0U=
-  dependencies:
-    metal "^2.0.0"
-    metal-component "^2.0.0"
-    metal-dom "^2.0.0"
-    metal-events "^2.0.0"
-    metal-soy "^2.0.0"
-
 metal-multimap@2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/metal-multimap/-/metal-multimap-2.0.0.tgz#3e1f40facec9e445f9725d2300f0801c2c57f09c"
