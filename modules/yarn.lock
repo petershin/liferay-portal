@@ -11948,10 +11948,10 @@ liferay-npm-bundler@2.13.2:
     semver "^5.5.0"
     xml-js "^1.6.8"
 
-liferay-npm-scripts@10.0.1:
-  version "10.0.1"
-  resolved "https://registry.yarnpkg.com/liferay-npm-scripts/-/liferay-npm-scripts-10.0.1.tgz#bdd5378e80f3729c0397e181244e14e95e1eda96"
-  integrity sha512-VQwTMqVbZdOLzWPRM0sjsDP1hI5HJBJxzAMR6ZqF7QbpKwuXJWduemllLjUPfGJs5ETzvkXJyZEkCw82bx+Kwg==
+liferay-npm-scripts@10.1.0:
+  version "10.1.0"
+  resolved "https://registry.yarnpkg.com/liferay-npm-scripts/-/liferay-npm-scripts-10.1.0.tgz#6eb83417c60ad489ad19152745aecf02cf3f34a2"
+  integrity sha512-AKaO+Gr2tXZt7wV1RsRg/O0dk3JUD44R1o/TpMNwIhiG/q5Z/hcdw18b6mE7FMWoFb7pT/7dMmQMd0piW7ItZA==
   dependencies:
     "@babel/cli" "^7.2.3"
     "@babel/plugin-proposal-class-properties" "7.4.4"
@@ -11976,7 +11976,6 @@ liferay-npm-scripts@10.0.1:
     deepmerge "^4.0.0"
     eslint "6.1.0"
     eslint-config-liferay "9.0.0"
-    glob "^7.1.3"
     http-proxy-middleware "^0.19.1"
     jest "^24.5.0"
     jest-fetch-mock "^2.1.2"
