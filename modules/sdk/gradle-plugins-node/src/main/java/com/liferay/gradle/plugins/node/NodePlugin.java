@@ -289,6 +289,8 @@ public class NodePlugin implements Plugin<Project> {
 					String result = packageRunBuildTask.getResult();
 
 					if (result.contains("errors during Soy compilation")) {
+						project.delete(packageRunBuildTask.getDestinationDir());
+
 						throw new GradleException("Soy compile error");
 					}
 				}
@@ -654,6 +656,10 @@ public class NodePlugin implements Plugin<Project> {
 
 					@Override
 					public File call() throws Exception {
+						if (!sourceDir.exists()) {
+							return null;
+						}
+
 						return sourceDir;
 					}
 
@@ -678,6 +684,10 @@ public class NodePlugin implements Plugin<Project> {
 					}
 
 				});
+
+			TaskOutputs taskOutputs = packageRunBuildTask.getOutputs();
+
+			taskOutputs.dir(packageRunBuildTask.getDestinationDir());
 
 			processResourcesCopy.dependsOn(packageRunBuildTask);
 
