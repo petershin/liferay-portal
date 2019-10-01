@@ -138,6 +138,10 @@ public class ExecuteNodeTask extends DefaultTask {
 		return _nodeExecutor.isInheritProxy();
 	}
 
+	public boolean isSilent() {
+		return _nodeExecutor.isSilent();
+	}
+
 	public boolean isUseGradleExec() {
 		return _nodeExecutor.isUseGradleExec();
 	}
@@ -168,6 +172,10 @@ public class ExecuteNodeTask extends DefaultTask {
 
 	public void setNpmInstallRetries(int npmInstallRetries) {
 		_npmInstallRetries = npmInstallRetries;
+	}
+
+	public void setSilent(boolean silent) {
+		_nodeExecutor.setSilent(silent);
 	}
 
 	public void setUseGradleExec(boolean useGradleExec) {

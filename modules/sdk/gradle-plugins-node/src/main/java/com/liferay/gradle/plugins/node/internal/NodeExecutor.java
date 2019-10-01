@@ -113,6 +113,10 @@ public class NodeExecutor {
 		return _inheritProxy;
 	}
 
+	public boolean isSilent() {
+		return _silent;
+	}
+
 	public boolean isUseGradleExec() {
 		return _useGradleExec;
 	}
@@ -145,6 +149,10 @@ public class NodeExecutor {
 		_nodeDir = nodeDir;
 	}
 
+	public void setSilent(boolean silent) {
+		_silent = silent;
+	}
+
 	public void setUseGradleExec(boolean useGradleExec) {
 		_useGradleExec = useGradleExec;
 	}
@@ -170,6 +178,10 @@ public class NodeExecutor {
 					execSpec.setStandardOutput(
 						new TeeOutputStream(byteArrayOutputStream, System.out));
 					execSpec.setWorkingDir(getWorkingDir());
+
+					if (isSilent()) {
+						execSpec.setStandardOutput(byteArrayOutputStream);
+					}
 				}
 
 			});
@@ -204,7 +216,9 @@ public class NodeExecutor {
 		String line = null;
 
 		while ((line = bufferedReader.readLine()) != null) {
-			System.out.println(line);
+			if (!isSilent()) {
+				System.out.println(line);
+			}
 
 			sb.append(line + System.lineSeparator());
 		}
@@ -439,6 +453,7 @@ public class NodeExecutor {
 	private boolean _inheritProxy = true;
 	private Object _nodeDir;
 	private final Project _project;
+	private boolean _silent;
 	private boolean _useGradleExec;
 	private Object _workingDir;
 
