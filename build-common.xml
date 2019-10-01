@@ -809,6 +809,26 @@ information.
 				</elseif>
 			</if>
 
+			<local name="task.outputproperty" />
+
+			<if>
+				<not>
+					<equals arg1="@{outputproperty}" arg2="" />
+				</not>
+				<then>
+					<property name="task.outputproperty" value="@{outputproperty}" />
+				</then>
+				<elseif>
+					<equals arg1="${gradle.execute.silent}" arg2="true" />
+					<then>
+						<property name="task.outputproperty" value="redirect.console.output" />
+					</then>
+				</elseif>
+				<else>
+					<property name="task.outputproperty" value="" />
+				</else>
+			</if>
+
 			<if>
 				<os family="unix" />
 				<then>
@@ -837,6 +857,7 @@ information.
 						<arg if:true="${gradle.profile.enabled}" value="--profile" />
 						<arg if:set="env.JENKINS_HOME" value="--profile" />
 						<arg value="--project-cache-dir=${project.dir}/.gradle" />
+						<arg if:true="${gradle.execute.silent}" value="--quiet" />
 						<arg if:true="@{refreshdependencies}" value="--refresh-dependencies" />
 						<arg value="--stacktrace" />
 						<arg value="-Dapp.server.parent.dir=${app.server.parent.dir}" />
@@ -847,10 +868,11 @@ information.
 						<arg if:set="env.JENKINS_HOME" value="-Dorg.gradle.internal.http.socketTimeout=${gradle.ci.http.socket.timeout}" />
 						<arg if:set="env.FIX_PACKS_RELEASE_ENVIRONMENT" value="-Dpatcher.hotfix.dirs=${build.patcher.hotfix.dirs}" />
 						<arg if:set="env.FIX_PACKS_RELEASE_ENVIRONMENT" value="-Dpatcher.hotfix.qualifier=${build.patcher.hotfix.qualifier}" />
+						<arg if:true="${gradle.execute.silent}" value="-DpackageRunBuild.silent=true" />
 						<arg value="tasks" />
 						<arg value="--all" />
 						<env key="GRADLE_OPTS" value="${task.gradle.opts}" />
-						<redirector errorproperty="@{outputproperty}.error" outputproperty="tasks.output" unless:blank="tasks.output" />
+						<redirector errorproperty="${task.outputproperty}.error" outputproperty="tasks.output" unless:blank="tasks.output" />
 					</exec>
 
 					<condition else="false" property="task.available" value="true">
@@ -859,12 +881,12 @@ information.
 
 					<local name="task.error" />
 
-					<propertycopy from="@{outputproperty}.error" name="task.error" />
+					<propertycopy from="${task.outputproperty}.error" name="task.error" />
 
 					<if>
 						<equals arg1="${task.error}" arg2="" />
 						<then>
-							<var name="@{outputproperty}.error" unset="true" />
+							<var name="${task.outputproperty}.error" unset="true" />
 						</then>
 					</if>
 				</then>
@@ -877,6 +899,13 @@ information.
 				<then>
 					<trycatch>
 						<try>
+							<if>
+								<equals arg1="${gradle.execute.silent}" arg2="true" />
+								<then>
+									<echo>Executing Gradle task: @{task} from @{dir}.</echo>
+								</then>
+							</if>
+
 							<exec dir="@{dir}" executable="${project.dir}/gradlew${gradlew.suffix}" failonerror="@{failonerror}">
 								<args />
 								<arg if:set="env.JENKINS_HOME" value="--max-workers=${gradle.ci.max.workers}" />
@@ -884,6 +913,7 @@ information.
 								<arg if:true="${gradle.profile.enabled}" value="--profile" />
 								<arg if:set="env.JENKINS_HOME" value="--profile" />
 								<arg value="--project-cache-dir=${project.dir}/.gradle" />
+								<arg if:true="${gradle.execute.silent}" value="--quiet" />
 								<arg if:true="@{refreshdependencies}" value="--refresh-dependencies" />
 								<arg value="--stacktrace" />
 								<arg value="-Dapp.server.parent.dir=${app.server.parent.dir}" />
@@ -892,22 +922,28 @@ information.
 								<arg if:set="env.JENKINS_HOME" value="-Dliferay.ssl.context.enabled=${gradle.ci.liferay.ssl.context.enabled}" />
 								<arg if:set="env.JENKINS_HOME" value="-Dorg.gradle.internal.http.connectionTimeout=${gradle.ci.http.connection.timeout}" />
 								<arg if:set="env.JENKINS_HOME" value="-Dorg.gradle.internal.http.socketTimeout=${gradle.ci.http.socket.timeout}" />
+								<arg if:true="${gradle.execute.silent}" value="-DpackageRunBuild.silent=true" />
 								<arg if:set="env.FIX_PACKS_RELEASE_ENVIRONMENT" value="-Dpatcher.hotfix.dirs=${build.patcher.hotfix.dirs}" />
 								<arg if:set="env.FIX_PACKS_RELEASE_ENVIRONMENT" value="-Dpatcher.hotfix.qualifier=${build.patcher.hotfix.qualifier}" />
 								<arg line="@{task}" />
 								<env key="GRADLE_OPTS" value="${task.gradle.opts}" />
-								<redirector errorproperty="@{outputproperty}.error" outputproperty="@{outputproperty}" unless:blank="@{outputproperty}" />
+								<redirector errorproperty="${task.outputproperty}.error" outputproperty="${task.outputproperty}" unless:blank="${task.outputproperty}" />
 							</exec>
 						</try>
 						<finally>
 							<if>
-								<isset property="@{outputproperty}" />
+								<and>
+									<not>
+										<equals arg1="${gradle.execute.silent}" arg2="true" />
+									</not>
+									<isset property="${task.outputproperty}" />
+								</and>
 								<then>
-									<local name="outputproperty" />
+									<local name="task.output" />
 
-									<propertycopy from="@{outputproperty}" name="outputproperty" />
+									<propertycopy from="${task.outputproperty}" name="task.output" />
 
-									<echo message="${outputproperty}" />
+									<echo message="${task.output}" />
 								</then>
 							</if>
 						</finally>

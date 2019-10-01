@@ -93,6 +93,15 @@
 	<target name="all">
 		<if>
 			<not>
+				<isset property="env.JENKINS_HOME" />
+			</not>
+			<then>
+				<property name="gradle.execute.silent" value="true" />
+			</then>
+		</if>
+
+		<if>
+			<not>
 				<or>
 					<equals arg1="${build.binaries.cache.dir}" arg2="" />
 					<available file="${project.dir}/${build.binaries.cache.dir}" type="dir" />
