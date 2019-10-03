@@ -14,10 +14,8 @@
 
 package com.liferay.gradle.plugins.node;
 
-import com.liferay.gradle.plugins.node.internal.util.DigestUtil;
 import com.liferay.gradle.plugins.node.internal.util.FileUtil;
 import com.liferay.gradle.plugins.node.internal.util.GradleUtil;
-import com.liferay.gradle.plugins.node.internal.util.NodePluginUtil;
 import com.liferay.gradle.plugins.node.internal.util.StringUtil;
 import com.liferay.gradle.plugins.node.tasks.DownloadNodeModuleTask;
 import com.liferay.gradle.plugins.node.tasks.DownloadNodeTask;
@@ -32,9 +30,16 @@ import com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask;
 
 import groovy.json.JsonSlurper;
 
+import groovy.lang.Closure;
+
 import java.io.File;
 
+import java.nio.file.FileSystem;
+import java.nio.file.Path;
+import java.nio.file.PathMatcher;
+
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -51,12 +56,12 @@ import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.PluginContainer;
 import org.gradle.api.specs.Spec;
+import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.Delete;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.TaskOutputs;
 import org.gradle.language.base.plugins.LifecycleBasePlugin;
-import org.gradle.language.jvm.tasks.ProcessResources;
 import org.gradle.util.VersionNumber;
 
 /**
@@ -277,7 +282,8 @@ public class NodePlugin implements Plugin<Project> {
 		packageRunBuildTask.setDescription(
 			"Runs the \"build\" package.json script.");
 		packageRunBuildTask.setGroup(BasePlugin.BUILD_GROUP);
-		packageRunBuildTask.setNodeVersion(nodeExtension.getNodeVersion());
+		packageRunBuildTask.setYarnWorkingDir(
+			_getYarnWorkingDir(project, nodeExtension));
 
 		packageRunBuildTask.doLast(
 			new Action<Task>() {
@@ -290,7 +296,7 @@ public class NodePlugin implements Plugin<Project> {
 					String result = packageRunBuildTask.getResult();
 
 					if (result.contains("errors during Soy compilation")) {
-						project.delete(packageRunBuildTask.getDigestFile());
+						project.delete(packageRunBuildTask.getDestinationDir());
 
 						throw new GradleException("Soy compile error");
 					}
@@ -566,19 +572,7 @@ public class NodePlugin implements Plugin<Project> {
 
 				@Override
 				public File call() throws Exception {
-					File nodeDir = nodeExtension.getNodeDir();
-
-					if (nodeDir == null) {
-						return null;
-					}
-
-					if (nodeExtension.isUseNpm()) {
-						File npmDir = NodePluginUtil.getNpmDir(nodeDir);
-
-						return new File(npmDir, "bin/npm-cli.js");
-					}
-
-					return nodeExtension.getYarnScriptFile();
+					return nodeExtension.getScriptFile();
 				}
 
 			});
@@ -637,91 +631,99 @@ public class NodePlugin implements Plugin<Project> {
 		}
 	}
 
+	@SuppressWarnings("serial")
 	private void _configureTaskPackageRunBuildForJavaPlugin(
-		PackageRunBuildTask packageRunBuildTask) {
+		final PackageRunBuildTask packageRunBuildTask) {
 
-		packageRunBuildTask.mustRunAfter(
-			JavaPlugin.PROCESS_RESOURCES_TASK_NAME);
+		final Project project = packageRunBuildTask.getProject();
 
-		Task classesTask = GradleUtil.getTask(
-			packageRunBuildTask.getProject(), JavaPlugin.CLASSES_TASK_NAME);
+		Copy processResourcesCopy = (Copy)GradleUtil.getTask(
+			project, JavaPlugin.PROCESS_RESOURCES_TASK_NAME);
 
-		classesTask.dependsOn(packageRunBuildTask);
+		File yarnWorkingDir = packageRunBuildTask.getYarnWorkingDir();
 
-		final File digestFile = packageRunBuildTask.getDigestFile();
+		if (_hasLiferayNpmScripts10Dependency(project, yarnWorkingDir)) {
+			final File destinationDir = new File(
+				project.getBuildDir(), "node/packageRunBuild/resources");
 
-		String newDigest = DigestUtil.getDigest(
-			packageRunBuildTask.getSourceFiles());
-		String oldDigest = DigestUtil.getDigest(digestFile);
-
-		if (Objects.equals(oldDigest, newDigest)) {
-			Project project = packageRunBuildTask.getProject();
-
-			ProcessResources processResourcesTask =
-				(ProcessResources)GradleUtil.getTask(
-					project, JavaPlugin.PROCESS_RESOURCES_TASK_NAME);
-
-			processResourcesTask.doFirst(
-				new Action<Task>() {
+			packageRunBuildTask.setDestinationDir(
+				new Callable<File>() {
 
 					@Override
-					public void execute(Task task) {
-						ProcessResources processResourcesTask =
-							(ProcessResources)task;
-
-						final File processResourcesDir =
-							processResourcesTask.getDestinationDir();
-
-						final File outputsDir = new File(
-							digestFile.getParentFile(), "outputs");
-
-						project.delete(outputsDir);
-
-						outputsDir.mkdirs();
-
-						project.copy(
-							new Action<CopySpec>() {
-
-								@Override
-								public void execute(CopySpec copySpec) {
-									copySpec.from(processResourcesDir);
-									copySpec.include("**/*.js");
-									copySpec.into(outputsDir);
-									copySpec.setIncludeEmptyDirs(false);
-								}
-
-							});
+					public File call() throws Exception {
+						return destinationDir;
 					}
 
 				});
 
-			processResourcesTask.doLast(
+			final File sourceDir = project.file(
+				"src/main/resources/META-INF/resources");
+
+			packageRunBuildTask.setSourceDir(
+				new Callable<File>() {
+
+					@Override
+					public File call() throws Exception {
+						if (!sourceDir.exists()) {
+							return null;
+						}
+
+						return sourceDir;
+					}
+
+				});
+
+			packageRunBuildTask.doFirst(
 				new Action<Task>() {
 
 					@Override
 					public void execute(Task task) {
-						ProcessResources processResourcesTask =
-							(ProcessResources)task;
+						Action<CopySpec> action = new Action<CopySpec>() {
 
-						final File processResourcesDir =
-							processResourcesTask.getDestinationDir();
+							@Override
+							public void execute(CopySpec copySpec) {
+								copySpec.from(sourceDir);
+								copySpec.into(destinationDir);
+							}
 
-						final File outputsDir = new File(
-							digestFile.getParentFile(), "outputs");
+						};
 
-						project.copy(
-							new Action<CopySpec>() {
-
-								@Override
-								public void execute(CopySpec copySpec) {
-									copySpec.from(outputsDir);
-									copySpec.into(processResourcesDir);
-								}
-
-							});
+						project.copy(action);
 					}
 
 				});
+
+			TaskOutputs taskOutputs = packageRunBuildTask.getOutputs();
+
+			taskOutputs.dir(packageRunBuildTask.getDestinationDir());
+
+			processResourcesCopy.dependsOn(packageRunBuildTask);
+
+			processResourcesCopy.from(
+				new Callable<File>() {
+
+					@Override
+					public File call() throws Exception {
+						return packageRunBuildTask.getDestinationDir();
+					}
+
+				},
+				new Closure<Void>(project) {
+
+					@SuppressWarnings("unused")
+					public void doCall(CopySpec copySpec) {
+						copySpec.into("META-INF/resources");
+					}
+
+				});
+		}
+		else {
+			packageRunBuildTask.mustRunAfter(processResourcesCopy);
+
+			Task classesTask = GradleUtil.getTask(
+				project, JavaPlugin.CLASSES_TASK_NAME);
+
+			classesTask.dependsOn(packageRunBuildTask);
 		}
 	}
 
@@ -911,8 +913,134 @@ public class NodePlugin implements Plugin<Project> {
 			});
 	}
 
+	private File _getYarnWorkingDir(
+		Project project, NodeExtension nodeExtension) {
+
+		if (nodeExtension.isUseNpm()) {
+			return null;
+		}
+
+		File projectDir = project.getProjectDir();
+
+		File dir = projectDir.getParentFile();
+
+		while (true) {
+			File packageJsonFile = new File(dir, "package.json");
+
+			if (_hasYarnPackage(projectDir, packageJsonFile)) {
+				return dir;
+			}
+
+			dir = dir.getParentFile();
+
+			if (dir == null) {
+				return null;
+			}
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	private boolean _hasLiferayNpmScripts10Dependency(File packageJSONFile) {
+		if ((packageJSONFile == null) || !packageJSONFile.exists()) {
+			return false;
+		}
+
+		JsonSlurper jsonSlurper = new JsonSlurper();
+
+		Map<String, Object> packageJSONMap =
+			(Map<String, Object>)jsonSlurper.parse(packageJSONFile);
+
+		Map<String, Object> devDependencies =
+			(Map<String, Object>)packageJSONMap.get("devDependencies");
+
+		if ((devDependencies == null) ||
+			!devDependencies.containsKey("liferay-npm-scripts")) {
+
+			return false;
+		}
+
+		VersionNumber versionNumber = VersionNumber.parse(
+			(String)devDependencies.get("liferay-npm-scripts"));
+
+		if (_liferayNpmScripts10VersionNumber.compareTo(versionNumber) > 0) {
+			return false;
+		}
+
+		return true;
+	}
+
+	private boolean _hasLiferayNpmScripts10Dependency(
+		Project project, File yarnWorkingDir) {
+
+		File packageJSONFile = project.file("package.json");
+
+		if (_hasLiferayNpmScripts10Dependency(packageJSONFile)) {
+			return true;
+		}
+
+		if (yarnWorkingDir != null) {
+			packageJSONFile = new File(yarnWorkingDir, "package.json");
+
+			if (_hasLiferayNpmScripts10Dependency(packageJSONFile)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	@SuppressWarnings("unchecked")
+	private boolean _hasYarnPackage(File projectDir, File packageJsonFile) {
+		if (!packageJsonFile.exists()) {
+			return false;
+		}
+
+		File dir = packageJsonFile.getParentFile();
+
+		JsonSlurper jsonSlurper = new JsonSlurper();
+
+		Map<String, Object> map = (Map<String, Object>)jsonSlurper.parse(
+			packageJsonFile);
+
+		map = (Map<String, Object>)map.get("workspaces");
+
+		if (map == null) {
+			return false;
+		}
+
+		List<String> packages = (List<String>)map.get("packages");
+
+		if (packages == null) {
+			return false;
+		}
+
+		String absolutePath = dir.getAbsolutePath();
+
+		if (File.separatorChar == '\\') {
+			absolutePath = absolutePath.replace('\\', '/');
+		}
+
+		Path dirPath = dir.toPath();
+
+		FileSystem fileSystem = dirPath.getFileSystem();
+
+		for (String pattern : packages) {
+			String s = "glob:" + absolutePath + '/' + pattern;
+
+			PathMatcher pathMatcher = fileSystem.getPathMatcher(s);
+
+			if (pathMatcher.matches(projectDir.toPath())) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	private static final String _PACKAGE_RUN_TASK_NAME_PREFIX = "packageRun";
 
+	private static final VersionNumber _liferayNpmScripts10VersionNumber =
+		VersionNumber.version(10);
 	private static final VersionNumber _node8VersionNumber =
 		VersionNumber.version(8);
 	private static final VersionNumber _npm5VersionNumber =
