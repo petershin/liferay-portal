@@ -826,6 +826,34 @@ information.
 
 			<local name="task.available" />
 
+			<local name="redirector.error.property" />
+			<local name="redirector.output.property" />
+
+			<if>
+				<or>
+					<not>
+						<equals arg1="@{outputproperty}" arg2="" />
+					</not>
+					<and>
+						<not>
+							<isset property="env.JENKINS_HOME" />
+						</not>
+						<equals arg1="${gradle.execute.silent}" arg2="true" />
+					</and>
+				</or>
+				<then>
+					<property name="redirector.error.property" value="error.property" />
+					<property name="redirector.output.property" value="output.property" />
+				</then>
+				<else>
+					<property name="redirector.error.property" value="" />
+					<property name="redirector.output.property" value="" />
+				</else>
+			</if>
+
+			<local name="${redirector.error.property}" />
+			<local name="${redirector.output.property}" />
+
 			<if>
 				<equals arg1="@{checktask}" arg2="true" />
 				<then>
@@ -850,7 +878,7 @@ information.
 						<arg value="tasks" />
 						<arg value="--all" />
 						<env key="GRADLE_OPTS" value="${task.gradle.opts}" />
-						<redirector errorproperty="@{outputproperty}.error" outputproperty="tasks.output" unless:blank="tasks.output" />
+						<redirector errorproperty="${redirector.error.property}" outputproperty="tasks.output" unless:blank="tasks.output" />
 					</exec>
 
 					<condition else="false" property="task.available" value="true">
@@ -859,13 +887,16 @@ information.
 
 					<local name="task.error" />
 
-					<propertycopy from="@{outputproperty}.error" name="task.error" />
+					<propertycopy from="${redirector.error.property}" name="task.error" />
 
 					<if>
 						<equals arg1="${task.error}" arg2="" />
 						<then>
-							<var name="@{outputproperty}.error" unset="true" />
+							<var name="${redirector.error.property}" unset="true" />
 						</then>
+						<else>
+							<propertycopy from="${redirector.error.property}" name="@{outputproperty}.error" />
+						</else>
 					</if>
 				</then>
 			</if>
@@ -875,8 +906,48 @@ information.
 			<if>
 				<equals arg1="${task.available}" arg2="true" />
 				<then>
+					<local name="gradle.executable.task" />
+
+					<if>
+						<isset property="@{dir}" />
+						<then>
+							<local name="gradle.task.dir.unix" />
+
+							<pathconvert property="gradle.task.dir.unix" targetos="unix">
+								<path location="@{dir}" />
+							</pathconvert>
+
+							<local name="gradle.project.path" />
+
+							<propertyregex
+								global="false"
+								input="${gradle.task.dir.unix}"
+								override="yes"
+								property="gradle.project.path"
+								regexp="^.*/modules(/.*)"
+								select="\1"
+							/>
+
+							<propertyregex
+								global="true"
+								input="${gradle.project.path}"
+								override="yes"
+								property="gradle.project.path"
+								regexp="/"
+								replace=":"
+							/>
+
+							<property name="gradle.executable.task" value="${gradle.project.path}:@{task}" />
+						</then>
+						<else>
+							<property name="gradle.executable.task" value="@{task}" />
+						</else>
+					</if>
+
 					<trycatch>
 						<try>
+							<echo message="Executing Gradle task: ${gradle.executable.task}" />
+
 							<exec dir="@{dir}" executable="${project.dir}/gradlew${gradlew.suffix}" failonerror="@{failonerror}">
 								<args />
 								<arg if:set="env.JENKINS_HOME" value="--max-workers=${gradle.ci.max.workers}" />
@@ -896,18 +967,77 @@ information.
 								<arg if:set="env.FIX_PACKS_RELEASE_ENVIRONMENT" value="-Dpatcher.hotfix.qualifier=${build.patcher.hotfix.qualifier}" />
 								<arg line="@{task}" />
 								<env key="GRADLE_OPTS" value="${task.gradle.opts}" />
-								<redirector errorproperty="@{outputproperty}.error" outputproperty="@{outputproperty}" unless:blank="@{outputproperty}" />
+								<redirector errorproperty="${redirector.error.property}" outputproperty="${redirector.output.property}" unless:blank="${redirector.output.property}" />
 							</exec>
 						</try>
+						<catch>
+							<if>
+								<isset property="${redirector.error.property}" />
+								<then>
+									<local name="task.error" />
+
+									<propertycopy from="${redirector.error.property}" name="task.error" />
+
+									<echo message="${task.error}" />
+								</then>
+							</if>
+
+							<echo />
+
+							<echoxml>
+								<exec dir="@{dir}" executable="${project.dir}/gradlew${gradlew.suffix}" failonerror="@{failonerror}">
+									<args />
+									<arg if:set="env.JENKINS_HOME" value="--max-workers=${gradle.ci.max.workers}" />
+									<arg value="--no-daemon" />
+									<arg if:true="${gradle.profile.enabled}" value="--profile" />
+									<arg if:set="env.JENKINS_HOME" value="--profile" />
+									<arg value="--project-cache-dir=${project.dir}/.gradle" />
+									<arg if:true="@{refreshdependencies}" value="--refresh-dependencies" />
+									<arg value="--stacktrace" />
+									<arg value="-Dapp.server.parent.dir=${app.server.parent.dir}" />
+									<arg value="-Dforced.cache.enabled=@{forcedcacheenabled}" />
+									<arg value="-Dliferay.home=${liferay.home}" />
+									<arg if:set="env.JENKINS_HOME" value="-Dliferay.ssl.context.enabled=${gradle.ci.liferay.ssl.context.enabled}" />
+									<arg if:set="env.JENKINS_HOME" value="-Dorg.gradle.internal.http.connectionTimeout=${gradle.ci.http.connection.timeout}" />
+									<arg if:set="env.JENKINS_HOME" value="-Dorg.gradle.internal.http.socketTimeout=${gradle.ci.http.socket.timeout}" />
+									<arg if:set="env.FIX_PACKS_RELEASE_ENVIRONMENT" value="-Dpatcher.hotfix.dirs=${build.patcher.hotfix.dirs}" />
+									<arg if:set="env.FIX_PACKS_RELEASE_ENVIRONMENT" value="-Dpatcher.hotfix.qualifier=${build.patcher.hotfix.qualifier}" />
+									<arg line="@{task}" />
+									<env key="GRADLE_OPTS" value="${task.gradle.opts}" />
+									<redirector errorproperty="${redirector.error.property}" outputproperty="${redirector.output.property}" unless:blank="${redirector.output.property}" />
+								</exec>
+							</echoxml>
+
+							<fail message="Unable to execute Gradle task: ${gradle.executable.task}." />
+						</catch>
 						<finally>
 							<if>
-								<isset property="@{outputproperty}" />
+								<not>
+									<equals arg1="${redirector.output.property}" arg2="" />
+								</not>
 								<then>
-									<local name="outputproperty" />
+									<if>
+										<not>
+											<equals arg1="@{outputproperty}" arg2="" />
+										</not>
+										<then>
+											<propertycopy from="${redirector.error.property}" name="@{outputproperty}.error" />
+											<propertycopy from="${redirector.output.property}" name="@{outputproperty}" />
+										</then>
+									</if>
 
-									<propertycopy from="@{outputproperty}" name="outputproperty" />
+									<if>
+										<not>
+											<equals arg1="${gradle.execute.silent}" arg2="true" />
+										</not>
+										<then>
+											<local name="task.output" />
 
-									<echo message="${outputproperty}" />
+											<propertycopy from="${redirector.output.property}" name="task.output" />
+
+											<echo message="${task.output}" />
+										</then>
+									</if>
 								</then>
 							</if>
 						</finally>
