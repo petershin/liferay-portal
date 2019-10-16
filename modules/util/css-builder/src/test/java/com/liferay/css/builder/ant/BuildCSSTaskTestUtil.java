@@ -58,20 +58,19 @@ public class BuildCSSTaskTestUtil {
 		project.setProperty(
 			"build.css.sass.compiler.class.name", sassCompilerClassName);
 
-		PrintStream systemOut = System.out;
+		PrintStream printStream = System.out;
+		StringPrintStream stringPrintStream = new StringPrintStream();
 
-		StringPrintStream output = new StringPrintStream();
-
-		System.setOut(output);
+		System.setOut(stringPrintStream);
 
 		try {
 			project.executeTarget("build-css");
 		}
 		finally {
-			System.setOut(systemOut);
+			System.setOut(printStream);
 		}
 
-		return output.toString();
+		return stringPrintStream.toString();
 	}
 
 }

@@ -50,20 +50,19 @@ public class CSSBuilderTestUtil {
 			"--rtl-excluded-path-regexps" + separator +
 				StringTestUtil.merge(rtlExcludedPathRegexps));
 
-		StringPrintStream output = new StringPrintStream();
+		PrintStream printStream = System.out;
+		StringPrintStream stringPrintStream = new StringPrintStream();
 
-		PrintStream systemOut = System.out;
-
-		System.setOut(output);
+		System.setOut(stringPrintStream);
 
 		try {
 			CSSBuilder.main(args.toArray(new String[0]));
 		}
 		finally {
-			System.setOut(systemOut);
+			System.setOut(printStream);
 		}
 
-		return output.toString();
+		return stringPrintStream.toString();
 	}
 
 }
