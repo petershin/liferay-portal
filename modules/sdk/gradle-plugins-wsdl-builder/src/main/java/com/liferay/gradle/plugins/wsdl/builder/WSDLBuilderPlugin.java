@@ -225,7 +225,7 @@ public class WSDLBuilderPlugin implements Plugin<Project> {
 
 		TaskInputs taskInputs = javaExec.getInputs();
 
-		taskInputs.file(inputFile);
+		taskInputs.files(inputFile);
 
 		TaskOutputs taskOutputs = javaExec.getOutputs();
 
