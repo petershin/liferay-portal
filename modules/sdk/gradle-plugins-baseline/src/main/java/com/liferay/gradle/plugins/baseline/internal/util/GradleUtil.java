@@ -39,17 +39,6 @@ import org.gradle.api.file.SourceDirectorySet;
  */
 public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 
-	public static <T extends Task> T addTask(
-		Project project, String name, Class<T> clazz, boolean overwrite) {
-
-		Map<String, Object> args = new HashMap<>();
-
-		args.put(Task.TASK_OVERWRITE, overwrite);
-		args.put(Task.TASK_TYPE, clazz);
-
-		return (T)project.task(args, name);
-	}
-
 	public static File getSrcDir(SourceDirectorySet sourceDirectorySet) {
 		Set<File> srcDirs = sourceDirectorySet.getSrcDirs();
 

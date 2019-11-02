@@ -129,10 +129,6 @@ public class BaselineTask extends DefaultTask implements VerificationTask {
 		return GradleUtil.toFile(getProject(), _bndFile);
 	}
 
-	public Task getBundleTask() {
-		return null;
-	}
-
 	@Override
 	public boolean getIgnoreFailures() {
 		return _ignoreFailures;

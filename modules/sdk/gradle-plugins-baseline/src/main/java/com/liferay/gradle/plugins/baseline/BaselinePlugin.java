@@ -57,7 +57,7 @@ public class BaselinePlugin implements Plugin<Project> {
 
 	public static final String BASELINE_CONFIGURATION_NAME = "baseline";
 
-	public static final String BASELINE_TASK_NAME = "baseline";
+	public static final String BASELINE_TASK_NAME = "bndBaseline";
 
 	public static final String EXTENSION_NAME = "baselineConfiguration";
 
@@ -132,7 +132,7 @@ public class BaselinePlugin implements Plugin<Project> {
 		final AbstractArchiveTask newJarTask) {
 
 		final BaselineTask baselineTask = _addTaskBaseline(
-			newJarTask, BASELINE_TASK_NAME, true);
+			newJarTask, BASELINE_TASK_NAME);
 
 		baselineTask.setDescription(
 			"Compares the public API of this project with the public API of " +
@@ -146,7 +146,7 @@ public class BaselinePlugin implements Plugin<Project> {
 		AbstractArchiveTask newJarTask, int majorVersion) {
 
 		BaselineTask baselineTask = _addTaskBaseline(
-			newJarTask, BASELINE_TASK_NAME + majorVersion, false);
+			newJarTask, BASELINE_TASK_NAME + majorVersion);
 
 		baselineTask.dependsOn(newJarTask);
 
@@ -174,13 +174,12 @@ public class BaselinePlugin implements Plugin<Project> {
 	}
 
 	private BaselineTask _addTaskBaseline(
-		final AbstractArchiveTask newJarTask, String taskName,
-		boolean overwrite) {
+		final AbstractArchiveTask newJarTask, String taskName) {
 
 		Project project = newJarTask.getProject();
 
 		final BaselineTask baselineTask = GradleUtil.addTask(
-			project, taskName, BaselineTask.class, overwrite);
+			project, taskName, BaselineTask.class);
 
 		File bndFile = project.file("bnd.bnd");
 
