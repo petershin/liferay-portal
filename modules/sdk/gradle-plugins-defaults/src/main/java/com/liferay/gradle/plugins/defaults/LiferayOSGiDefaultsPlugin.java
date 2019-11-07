@@ -3902,9 +3902,32 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		uploadArchivesTask.dependsOn(publishNodeModuleTasks);
 
+		boolean updateFileVersionsTaskEnabled = false;
+
+		String gitWorkingBranchName = GradleUtil.getProperty(
+			project, "git.working.branch.name", (String)null);
+
+		if ((gitWorkingBranchName != null) &&
+			gitWorkingBranchName.startsWith("master")) {
+
+			File file = GradleUtil.getRootDir(project, ".lfrbuild-master-only");
+
+			if (file != null) {
+				updateFileVersionsTaskEnabled = true;
+			}
+		}
+		else {
+			updateFileVersionsTaskEnabled = true;
+		}
+
+		if (updateFileVersionsTaskEnabled &&
+			!GradlePluginsDefaultsUtil.isSnapshot(project)) {
+
+			uploadArchivesTask.finalizedBy(updateFileVersionsTask);
+		}
+
 		if (!GradlePluginsDefaultsUtil.isSnapshot(project)) {
-			uploadArchivesTask.finalizedBy(
-				updateFileVersionsTask, updateVersionTask);
+			uploadArchivesTask.finalizedBy(updateVersionTask);
 		}
 	}
 
