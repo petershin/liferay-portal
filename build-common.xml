@@ -1359,6 +1359,7 @@ information.
 						</sequential>
 					</for>
 
+					<!--
 					<artifact:deploy file="${artifact.name}.@{packaging}">
 						<attach-files />
 						<pom file="pom.xml" />
@@ -1366,6 +1367,7 @@ information.
 							<authentication password="${remote.repository.password}" username="${remote.repository.username}" />
 						</remoteRepository>
 					</artifact:deploy>
+					-->
 
 					<if>
 						<isfalse value="@{snapshot}" />
