@@ -774,21 +774,21 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 
 				@Override
 				public boolean isSatisfiedBy(Task task) {
-					Properties artifactProperties;
+					Project project = recordArtifactTask.getProject();
+
+					if (_isStale(project)) {
+						return true;
+					}
 
 					File artifactPropertiesFile =
 						recordArtifactTask.getOutputFile();
+					File projectDir = project.getProjectDir();
 
-					if (artifactPropertiesFile.exists()) {
-						artifactProperties = GUtil.loadProperties(
-							artifactPropertiesFile);
-					}
-					else {
-						artifactProperties = new Properties();
+					if (_isStale(project, projectDir, artifactPropertiesFile)) {
+						return true;
 					}
 
-					return _isStale(
-						recordArtifactTask.getProject(), artifactProperties);
+					return false;
 				}
 
 			});
@@ -925,9 +925,35 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 		return sb.toString();
 	}
 
-	private boolean _hasProjectDependencies(Project project) {
-		Logger logger = project.getLogger();
+	private File _getPortalProjectDir(Project project, Dependency dependency) {
+		File portalRootDir = GradleUtil.getRootDir(
+			project.getRootProject(), "portal-impl");
 
+		if (portalRootDir == null) {
+			return null;
+		}
+
+		String dependencyGroup = dependency.getGroup();
+		String dependencyName = dependency.getName();
+
+		if (!Objects.equals(dependencyGroup, "com.liferay.portal") ||
+			!dependencyName.startsWith("com.liferay.")) {
+
+			return null;
+		}
+
+		String s = dependencyName.substring(12);
+
+		File portalProjectDir = new File(portalRootDir, s.replace('.', '-'));
+
+		if (!portalProjectDir.exists()) {
+			return null;
+		}
+
+		return portalProjectDir;
+	}
+
+	private boolean _hasProjectDependencies(Project project) {
 		for (Configuration configuration : project.getConfigurations()) {
 			String name = configuration.getName();
 
@@ -941,23 +967,7 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 			}
 
 			for (Dependency dependency : configuration.getDependencies()) {
-				if (dependency instanceof ProjectDependency) {
-					return true;
-				}
-
-				if (!name.startsWith("compile")) {
-					continue;
-				}
-
-				String version = dependency.getVersion();
-
-				if ((version != null) && version.equals("default")) {
-					if (logger.isQuietEnabled()) {
-						logger.quiet(
-							"{} has version \"default\" in {}.", project,
-							dependency);
-					}
-
+				if (_isProjectDependency(project, configuration, dependency)) {
 					return true;
 				}
 			}
@@ -966,24 +976,134 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 		return false;
 	}
 
+	private boolean _isProjectDependency(
+		Project project, Configuration configuration, Dependency dependency) {
+
+		if (dependency instanceof ProjectDependency) {
+			String gitWorkingBranchName = GradleUtil.getProperty(
+				project, "git.working.branch.name", "");
+
+			if (gitWorkingBranchName.startsWith("master")) {
+				ProjectDependency projectDependency =
+					(ProjectDependency)dependency;
+
+				Project dependencyProject =
+					projectDependency.getDependencyProject();
+
+				WritePropertiesTask recordArtifactTask =
+					(WritePropertiesTask)GradleUtil.getTask(
+						dependencyProject, RECORD_ARTIFACT_TASK_NAME);
+
+				if (_isStale(
+						dependencyProject, dependencyProject.getProjectDir(),
+						recordArtifactTask.getOutputFile())) {
+
+					return true;
+				}
+			}
+			else {
+				return true;
+			}
+		}
+
+		String configurationName = configuration.getName();
+
+		if (configurationName.startsWith("compile") &&
+			Objects.equals(dependency.getVersion(), "default")) {
+
+			String gitWorkingBranchName = GradleUtil.getProperty(
+				project, "git.working.branch.name", "");
+
+			if (gitWorkingBranchName.startsWith("master")) {
+				File portalProjectDir = _getPortalProjectDir(
+					project, dependency);
+
+				if (portalProjectDir == null) {
+					return true;
+				}
+
+				StringBuilder sb = new StringBuilder();
+
+				sb.append("modules/");
+				sb.append(_RELENG_DIR_NAME);
+				sb.append('/');
+				sb.append(portalProjectDir.getName());
+				sb.append(".properties");
+
+				File artifactPropertiesFile = new File(
+					portalProjectDir.getParent(), sb.toString());
+
+				if (_isStale(
+						project, portalProjectDir, artifactPropertiesFile)) {
+
+					return true;
+				}
+			}
+			else {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private boolean _isStale(Project project) {
+		if (GradleUtil.hasPlugin(project, LiferayThemeDefaultsPlugin.class)) {
+			WriteDigestTask writeDigestTask =
+				(WriteDigestTask)GradleUtil.getTask(
+					project,
+					LiferayThemeDefaultsPlugin.
+						WRITE_PARENT_THEMES_DIGEST_TASK_NAME);
+
+			String digest = writeDigestTask.getDigest();
+			String oldDigest = writeDigestTask.getOldDigest();
+
+			Logger logger = project.getLogger();
+
+			if (logger.isInfoEnabled()) {
+				logger.info(
+					"Digest for {} is {}, old digest is {}", writeDigestTask,
+					digest, oldDigest);
+			}
+
+			if (!Objects.equals(digest, oldDigest)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	private boolean _isStale(
-		final Project project, Properties artifactProperties) {
+		Project project, File artifactProjectDir, File artifactPropertiesFile) {
 
 		Logger logger = project.getLogger();
+
+		if (!artifactPropertiesFile.exists()) {
+			if (logger.isInfoEnabled()) {
+				logger.info("{} has never been published", artifactProjectDir);
+			}
+
+			return true;
+		}
+
+		Properties artifactProperties = GUtil.loadProperties(
+			artifactPropertiesFile);
 
 		final String artifactGitId = artifactProperties.getProperty(
 			"artifact.git.id");
 
 		if (Validator.isNull(artifactGitId)) {
 			if (logger.isInfoEnabled()) {
-				logger.info("{} has never been published", project);
+				logger.info("{} has never been published", artifactProjectDir);
 			}
 
 			return true;
 		}
 
 		String result = GitUtil.getGitResult(
-			project, "log", "--format=%s", artifactGitId + "..HEAD", ".");
+			project, artifactProjectDir, "log", "--format=%s",
+			artifactGitId + "..HEAD", ".");
 
 		String[] lines = result.split("\\r?\\n");
 
@@ -999,27 +1119,6 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 			if (!line.contains(
 					WriteArtifactPublishCommandsTask.IGNORED_MESSAGE_PATTERN)) {
 
-				return true;
-			}
-		}
-
-		if (GradleUtil.hasPlugin(project, LiferayThemeDefaultsPlugin.class)) {
-			WriteDigestTask writeDigestTask =
-				(WriteDigestTask)GradleUtil.getTask(
-					project,
-					LiferayThemeDefaultsPlugin.
-						WRITE_PARENT_THEMES_DIGEST_TASK_NAME);
-
-			String digest = writeDigestTask.getDigest();
-			String oldDigest = writeDigestTask.getOldDigest();
-
-			if (logger.isInfoEnabled()) {
-				logger.info(
-					"Digest for {} is {}, old digest is {}", writeDigestTask,
-					digest, oldDigest);
-			}
-
-			if (!Objects.equals(digest, oldDigest)) {
 				return true;
 			}
 		}
