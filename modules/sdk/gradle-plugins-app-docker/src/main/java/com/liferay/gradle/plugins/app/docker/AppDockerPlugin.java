@@ -374,7 +374,7 @@ public class AppDockerPlugin implements Plugin<Project> {
 			return imageName;
 		}
 
-		return imageUser + "/" + imageName;
+		return imageUser + '_' + imageName;
 	}
 
 	private String _getImageRepositoryAndTag(
@@ -384,7 +384,7 @@ public class AppDockerPlugin implements Plugin<Project> {
 			return imageRepository;
 		}
 
-		return imageRepository + ":" + imageTag;
+		return imageRepository + '_' + imageTag;
 	}
 
 	private static final Map<String, Object> _fixCrLfArgs =
