@@ -454,7 +454,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		_configureBasePlugin(project, portalRootDir);
 		_configureBundleDefaultInstructions(project, portalRootDir, publishing);
-		_configureConfigurations(project, liferayExtension);
+		_configureConfigurations(project, liferayExtension, publishing);
 		_configureDependencyChecker(project);
 		_configureDeployDir(
 			project, liferayExtension, deployToAppServerLibs, deployToTools);
@@ -2375,7 +2375,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	}
 
 	private void _configureConfigurations(
-		Project project, LiferayExtension liferayExtension) {
+		Project project, LiferayExtension liferayExtension,
+		boolean publishing) {
 
 		_configureConfigurationDefault(project);
 		_configureConfigurationJspC(project, liferayExtension);
@@ -2394,6 +2395,13 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			_configureConfigurationTransitive(
 				project, JavaPlugin.COMPILE_CLASSPATH_CONFIGURATION_NAME,
 				false);
+
+			if (publishing) {
+				_configureDependenciesPublishing(
+					project, JavaPlugin.COMPILE_CONFIGURATION_NAME);
+				_configureDependenciesPublishing(
+					project, JavaPlugin.COMPILE_CLASSPATH_CONFIGURATION_NAME);
+			}
 		}
 
 		_configureDependenciesTransitive(
@@ -2477,6 +2485,96 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			project, name);
 
 		configuration.setTransitive(transitive);
+	}
+
+	private void _configureDependenciesPublishing(
+		final Project project, String configurationName) {
+
+		final Logger logger = project.getLogger();
+
+		final Configuration configuration = GradleUtil.getConfiguration(
+			project, configurationName);
+
+		DependencySet dependencySet = configuration.getAllDependencies();
+
+		dependencySet.withType(
+			ExternalModuleDependency.class,
+			new Action<ExternalModuleDependency>() {
+
+				@Override
+				public void execute(
+					ExternalModuleDependency externalModuleDependency) {
+
+					String group = externalModuleDependency.getGroup();
+
+					if (!group.equals(_GROUP_PORTAL)) {
+						return;
+					}
+
+					String version = externalModuleDependency.getVersion();
+
+					if (!version.equals("default")) {
+						return;
+					}
+
+					String name = externalModuleDependency.getName();
+
+					String newVersion = GradleUtil.getProperty(
+						project, name + ".version", (String)null);
+
+					if (Validator.isNull(newVersion)) {
+						return;
+					}
+
+					StringBuilder sb = new StringBuilder();
+
+					sb.append(group);
+					sb.append(':');
+					sb.append(name);
+					sb.append(':');
+					sb.append(version);
+
+					String oldNotation = sb.toString();
+
+					sb.setLength(0);
+
+					sb.append(group);
+					sb.append(':');
+					sb.append(name);
+					sb.append(':');
+
+					int x = newVersion.lastIndexOf("-SNAPSHOT");
+
+					if (x != -1) {
+						sb.append("(," + newVersion.substring(0, x) + ")");
+					}
+					else {
+						sb.append("(," + newVersion + ")");
+					}
+
+					String newNotation = sb.toString();
+
+					if (logger.isLifecycleEnabled()) {
+						logger.lifecycle(
+							"Compiling files of {} with '{}' in place of '{}'",
+							project, newNotation, oldNotation);
+					}
+
+					ResolutionStrategy resolutionStrategy =
+						configuration.getResolutionStrategy();
+
+					DependencySubstitutions dependencySubstitutions =
+						resolutionStrategy.getDependencySubstitution();
+
+					DependencySubstitutions.Substitution substitution =
+						dependencySubstitutions.substitute(
+							dependencySubstitutions.module(oldNotation));
+
+					substitution.with(
+						dependencySubstitutions.module(newNotation));
+				}
+
+			});
 	}
 
 	private void _configureDependenciesTransitive(
