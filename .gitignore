@@ -1,5 +1,11 @@
 !/sql/update-*.sql
-**/.gradle
+**/.gradle/4.10.2
+**/.gradle/buildOutputCleanup
+**/.gradle/caches/4.10.2
+**/.gradle/caches/journal-1
+**/.gradle/caches/modules-2
+**/.gradle/wrapper
+/*/.gradle
 **/.settings
 **/.sonar
 **/liferay/logs/*.log
