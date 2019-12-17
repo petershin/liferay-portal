@@ -1051,29 +1051,34 @@ information.
 			<local name="build.repository.local.actual.dir" />
 			<local name="snapshot.version.suffix" />
 
-			<condition else="${build.repository.local.dir}" property="build.repository.local.actual.dir" value="${user.home}/.m2/repository">
-				<equals arg1="${build.repository.local.dir}" arg2="" />
-			</condition>
+			<if>
+				<equals arg1="${build.com.liferay.portal.snapshots}" arg2="true" />
+				<then>
+					<condition else="${build.repository.local.dir}" property="build.repository.local.actual.dir" value="${user.home}/.m2/repository">
+						<equals arg1="${build.repository.local.dir}" arg2="" />
+					</condition>
 
-			<condition else="" property="snapshot.version.suffix" value="-SNAPSHOT">
-				<istrue value="@{snapshot}" />
-			</condition>
+					<condition else="" property="snapshot.version.suffix" value="-SNAPSHOT">
+						<istrue value="@{snapshot}" />
+					</condition>
 
-			<prepare-portal-artifact-pom snapshot.version.suffix="${snapshot.version.suffix}" />
+					<prepare-portal-artifact-pom snapshot.version.suffix="${snapshot.version.suffix}" />
 
-			<delete dir="${build.repository.local.actual.dir}/com/liferay/portal/com.liferay.${processed.artifact.name}" />
+					<delete dir="${build.repository.local.actual.dir}/com/liferay/portal/com.liferay.${processed.artifact.name}" />
 
-			<artifact:install file="${artifact.name}.@{packaging}">
-				<attach-files />
-				<localRepository path="${build.repository.local.dir}" unless:blank="${build.repository.local.dir}" />
-				<pom file="pom.xml" />
-			</artifact:install>
+					<artifact:install file="${artifact.name}.@{packaging}">
+						<attach-files />
+						<localRepository path="${build.repository.local.dir}" unless:blank="${build.repository.local.dir}" />
+						<pom file="pom.xml" />
+					</artifact:install>
 
-			<delete file="pom.xml" />
+					<delete file="pom.xml" />
 
-			<propertyfile file="../.gradle/gradle.properties">
-				<entry key="com.liferay.${processed.artifact.name}.version" value="${artifact.version}${snapshot.version.suffix}" />
-			</propertyfile>
+					<propertyfile file="../.gradle/gradle.properties">
+						<entry key="com.liferay.${processed.artifact.name}.version" value="${artifact.version}${snapshot.version.suffix}" />
+					</propertyfile>
+				</then>
+			</if>
 		</sequential>
 	</macrodef>
 
@@ -1491,15 +1496,27 @@ artifact.url=${remote.repository.url}/com/liferay/portal/com.liferay.${processed
 				<propertyresource name="artifact.name" />
 			</loadresource>
 
-			<loadproperties srcFile="${basedir}/@{artifact.name}/bnd.bnd">
-				<filterchain>
-					<linecontains>
-						<contains value="Bundle-Version" />
-					</linecontains>
-				</filterchain>
-			</loadproperties>
+			<if>
+				<equals arg1="${build.com.liferay.portal.snapshots}" arg2="true" />
+				<then>
+					<loadproperties srcFile="${basedir}/@{artifact.name}/bnd.bnd">
+						<filterchain>
+							<linecontains>
+								<contains value="Bundle-Version" />
+							</linecontains>
+						</filterchain>
+					</loadproperties>
 
-			<echo append="true" file="@{file}" message="${line.separator}${processed.artifact.name}=${Bundle-Version}-SNAPSHOT" />
+					<echo append="true" file="@{file}" message="${line.separator}${processed.artifact.name}=${Bundle-Version}-SNAPSHOT" />
+				</then>
+				<else>
+					<local name="build.properties.artifact.version" />
+
+					<propertycopy from="build.${processed.artifact.name}" name="build.properties.artifact.version" />
+
+					<echo append="true" file="@{file}" message="${line.separator}${processed.artifact.name}=${build.properties.artifact.version}" />
+				</else>
+			</if>
 		</sequential>
 	</macrodef>
 

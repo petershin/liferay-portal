@@ -8,7 +8,25 @@
 	<property name="manifest.bundle.name" value="Liferay Portal Test Integration" />
 	<property name="manifest.bundle.symbolic.name" value="com.liferay.portal.test.integration" />
 
-	<target depends="build-common-java.deploy" name="deploy">
+	<target name="deploy">
+		<if>
+			<or>
+				<equals arg1="${build.com.liferay.portal.snapshots}" arg2="true" />
+				<equals arg1="${build.com.liferay.portal.test.integration.version}" arg2=""/>
+			</or>
+			<then>
+				<ant antfile="${project.dir}/build-common-java.xml" dir="${project.dir}/portal-test-integration" inheritRefs="true" target="deploy" />
+			</then>
+			<else>
+				<gradle-execute setupbinariescache="false" task="deployGroupPortalProject">
+					<arg value="--build-file=${project.dir}/modules/util.gradle" />
+					<arg value="-PdependencyName=${manifest.bundle.symbolic.name}" />
+					<arg value="-PdeployDir=${deploy.dir}" />
+					<arg value="-PprojectName=${ant.project.name}" />
+				</gradle-execute>
+			</else>
+		</if>
+
 		<move
 			file="${deploy.dir}/${jar.file}.jar"
 			tofile="${deploy.dir}/${manifest.bundle.symbolic.name}.jar"

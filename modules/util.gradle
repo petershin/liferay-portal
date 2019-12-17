@@ -16,6 +16,7 @@ apply plugin: "com.liferay.source.formatter"
 apply plugin: "com.liferay.source.formatter.defaults"
 
 task appendHotfixQualifier
+task deployGroupPortalProject(type: Copy)
 task formatSourceCurrentBranch(type: FormatSourceTask)
 task formatSourceLatestAuthor(type: FormatSourceTask)
 task formatSourceLocalChanges(type: FormatSourceTask)
@@ -60,6 +61,33 @@ appendHotfixQualifier {
 					logger.lifecycle "Appended {}:{}", project.relativePath(bndBndFile), qualifier
 				}
 			}
+		}
+	}
+}
+
+deployGroupPortalProject {
+	from {
+		Dependency dependency = dependencies.create "com.liferay.portal:" + project.properties["dependencyName"] + ":" + project.properties["${dependencyName}.version"]
+
+		Configuration configuration = configurations.detachedConfiguration dependency
+
+		configuration.transitive = false
+
+		configuration
+	}
+
+	into {
+		deployDir
+	}
+
+	rename {
+		projectName + ".jar"
+	}
+
+	doLast {
+		copy {
+			from new File(deployDir, projectName + ".jar")
+			into new File(projectDir.parentFile, projectName)
 		}
 	}
 }
