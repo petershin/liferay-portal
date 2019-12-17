@@ -2397,12 +2397,10 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 				project, JavaPlugin.COMPILE_CLASSPATH_CONFIGURATION_NAME,
 				false);
 
-			if (publishing) {
-				_configureDependenciesGroupPortal(
-					project, JavaPlugin.COMPILE_CONFIGURATION_NAME);
-				_configureDependenciesGroupPortal(
-					project, JavaPlugin.COMPILE_CLASSPATH_CONFIGURATION_NAME);
-			}
+			_configureDependenciesGroupPortal(
+				project, JavaPlugin.COMPILE_CONFIGURATION_NAME);
+			_configureDependenciesGroupPortal(
+				project, JavaPlugin.COMPILE_CLASSPATH_CONFIGURATION_NAME);
 		}
 
 		_configureDependenciesTransitive(
@@ -2527,6 +2525,12 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 						return;
 					}
 
+					int x = newVersion.lastIndexOf("-SNAPSHOT");
+
+					if (x == -1) {
+						return;
+					}
+
 					StringBuilder sb = new StringBuilder();
 
 					sb.append(group);
@@ -2543,15 +2547,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 					sb.append(':');
 					sb.append(name);
 					sb.append(':');
-
-					int x = newVersion.lastIndexOf("-SNAPSHOT");
-
-					if (x != -1) {
-						sb.append("(," + newVersion.substring(0, x) + ")");
-					}
-					else {
-						sb.append("(," + newVersion + ")");
-					}
+					sb.append(newVersion);
 
 					String newNotation = sb.toString();
 
