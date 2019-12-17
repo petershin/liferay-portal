@@ -1052,7 +1052,7 @@ information.
 			<local name="build.repository.local.actual.dir" />
 			<local name="snapshot.version.suffix" />
 
-			<propertycopy from="build.com.liferay.${processed.artifact.name}.version" name="build.properties.artifact.version" />
+			<propertycopy from="build.com.liferay.${processed.artifact.name}.version" name="build.properties.artifact.version" silent="true" />
 
 			<if>
 				<or>
@@ -1506,7 +1506,7 @@ artifact.url=${remote.repository.url}/com/liferay/portal/com.liferay.${processed
 				<propertyresource name="artifact.name" />
 			</loadresource>
 
-			<propertycopy from="build.${processed.artifact.name}" name="build.properties.artifact.version" />
+			<propertycopy from="build.${processed.artifact.name}" name="build.properties.artifact.version" silent="true" />
 
 			<if>
 				<or>
