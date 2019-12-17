@@ -2395,6 +2395,11 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			_configureConfigurationTransitive(
 				project, JavaPlugin.COMPILE_CLASSPATH_CONFIGURATION_NAME,
 				false);
+		}
+
+		if (projectPath.startsWith(":apps:") ||
+			projectPath.startsWith(":dxp:apps:") ||
+			projectPath.startsWith(":private:apps:")) {
 
 			_configureDependenciesGroupPortal(
 				project, JavaPlugin.COMPILE_CONFIGURATION_NAME);
