@@ -44,6 +44,7 @@ xpack.ssl.key: certs/localhost/localhost.key</echo>
 	<macrodef name="configure-elasticsearch67-test-properties">
 		<sequential>
 			<var name="elasticsearch.version" unset="true" />
+			<var name="elasticsearch.major.version" unset="true" />
 			<var name="elasticsearch.dir" unset="true" />
 			<var name="elasticsearch.analysis-icu.zip.name" unset="true" />
 			<var name="elasticsearch.analysis-icu.zip.url" unset="true" />
@@ -57,7 +58,8 @@ xpack.ssl.key: certs/localhost/localhost.key</echo>
 			<var name="elasticsearch.zip.url" unset="true" />
 
 			<property name="elasticsearch.version" value="6.7.1" />
-			<property name="elasticsearch.dir" value="${app.server.parent.dir}/elasticsearch-${elasticsearch.version}" />
+			<property name="elasticsearch.major.version" value="6" />
+			<property name="elasticsearch.dir" value="${app.server.parent.dir}/elasticsearch-${elasticsearch.major.version}" />
 			<property name="elasticsearch.analysis-icu.zip.name" value="analysis-icu-${elasticsearch.version}.zip" />
 			<property name="elasticsearch.analysis-icu.zip.url" value="https://artifacts.elastic.co/downloads/elasticsearch-plugins/analysis-icu/${elasticsearch.analysis-icu.zip.name}" />
 			<property name="elasticsearch.analysis-kuromoji.zip.name" value="analysis-kuromoji-${elasticsearch.version}.zip" />
@@ -497,6 +499,11 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 				dest="${app.server.parent.dir}"
 				src="${app.server.parent.dir}/${elasticsearch.zip.name}"
 			/>
+
+			<move
+				file="${app.server.parent.dir}/elasticsearch-${elasticsearch.version}"
+				tofile="${elasticsearch.dir}"
+			/>
 		</sequential>
 	</macrodef>
 
@@ -651,6 +658,33 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 		<echo>Finished adding LTR linear regression model.</echo>
 	</target>
 
+	<target name="clean-elasticsearch">
+		<for param="elasticsearch.dir">
+			<path>
+				<dirset
+					dir="${app.server.parent.dir}"
+				>
+					<include name="elasticsearch-*" />
+				</dirset>
+			</path>
+
+			<sequential>
+				<delete dir="@{elasticsearch.dir}" />
+			</sequential>
+		</for>
+
+		<for param="elasticsearch.file">
+			<fileset
+				dir="${app.server.parent.dir}"
+			>
+				<include name="elasticsearch-*" />
+			</fileset>
+			<sequential>
+				<delete file="@{elasticsearch.file}" />
+			</sequential>
+		</for>
+	</target>
+
 	<target name="configure-elasticsearch-cluster-properties">
 		<math
 			datatype="int"
@@ -726,10 +760,17 @@ xpack.monitoring.collection.enabled: true</echo>
 		<echo>Restoring snapshot.${line.separator}${curl.output}</echo>
 	</target>
 
-	<target name="start-elasticsearch">
+	<target depends="clean-elasticsearch" name="setup-elasticsearch">
 		<lstopwatch action="start" name="start.elasticsearch" />
 
-		<get-testcase-property property.name="remote.elasticsearch.ltr.enabled" />
+		<if>
+			<not>
+				<isset property="remote.elasticsearch.ltr.enabled" />
+			</not>
+			<then>
+				<get-testcase-property property.name="remote.elasticsearch.ltr.enabled" />
+			</then>
+		</if>
 
 		<if>
 			<equals arg1="${remote.elasticsearch.ltr.enabled}" arg2="true" />
@@ -801,6 +842,10 @@ xpack.monitoring.collection.enabled: true</echo>
 		<antcall target="configure-elasticsearch-cluster-properties" />
 
 		<antcall target="prepare-additional-elasticsearch-dirs" />
+	</target>
+
+	<target name="start-elasticsearch">
+		<antcall target="setup-elasticsearch" />
 
 		<antcall target="start-elasticsearch-node" />
 
