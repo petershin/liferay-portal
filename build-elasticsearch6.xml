@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+
+<project basedir="." name="portal-elasticsearch6">
+	<import file="build-common.xml" />
+
+	<target name="setup-elasticsearch">
+		<mirrors-get
+			dest="${app.server.parent.dir}/${elasticsearch.zip.name}"
+			force="false"
+			skipChecksum="true"
+			src="${elasticsearch.zip.url}"
+		/>
+
+		<delete dir="${app.server.parent.dir}/${elasticsearch.zip.name}" />
+
+		<unzip
+			dest="${app.server.parent.dir}"
+			src="${app.server.parent.dir}/${elasticsearch.zip.name}"
+		/>
+	</target>
+</project>
