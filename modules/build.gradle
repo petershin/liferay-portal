@@ -247,7 +247,49 @@ gradle.beforeProject {
 		}
 
 		pluginManager.withPlugin("com.liferay.ant.plugin") {
-			task buildLang(dependsOn: "build-lang")
+			apply plugin: "com.liferay.lang.builder"
+
+			buildLang {
+				dependsOn "build-lang"
+
+				enabled = false
+			}
+
+			File appProjectDir = GradleUtil.getRootDir(project, "app.bnd")
+
+			if (appProjectDir != null) {
+				File bundlePropertiesFile = new File(appProjectDir, "app.bnd-localization/bundle.properties")
+
+				if (bundlePropertiesFile.exists()) {
+					task copyAppLangDir(type: Copy) {
+						eachFile {
+							filter {
+								project.properties.each {
+									String key, Object value ->
+
+									if ((value instanceof String) && key.startsWith("liferay.releng")) {
+										it = it.replace '${' + key + '}', (String)value
+									}
+								}
+
+								return it
+							}
+						}
+						from bundlePropertiesFile.parentFile
+						into project.file("docroot/WEB-INF/src/OSGI-INF/l10n")
+					}
+
+					task deleteAppLangDir(type: Delete) {
+						delete project.file("docroot/WEB-INF/src/OSGI-INF/l10n")
+					}
+
+					deploy.dependsOn copyAppLangDir
+					deploy.finalizedBy deleteAppLangDir
+
+					war.dependsOn copyAppLangDir
+					war.finalizedBy deleteAppLangDir
+				}
+			}
 
 			if (FileUtil.exists(project, "docroot/WEB-INF/service.xml")) {
 				task buildService(dependsOn: "build-service")
