@@ -1945,6 +1945,7 @@ rerun your task.
 					<propertyref name="upgrade.table.dir" />
 					<propertyref prefix="build.compat.version.com.liferay.portal." />
 					<propertyref prefix="build.compat.version.com.liferay.util." />
+					<propertyref prefix="elasticsearch." />
 					<propertyref prefix="gradle.publish." />
 					<propertyref prefix="gradle.releng.pom." />
 					<propertyref prefix="ivy.pom." />

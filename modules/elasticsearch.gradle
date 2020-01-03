@@ -1,0 +1,211 @@
+import com.liferay.gradle.util.FileUtil
+import com.liferay.gradle.util.OSDetector
+
+import groovy.io.FileType
+
+buildscript {
+	apply from: file("build-buildscript.gradle"), to: buildscript
+}
+
+task cleanElasticsearch(type: Delete)
+task downloadElasticsearch(type: DownloadFileTask)
+task downloadPluginAnalysisICU(type: DownloadFileTask)
+task downloadPluginAnalysisKuromoji(type: DownloadFileTask)
+task downloadPluginAnalysisSmartCN(type: DownloadFileTask)
+task downloadPluginAnalysisStempel(type: DownloadFileTask)
+task downloadPluginLTR(type: DownloadFileTask)
+task installPluginAnalysisICU(type: InstallPluginTask)
+task installPluginAnalysisKuromoji(type: InstallPluginTask)
+task installPluginAnalysisSmartCN(type: InstallPluginTask)
+task installPluginAnalysisStempel(type: InstallPluginTask)
+task installPluginLTR(type: InstallPluginTask)
+task setupElasticsearch
+
+String liferayHome = project.properties["liferay.home"]
+
+File elasticsearchDataDir = file("${liferayHome}/data/elasticsearch/repo")
+File elasticsearchDir = file("${liferayHome}/elasticsearch-${project.'elasticsearch.version'}")
+
+cleanElasticsearch {
+	doFirst {
+		logger.lifecycle "Deleting {}", elasticsearchDataDir
+
+		delete elasticsearchDataDir
+
+		logger.lifecycle "Deleting {}", elasticsearchDir
+
+		delete elasticsearchDir
+
+		File liferayHomeDir = file(liferayHome)
+
+		liferayHomeDir.traverse(type: FileType.ANY, maxDepth: 0) {
+			File file ->
+
+			if (file.name.startsWith("elasticsearch-")) {
+				logger.lifecycle "Deleting {}", file
+
+				delete file
+			}
+		}
+	}
+}
+
+downloadElasticsearch {
+	mustRunAfter cleanElasticsearch
+
+	destinationFile = file("${liferayHome}/${project.'elasticsearch.zip.name'}")
+	url = project.properties["elasticsearch.zip.url"]
+
+	doLast {
+		project.copy {
+			from zipTree(downloadElasticsearch.destinationFile)
+			into liferayHome
+		}
+	}
+}
+
+downloadPluginAnalysisICU {
+	destinationFile = file("${liferayHome}/${project.'elasticsearch.plugins.analysis-icu.zip.name'}")
+	url = project.properties["elasticsearch.plugins.analysis-icu.zip.url"]
+}
+
+downloadPluginAnalysisKuromoji {
+	destinationFile = file("${liferayHome}/${project.'elasticsearch.plugins.analysis-kuromoji.zip.name'}")
+	url = project.properties["elasticsearch.plugins.analysis-kuromoji.zip.url"]
+}
+
+downloadPluginAnalysisSmartCN {
+	destinationFile = file("${liferayHome}/${project.'elasticsearch.plugins.analysis-smartcn.zip.name'}")
+	url = project.properties["elasticsearch.plugins.analysis-smartcn.zip.url"]
+}
+
+downloadPluginAnalysisStempel {
+	destinationFile = file("${liferayHome}/${project.'elasticsearch.plugins.analysis-stempel.zip.name'}")
+	url = project.properties["elasticsearch.plugins.analysis-stempel.zip.url"]
+}
+
+downloadPluginLTR {
+	destinationFile = file("${liferayHome}/${project.'elasticsearch.ltr.zip.name'}")
+	url = project.properties["elasticsearch.ltr.zip.url"]
+}
+
+installPluginAnalysisICU {
+	mustRunAfter downloadPluginAnalysisICU
+
+	pluginFile = downloadPluginAnalysisICU.destinationFile
+	workingDir = file("${elasticsearchDir}/bin")
+}
+
+installPluginAnalysisKuromoji {
+	mustRunAfter downloadPluginAnalysisKuromoji
+
+	pluginFile = downloadPluginAnalysisKuromoji.destinationFile
+	workingDir = file("${elasticsearchDir}/bin")
+}
+
+installPluginAnalysisSmartCN {
+	mustRunAfter downloadPluginAnalysisSmartCN
+
+	pluginFile = downloadPluginAnalysisSmartCN.destinationFile
+	workingDir = file("${elasticsearchDir}/bin")
+}
+
+installPluginAnalysisStempel {
+	mustRunAfter downloadPluginAnalysisStempel
+
+	pluginFile = downloadPluginAnalysisStempel.destinationFile
+	workingDir = file("${elasticsearchDir}/bin")
+}
+
+installPluginLTR {
+	mustRunAfter downloadPluginLTR
+
+	input = "y"
+	pluginFile = downloadPluginLTR.destinationFile
+	workingDir = file("${elasticsearchDir}/bin")
+}
+
+setupElasticsearch {
+	dependsOn cleanElasticsearch
+	dependsOn downloadElasticsearch
+	dependsOn downloadPluginAnalysisICU
+	dependsOn downloadPluginAnalysisKuromoji
+	dependsOn downloadPluginAnalysisSmartCN
+	dependsOn downloadPluginAnalysisStempel
+	dependsOn downloadPluginLTR
+	dependsOn installPluginAnalysisICU
+	dependsOn installPluginAnalysisKuromoji
+	dependsOn installPluginAnalysisSmartCN
+	dependsOn installPluginAnalysisStempel
+	dependsOn installPluginLTR
+
+	doLast {
+		project.mkdir elasticsearchDataDir
+
+		File configFile = file("${liferayHome}/osgi/configs/com.liferay.portal.search.elasticsearch6.configuration.ElasticsearchConfiguration.config")
+
+		configFile.text = "\noperationMode=\"REMOTE\""
+
+		File ymlFile = file("${elasticsearchDir}/config/elasticsearch.yml")
+
+		String pathRepo = elasticsearchDataDir.absolutePath.replace(File.separatorChar, '/' as char)
+
+		ymlFile.append """
+#
+# Liferay
+#
+
+bootstrap.system_call_filter: false
+cluster.name: LiferayElasticsearchCluster
+discovery.zen.minimum_master_nodes: 1
+path.repo: ${pathRepo}
+xpack.ml.enabled: false
+xpack.monitoring.collection.enabled: true"""
+
+		project.copy {
+			from elasticsearchDir
+			into file("${liferayHome}/elasticsearch-${project.'elasticsearch.version'}-1")
+		}
+
+		delete elasticsearchDir
+	}
+}
+
+class DownloadFileTask extends DefaultTask {
+
+	@TaskAction
+	public void downloadFile() throws IOException {
+		FileUtil.get(project, url, destinationFile, false, true)
+	}
+
+	File destinationFile
+	String url
+
+}
+
+class InstallPluginTask extends Exec {
+
+	@Override
+	void exec() {
+		if (OSDetector.isWindows()) {
+			executable = "cmd"
+
+			args "/c elasticsearch-plugin install file:///" + pluginFile
+		}
+		else {
+			executable = "sh"
+
+			args "-c ./elasticsearch-plugin install file:///" + pluginFile
+		}
+
+		if (input != null) {
+			standardInput = new ByteArrayInputStream(input.getBytes())
+		}
+
+		super.exec()
+	}
+
+	String input
+	File pluginFile
+
+}
