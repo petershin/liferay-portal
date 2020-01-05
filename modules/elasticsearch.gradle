@@ -1,7 +1,10 @@
 import com.liferay.gradle.util.FileUtil
 import com.liferay.gradle.util.OSDetector
+import com.liferay.gradle.util.StringUtil
 
 import groovy.io.FileType
+
+import java.util.concurrent.TimeUnit
 
 buildscript {
 	apply from: file("build-buildscript.gradle"), to: buildscript
@@ -9,42 +12,31 @@ buildscript {
 
 task cleanElasticsearch(type: Delete)
 task downloadElasticsearch(type: DownloadFileTask)
-task downloadPluginAnalysisICU(type: DownloadFileTask)
-task downloadPluginAnalysisKuromoji(type: DownloadFileTask)
-task downloadPluginAnalysisSmartCN(type: DownloadFileTask)
-task downloadPluginAnalysisStempel(type: DownloadFileTask)
-task downloadPluginLTR(type: DownloadFileTask)
-task installPluginAnalysisICU(type: InstallPluginTask)
-task installPluginAnalysisKuromoji(type: InstallPluginTask)
-task installPluginAnalysisSmartCN(type: InstallPluginTask)
-task installPluginAnalysisStempel(type: InstallPluginTask)
-task installPluginLTR(type: InstallPluginTask)
 task setupElasticsearch
+task setupXPackSecurity
+task startElasticsearch
+task stopElasticsearch
 
 String liferayHome = project.properties["liferay.home"]
 
-File elasticsearchDataDir = file("${liferayHome}/data/elasticsearch/repo")
+int elasticsearchClusterSize = project.properties["elasticsearch.cluster.size"] as int
+File elasticsearchDataDir = file("${liferayHome}/data/elasticsearch${project.'elasticsearch.major.version'}/repo")
 File elasticsearchDir = file("${liferayHome}/elasticsearch-${project.'elasticsearch.version'}")
 
 cleanElasticsearch {
-	doFirst {
+	doLast {
 		logger.lifecycle "Deleting {}", elasticsearchDataDir
-
-		delete elasticsearchDataDir
-
 		logger.lifecycle "Deleting {}", elasticsearchDir
 
-		delete elasticsearchDir
+		delete elasticsearchDataDir, elasticsearchDir
 
 		File liferayHomeDir = file(liferayHome)
 
 		liferayHomeDir.traverse(type: FileType.ANY, maxDepth: 0) {
-			File file ->
+			if (it.name.startsWith("elasticsearch-")) {
+				logger.lifecycle "Deleting {}", it
 
-			if (file.name.startsWith("elasticsearch-")) {
-				logger.lifecycle "Deleting {}", file
-
-				delete file
+				delete it
 			}
 		}
 	}
@@ -64,110 +56,199 @@ downloadElasticsearch {
 	}
 }
 
-downloadPluginAnalysisICU {
-	destinationFile = file("${liferayHome}/${project.'elasticsearch.plugins.analysis-icu.zip.name'}")
-	url = project.properties["elasticsearch.plugins.analysis-icu.zip.url"]
-}
+setupXPackSecurity {
+	mustRunAfter downloadElasticsearch
 
-downloadPluginAnalysisKuromoji {
-	destinationFile = file("${liferayHome}/${project.'elasticsearch.plugins.analysis-kuromoji.zip.name'}")
-	url = project.properties["elasticsearch.plugins.analysis-kuromoji.zip.url"]
-}
+	doLast {
+		project.exec {
+			workingDir = file("${elasticsearchDir}/bin")
 
-downloadPluginAnalysisSmartCN {
-	destinationFile = file("${liferayHome}/${project.'elasticsearch.plugins.analysis-smartcn.zip.name'}")
-	url = project.properties["elasticsearch.plugins.analysis-smartcn.zip.url"]
-}
+			if (OSDetector.isWindows()) {
+				executable "cmd.exe"
 
-downloadPluginAnalysisStempel {
-	destinationFile = file("${liferayHome}/${project.'elasticsearch.plugins.analysis-stempel.zip.name'}")
-	url = project.properties["elasticsearch.plugins.analysis-stempel.zip.url"]
-}
+				args "/c elasticsearch-certutil ca --pem --ca-dn CN=localhost --out elastic-stack-ca.zip"
+			}
+		}
 
-downloadPluginLTR {
-	destinationFile = file("${liferayHome}/${project.'elasticsearch.ltr.zip.name'}")
-	url = project.properties["elasticsearch.ltr.zip.url"]
-}
+		project.copy {
+			from zipTree(file("${elasticsearchDir}/bin/elastic-stack-ca.zip"))
+			into file("${elasticsearchDir}/bin")
+		}
 
-installPluginAnalysisICU {
-	mustRunAfter downloadPluginAnalysisICU
+		delete file("${elasticsearchDir}/bin/elastic-stack-ca.zip")
 
-	pluginFile = downloadPluginAnalysisICU.destinationFile
-	workingDir = file("${elasticsearchDir}/bin")
-}
+		project.exec {
+			workingDir = file("${elasticsearchDir}/bin")
 
-installPluginAnalysisKuromoji {
-	mustRunAfter downloadPluginAnalysisKuromoji
+			if (OSDetector.isWindows()) {
+				executable "cmd.exe"
 
-	pluginFile = downloadPluginAnalysisKuromoji.destinationFile
-	workingDir = file("${elasticsearchDir}/bin")
-}
+				args "/c elasticsearch-certutil cert --ca-cert ca/ca.crt --ca-key ca/ca.key --pem --ip 127.0.0.1 --dns localhost --name localhost --out certificate-bundle.zip"
+			}
+		}
 
-installPluginAnalysisSmartCN {
-	mustRunAfter downloadPluginAnalysisSmartCN
+		project.copy {
+			from zipTree(file("${elasticsearchDir}/bin/certificate-bundle.zip"))
+			into file("${elasticsearchDir}/bin")
+		}
 
-	pluginFile = downloadPluginAnalysisSmartCN.destinationFile
-	workingDir = file("${elasticsearchDir}/bin")
-}
+		ant.move(file: file("${elasticsearchDir}/bin/ca"), todir: file("${elasticsearchDir}/config/certs"))
 
-installPluginAnalysisStempel {
-	mustRunAfter downloadPluginAnalysisStempel
+		ant.move(file: file("${elasticsearchDir}/bin/localhost"), todir: file("${elasticsearchDir}/config/certs"))
 
-	pluginFile = downloadPluginAnalysisStempel.destinationFile
-	workingDir = file("${elasticsearchDir}/bin")
-}
+		delete file("${elasticsearchDir}/bin/certificate-bundle.zip")
 
-installPluginLTR {
-	mustRunAfter downloadPluginLTR
+		File ymlFile = file("${elasticsearchDir}/config/elasticsearch.yml")
 
-	input = "y"
-	pluginFile = downloadPluginLTR.destinationFile
-	workingDir = file("${elasticsearchDir}/bin")
+		ymlFile.append """
+xpack.security.enabled: true
+xpack.security.http.ssl.enabled: true
+xpack.security.transport.ssl.enabled: true
+xpack.security.transport.ssl.verification_mode: certificate
+xpack.ssl.certificate: certs/localhost/localhost.crt
+xpack.ssl.certificate_authorities: [ "certs/ca/ca.crt" ]
+xpack.ssl.key: certs/localhost/localhost.key"""
+	}
 }
 
 setupElasticsearch {
 	dependsOn cleanElasticsearch
 	dependsOn downloadElasticsearch
-	dependsOn downloadPluginAnalysisICU
-	dependsOn downloadPluginAnalysisKuromoji
-	dependsOn downloadPluginAnalysisSmartCN
-	dependsOn downloadPluginAnalysisStempel
-	dependsOn downloadPluginLTR
-	dependsOn installPluginAnalysisICU
-	dependsOn installPluginAnalysisKuromoji
-	dependsOn installPluginAnalysisSmartCN
-	dependsOn installPluginAnalysisStempel
-	dependsOn installPluginLTR
 
-	doLast {
+	if (project.properties["elasticsearch.xpack.security.enabled"] == "true") {
+		dependsOn setupXPackSecurity
+	}
+
+	doFirst {
 		project.mkdir elasticsearchDataDir
 
-		File configFile = file("${liferayHome}/osgi/configs/com.liferay.portal.search.elasticsearch6.configuration.ElasticsearchConfiguration.config")
+		File configFile = file("${liferayHome}/osgi/configs/com.liferay.portal.search.elasticsearch${project.'elasticsearch.major.version'}.configuration.ElasticsearchConfiguration.config")
 
 		configFile.text = "\noperationMode=\"REMOTE\""
 
 		File ymlFile = file("${elasticsearchDir}/config/elasticsearch.yml")
 
+		int minimumMasterNodes = (elasticsearchClusterSize / 2) + 1
 		String pathRepo = elasticsearchDataDir.absolutePath.replace(File.separatorChar, '/' as char)
 
 		ymlFile.append """
-#
-# Liferay
-#
-
 bootstrap.system_call_filter: false
 cluster.name: LiferayElasticsearchCluster
-discovery.zen.minimum_master_nodes: 1
+discovery.zen.minimum_master_nodes: ${minimumMasterNodes}
 path.repo: ${pathRepo}
 xpack.ml.enabled: false
 xpack.monitoring.collection.enabled: true"""
+	}
 
-		project.copy {
-			from elasticsearchDir
-			into file("${liferayHome}/elasticsearch-${project.'elasticsearch.version'}-1")
+	doLast {
+		for (int i = 1; i <= elasticsearchClusterSize; i++) {
+			project.copy {
+				from elasticsearchDir
+				into file("${liferayHome}/elasticsearch-${project.'elasticsearch.major.version'}/node-${i}")
+			}
 		}
 
 		delete elasticsearchDir
+	}
+}
+
+startElasticsearch {
+	doFirst {
+		for (int i = 1; i <= elasticsearchClusterSize; i++) {
+			if (OSDetector.isWindows()) {
+				ant.exec(dir: file("${liferayHome}/elasticsearch-${project.'elasticsearch.major.version'}/node-${i}/bin"), executable: "cmd.exe", spawn: true) {
+					arg(value: "/c")
+					arg(value: "elasticsearch -d -p pid-elasticsearch")
+				}
+			}
+		}
+	}
+
+	doLast {
+		String elasticsearchURL = "http://localhost:9200/"
+		boolean connected = false
+
+		long startTime = System.currentTimeMillis()
+		long waitTime = TimeUnit.SECONDS.toMillis(60)
+
+		logger.lifecycle "Waiting for {}", elasticsearchURL
+
+		while ((System.currentTimeMillis() - startTime) < waitTime) {
+			URLConnection urlConnection = new URL(elasticsearchURL).openConnection()
+
+			urlConnection.requestMethod = "HEAD"
+
+			try {
+				if (urlConnection.responseCode == 200) {
+					connected = true
+
+					break
+				}
+			}
+			catch (IOException ioe) {
+				sleep(500)
+			}
+		}
+
+		if (connected) {
+			println file("${liferayHome}/elasticsearch-${project.'elasticsearch.major.version'}/node-1/logs/LiferayElasticsearchCluster.log").text
+		}
+		else {
+			throw new GradleException("Unable to connect to Elasticsearch")
+		}
+	}
+}
+
+stopElasticsearch {
+	doLast {
+		for (int i = 1; i <= elasticsearchClusterSize; i++) {
+			project.exec {
+				workingDir = file("${liferayHome}/elasticsearch-${project.'elasticsearch.major.version'}/node-${i}")
+
+				if (OSDetector.isWindows()) {
+					executable "cmd.exe"
+
+					args "/c for /f %x in (pid-elasticsearch) do taskkill /f /pid %x"
+				}
+			}
+		}
+	}
+}
+
+_createPluginTasks(elasticsearchDir)
+
+private void _createPluginTasks(File elasticsearchDir) {
+	project.properties.each {
+		name, value ->
+
+		if (name.startsWith("elasticsearch.plugins.") && name.endsWith(".zip.name")) {
+			String pluginURL = project.properties[name.substring(0, name.length() - 4) + "url"]
+
+			if (pluginURL != null) {
+				String suffix = value.replaceAll(/[\.-](\w)/) {
+					return it[1].toUpperCase()
+				}
+
+				Task downloadPluginTask = tasks.create(name: "downloadPlugin" + StringUtil.capitalize(suffix), type: DownloadFileTask) {
+					destinationFile = project.file(project.properties["liferay.home"] + '/' + value)
+					url = pluginURL
+				}
+
+				Task installPluginTask = tasks.create(name: "installPlugin" + StringUtil.capitalize(suffix), type: InstallPluginTask) {
+					pluginFile = downloadPluginTask.destinationFile
+					workingDir = file("${elasticsearchDir}/bin")
+
+					if (name == "elasticsearch.plugins.ltr.zip.name") {
+						input = "y"
+					}
+				}
+
+				installPluginTask.mustRunAfter downloadPluginTask
+
+				setupElasticsearch.dependsOn downloadPluginTask
+				setupElasticsearch.dependsOn installPluginTask
+			}
+		}
 	}
 }
 
@@ -188,12 +269,12 @@ class InstallPluginTask extends Exec {
 	@Override
 	void exec() {
 		if (OSDetector.isWindows()) {
-			executable = "cmd"
+			executable "cmd.exe"
 
 			args "/c elasticsearch-plugin install file:///" + pluginFile
 		}
 		else {
-			executable = "sh"
+			executable "/bin/sh"
 
 			args "-c ./elasticsearch-plugin install file:///" + pluginFile
 		}

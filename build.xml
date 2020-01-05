@@ -118,9 +118,7 @@ message.
 		<antcall target="compile" />
 		<antcall target="deploy" />
 
-		<gradle-execute setupbinariescache="false" task="setupElasticsearch">
-			<arg value="--build-file=${project.dir}/modules/elasticsearch.gradle" />
-		</gradle-execute>
+		<antcall target="setup-elasticsearch" />
 	</target>
 
 	<target name="baseline-current-branch">
@@ -993,6 +991,38 @@ This target has been renamed to "snapshot-bundle". Please call "snapshot-bundle"
 		<ant dir="util-java" inheritAll="false" target="restore-latest-artifact-version" />
 		<ant dir="util-slf4j" inheritAll="false" target="restore-latest-artifact-version" />
 		<ant dir="util-taglib" inheritAll="false" target="restore-latest-artifact-version" />
+	</target>
+
+	<target name="setup-elasticsearch">
+		<if>
+			<resourcecount count="0" when="gt">
+				<fileset
+					dir="${project.dir}/modules/apps/portal-search-elasticsearch6"
+					includes="**/.lfrbuild-portal"
+				/>
+			</resourcecount>
+			<then>
+				<gradle-execute setupbinariescache="false" task="setupElasticsearch">
+					<arg value="--build-file=${project.dir}/modules/elasticsearch.gradle" />
+					<arg value="-Pelasticsearch.cluster.size=${elasticsearch.cluster.size}" />
+					<arg value="-Pelasticsearch.major.version=${elasticsearch.major.version}" />
+					<arg value="-Pelasticsearch.plugins.analysis-icu.zip.name=${elasticsearch.plugins.analysis-icu.zip.name}" />
+					<arg value="-Pelasticsearch.plugins.analysis-icu.zip.url=${elasticsearch.plugins.analysis-icu.zip.url}" />
+					<arg value="-Pelasticsearch.plugins.analysis-kuromoji.zip.name=${elasticsearch.plugins.analysis-kuromoji.zip.name}" />
+					<arg value="-Pelasticsearch.plugins.analysis-kuromoji.zip.url=${elasticsearch.plugins.analysis-kuromoji.zip.url}" />
+					<arg value="-Pelasticsearch.plugins.analysis-smartcn.zip.name=${elasticsearch.plugins.analysis-smartcn.zip.name}" />
+					<arg value="-Pelasticsearch.plugins.analysis-smartcn.zip.url=${elasticsearch.plugins.analysis-smartcn.zip.url}" />
+					<arg value="-Pelasticsearch.plugins.analysis-stempel.zip.name=${elasticsearch.plugins.analysis-stempel.zip.name}" />
+					<arg value="-Pelasticsearch.plugins.analysis-stempel.zip.url=${elasticsearch.plugins.analysis-stempel.zip.url}" />
+					<arg value="-Pelasticsearch.plugins.ltr.zip.name=${elasticsearch.plugins.ltr.zip.name}" />
+					<arg value="-Pelasticsearch.plugins.ltr.zip.url=${elasticsearch.plugins.ltr.zip.url}" />
+					<arg value="-Pelasticsearch.xpack.security.enabled=${elasticsearch.xpack.security.enabled}" />
+					<arg value="-Pelasticsearch.version=${elasticsearch.version}" />
+					<arg value="-Pelasticsearch.zip.name=${elasticsearch.zip.name}" />
+					<arg value="-Pelasticsearch.zip.url=${elasticsearch.zip.url}" />
+				</gradle-execute>
+			</then>
+		</if>
 	</target>
 
 	<target depends="setup-jrebel-properties" name="setup-jrebel">

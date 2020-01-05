@@ -808,8 +808,6 @@ xpack.monitoring.collection.enabled: true</echo>
 
 		<configure-elasticsearch-properties />
 
-		<get-testcase-property property.name="elastic.xpack.enabled" />
-
 		<if>
 			<equals arg1="${elastic.xpack.enabled}" arg2="true" />
 			<then>
@@ -820,17 +818,6 @@ xpack.monitoring.collection.enabled: true</echo>
 		</if>
 
 		<configure-portal-elasticsearch-osgi-properties />
-
-		<get-testcase-property property.name="remote.elasticsearch.cluster.size" />
-
-		<if>
-			<not>
-				<isset property="remote.elasticsearch.cluster.size" />
-			</not>
-			<then>
-				<property name="remote.elasticsearch.cluster.size" value="1" />
-			</then>
-		</if>
 
 		<antcall target="configure-elasticsearch-cluster-properties" />
 
