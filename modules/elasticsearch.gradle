@@ -15,7 +15,9 @@ task downloadElasticsearch(type: DownloadFileTask)
 task setupElasticsearch
 task setupXPackSecurity
 task startElasticsearch
+task startKibana
 task stopElasticsearch
+task stopKibana
 
 String liferayHome = project.properties["liferay.home"]
 
@@ -153,6 +155,10 @@ xpack.monitoring.collection.enabled: true"""
 }
 
 startElasticsearch {
+	if (project.properties["elasticsearch.xpack.security.enabled"] == "true") {
+		finalizedBy startKibana
+	}
+
 	doFirst {
 		for (int i = 1; i <= elasticsearchClusterSize; i++) {
 			if (OSDetector.isWindows()) {
@@ -190,12 +196,129 @@ startElasticsearch {
 			}
 		}
 
-		if (connected) {
-			println file("${liferayHome}/elasticsearch-${project.'elasticsearch.major.version'}/node-1/logs/LiferayElasticsearchCluster.log").text
-		}
-		else {
+		if (!connected) {
 			throw new GradleException("Unable to connect to Elasticsearch")
 		}
+
+		println file("${liferayHome}/elasticsearch-${project.'elasticsearch.major.version'}/node-1/logs/LiferayElasticsearchCluster.log").text
+	}
+}
+
+startKibana {
+	doFirst {
+		ByteArrayOutputStream standardByteArrayOutputStream = new ByteArrayOutputStream()
+
+		project.exec {
+			workingDir = file("${liferayHome}/elasticsearch-${project.'elasticsearch.major.version'}/node-1/bin")
+			standardOutput = standardByteArrayOutputStream
+
+			if (OSDetector.isWindows()) {
+				args "/c elasticsearch-setup-passwords auto --batch"
+				executable "cmd.exe"
+			}
+		}
+
+		String passwords = standardByteArrayOutputStream.toString()
+
+		ant.propertyregex(
+			input: "${passwords}",
+			override: true,
+			property: "kibanaPassword",
+			regexp: "(PASSWORD kibana = )(\S*)",
+			select: "\2"
+		)
+
+		ant.propertyregex(
+			input: "${passwords}",
+			override: true,
+			property: "elasticPassword",
+			regexp: "(PASSWORD elastic = )(\S*)",
+			select: "\2"
+		)
+
+		standardByteArrayOutputStream = new ByteArrayOutputStream()
+
+		project.exec {
+			args "https://localhost:9200 -ku elastic:${elasticPassword}"
+			executable "curl"
+			standardOutput = standardByteArrayOutputStream
+		}
+
+		logger.lifecycle "Response: {}", standardByteArrayOutputStream.toString()
+
+		standardByteArrayOutputStream = new ByteArrayOutputStream()
+
+		project.exec {
+			args "-k -X POST -ku elastic:${elasticPassword} https://localhost:9200/_xpack/license/start_trial?acknowledge=true&amp;pretty"
+			executable "curl"
+			standardOutput = standardByteArrayOutputStream
+		}
+
+		logger.lifecycle "Response: {}", standardByteArrayOutputStream.toString()
+
+		ant.propertyregex(
+			defaultValue: "${elasticPassword}"
+			input: "${elasticPassword}",
+			override: true,
+			property: "osgiPassword",
+			regexp: "=",
+			replace: "\\\\="
+		)
+
+		File configFile = file("${liferayHome}/osgi/configs/com.liferay.portal.search.elasticsearch${project.'elasticsearch.major.version'}.xpack.monitoring.web.internal.configuration.XPackMonitoringConfiguration.config")
+
+		configFile.append """
+kibanaPassword="${osgiPassword}"
+kibanaURL="https://localhost:5601"
+proxyServletLogEnable="true""""
+
+		configFile = file("${liferayHome}/osgi/configs/com.liferay.portal.search.elasticsearch${project.'elasticsearch.major.version'}.xpack.security.internal.configuration.XPackSecurityConfiguration.config")
+
+		configFile.append """
+certificateFormat="PEM"
+password="${osgiPassword}"
+requiresAuthentication="true"
+sslCertificateAuthoritiesPaths="${liferayHome}/elasticsearch-${project.'elasticsearch.major.version'}/node-1/config/certs/ca/ca.crt"
+sslCertificatePath="${liferayHome}/elasticsearch-${project.'elasticsearch.major.version'}/node-1/config/certs/localhost/localhost.crt"
+sslKeyPath="${liferayHome}/elasticsearch-${project.'elasticsearch.major.version'}/node-1/config/certs/localhost/localhost.key"
+transportSSLEnabled="true""""
+
+		project.exec {
+			workingDir = file("${liferayHome}/elasticsearch-${project.'elasticsearch.major.version'}/node-1/bin")
+
+			if (OSDetector.isWindows()) {
+				args "/c elasticsearch-certutil cert --ca-cert ${liferayHome}/elasticsearch-${project.'elasticsearch.major.version'}/node-1/config/certs/ca/ca.crt --ca-key ${liferayHome}/elasticsearch-${project.'elasticsearch.major.version'}/node-1/config/certs/ca/ca.key --pass liferay --ip 127.0.0.1 --dns localhost --name localhost --out ${liferayHome}/elasticsearch-${project.'elasticsearch.major.version'}/node-1/config/certs/localhost.p12"
+				executable "cmd.exe"
+			}
+		}
+
+		project.exec {
+			workingDir = file("${liferayHome}/elasticsearch-${project.'elasticsearch.major.version'}/node-1/bin")
+
+			if (OSDetector.isWindows()) {
+				args "/c keytool -importkeystore -deststorepass liferay -destkeystore ${liferayHome}/elasticsearch-${project.'elasticsearch.major.version'}/node-1/config/certs/localhost.jks -srckeystore ${liferayHome}/elasticsearch-${project.'elasticsearch.major.version'}/node-1/config/certs/localhost.p12 -srcstoretype PKCS12 -srcstorepass liferay"
+				executable "cmd.exe"
+			}
+		}
+
+	if (project.properties["app.server.type"] == "true") {
+		File setEnvBatFile = file("${project.'app.server.tomcat.dir'}/bin/setenv.bat")
+
+		setEnvBatFile.append """
+CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${liferayHome}/elasticsearch-${project.'elasticsearch.major.version'}/node-1/config/certs/localhost.jks -Djavax.net.ssl.trustStorePassword=liferay""""
+
+
+		File setEnvShFile = file("${project.'app.server.tomcat.dir'}/bin/setenv.sh")
+
+		setEnvShFile.append """
+CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${liferayHome}/elasticsearch-${project.'elasticsearch.major.version'}/node-1/config/certs/localhost.jks -Djavax.net.ssl.trustStorePassword=liferay""""
+	}
+	else {
+		logger.lifecycle "Set setenv.bat and setenv.sh manually before attempting to connect with portal."
+	}
+
+	doLast {
+		
 	}
 }
 
