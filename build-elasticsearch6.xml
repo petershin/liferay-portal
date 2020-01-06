@@ -1,0 +1,185 @@
+<?xml version="1.0"?>
+
+<project basedir="." name="portal-elasticsearch6" xmlns:antelope="antlib:ise.antelope.tasks">
+	<import file="build-common.xml" />
+
+	<target name="setup-elasticsearch">
+
+		<!-- elasticsearchExtension -->
+
+		<property name="elasticsearch.dir" value="${app.server.parent.dir}/elasticsearch-${elasticsearch.version}" />
+
+		<!-- setUpElasticsearch -->
+
+		<mirrors-get
+			dest="${app.server.parent.dir}/${elasticsearch.zip.name}"
+			skipChecksum="true"
+			src="${elasticsearch.zip.url}"
+		/>
+
+		<delete dir="${elasticsearch.dir}" />
+
+		<unzip
+			dest="${app.server.parent.dir}"
+			src="${app.server.parent.dir}/${elasticsearch.zip.name}"
+		/>
+
+		<echo append="true" file="${elasticsearch.dir}/config/elasticsearch.yml">${line.separator}path.repo: ${liferay.home}/data/elasticsearch6/repo</echo>
+
+		<echo append="true" file="${elasticsearch.dir}/config/elasticsearch.yml">${line.separator}bootstrap.system_call_filter: false
+cluster.name: LiferayElasticsearchCluster
+xpack.ml.enabled: false</echo>
+
+		<delete dir="${liferay.home}/data/elasticsearch6/repo" />
+
+		<mkdir dir="${liferay.home}/data/elasticsearch6/repo" />
+
+		<chmod
+			file="${liferay.home}/data/elasticsearch6/repo"
+			perm="777"
+			type="dir"
+			verbose="true"
+		/>
+
+		<echo append="true" file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch6.configuration.ElasticsearchConfiguration.config">${line.separator}operationMode="REMOTE"</echo>
+
+		<!-- setUpPlugins -->
+
+		<mirrors-get
+			dest="${elasticsearch.dir}/${elasticsearch.plugins.analysis-icu.zip.name}"
+			skipChecksum="true"
+			src="${elasticsearch.plugins.analysis-icu.zip.url}"
+		/>
+
+		<mirrors-get
+			dest="${elasticsearch.dir}/${elasticsearch.plugins.analysis-kuromoji.zip.name}"
+			skipChecksum="true"
+			src="${elasticsearch.plugins.analysis-kuromoji.zip.url}"
+		/>
+
+		<mirrors-get
+			dest="${elasticsearch.dir}/${elasticsearch.plugins.analysis-smartcn.zip.name}"
+			skipChecksum="true"
+			src="${elasticsearch.plugins.analysis-smartcn.zip.url}"
+		/>
+
+		<mirrors-get
+			dest="${elasticsearch.dir}/${elasticsearch.plugins.analysis-stempel.zip.name}"
+			skipChecksum="true"
+			src="${elasticsearch.plugins.analysis-stempel.zip.url}"
+		/>
+
+		<mirrors-get
+			dest="${elasticsearch.dir}/${elasticsearch.ltr.zip.name}"
+			skipChecksum="true"
+			src="${elasticsearch.ltr.zip.url}"
+		/>
+
+		<if>
+			<os family="unix" />
+			<then>
+				<chmod
+					perm="777"
+					type="both"
+					verbose="true"
+				>
+					<fileset
+						dir="${elasticsearch.dir}"
+					/>
+				</chmod>
+			</then>
+		</if>
+
+		<!-- installPlugins -->
+
+		<for list="${elasticsearch.plugins.analysis-icu.zip.name},${elasticsearch.plugins.analysis-kuromoji.zip.name},${elasticsearch.plugins.analysis-smartcn.zip.name},${elasticsearch.plugins.analysis-stempel.zip.name}" param="elasticsearch.plugin.name">
+			<sequential>
+				<if>
+					<os family="windows" />
+					<then>
+						<exec dir="${elasticsearch.dir}/bin" executable="cmd">
+							<arg value="/c" />
+							<arg value="elasticsearch-plugin install file:///${elasticsearch.dir}/@{elasticsearch.plugin.name}" />
+						</exec>
+					</then>
+					<else>
+						<exec dir="${elasticsearch.dir}/bin" executable="/bin/bash">
+							<arg value="-c" />
+							<arg value="./elasticsearch-plugin install file:///${elasticsearch.dir}/@{elasticsearch.plugin.name}" />
+						</exec>
+					</else>
+				</if>
+			</sequential>
+		</for>
+
+		<if>
+			<os family="windows" />
+			<then>
+				<exec dir="${elasticsearch.dir}/bin" executable="cmd" inputstring="y&#x0A;">
+					<arg value="/c" />
+					<arg value="elasticsearch-plugin install file:///${elasticsearch.dir}/${elasticsearch.ltr.zip.name}" />
+				</exec>
+			</then>
+			<else>
+				<exec dir="${elasticsearch.dir}/bin" executable="/bin/bash" inputstring="y&#x0A;">
+					<arg value="-c" />
+					<arg value="./elasticsearch-plugin install file:///${elasticsearch.dir}/${elasticsearch.ltr.zip.name}" />
+				</exec>
+			</else>
+		</if>
+
+		<!-- setUpElasticsearchCluster -->
+
+		<if>
+			<not>
+				<isset property="remote.elasticsearch.cluster.size" />
+			</not>
+			<then>
+				<property name="remote.elasticsearch.cluster.size" value="1" />
+			</then>
+		</if>
+
+		<math
+			datatype="int"
+			operand1="${remote.elasticsearch.cluster.size}"
+			operand2="2"
+			operation="/"
+			result="elasticsearch.master-eligible.nodes.quorum"
+		/>
+
+		<math
+			datatype="int"
+			operand1="${elasticsearch.master-eligible.nodes.quorum}"
+			operand2="1"
+			operation="+"
+			result="elasticsearch.master-eligible.nodes.quorum"
+		/>
+
+		<echo append="true" file="${elasticsearch.dir}/config/elasticsearch.yml">${line.separator}discovery.zen.minimum_master_nodes: ${elasticsearch.master-eligible.nodes.quorum}
+xpack.monitoring.collection.enabled: true</echo>
+
+		<var name="elasticsearch.node.number" value="0" />
+
+		<antelope:repeat count="${remote.elasticsearch.cluster.size}">
+			<math
+				datatype="int"
+				operand1="${elasticsearch.node.number}"
+				operand2="1"
+				operation="+"
+				result="elasticsearch.node.number"
+			/>
+
+			<delete dir="${elasticsearch.dir}-${elasticsearch.node.number}" />
+
+			<copy
+				todir="${elasticsearch.dir}-${elasticsearch.node.number}"
+			>
+				<fileset
+					dir="${elasticsearch.dir}"
+				/>
+			</copy>
+		</antelope:repeat>
+
+		<delete dir="${elasticsearch.dir}" />
+	</target>
+</project>

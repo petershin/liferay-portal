@@ -593,7 +593,7 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 					<os family="windows" />
 					<then>
 						<move
-							file="${app.server.parent.dir}/kibana-${elasticsearch.version}-windows-x86"
+							file="${app.server.parent.dir}/kibana-${elasticsearch.version}-windows-x86_64"
 							tofile="${elastic.kibana.dir}"
 						/>
 					</then>
@@ -649,6 +649,33 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 		</antcall>
 
 		<echo>Finished adding LTR linear regression model.</echo>
+	</target>
+
+	<target name="clean-elasticsearch">
+		<for param="elasticsearch.dir">
+			<path>
+				<dirset
+					dir="${app.server.parent.dir}"
+				>
+					<include name="elasticsearch-*" />
+				</dirset>
+			</path>
+
+			<sequential>
+				<delete dir="@{elasticsearch.dir}" />
+			</sequential>
+		</for>
+
+		<for param="elasticsearch.file">
+			<fileset
+				dir="${app.server.parent.dir}"
+			>
+				<include name="elasticsearch-*" />
+			</fileset>
+			<sequential>
+				<delete file="@{elasticsearch.file}" />
+			</sequential>
+		</for>
 	</target>
 
 	<target name="configure-elasticsearch-cluster-properties">
@@ -726,10 +753,17 @@ xpack.monitoring.collection.enabled: true</echo>
 		<echo>Restoring snapshot.${line.separator}${curl.output}</echo>
 	</target>
 
-	<target name="start-elasticsearch">
+	<target depends="clean-elasticsearch" name="setup-elasticsearch">
 		<lstopwatch action="start" name="start.elasticsearch" />
 
-		<get-testcase-property property.name="remote.elasticsearch.ltr.enabled" />
+		<if>
+			<not>
+				<isset property="remote.elasticsearch.ltr.enabled" />
+			</not>
+			<then>
+				<get-testcase-property property.name="remote.elasticsearch.ltr.enabled" />
+			</then>
+		</if>
 
 		<if>
 			<equals arg1="${remote.elasticsearch.ltr.enabled}" arg2="true" />
@@ -774,8 +808,6 @@ xpack.monitoring.collection.enabled: true</echo>
 
 		<configure-elasticsearch-properties />
 
-		<get-testcase-property property.name="elastic.xpack.enabled" />
-
 		<if>
 			<equals arg1="${elastic.xpack.enabled}" arg2="true" />
 			<then>
@@ -787,20 +819,29 @@ xpack.monitoring.collection.enabled: true</echo>
 
 		<configure-portal-elasticsearch-osgi-properties />
 
-		<get-testcase-property property.name="remote.elasticsearch.cluster.size" />
-
-		<if>
-			<not>
-				<isset property="remote.elasticsearch.cluster.size" />
-			</not>
-			<then>
-				<property name="remote.elasticsearch.cluster.size" value="1" />
-			</then>
-		</if>
-
 		<antcall target="configure-elasticsearch-cluster-properties" />
 
 		<antcall target="prepare-additional-elasticsearch-dirs" />
+	</target>
+
+	<target name="start-elasticsearch">
+		<if>
+			<not>
+				<isset property="remote.elasticsearch.ltr.enabled" />
+			</not>
+			<then>
+				<get-testcase-property property.name="remote.elasticsearch.ltr.enabled" />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${remote.elasticsearch.ltr.enabled}" arg2="true" />
+			<then>
+				<configure-elasticsearch67-test-properties />
+
+				<configure-elasticsearch6-ltr-test-properties />
+			</then>
+		</if>
 
 		<antcall target="start-elasticsearch-node" />
 
@@ -951,7 +992,7 @@ xpack.monitoring.collection.enabled: true</echo>
 			<elseif>
 				<os family="windows" />
 				<then>
-					<exec dir="${elastic.kibana.dir}/bin" executable="cmd">
+					<exec dir="${elastic.kibana.dir}/bin" executable="cmd" spawn="true">
 						<arg value="/c" />
 						<arg value="kibana" />
 					</exec>
