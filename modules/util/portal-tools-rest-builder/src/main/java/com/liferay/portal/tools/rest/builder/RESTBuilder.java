@@ -1215,6 +1215,10 @@ public class RESTBuilder {
 					OpenAPIParserUtil.getHTTPMethod(operation) + ":", x);
 
 				for (Parameter parameter : operation.getParameters()) {
+					if (Validator.isNotNull(parameter.getReference())) {
+						continue;
+					}
+
 					String in = parameter.getIn();
 					String parameterName = parameter.getName();
 
@@ -1293,6 +1297,10 @@ public class RESTBuilder {
 					OpenAPIParserUtil.getHTTPMethod(operation) + ":", x);
 
 				for (Parameter parameter : operation.getParameters()) {
+					if (Validator.isNotNull(parameter.getReference())) {
+						continue;
+					}
+
 					String in = parameter.getIn();
 					String parameterName = parameter.getName();
 
