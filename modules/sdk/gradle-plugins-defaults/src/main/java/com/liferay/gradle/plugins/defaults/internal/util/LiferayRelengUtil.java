@@ -200,7 +200,7 @@ public class LiferayRelengUtil {
 
 				if (logger.isQuietEnabled()) {
 					logger.quiet(
-						"The project dependency {} has new commits.",
+						"The project dependency '{}' has new commits.",
 						artifactProjectDir.getName());
 				}
 
@@ -227,7 +227,9 @@ public class LiferayRelengUtil {
 
 		if (Validator.isNull(artifactGitId)) {
 			if (logger.isInfoEnabled()) {
-				logger.info("{} has never been published", artifactProjectDir);
+				logger.info(
+					"The project '{}' has never been published.",
+					artifactProjectDir.getName());
 			}
 
 			return true;
@@ -269,7 +271,7 @@ public class LiferayRelengUtil {
 
 		for (String line : lines) {
 			if (logger.isInfoEnabled()) {
-				logger.info(line);
+				logger.info("Git Commit: {}", line);
 			}
 
 			if (Validator.isNull(line)) {
