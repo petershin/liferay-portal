@@ -231,6 +231,7 @@
 		<check name="JavaDeprecatedKernelClassesCheck" />
 		<check name="JavaFinderCacheCheck" />
 		<check name="JavaFinderImplCustomSQLCheck" />
+		<check name="JavaGradleCacheableTaskCheck" />
 		<check name="JavaIllegalImportsCheck">
 			<property name="enforceJavaUtilFunctionImports" value="true" />
 		</check>
