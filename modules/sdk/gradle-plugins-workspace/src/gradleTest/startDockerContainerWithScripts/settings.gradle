@@ -1,0 +1,81 @@
+import com.bmuschko.gradle.docker.tasks.container.DockerLogsContainer
+
+import java.net.InetAddress
+
+buildscript {
+	dependencies {
+		classpath fileTree(dir: pluginClasspathDir, excludes: ["biz.aQute.bnd-3.5.0.jar", "com.liferay.gradle.util-1.0.33.jar"], include: "*.jar")
+	}
+}
+
+apply plugin: "com.liferay.workspace"
+
+gradle.liferayWorkspace {
+	String hostName = InetAddress.localHost.canonicalHostName.toLowerCase()
+
+	dockerContainerId = hostName + "startdockercontainerwithscript"
+	dockerImageId = hostName + "startdockercontainerwithscript"
+}
+
+gradle.projectsEvaluated {
+	Project rootProject = gradle.rootProject
+
+	rootProject.tasks.register("assertLog", DockerLogsContainer) {
+		dependsOn rootProject.tasks.startDockerContainer
+
+		finalizedBy rootProject.tasks.cleanDockerImage
+
+		tailAll = true
+
+		follow = false
+
+		targetContainerId {
+			gradle.liferayWorkspace.dockerContainerId
+		}
+
+		def expectedLines = ["Common script", "Other script"]
+		def unexpectedLines = ["Local script", "No such file or directory"]
+
+		int expectedLinesDetected = 0
+		int unexpectedLinesDetected = 0
+
+		sink new PrintWriter(new StringWriter()) {
+			public void write(String line) {
+				if (expectedLines.contains(line.trim())) {
+					rootProject.println "expected line detected."
+					expectedLinesDetected++
+				}
+
+				if (unexpectedLines.contains(line.trim())) {
+					rootProject.println "unexpected line detected."
+					unexpectedLinesDetected++
+				}
+
+				rootProject.print line
+			}
+		}
+
+		doLast {
+			int retries = 0
+
+			while (expectedLinesDetected < 2 && retries < 20) {
+				Thread.sleep(100)
+
+				retries++
+
+				expectedLinesDetected = 0
+				unexpectedLinesDetected = 0
+
+				start()
+			}
+
+			if (expectedLinesDetected != 2) {
+				throw new GradleException("The expected lines " + expectedLines + " were not found in the log.")
+			}
+
+			if (unexpectedLinesDetected > 0) {
+				throw new GradleException("One of the unexpected lines " + unexpectedLines + " were found in the log.")
+			}
+		}
+	}
+}
