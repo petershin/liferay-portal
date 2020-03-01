@@ -1,0 +1,191 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.gradle.util.tasks;
+
+import com.liferay.gradle.util.work.ExecuteJavaWorkAction;
+import com.liferay.gradle.util.work.ExecuteJavaWorkParameters;
+
+import java.util.Collections;
+import java.util.List;
+
+import javax.inject.Inject;
+
+import org.gradle.api.Action;
+import org.gradle.api.DefaultTask;
+import org.gradle.api.file.ConfigurableFileCollection;
+import org.gradle.api.file.FileCollection;
+import org.gradle.api.logging.Logger;
+import org.gradle.api.provider.ListProperty;
+import org.gradle.api.provider.Property;
+import org.gradle.api.tasks.TaskAction;
+import org.gradle.workers.ClassLoaderWorkerSpec;
+import org.gradle.workers.ProcessWorkerSpec;
+import org.gradle.workers.WorkQueue;
+import org.gradle.workers.WorkerExecutor;
+
+/**
+ * @author Peter Shin
+ */
+public abstract class ExecuteJavaTask extends DefaultTask {
+
+	@Inject
+	public ExecuteJavaTask(WorkerExecutor workerExecutor) {
+		_workerExecutor = workerExecutor;
+	}
+
+	@TaskAction
+	public void executeJava() {
+		_submitWorkQueue(_createWorkQueue());
+	}
+
+	public FileCollection getClasspath() {
+		return null;
+	}
+
+	protected List<String> getArgs() {
+		return null;
+	}
+
+	protected abstract String getClassName();
+
+	protected List<String> getJvmArgs() {
+		return null;
+	}
+
+	protected String getMethodName() {
+		return "main";
+	}
+
+	protected WorkerExecutor getWorkerExecutor() {
+		return _workerExecutor;
+	}
+
+	private WorkQueue _createWorkQueue() {
+		final FileCollection classpath = getClasspath();
+		final List<String> jvmArgs = getJvmArgs();
+		final Logger logger = getLogger();
+
+		WorkerExecutor workerExecutor = getWorkerExecutor();
+
+		if ((jvmArgs != null) && !jvmArgs.isEmpty()) {
+			return workerExecutor.processIsolation(
+				new Action<ProcessWorkerSpec>() {
+
+					@Override
+					public void execute(ProcessWorkerSpec processWorkerSpec) {
+						processWorkerSpec.forkOptions(
+							forkOptions -> forkOptions.jvmArgs(jvmArgs));
+
+						if ((classpath != null) && !classpath.isEmpty()) {
+							ConfigurableFileCollection processWorkerClasspath =
+								processWorkerSpec.getClasspath();
+
+							processWorkerClasspath.from(classpath);
+						}
+
+						if (logger.isInfoEnabled()) {
+							StringBuilder sb = new StringBuilder();
+
+							sb.append("Running in process isolation with ");
+							sb.append("JVM arguments ");
+							sb.append(jvmArgs);
+
+							if ((classpath != null) && !classpath.isEmpty()) {
+								sb.append(" and classpath ");
+								sb.append(classpath.getAsPath());
+							}
+
+							logger.info(sb.toString());
+						}
+					}
+
+				});
+		}
+
+		if ((classpath != null) && !classpath.isEmpty()) {
+			return workerExecutor.classLoaderIsolation(
+				new Action<ClassLoaderWorkerSpec>() {
+
+					@Override
+					public void execute(
+						ClassLoaderWorkerSpec classLoaderWorkerSpec) {
+
+						ConfigurableFileCollection classLoaderWorkerClasspath =
+							classLoaderWorkerSpec.getClasspath();
+
+						classLoaderWorkerClasspath.from(classpath);
+
+						if (logger.isInfoEnabled()) {
+							logger.info(
+								"Running in class loader isolation with {}",
+								classpath.getAsPath());
+						}
+					}
+
+				});
+		}
+
+		return workerExecutor.noIsolation();
+	}
+
+	private void _submitWorkQueue(WorkQueue workQueue) {
+		workQueue.submit(
+			ExecuteJavaWorkAction.class,
+			new Action<ExecuteJavaWorkParameters>() {
+
+				@Override
+				public void execute(
+					ExecuteJavaWorkParameters executeJavaWorkParameters) {
+
+					ListProperty<String> argsListProperty =
+						executeJavaWorkParameters.getArgs();
+
+					List<String> args = getArgs();
+
+					if (args == null) {
+						args = Collections.emptyList();
+					}
+
+					argsListProperty.set(args);
+
+					Property<String> classNameProperty =
+						executeJavaWorkParameters.getClassName();
+
+					String className = getClassName();
+
+					classNameProperty.set(className);
+
+					Property<String> methodNameProperty =
+						executeJavaWorkParameters.getMethodName();
+
+					String methodName = getMethodName();
+
+					methodNameProperty.set(methodName);
+
+					Logger logger = getLogger();
+
+					if (logger.isInfoEnabled()) {
+						logger.info(
+							"Running '{}#{}' with arguments '{}'", className,
+							methodName, args);
+					}
+				}
+
+			});
+	}
+
+	private final WorkerExecutor _workerExecutor;
+
+}
