@@ -14,11 +14,15 @@
 
 package com.liferay.gradle.util.tasks;
 
+import com.liferay.gradle.util.GradleUtil;
 import com.liferay.gradle.util.work.ExecuteJavaWorkAction;
 import com.liferay.gradle.util.work.ExecuteJavaWorkParameters;
 
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.inject.Inject;
 
@@ -30,6 +34,7 @@ import org.gradle.api.logging.Logger;
 import org.gradle.api.provider.ListProperty;
 import org.gradle.api.provider.Property;
 import org.gradle.api.tasks.TaskAction;
+import org.gradle.util.GUtil;
 import org.gradle.workers.ClassLoaderWorkerSpec;
 import org.gradle.workers.ProcessWorkerSpec;
 import org.gradle.workers.WorkQueue;
@@ -54,15 +59,35 @@ public abstract class ExecuteJavaTask extends DefaultTask {
 		return null;
 	}
 
+	public List<String> getJvmArgs() {
+		return GradleUtil.toStringList(_jvmArgs);
+	}
+
+	public ExecuteJavaTask jvmArgs(Iterable<Object> jvmArgs) {
+		GUtil.addToCollection(_jvmArgs, jvmArgs);
+
+		return this;
+	}
+
+	public ExecuteJavaTask jvmArgs(Object... jvmArgs) {
+		return jvmArgs(Arrays.asList(jvmArgs));
+	}
+
+	public void setJvmArgs(Iterable<Object> jvmArgs) {
+		_jvmArgs.clear();
+
+		jvmArgs(jvmArgs);
+	}
+
+	public void setJvmArgs(Object... jvmArgs) {
+		setJvmArgs(Arrays.asList(jvmArgs));
+	}
+
 	protected List<String> getArgs() {
 		return null;
 	}
 
 	protected abstract String getClassName();
-
-	protected List<String> getJvmArgs() {
-		return null;
-	}
 
 	protected String getMethodName() {
 		return "main";
@@ -186,6 +211,7 @@ public abstract class ExecuteJavaTask extends DefaultTask {
 			});
 	}
 
+	private final Set<Object> _jvmArgs = new HashSet<>();
 	private final WorkerExecutor _workerExecutor;
 
 }
