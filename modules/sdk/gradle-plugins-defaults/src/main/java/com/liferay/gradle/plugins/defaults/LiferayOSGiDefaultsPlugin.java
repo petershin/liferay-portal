@@ -17,6 +17,10 @@ package com.liferay.gradle.plugins.defaults;
 import aQute.bnd.osgi.Constants;
 import aQute.bnd.version.Version;
 
+import com.github.spotbugs.snom.SpotBugsPlugin;
+import com.github.spotbugs.snom.SpotBugsReport;
+import com.github.spotbugs.snom.SpotBugsTask;
+
 import com.gradle.publish.PublishPlugin;
 
 import com.liferay.gradle.plugins.JspCDefaultsPlugin;
@@ -139,6 +143,7 @@ import org.gradle.StartParameter;
 import org.gradle.api.Action;
 import org.gradle.api.GradleException;
 import org.gradle.api.JavaVersion;
+import org.gradle.api.NamedDomainObjectContainer;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
@@ -176,8 +181,10 @@ import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileCopyDetails;
 import org.gradle.api.file.FileTree;
 import org.gradle.api.file.SourceDirectorySet;
+import org.gradle.api.internal.ConventionMapping;
 import org.gradle.api.internal.GradleInternal;
 import org.gradle.api.internal.artifacts.publish.ArchivePublishArtifact;
+import org.gradle.api.internal.plugins.DslObject;
 import org.gradle.api.internal.project.ProjectInternal;
 import org.gradle.api.invocation.Gradle;
 import org.gradle.api.logging.LogLevel;
@@ -190,14 +197,9 @@ import org.gradle.api.plugins.JavaPluginConvention;
 import org.gradle.api.plugins.MavenPlugin;
 import org.gradle.api.plugins.MavenPluginConvention;
 import org.gradle.api.plugins.MavenRepositoryHandlerConvention;
-import org.gradle.api.plugins.quality.FindBugs;
-import org.gradle.api.plugins.quality.FindBugsPlugin;
-import org.gradle.api.plugins.quality.FindBugsReports;
 import org.gradle.api.plugins.quality.Pmd;
 import org.gradle.api.plugins.quality.PmdExtension;
 import org.gradle.api.plugins.quality.PmdPlugin;
-import org.gradle.api.reporting.CustomizableHtmlReport;
-import org.gradle.api.reporting.SingleFileReport;
 import org.gradle.api.resources.ResourceHandler;
 import org.gradle.api.resources.TextResourceFactory;
 import org.gradle.api.specs.Spec;
@@ -485,10 +487,10 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		_configureTaskTestIntegration(project);
 		_configureTaskTlddoc(project, portalRootDir);
 		_configureTasksCheckOSGiBundleState(project, liferayExtension);
-		_configureTasksFindBugs(project);
 		_configureTasksJavaCompile(project);
 		_configureTasksJspC(project);
 		_configureTasksPmd(project);
+		_configureTasksSpotBugs(project);
 		_configureTestIntegrationTomcat(project);
 
 		_addTaskUpdateFileSnapshotVersions(project);
@@ -1693,7 +1695,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		GradleUtil.applyPlugin(project, BaselinePlugin.class);
 		GradleUtil.applyPlugin(project, DependencyCheckerPlugin.class);
-		GradleUtil.applyPlugin(project, FindBugsPlugin.class);
+		GradleUtil.applyPlugin(project, SpotBugsPlugin.class);
 		GradleUtil.applyPlugin(project, IdeaPlugin.class);
 		GradleUtil.applyPlugin(project, JSDocPlugin.class);
 		GradleUtil.applyPlugin(project, MavenPlugin.class);
@@ -3389,52 +3391,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			});
 	}
 
-	private void _configureTaskFindBugs(FindBugs findBugs) {
-		Project project = findBugs.getProject();
-
-		findBugs.setMaxHeapSize("3g");
-
-		FindBugsReports findBugsReports = findBugs.getReports();
-
-		CustomizableHtmlReport customizableHtmlReport =
-			findBugsReports.getHtml();
-
-		customizableHtmlReport.setEnabled(true);
-
-		SingleFileReport xmlReport = findBugsReports.getXml();
-
-		xmlReport.setEnabled(false);
-
-		SourceSet sourceSet = null;
-
-		String name = findBugs.getName();
-
-		if (name.startsWith("findbugs")) {
-			name = GUtil.toLowerCamelCase(name.substring(8));
-
-			JavaPluginConvention javaPluginConvention =
-				GradleUtil.getConvention(project, JavaPluginConvention.class);
-
-			SourceSetContainer sourceSetContainer =
-				javaPluginConvention.getSourceSets();
-
-			sourceSet = sourceSetContainer.findByName(name);
-		}
-
-		if (sourceSet != null) {
-			ConfigurableFileTree configurableFileTree = project.fileTree(
-				FileUtil.getJavaClassesDir(sourceSet));
-
-			configurableFileTree.setBuiltBy(
-				Collections.singleton(sourceSet.getOutput()));
-
-			configurableFileTree.setIncludes(
-				Collections.singleton("**/*.class"));
-
-			findBugs.setClasses(configurableFileTree);
-		}
-	}
-
 	private void _configureTaskGenerateJSPJava(
 		Project project, LiferayExtension liferayExtension) {
 
@@ -3814,21 +3770,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		}
 	}
 
-	private void _configureTasksFindBugs(Project project) {
-		TaskContainer taskContainer = project.getTasks();
-
-		taskContainer.withType(
-			FindBugs.class,
-			new Action<FindBugs>() {
-
-				@Override
-				public void execute(FindBugs findBugs) {
-					_configureTaskFindBugs(findBugs);
-				}
-
-			});
-	}
-
 	private void _configureTasksJavaCompile(Project project) {
 		TaskContainer taskContainer = project.getTasks();
 
@@ -3871,6 +3812,78 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 				@Override
 				public void execute(Pmd pmd) {
 					_configureTaskPmd(pmd);
+				}
+
+			});
+	}
+
+	private void _configureTaskSpotBugs(SpotBugsTask spotBugsTask) {
+		Project project = spotBugsTask.getProject();
+
+		NamedDomainObjectContainer<SpotBugsReport> reports =
+			spotBugsTask.getReports();
+
+		SpotBugsReport htmlReport = reports.create("html");
+
+		htmlReport.setEnabled(true);
+
+		htmlReport.setStylesheet("fancy-hist.xsl");
+
+		SourceSet sourceSet = null;
+
+		String name = spotBugsTask.getName();
+
+		if (name.startsWith("spotbugs")) {
+			name = GUtil.toLowerCamelCase(name.substring(8));
+
+			JavaPluginConvention javaPluginConvention =
+				GradleUtil.getConvention(project, JavaPluginConvention.class);
+
+			SourceSetContainer sourceSetContainer =
+				javaPluginConvention.getSourceSets();
+
+			sourceSet = sourceSetContainer.findByName(name);
+		}
+
+		if (sourceSet != null) {
+			ConfigurableFileTree configurableFileTree = project.fileTree(
+				FileUtil.getJavaClassesDir(sourceSet));
+
+			configurableFileTree.setBuiltBy(
+				Collections.singleton(sourceSet.getOutput()));
+
+			configurableFileTree.setIncludes(
+				Collections.singleton("**/*.class"));
+
+			spotBugsTask.setClasses(configurableFileTree);
+		}
+
+		DslObject dslObject = new DslObject(spotBugsTask);
+
+		ConventionMapping conventionMapping = dslObject.getConventionMapping();
+
+		conventionMapping.map(
+			"maxHeapSize",
+			new Callable<String>() {
+
+				@Override
+				public String call() throws Exception {
+					return "3g";
+				}
+
+			});
+	}
+
+	private void _configureTasksSpotBugs(Project project) {
+		TaskContainer taskContainer = project.getTasks();
+
+		taskContainer.withType(
+			SpotBugsTask.class,
+			new Action<SpotBugsTask>() {
+
+				@Override
+				public void execute(SpotBugsTask spotBugsTask) {
+					_configureTaskSpotBugs(spotBugsTask);
 				}
 
 			});
