@@ -179,8 +179,18 @@ public class BaselinePlugin implements Plugin<Project> {
 
 		Project project = newJarTask.getProject();
 
+		if (overwrite) {
+			taskName = taskName + "Replacement";
+
+			Task task = GradleUtil.getTask(project, BASELINE_TASK_NAME);
+
+			task.setEnabled(false);
+
+			task.dependsOn(taskName);
+		}
+
 		final BaselineTask baselineTask = GradleUtil.addTask(
-			project, taskName, BaselineTask.class, overwrite);
+			project, taskName, BaselineTask.class);
 
 		File bndFile = project.file("bnd.bnd");
 
