@@ -1274,6 +1274,17 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 	private void _configureTaskJar(final Project project) {
 		Jar jar = (Jar)GradleUtil.getTask(project, JavaPlugin.JAR_TASK_NAME);
 
+		Convention convention = jar.getConvention();
+
+		Map<String, Object> plugins = convention.getPlugins();
+
+		final BundleTaskConvention bundleTaskConvention =
+			new BundleTaskConvention(jar);
+
+		plugins.put("bundle", bundleTaskConvention);
+
+		jar.setDescription("Assembles a bundle containing the main classes.");
+
 		jar.doFirst(
 			new Action<Task>() {
 
@@ -1300,15 +1311,17 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 						}
 					}
 
-					Convention convention = jar.getConvention();
-
-					BundleTaskConvention bundleTaskConvention =
-						convention.getPlugin(BundleTaskConvention.class);
-
-					bundleTaskConvention.setBndfile(
-						new File("$$$DOESNOTEXIST$$$"));
-
 					bundleTaskConvention.setBnd(instructions);
+				}
+
+			});
+
+		jar.doLast(
+			new Action<Task>() {
+
+				@Override
+				public void execute(Task task) {
+					bundleTaskConvention.buildBundle();
 				}
 
 			});
