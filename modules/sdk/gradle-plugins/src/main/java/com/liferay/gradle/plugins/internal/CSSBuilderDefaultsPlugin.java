@@ -42,10 +42,6 @@ public class CSSBuilderDefaultsPlugin
 
 		super.configureDefaults(project, cssBuilderPlugin);
 
-		addPortalToolDependencies(
-			project, CSSBuilderPlugin.PORTAL_COMMON_CSS_CONFIGURATION_NAME,
-			_FRONTEND_COMMON_CSS_NAME);
-
 		_configureTasksBuildCSS(project);
 	}
 
@@ -56,7 +52,7 @@ public class CSSBuilderDefaultsPlugin
 
 	@Override
 	protected String getPortalToolConfigurationName() {
-		return CSSBuilderPlugin.CSS_BUILDER_CONFIGURATION_NAME;
+		return CSSBuilderPlugin.PORTAL_COMMON_CSS_CONFIGURATION_NAME;
 	}
 
 	@Override
@@ -112,9 +108,7 @@ public class CSSBuilderDefaultsPlugin
 			});
 	}
 
-	private static final String _FRONTEND_COMMON_CSS_NAME =
+	private static final String _PORTAL_TOOL_NAME =
 		"com.liferay.frontend.css.common";
-
-	private static final String _PORTAL_TOOL_NAME = "com.liferay.css.builder";
 
 }
