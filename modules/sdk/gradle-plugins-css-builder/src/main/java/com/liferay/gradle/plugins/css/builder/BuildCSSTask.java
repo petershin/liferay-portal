@@ -16,7 +16,6 @@ package com.liferay.gradle.plugins.css.builder;
 
 import com.liferay.css.builder.CSSBuilder;
 import com.liferay.css.builder.CSSBuilderArgs;
-import com.liferay.gradle.util.FileUtil;
 import com.liferay.gradle.util.GradleUtil;
 import com.liferay.gradle.util.Validator;
 
@@ -64,9 +63,11 @@ public class BuildCSSTask extends DefaultTask {
 
 	@TaskAction
 	public void buildCSS() throws Exception {
-		List<String> args = _getCompleteArgs();
+		CSSBuilderArgs cssBuilderArgs = _getCSSBuilderArgs();
 
-		CSSBuilder.main(args.toArray(new String[0]));
+		CSSBuilder cssBuilder = new CSSBuilder(cssBuilderArgs);
+
+		cssBuilder.execute();
 	}
 
 	public BuildCSSTask dirNames(Iterable<Object> dirNames) {
@@ -328,44 +329,39 @@ public class BuildCSSTask extends DefaultTask {
 		return path;
 	}
 
-	private List<String> _getCompleteArgs() {
-		List<String> args = new ArrayList<>();
+	private CSSBuilderArgs _getCSSBuilderArgs() {
+		CSSBuilderArgs cssBuilderArgs = new CSSBuilderArgs();
 
-		args.add(
-			"--append-css-import-timestamps=" + isAppendCssImportTimestamps());
+		cssBuilderArgs.setAppendCssImportTimestamps(
+			isAppendCssImportTimestamps());
 
-		String baseDir = FileUtil.getAbsolutePath(getBaseDir());
-
-		args.add("--base-dir=" + _removeTrailingSlash(baseDir));
+		cssBuilderArgs.setBaseDir(getBaseDir());
 
 		String sassCompilerClassName = getSassCompilerClassName();
 
 		if (Validator.isNotNull(sassCompilerClassName)) {
-			args.add("--compiler=" + sassCompilerClassName);
+			cssBuilderArgs.setSassCompilerClassName(sassCompilerClassName);
 		}
 
-		args.add("--dir-names=" + _getDirNamesArg());
+		cssBuilderArgs.setDirNames(_getDirNamesArg());
 
 		String excludes = CollectionUtils.join(",", getExcludes());
 
-		args.add("--excludes=" + excludes);
+		cssBuilderArgs.setExcludes(excludes);
 
-		args.add("--generate-source-map=" + isGenerateSourceMap());
+		cssBuilderArgs.setGenerateSourceMap(isGenerateSourceMap());
 
 		FileCollection imports = getImports();
 
-		args.add("--import-paths=" + imports.getAsPath());
+		cssBuilderArgs.setImportPaths(new ArrayList<>(imports.getFiles()));
 
-		args.add("--output-dir=" + _addTrailingSlash(getOutputDirName()));
+		cssBuilderArgs.setOutputDirName(_addTrailingSlash(getOutputDirName()));
 
-		args.add("--precision=" + getPrecision());
+		cssBuilderArgs.setPrecision(getPrecision());
 
-		String rtlExcludedPathRegexps = CollectionUtils.join(
-			",", getRtlExcludedPathRegexps());
+		cssBuilderArgs.setRtlExcludedPathRegexps(getRtlExcludedPathRegexps());
 
-		args.add("--rtl-excluded-path-regexps=" + rtlExcludedPathRegexps);
-
-		return args;
+		return cssBuilderArgs;
 	}
 
 	private String _getDirNamesArg() {
