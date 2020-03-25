@@ -296,11 +296,53 @@ gradle.beforeProject {
 			buildCSS {
 				rtlExcludedPathRegexps = [".+"]
 			}
+
+			buildCSS {
+				doLast {
+					if (file("classes").exists()) {
+						file("classes").eachDir{ logger.lifecycle "########## buildCSS: " + it } }
+					else {
+						logger.lifecycle "########## buildCSS: none"
+					}
+				}
+			}
+
+			copyCSS {
+				doLast {
+					if (file("classes").exists()) {
+						file("classes").eachDir{ logger.lifecycle "########## copyCSS: " + it } }
+					else {
+						logger.lifecycle "########## copyCSS: none"
+					}
+				}
+			}
 		}
 
 		pluginManager.withPlugin("com.liferay.js.module.config.generator") {
 			downloadLiferayModuleConfigGenerator {
 				enabled = false
+			}
+		}
+
+		pluginManager.withPlugin("com.liferay.node") {
+			if (file("package.json").exists() && file("package.json").text.contains("build")) {
+				packageRunBuild {
+					doFirst {
+						if (file("classes").exists()) {
+							file("classes").eachDir{ logger.lifecycle "########## packageRunBuild: " + it } }
+						else {
+							logger.lifecycle "########## packageRunBuild: none"
+						}
+					}
+
+					doLast {
+						if (file("classes").exists()) {
+							file("classes").eachDir{ logger.lifecycle "########## packageRunBuild: " + it } }
+						else {
+							logger.lifecycle "########## packageRunBuild: none"
+						}
+					}
+				}
 			}
 		}
 
@@ -402,6 +444,48 @@ gradle.beforeProject {
 				outputs.cacheIf {
 					false
 				}
+			}
+
+			classes {
+				doLast {
+					if (file("classes").exists()) {
+						file("classes").eachDir{ logger.lifecycle "########## classes: " + it } }
+					else {
+						logger.lifecycle "########## classes: none"
+					}
+				}
+			}
+
+			compileJava {
+				doLast {
+					if (file("classes").exists()) {
+						file("classes").eachDir{ logger.lifecycle "########## compileJava: " + it } }
+					else {
+						logger.lifecycle "########## compileJava: none"
+					}
+				}
+			}
+
+			processResources {
+				doFirst {
+					if (file("classes").exists()) {
+						file("classes").eachDir{ logger.lifecycle "# first ## processResources: " + it } }
+					else {
+						logger.lifecycle "1######### processResources: none"
+					}
+				}
+
+				doLast {
+					if (file("classes").exists()) {
+						file("classes").eachDir{ logger.lifecycle "# last ### processResources: " + it } }
+					else {
+						logger.lifecycle "2######### processResources: none"
+					}
+				}
+			}
+
+			if (file("package.json").exists() && file("package.json").text.contains("build")) {
+				packageRunBuild.mustRunAfter compileJava
 			}
 		}
 
