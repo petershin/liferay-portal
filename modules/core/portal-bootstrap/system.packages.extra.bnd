@@ -98,6 +98,8 @@ Export-Package:\
 	\
 	!unicode-license.txt,\
 	\
+	com.fasterxml.jackson.databind;version='2.10.3.LIFERAY-PATCHED-1',\
+	\
 	com.ibm.crypto.provider,\
 	\
 	com.liferay.ibm.icu.*;version='4.0.1',\
@@ -391,7 +393,6 @@ Provide-Capability:\
 	@../../../portal-impl/portal-impl.jar,\
 	@../../../portal-kernel/portal-kernel.jar,\
 	@lib/biz.aQute.bnd.annotation.jar!/aQute/bnd/annotation/metatype/*,\
-	@lib/com.fasterxml.jackson.databind.jar,\
 	@lib/com.liferay.osgi.service.tracker.collections.jar,\
 	@lib/com.liferay.petra.concurrent.jar,\
 	@lib/com.liferay.petra.content.jar,\
