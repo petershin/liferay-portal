@@ -98,7 +98,7 @@ Export-Package:\
 	\
 	!unicode-license.txt,\
 	\
-	com.fasterxml.jackson.databind;version='2.10.3.LIFERAY-PATCHED-1',\
+	com.fasterxml.jackson.databind.*;version='2.10.3.LIFERAY-PATCHED-1',\
 	\
 	com.ibm.crypto.provider,\
 	\
