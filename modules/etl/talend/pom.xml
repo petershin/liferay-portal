@@ -36,7 +36,7 @@
 		<repository>
 			<id>liferay</id>
 			<name>Liferay Repository</name>
-			<url>https://repository-cdn.liferay.com/nexus/content/groups/public/</url>
+			<url>https://repository-linode.liferay.com/nexus/content/groups/public/</url>
 		</repository>
 		<repository>
 			<id>talend_nexus</id>
@@ -57,7 +57,7 @@
 		<pluginRepository>
 			<id>liferay</id>
 			<name>Liferay Repository</name>
-			<url>https://repository-cdn.liferay.com/nexus/content/groups/public/</url>
+			<url>https://repository-linode.liferay.com/nexus/content/groups/public/</url>
 		</pluginRepository>
 		<pluginRepository>
 			<id>talend_runtime_nexus</id>

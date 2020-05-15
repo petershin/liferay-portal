@@ -157,7 +157,7 @@ public interface BaseProjectTemplatesTestCase {
 	public static final String OUTPUT_FILE_NAME_GLOB_REGEX = "*.{jar,war}";
 
 	public static final String REPOSITORY_CDN_URL =
-		"https://repository-cdn.liferay.com/nexus/content/groups/public";
+		"https://repository-linode.liferay.com/nexus/content/groups/public";
 
 	public static final String SETTINGS_GRADLE_FILE_NAME = "settings.gradle";
 
