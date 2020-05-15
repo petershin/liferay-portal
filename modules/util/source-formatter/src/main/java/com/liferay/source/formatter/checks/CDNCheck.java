@@ -30,20 +30,8 @@ public class CDNCheck extends BaseFileCheck {
 
 	private String _fixCDNURL(String content) {
 		return StringUtil.replace(
-			content,
-			new String[] {
-				"cdn.lfrs.sl/releases.liferay.com",
-				"cdn.lfrs.sl/repository.liferay.com",
-				"repository.liferay.com/nexus/content/repositories/",
-				"repository.liferay.com/nexus/service/local/repo_groups" +
-					"/private/content/"
-			},
-			new String[] {
-				"releases-cdn.liferay.com", "repository-cdn.liferay.com",
-				"repository-cdn.liferay.com/nexus/content/repositories/",
-				"repository-cdn.liferay.com/nexus/service/local/repo_groups" +
-					"/private/content/"
-			});
+			content, new String[] {"repository-cdn.liferay.com"},
+			new String[] {"repository-linode.liferay.com"});
 	}
 
 }
