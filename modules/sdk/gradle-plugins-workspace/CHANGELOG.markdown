@@ -1567,7 +1567,7 @@ version 3.2.3.
 
 ### Description
 - [LPS-77875] Update the private constant `_DEFAULT_REPOSITORY_URL` to
-`https://repository-cdn.liferay.com/nexus/content/groups/public`.
+`https://repository-linode.liferay.com/nexus/content/groups/public`.
 
 ## 1.10.0 - 2018-05-26
 
@@ -2526,7 +2526,7 @@ version 3.0.0.
 - [LPS-71724] Add the ability to download and upgrade the Plugins SDK
 directories by executing the `upgradePluginsSDK` task in the root project.
 - [LPS-71724] Add the
-[Liferay CDN](https://repository-cdn.liferay.com/nexus/content/groups/public)
+[Liferay CDN](https://repository-linode.liferay.com/nexus/content/groups/public)
 as the default repository in the root project. This behavior can be disabled by
 setting the `liferay.workspace.default.repository.enabled` property to `false`
 in `gradle.properties`.
@@ -2799,7 +2799,7 @@ default repository for module and WAR projects.
 
 ### Description
 - [LPS-68293] Add the
-[Liferay CDN](https://repository-cdn.liferay.com/nexus/content/groups/public)
+[Liferay CDN](https://repository-linode.liferay.com/nexus/content/groups/public)
 as default repository in WAR projects. This behavior can be disabled by setting
 the `liferay.workspace.wars.default.repository.enabled` property in
 `gradle.properties` to `false`.

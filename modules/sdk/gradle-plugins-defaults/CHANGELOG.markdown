@@ -4789,7 +4789,7 @@ file.
 
 ### Description
 - [LPS-74544] Fixed URLs in `config-maven.gradle`
-(`https://repository-cdn.liferay.com/nexus/content/repositories/`).
+(`https://repository-linode.liferay.com/nexus/content/repositories/`).
 
 ## 5.4.77 - 2018-07-13
 
@@ -5070,7 +5070,7 @@ about tracking data.
 ### Description
 - [LPS-77425] Update the constant `DEFAULT_REPOSITORY_URL` in the
 `GradlePluginsDefaultsUtil` class to
-`https://repository-cdn.liferay.com/nexus/content/groups/public`.
+`https://repository-linode.liferay.com/nexus/content/groups/public`.
 
 ## 5.4.41 - 2018-06-13
 
@@ -5116,7 +5116,7 @@ about tracking data.
 ### Description
 - [LPS-77875] Update the constant `DEFAULT_REPOSITORY_URL` in the
 `GradlePluginsDefaultsUtil` class to
-`https://repository-cdn.liferay.com/nexus/content/groups/public`.
+`https://repository-linode.liferay.com/nexus/content/groups/public`.
 
 ## 5.4.35 - 2018-06-11
 
