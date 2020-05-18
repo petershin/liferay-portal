@@ -406,10 +406,12 @@ public class LiferayHttpResourceAccessor extends HttpResourceAccessor {
 		"http://cdn.repository.liferay.com/nexus/content/groups/public/",
 		"http://repository.liferay.com/nexus/content/groups/public/",
 		"http://repository-cdn.liferay.com/nexus/content/groups/public/",
+		"http://repository-linode.liferay.com/nexus/content/groups/public/",
 		"https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups" +
 			"/public/",
 		"https://repository.liferay.com/nexus/content/groups/public/",
-		"https://repository-cdn.liferay.com/nexus/content/groups/public/"
+		"https://repository-cdn.liferay.com/nexus/content/groups/public/",
+		"https://repository-linode.liferay.com/nexus/content/groups/public/"
 	};
 
 	private static final Logger _logger = LoggerFactory.getLogger(

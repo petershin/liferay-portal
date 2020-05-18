@@ -188,6 +188,6 @@ public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 	}
 
 	private static final String _DEFAULT_REPOSITORY_URL =
-		"https://repository-cdn.liferay.com/nexus/content/groups/public";
+		"https://repository-linode.liferay.com/nexus/content/groups/public";
 
 }

@@ -129,7 +129,7 @@ repositories {
 	}
 
 	maven {
-		url System.properties["repository.url"] ?: "https://repository-cdn.liferay.com/nexus/content/groups/public"
+		url System.properties["repository.url"] ?: "https://repository-linode.liferay.com/nexus/content/groups/public"
 	}
 }
 
@@ -148,7 +148,7 @@ updateYarnBinariesCache {
 wrapperPortal {
 	File wrapperDir = projectDir.parentFile
 
-	distributionUrl = "../../tools/gradle-${gradle.gradleVersion}.LIFERAY-PATCHED-2-bin.zip"
+	distributionUrl = "../../tools/gradle-${gradle.gradleVersion}.LIFERAY-PATCHED-3-bin.zip"
 	dependsOn wrapperSubrepo
 
 	doLast {

@@ -59,7 +59,7 @@ buildscript {
 
 	repositories {
 		maven {
-			url "https://repository-cdn.liferay.com/nexus/content/groups/public"
+			url "https://repository-linode.liferay.com/nexus/content/groups/public"
 		}
 	}
 }
@@ -776,7 +776,7 @@ prepareMajorIncrement {
 
 repositories {
 	maven {
-		url "https://repository-cdn.liferay.com/nexus/content/groups/public"
+		url "https://repository-linode.liferay.com/nexus/content/groups/public"
 	}
 }
 
@@ -1419,9 +1419,9 @@ private List<Dependency> _getPortalArtifactsDependencies(List<File> relengProper
 				String version = array[2]
 
 				String[] urls = [
-					"https://repository-cdn.liferay.com/nexus/service/local/repositories/gradle-plugins/content/${groupPath}/${name}/${version}/${name}-${version}.jar",
-					"https://repository-cdn.liferay.com/nexus/service/local/repositories/liferay-public-releases/content/${groupPath}/${name}/${version}/${name}-${version}.jar",
-					"https://repository-cdn.liferay.com/nexus/service/local/repositories/maven2/content/${groupPath}/${name}/${version}/${name}-${version}.jar"
+					"https://repository-linode.liferay.com/nexus/service/local/repositories/gradle-plugins/content/${groupPath}/${name}/${version}/${name}-${version}.jar",
+					"https://repository-linode.liferay.com/nexus/service/local/repositories/liferay-public-releases/content/${groupPath}/${name}/${version}/${name}-${version}.jar",
+					"https://repository-linode.liferay.com/nexus/service/local/repositories/maven2/content/${groupPath}/${name}/${version}/${name}-${version}.jar"
 				]
 
 				artifactURLs.add(_downloadFile(cacheDir, urls))

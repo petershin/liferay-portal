@@ -26,7 +26,7 @@ buildscript {
 
 	repositories {
 		maven {
-			url "https://repository-cdn.liferay.com/nexus/content/groups/public"
+			url "https://repository-linode.liferay.com/nexus/content/groups/public"
 		}
 	}
 }
@@ -435,7 +435,7 @@ private void _testPom(String artifactId, String version) {
 	assert pomNode.repositories.repository.id.text() == "liferay-public-releases"
 	assert pomNode.repositories.repository.name.text() == "Liferay Public Releases"
 	assert pomNode.repositories.repository.size() == 1
-	assert pomNode.repositories.repository.url.text() == "https://repository-cdn.liferay.com/nexus/content/repositories/liferay-public-releases/"
+	assert pomNode.repositories.repository.url.text() == "https://repository-linode.liferay.com/nexus/content/repositories/liferay-public-releases/"
 	assert pomNode.scm.connection.text() == "scm:git:git@github.com:liferay/liferay-portal.git"
 	assert pomNode.scm.developerConnection.text() == "scm:git:git@github.com:liferay/liferay-portal.git"
 	assert pomNode.scm.tag.text().matches(/[a-f\d]{40}/)
@@ -452,7 +452,7 @@ private void _testPom(String artifactId, String version) {
 		String groupPath = it.groupId.text().replaceAll(/\./, "/")
 
 		File dependencyFile = new File(buildDir, "testPom/${it.artifactId.text()}-${it.version.text()}.jar")
-		String dependencyURL = "https://repository-cdn.liferay.com/nexus/content/groups/public/${groupPath}/${it.artifactId.text()}/${it.version.text()}/${it.artifactId.text()}-${it.version.text()}.jar"
+		String dependencyURL = "https://repository-linode.liferay.com/nexus/content/groups/public/${groupPath}/${it.artifactId.text()}/${it.version.text()}/${it.artifactId.text()}-${it.version.text()}.jar"
 
 		try {
 			FileUtil.get(project, dependencyURL, project.properties['systemProp.repository.private.username'], project.properties['systemProp.repository.private.password'], dependencyFile, false, true)
