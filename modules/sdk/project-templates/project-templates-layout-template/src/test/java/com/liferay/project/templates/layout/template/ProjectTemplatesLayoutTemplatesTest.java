@@ -80,11 +80,10 @@ public class ProjectTemplatesLayoutTemplatesTest
 			temporaryFolder, "gradle", "gradleWS", _liferayVersion,
 			mavenExecutor);
 
-		File gradleWorkspaceModulesDir = new File(
-			gradleWorkspaceDir, "modules");
+		File gradleWorkspaceWarsDir = new File(gradleWorkspaceDir, "wars");
 
 		File gradleProjectDir = buildTemplateWithGradle(
-			gradleWorkspaceModulesDir, template, name, "--liferay-version",
+			gradleWorkspaceWarsDir, template, name, "--liferay-version",
 			_liferayVersion);
 
 		if (_liferayVersion.startsWith("7.0")) {
@@ -133,10 +132,10 @@ public class ProjectTemplatesLayoutTemplatesTest
 			temporaryFolder, "maven", "mavenWS", _liferayVersion,
 			mavenExecutor);
 
-		File mavenModulesDir = new File(mavenWorkspaceDir, "modules");
+		File mavenWarsDir = new File(mavenWorkspaceDir, "wars");
 
 		File mavenProjectDir = buildTemplateWithMaven(
-			mavenModulesDir, mavenModulesDir, template, name, "com.test",
+			mavenWarsDir, mavenWarsDir, template, name, "com.test",
 			mavenExecutor, "-DliferayVersion=" + _liferayVersion);
 
 		createNewFiles(

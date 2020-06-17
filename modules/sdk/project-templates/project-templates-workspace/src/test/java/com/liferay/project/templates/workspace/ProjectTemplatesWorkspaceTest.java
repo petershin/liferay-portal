@@ -76,9 +76,11 @@ public class ProjectTemplatesWorkspaceTest
 		testExists(workspaceProjectDir, "gradle.properties");
 		testExists(workspaceProjectDir, "modules");
 		testExists(workspaceProjectDir, "themes");
+		testExists(workspaceProjectDir, "wars");
 
 		testNotExists(workspaceProjectDir, "modules/pom.xml");
 		testNotExists(workspaceProjectDir, "themes/pom.xml");
+		testNotExists(workspaceProjectDir, "wars/pom.xml");
 
 		File moduleProjectDir = buildTemplateWithGradle(
 			new File(workspaceProjectDir, "modules"), "", "foo-portlet");

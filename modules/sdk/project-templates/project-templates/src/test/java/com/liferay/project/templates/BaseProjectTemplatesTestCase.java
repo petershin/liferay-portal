@@ -1124,7 +1124,14 @@ public interface BaseProjectTemplatesTestCase {
 			temporaryFolder, "gradle", "gradleWS", liferayVersion,
 			mavenExecutor);
 
-		String modulesDir = "modules";
+		String modulesDir;
+
+		if (template.contains("war")) {
+			modulesDir = "wars";
+		}
+		else {
+			modulesDir = "modules";
+		}
 
 		File gradleWorkspaceModulesDir = new File(
 			gradleWorkspaceDir, modulesDir);
@@ -1205,10 +1212,10 @@ public interface BaseProjectTemplatesTestCase {
 		File gradleWorkspaceDir = buildWorkspace(
 			temporaryFolder, liferayVersion);
 
-		File modulesDir = new File(gradleWorkspaceDir, "modules");
+		File warsDir = new File(gradleWorkspaceDir, "wars");
 
 		File gradleProjectDir = buildTemplateWithGradle(
-			modulesDir, template, name, "--dependency-management-enabled",
+			warsDir, template, name, "--dependency-management-enabled",
 			"--liferay-version", liferayVersion);
 
 		if (!template.equals("war-hook") && !template.equals("theme")) {
@@ -1233,10 +1240,10 @@ public interface BaseProjectTemplatesTestCase {
 		File mavenWorkspaceDir = buildWorkspace(
 			temporaryFolder, "maven", "mavenWS", liferayVersion, mavenExecutor);
 
-		File mavenModulesDir = new File(mavenWorkspaceDir, "modules");
+		File mavenWarsDir = new File(mavenWorkspaceDir, "wars");
 
 		File mavenProjectDir = buildTemplateWithMaven(
-			mavenModulesDir, mavenModulesDir, template, name, "com.test",
+			mavenWarsDir, mavenWarsDir, template, name, "com.test",
 			mavenExecutor, "-DclassName=" + name,
 			"-Dpackage=" + name.toLowerCase(),
 			"-DliferayVersion=" + liferayVersion);
@@ -1248,7 +1255,7 @@ public interface BaseProjectTemplatesTestCase {
 			buildProjects(
 				gradleDistribution, mavenExecutor, gradleWorkspaceDir,
 				mavenProjectDir, gradleOutputDir, mavenOutputDir,
-				":modules:" + name + GRADLE_TASK_PATH_BUILD);
+				":wars:" + name + GRADLE_TASK_PATH_BUILD);
 		}
 
 		return gradleProjectDir;
