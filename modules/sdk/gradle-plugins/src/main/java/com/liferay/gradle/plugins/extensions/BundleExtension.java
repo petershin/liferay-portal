@@ -14,6 +14,8 @@
 
 package com.liferay.gradle.plugins.extensions;
 
+import com.liferay.gradle.plugins.internal.util.GradleUtil;
+
 import java.util.HashMap;
 
 /**
@@ -21,12 +23,29 @@ import java.util.HashMap;
  */
 public class BundleExtension extends HashMap<String, Object> {
 
-	public Object instruction(String key, Object value) {
-		return put(key, value);
+	/**
+	 * @deprecated Replaced by {@link #getInstruction(String)}
+	 */
+	@Deprecated
+	@Override
+	public Object get(Object key) {
+		return getInstruction(String.valueOf(key));
 	}
 
+	public String getInstruction(String key) {
+		return GradleUtil.toString(super.get(key));
+	}
+
+	/**
+	 * @deprecated Replaced by {@link #putInstruction(String, Object)}
+	 */
+	@Deprecated
 	@Override
 	public Object put(String key, Object value) {
+		return putInstruction(key, value);
+	}
+
+	public Object putInstruction(String key, Object value) {
 		return super.put(key, value);
 	}
 

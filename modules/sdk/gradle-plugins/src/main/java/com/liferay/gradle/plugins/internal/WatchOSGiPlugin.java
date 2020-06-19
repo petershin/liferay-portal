@@ -17,11 +17,11 @@ package com.liferay.gradle.plugins.internal;
 import aQute.bnd.osgi.Constants;
 
 import com.liferay.gradle.plugins.LiferayOSGiPlugin;
+import com.liferay.gradle.plugins.extensions.BundleExtension;
 import com.liferay.gradle.plugins.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.internal.util.IncludeResourceCompileIncludeInstruction;
 import com.liferay.gradle.plugins.tasks.ExecuteBndTask;
 import com.liferay.gradle.plugins.tasks.WatchTask;
-import com.liferay.gradle.plugins.util.BndUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -37,6 +37,7 @@ import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.file.FileTree;
 import org.gradle.api.plugins.BasePlugin;
+import org.gradle.api.plugins.ExtensionContainer;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.SourceSet;
@@ -62,6 +63,13 @@ public class WatchOSGiPlugin implements Plugin<Project> {
 	@Override
 	public void apply(Project project) {
 
+		// Extensions
+
+		ExtensionContainer extensionContainer = project.getExtensions();
+
+		BundleExtension bundleExtension = extensionContainer.getByType(
+			BundleExtension.class);
+
 		// Tasks
 
 		TaskProvider<Sync> buildBundleDirTaskProvider =
@@ -80,7 +88,7 @@ public class WatchOSGiPlugin implements Plugin<Project> {
 		_configureTaskBuildBundleDirProvider(
 			project, buildBundleDirTaskProvider, jarTaskProvider);
 		_configureTaskJarCompileIncludeFragmentProvider(
-			project, jarCompileIncludeFragmentTaskProvider);
+			project, bundleExtension, jarCompileIncludeFragmentTaskProvider);
 		_configureTaskWatchProvider(
 			buildBundleDirTaskProvider, jarCompileIncludeFragmentTaskProvider,
 			watchTaskProvider);
@@ -133,7 +141,7 @@ public class WatchOSGiPlugin implements Plugin<Project> {
 	}
 
 	private void _configureTaskJarCompileIncludeFragmentProvider(
-		final Project project,
+		final Project project, final BundleExtension bundleExtension,
 		TaskProvider<ExecuteBndTask> jarCompileIncludeFragmentTaskProvider) {
 
 		jarCompileIncludeFragmentTaskProvider.configure(
@@ -149,8 +157,9 @@ public class WatchOSGiPlugin implements Plugin<Project> {
 
 							@Override
 							public String call() throws Exception {
-								String instruction = BndUtil.getInstruction(
-									project, Constants.BUNDLE_NAME);
+								String instruction =
+									bundleExtension.getInstruction(
+										Constants.BUNDLE_NAME);
 
 								return instruction + " Libs";
 							}
@@ -163,8 +172,9 @@ public class WatchOSGiPlugin implements Plugin<Project> {
 
 							@Override
 							public String call() throws Exception {
-								String instruction = BndUtil.getInstruction(
-									project, Constants.BUNDLE_SYMBOLICNAME);
+								String instruction =
+									bundleExtension.getInstruction(
+										Constants.BUNDLE_SYMBOLICNAME);
 
 								return instruction + ".libs";
 							}
@@ -180,8 +190,8 @@ public class WatchOSGiPlugin implements Plugin<Project> {
 
 							@Override
 							public String call() throws Exception {
-								return BndUtil.getInstruction(
-									project, Constants.BUNDLE_SYMBOLICNAME);
+								return bundleExtension.getInstruction(
+									Constants.BUNDLE_SYMBOLICNAME);
 							}
 
 						});

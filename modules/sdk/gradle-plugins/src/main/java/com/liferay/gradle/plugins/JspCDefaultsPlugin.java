@@ -14,16 +14,15 @@
 
 package com.liferay.gradle.plugins;
 
+import com.liferay.gradle.plugins.extensions.BundleExtension;
 import com.liferay.gradle.plugins.internal.util.FileUtil;
 import com.liferay.gradle.plugins.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.jasper.jspc.CompileJSPTask;
 import com.liferay.gradle.plugins.jasper.jspc.JspCPlugin;
-import com.liferay.gradle.plugins.util.BndUtil;
 
 import java.io.File;
 
 import java.util.Iterator;
-import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Callable;
 
@@ -33,6 +32,7 @@ import org.gradle.api.Project;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.FileTree;
 import org.gradle.api.file.SourceDirectorySet;
+import org.gradle.api.plugins.ExtensionContainer;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.SourceSet;
@@ -53,6 +53,11 @@ public class JspCDefaultsPlugin extends BaseDefaultsPlugin<JspCPlugin> {
 
 	@Override
 	protected void applyPluginDefaults(Project project, JspCPlugin jspCPlugin) {
+		ExtensionContainer extensionContainer = project.getExtensions();
+
+		final BundleExtension bundleExtension = _getBundleExtension(
+			extensionContainer);
+
 		_configureTaskGenerateJSPJava(project);
 		_configureTaskJar(project);
 		_configureTaskProcessResources(project);
@@ -62,7 +67,7 @@ public class JspCDefaultsPlugin extends BaseDefaultsPlugin<JspCPlugin> {
 
 				@Override
 				public void execute(Project project) {
-					_configureBundleExtensionDefaults(project);
+					_configureBundleExtensionDefaults(project, bundleExtension);
 				}
 
 			});
@@ -76,9 +81,8 @@ public class JspCDefaultsPlugin extends BaseDefaultsPlugin<JspCPlugin> {
 	private JspCDefaultsPlugin() {
 	}
 
-	private void _configureBundleExtensionDefaults(Project project) {
-		Map<String, Object> bundleInstructions = BndUtil.getInstructions(
-			project);
+	private void _configureBundleExtensionDefaults(
+		Project project, BundleExtension bundleExtension) {
 
 		StringBuilder sb = new StringBuilder();
 
@@ -94,7 +98,7 @@ public class JspCDefaultsPlugin extends BaseDefaultsPlugin<JspCPlugin> {
 
 		sb.append(FileUtil.getAbsolutePath(compileJSPTask.getDestinationDir()));
 
-		bundleInstructions.put("-add-resource", sb.toString());
+		bundleExtension.putInstruction("-add-resource", sb.toString());
 	}
 
 	private void _configureTaskGenerateJSPJava(final Project project) {
@@ -195,6 +199,22 @@ public class JspCDefaultsPlugin extends BaseDefaultsPlugin<JspCPlugin> {
 					});
 			}
 		}
+	}
+
+	private BundleExtension _getBundleExtension(
+		ExtensionContainer extensionContainer) {
+
+		BundleExtension bundleExtension = extensionContainer.findByType(
+			BundleExtension.class);
+
+		if (bundleExtension == null) {
+			bundleExtension = new BundleExtension();
+
+			extensionContainer.add(
+				BundleExtension.class, "bundle", bundleExtension);
+		}
+
+		return bundleExtension;
 	}
 
 }
