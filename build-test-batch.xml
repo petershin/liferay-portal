@@ -4683,7 +4683,7 @@ log.sanitizer.enabled=false</echo>
 						<dirset
 							dir="modules/sdk"
 							excludes="${gradle.plugins.test.excludes}"
-							includes="gradle-plugins-*"
+							includes="gradle-plugins*"
 						/>
 					</path>
 					<sequential>
