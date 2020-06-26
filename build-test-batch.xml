@@ -4678,6 +4678,8 @@ log.sanitizer.enabled=false</echo>
 	<target name="gradle-plugins-test-jdk8">
 		<run-batch-test>
 			<test-action>
+				<update-gradle-properties />
+
 				<for keepgoing="true" param="gradle.plugin.dir">
 					<path>
 						<dirset
