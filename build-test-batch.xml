@@ -4678,7 +4678,9 @@ log.sanitizer.enabled=false</echo>
 	<target name="gradle-plugins-test-jdk8">
 		<run-batch-test>
 			<test-action>
-				<update-gradle-properties />
+				<propertyfile file="${basedir}/.gradle/gradle.properties">
+					<entry key="plugins.sdk.version" value="${build.sdk.version}" />
+				</propertyfile>
 
 				<for keepgoing="true" param="gradle.plugin.dir">
 					<path>
