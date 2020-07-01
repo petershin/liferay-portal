@@ -39,6 +39,7 @@ import org.gradle.api.artifacts.Dependency;
 import org.gradle.api.artifacts.dsl.ArtifactHandler;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.BasePluginConvention;
+import org.gradle.api.plugins.ExtensionAware;
 import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.Delete;
 import org.gradle.language.base.plugins.LifecycleBasePlugin;
@@ -52,6 +53,9 @@ public class FrontendPlugin implements Plugin<Project> {
 
 	@Override
 	public void apply(Project project) {
+		final WorkspaceExtension workspaceExtension = GradleUtil.getExtension(
+			(ExtensionAware)project.getGradle(), WorkspaceExtension.class);
+
 		GradleUtil.applyPlugin(project, BasePlugin.class);
 		GradleUtil.applyPlugin(project, LiferayBasePlugin.class);
 		GradleUtil.applyPlugin(project, NodePlugin.class);
@@ -66,6 +70,12 @@ public class FrontendPlugin implements Plugin<Project> {
 		_configureNodeAndNpmVersion(project);
 		_configureTaskClean(project);
 		_configureTaskDeploy(project);
+
+		String nodePackageManager = workspaceExtension.getNodePackageManager();
+
+		if (nodePackageManager.equals("yarn")) {
+			_configureNpmInstall(project);
+		}
 	}
 
 	private void _configureArchivesBaseName(
@@ -159,6 +169,13 @@ public class FrontendPlugin implements Plugin<Project> {
 		catch (Exception exception) {
 			throw new GradleException("Unable to parse npm version", exception);
 		}
+	}
+
+	private void _configureNpmInstall(Project project) {
+		NodeExtension nodeExtension = GradleUtil.getExtension(
+			project, NodeExtension.class);
+
+		nodeExtension.setUseNpm(false);
 	}
 
 	private void _configureTaskClean(Project project) {

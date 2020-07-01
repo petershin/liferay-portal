@@ -26,6 +26,8 @@ import com.bmuschko.gradle.docker.tasks.image.DockerRemoveImage;
 import com.bmuschko.gradle.docker.tasks.image.Dockerfile;
 
 import com.liferay.gradle.plugins.LiferayBasePlugin;
+import com.liferay.gradle.plugins.LiferayYarnPlugin;
+import com.liferay.gradle.plugins.node.NodeExtension;
 import com.liferay.gradle.plugins.workspace.WorkspaceExtension;
 import com.liferay.gradle.plugins.workspace.WorkspacePlugin;
 import com.liferay.gradle.plugins.workspace.internal.configurators.TargetPlatformRootProjectConfigurator;
@@ -34,6 +36,7 @@ import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.workspace.internal.util.StringUtil;
 import com.liferay.gradle.plugins.workspace.tasks.CreateTokenTask;
 import com.liferay.gradle.plugins.workspace.tasks.InitBundleTask;
+import com.liferay.gradle.plugins.workspace.tasks.SetUpYarnTask;
 import com.liferay.gradle.util.OSDetector;
 import com.liferay.gradle.util.Validator;
 import com.liferay.gradle.util.copy.StripPathSegmentsAction;
@@ -144,6 +147,8 @@ public class RootProjectConfigurator implements Plugin<Project> {
 	public static final String REMOVE_DOCKER_CONTAINER_TASK_NAME =
 		"removeDockerContainer";
 
+	public static final String SET_UP_YARN_TASK_NAME = "setUpYarn";
+
 	public static final String START_DOCKER_CONTAINER_TASK_NAME =
 		"startDockerContainer";
 
@@ -152,7 +157,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 	/**
 	 * @deprecated As of 1.4.0, replaced by {@link
-	 *             #RootProjectConfigurator(Settings)}
+	 * #RootProjectConfigurator(Settings)}
 	 */
 	@Deprecated
 	public RootProjectConfigurator() {
@@ -172,6 +177,16 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 		GradleUtil.applyPlugin(project, DockerRemoteApiPlugin.class);
 		GradleUtil.applyPlugin(project, LifecycleBasePlugin.class);
+
+		String nodePackageManager = workspaceExtension.getNodePackageManager();
+
+		if (nodePackageManager.equals("yarn")) {
+			SetUpYarnTask setUpYarnTask = _addTaskSetUpYarn(project);
+
+			GradleUtil.applyPlugin(project, LiferayYarnPlugin.class);
+
+			_configureTasksYarnInstall(project, setUpYarnTask);
+		}
 
 		if (isDefaultRepositoryEnabled()) {
 			GradleUtil.addDefaultRepositories(project);
@@ -1038,6 +1053,11 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		return dockerRemoveContainer;
 	}
 
+	private SetUpYarnTask _addTaskSetUpYarn(Project project) {
+		return GradleUtil.addTask(
+			project, SET_UP_YARN_TASK_NAME, SetUpYarnTask.class);
+	}
+
 	private DockerStartContainer _addTaskStartDockerContainer(
 		Project project, DockerCreateContainer dockerCreateContainer) {
 
@@ -1248,6 +1268,41 @@ public class RootProjectConfigurator implements Plugin<Project> {
 				}
 
 			});
+	}
+
+	private void _configureTasksYarnInstall(
+		Project project, SetUpYarnTask setUpYarnTask) {
+
+		NodeExtension nodeExtension = GradleUtil.getExtension(
+			project, NodeExtension.class);
+
+		nodeExtension.setUseNpm(false);
+
+		Task task = GradleUtil.getTask(
+			project, LiferayYarnPlugin.YARN_INSTALL_TASK_NAME);
+
+		task.dependsOn(setUpYarnTask);
+
+		File file = new File(project.getProjectDir(), "yarn.lock");
+
+		try {
+			String contents = new String(Files.readAllBytes(file.toPath()));
+
+			if (contents.equals("")) {
+				task.dependsOn(LiferayYarnPlugin.YARN_LOCK_TASK_NAME);
+			}
+		}
+		catch (IOException ioException) {
+			Logger logger = project.getLogger();
+
+			if (logger.isWarnEnabled()) {
+				StringBuilder sb = new StringBuilder();
+
+				sb.append("Could not read yarn.lock.");
+
+				logger.warn(sb.toString());
+			}
+		}
 	}
 
 	private void _createTouchFile(File dir) throws IOException {

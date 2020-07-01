@@ -15,6 +15,8 @@
 package com.liferay.gradle.plugins.workspace.configurators;
 
 import com.liferay.gradle.plugins.LiferayThemePlugin;
+import com.liferay.gradle.plugins.gulp.ExecuteGulpTask;
+import com.liferay.gradle.plugins.node.NodeExtension;
 import com.liferay.gradle.plugins.theme.builder.BuildThemeTask;
 import com.liferay.gradle.plugins.theme.builder.ThemeBuilderPlugin;
 import com.liferay.gradle.plugins.workspace.ProjectConfigurator;
@@ -87,6 +89,14 @@ public class ThemesProjectConfigurator extends BaseProjectConfigurator {
 			GradleUtil.applyPlugin(project, LiferayThemePlugin.class);
 
 			configureLiferay(project, workspaceExtension);
+
+			String nodePackageManager =
+				workspaceExtension.getNodePackageManager();
+
+			if (nodePackageManager.equals("yarn")) {
+				_configureTaskGulpBuild(project);
+				_configureNpmInstall(project);
+			}
 
 			final Task assembleTask = GradleUtil.getTask(
 				project, BasePlugin.ASSEMBLE_TASK_NAME);
@@ -168,6 +178,13 @@ public class ThemesProjectConfigurator extends BaseProjectConfigurator {
 
 	protected static final String NAME = "themes";
 
+	private void _configureNpmInstall(Project project) {
+		NodeExtension nodeExtension = GradleUtil.getExtension(
+			project, NodeExtension.class);
+
+		nodeExtension.setUseNpm(false);
+	}
+
 	@SuppressWarnings({"serial", "unused"})
 	private void _configureRootTaskDistBundle(final Task assembleTask) {
 		Project project = assembleTask.getProject();
@@ -227,6 +244,13 @@ public class ThemesProjectConfigurator extends BaseProjectConfigurator {
 
 		buildThemeTask.setParentName(baseTheme);
 		buildThemeTask.setTemplateExtension(templateLanguage);
+	}
+
+	private void _configureTaskGulpBuild(Project project) {
+		ExecuteGulpTask executeGulpTask = (ExecuteGulpTask)GradleUtil.getTask(
+			project, "gulpBuild");
+
+		executeGulpTask.setEnabled(false);
 	}
 
 	private void _configureWar(Project project) {
