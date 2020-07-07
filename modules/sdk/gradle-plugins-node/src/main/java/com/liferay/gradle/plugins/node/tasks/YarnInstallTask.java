@@ -16,6 +16,7 @@ package com.liferay.gradle.plugins.node.tasks;
 
 import com.liferay.gradle.plugins.node.internal.util.FileUtil;
 import com.liferay.gradle.plugins.node.internal.util.GradleUtil;
+import com.liferay.gradle.plugins.node.internal.util.NodePluginUtil;
 
 import java.io.File;
 
@@ -74,7 +75,7 @@ public class YarnInstallTask extends ExecutePackageManagerTask {
 	}
 
 	private File _getYarnrcFile() {
-		return new File(getWorkingDir(), ".yarnrc");
+		return new File(NodePluginUtil.getYarnDir(getNodeDir()), ".yarnrc");
 	}
 
 	private Object _frozenLockFile;

@@ -15,6 +15,7 @@
 package com.liferay.gradle.plugins.node;
 
 import com.liferay.gradle.plugins.node.internal.util.GradleUtil;
+import com.liferay.gradle.plugins.node.internal.util.NodePluginUtil;
 import com.liferay.gradle.plugins.node.internal.util.StringUtil;
 import com.liferay.gradle.plugins.node.tasks.DownloadNodeModuleTask;
 import com.liferay.gradle.plugins.node.tasks.DownloadNodeTask;
@@ -598,9 +599,10 @@ public class NodePlugin implements Plugin<Project> {
 						return project.file("node_modules");
 					}
 
-					Project rootProject = project.getRootProject();
+					File yarnDir = NodePluginUtil.getYarnDir(
+						nodeExtension.getNodeDir());
 
-					return rootProject.file("node_modules");
+					return new File(yarnDir, "node_modules");
 				}
 
 			});
