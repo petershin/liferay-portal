@@ -39,6 +39,10 @@ ext {
 	]
 }
 
+task portalYarnCheckFormat
+task portalYarnFormat
+task portalYarnInstall
+
 if (Boolean.getBoolean("gradle.build.scan.enabled")) {
 	apply plugin: "com.gradle.build-scan"
 
@@ -118,8 +122,40 @@ for (String gradleVersion in ["5.6.4"]) {
 	}
 }
 
+portalYarnCheckFormat {
+	dependsOn ":yarnCheckFormat"
+}
+
+portalYarnFormat {
+	dependsOn ":yarnFormat"
+}
+
+portalYarnInstall {
+	dependsOn ":yarnInstall"
+}
+
 gradle.beforeProject {
 	Project project ->
+
+	if (project.path.equals(":private")) {
+		configure(project) {
+			apply plugin: "com.liferay.yarn.defaults.plugin"
+		}
+
+		portalYarnCheckFormat {
+			dependsOn ":private:yarnCheckFormat"
+		}
+
+		portalYarnFormat {
+			dependsOn ":private:yarnFormat"
+		}
+
+		portalYarnInstall {
+			dependsOn ":private:yarnInstall"
+		}
+
+		return
+	}
 
 	if (!project.parent || project.childProjects) {
 		return
