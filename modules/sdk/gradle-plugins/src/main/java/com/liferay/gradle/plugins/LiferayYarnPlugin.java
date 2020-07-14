@@ -30,7 +30,9 @@ import org.gradle.StartParameter;
 import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
+import org.gradle.api.Task;
 import org.gradle.api.invocation.Gradle;
+import org.gradle.api.logging.Logger;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.TaskProvider;
 
@@ -61,26 +63,26 @@ public class LiferayYarnPlugin implements Plugin<Project> {
 			GradleUtil.addTaskProvider(
 				project, YARN_INSTALL_TASK_NAME, YarnInstallTask.class);
 
-		_configureTaskYarnInstallProvider(yarnInstallTaskProvider);
+		_configureTaskYarnInstallProvider(project, yarnInstallTaskProvider);
 
-		if (_hasPackageJsonScript(project, _CHECK_FORMAT_SCRIPT_NAME)) {
+		if (_hasPackageJsonScript(project, "checkFormat")) {
 			TaskProvider<ExecutePackageManagerTask>
-				executePackageManagerTaskProvider = GradleUtil.addTaskProvider(
+				yarnCheckFormatTaskProvider = GradleUtil.addTaskProvider(
 					project, YARN_CHECK_FORMAT_TASK_NAME,
 					ExecutePackageManagerTask.class);
 
 			_configureTaskExecutePackageManagerProvider(
-				executePackageManagerTaskProvider, _CHECK_FORMAT_SCRIPT_NAME);
+				project, yarnCheckFormatTaskProvider, "checkFormat");
 		}
 
-		if (_hasPackageJsonScript(project, _FORMAT_SCRIPT_NAME)) {
-			TaskProvider<ExecutePackageManagerTask>
-				executePackageManagerTaskProvider = GradleUtil.addTaskProvider(
+		if (_hasPackageJsonScript(project, "format")) {
+			TaskProvider<ExecutePackageManagerTask> yarnFormatTaskProvider =
+				GradleUtil.addTaskProvider(
 					project, YARN_FORMAT_TASK_NAME,
 					ExecutePackageManagerTask.class);
 
 			_configureTaskExecutePackageManagerProvider(
-				executePackageManagerTaskProvider, _FORMAT_SCRIPT_NAME);
+				project, yarnFormatTaskProvider, "format");
 		}
 
 		// Other
@@ -122,9 +124,10 @@ public class LiferayYarnPlugin implements Plugin<Project> {
 	}
 
 	private void _configureTaskExecutePackageManagerProvider(
+		final Project project,
 		TaskProvider<ExecutePackageManagerTask>
 			executePackageManagerTaskProvider,
-		String scriptName) {
+		final String scriptName) {
 
 		executePackageManagerTaskProvider.configure(
 			new Action<ExecutePackageManagerTask>() {
@@ -132,8 +135,6 @@ public class LiferayYarnPlugin implements Plugin<Project> {
 				@Override
 				public void execute(
 					ExecutePackageManagerTask executePackageManagerTask) {
-
-					Project project = executePackageManagerTask.getProject();
 
 					executePackageManagerTask.args(scriptName);
 					executePackageManagerTask.setDescription(
@@ -155,6 +156,7 @@ public class LiferayYarnPlugin implements Plugin<Project> {
 	}
 
 	private void _configureTaskYarnInstallProvider(
+		final Project project,
 		TaskProvider<YarnInstallTask> yarnInstallTaskProvider) {
 
 		yarnInstallTaskProvider.configure(
@@ -162,8 +164,6 @@ public class LiferayYarnPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(YarnInstallTask yarnInstallTask) {
-					Project project = yarnInstallTask.getProject();
-
 					boolean frozenLockfile = Boolean.parseBoolean(
 						System.getProperty(
 							"frozen.lockfile", Boolean.TRUE.toString()));
@@ -205,9 +205,5 @@ public class LiferayYarnPlugin implements Plugin<Project> {
 
 		return false;
 	}
-
-	private static final String _CHECK_FORMAT_SCRIPT_NAME = "checkFormat";
-
-	private static final String _FORMAT_SCRIPT_NAME = "format";
 
 }
