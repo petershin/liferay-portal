@@ -30,7 +30,7 @@ import org.gradle.api.tasks.Input;
 public class ExecuteGulpTask extends ExecuteNodeScriptTask {
 
 	public ExecuteGulpTask() {
-		setScriptFile("node_modules/gulp/bin/gulp.js");
+		setScriptFile("node_modules/.bin/gulp");
 	}
 
 	@Input
