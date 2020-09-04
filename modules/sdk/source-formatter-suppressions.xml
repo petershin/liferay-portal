@@ -9,6 +9,7 @@
 		<suppress checks="MissingEmptyLineCheck" files="gradle-plugins/src/main/java/com/liferay/gradle/plugins/JspCDefaultsPlugin\.java" />
 		<suppress checks="MissingEmptyLineCheck" files="gradle-plugins/src/main/java/com/liferay/gradle/plugins/LiferayExtPlugin\.java" />
 		<suppress checks="MissingEmptyLineCheck" files="gradle-plugins/src/main/java/com/liferay/gradle/plugins/LiferayOSGiExtPlugin\.java" />
+		<suppress checks="MissingEmptyLineCheck" files="gradle-plugins-defaults/src/main/java/com/liferay/gradle/plugins/defaults/internal/LiferayRelengPlugin\.java" />
 		<suppress checks="OperatorOperandCheck" files="project-templates/project-templates/src/test/java/com/liferay/project/templates/ProjectTemplateFilesTest\.java" />
 		<suppress checks="TryWithResourcesCheck" files="ant-beanshell/.*" />
 		<suppress checks="TryWithResourcesCheck" files="ant-gradle/.*" />
@@ -44,6 +45,7 @@
 		<suppress checks="JavaXMLSecurityCheck" files="gradle-plugins-maven-plugin-builder/src/main/java/com/liferay/gradle/plugins/maven/plugin/builder/tasks/BuildPluginDescriptorTask\.java" />
 		<suppress checks="JavaXMLSecurityCheck" files="gradle-plugins-tlddoc-builder/src/main/java/com/liferay/gradle/plugins/tlddoc/builder/internal/util/TLDUtil\.java" />
 		<suppress checks="JSONValidationCheck" files="project-templates/.*" />
+		<suppress checks="JavaLongLinesCheck" files="gradle-plugins-defaults/src/main/java/com/liferay/gradle/plugins/defaults/internal/LiferayRelengPlugin\.java" />
 		<suppress checks="StringMethodsCheck" files="gradle-plugins-baseline/src/main/java/com/liferay/gradle/plugins/baseline/Baseline\.java" />
 		<suppress checks="StringMethodsCheck" files="gradle-plugins-defaults/src/main/java/com/liferay/gradle/plugins/defaults/LiferayOSGiDefaultsPlugin\.java" />
 		<suppress checks="XMLServiceFileCheck" files="gradle-plugins-db-support/src/gradleTest/cleanServiceBuilder/service\.xml" />
