@@ -287,9 +287,9 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 					_configureTaskBuildWSDDJarProvider(
 						project, bundleExtension, liferayExtension,
-						liferayOSGiExtension, javaMainSourceSet,
-						buildWSDDTask, buildWSDDJarTaskProvider,
-						cleanTaskProvider, deployTaskProvider);
+						liferayOSGiExtension, javaMainSourceSet, buildWSDDTask,
+						buildWSDDJarTaskProvider, cleanTaskProvider,
+						deployTaskProvider);
 				}
 
 			});
@@ -441,8 +441,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 		File javaClassesDir = new File(docrootDir, "WEB-INF/classes");
 
-		SourceDirectorySet javaSourceDirectorySet =
-			javaMainSourceSet.getJava();
+		SourceDirectorySet javaSourceDirectorySet = javaMainSourceSet.getJava();
 
 		javaSourceDirectorySet.setOutputDir(javaClassesDir);
 
@@ -776,7 +775,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		final Project project, final BundleExtension bundleExtension,
 		LiferayExtension liferayExtension,
 		final LiferayOSGiExtension liferayOSGiExtension,
-		final SourceSet javaMainSourceSet,  final BuildWSDDTask buildWSDDTask,
+		final SourceSet javaMainSourceSet, final BuildWSDDTask buildWSDDTask,
 		TaskProvider<Jar> buildWSDDJarTaskProvider,
 		TaskProvider<Delete> cleanTaskProvider,
 		TaskProvider<Copy> deployTaskProvider) {
