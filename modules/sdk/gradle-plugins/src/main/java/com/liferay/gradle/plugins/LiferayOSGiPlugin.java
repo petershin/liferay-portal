@@ -270,9 +270,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 			project, liferayExtension, deployTaskProvider, jarTaskProvider,
 			false);
 
-		// Other
-
-		_configureProject(project, bundleExtension);
+		// Containers
 
 		TaskContainer taskContainer = project.getTasks();
 
@@ -327,6 +325,10 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 				}
 
 			});
+
+		// Other
+
+		_configureProject(project, bundleExtension);
 
 		project.afterEvaluate(
 			new Action<Project>() {
