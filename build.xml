@@ -1134,6 +1134,7 @@ This target has been renamed to "snapshot-bundle". Please call "snapshot-bundle"
 						</exec>
 
 						<propertyregex
+							defaultValue=""
 							input="${github.dev.git.ls.remote}"
 							override="true"
 							property="github.dev.git.hash"
