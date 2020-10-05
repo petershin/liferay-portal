@@ -809,7 +809,7 @@ information.
 					<local name="tasks.output" />
 
 					<exec dir="@{dir}" executable="${project.dir}/gradlew${gradlew.suffix}" failonerror="@{failonerror}">
-						<arg if:set="env.JENKINS_HOME" value="--max-workers=${gradle.ci.max.workers}" />
+						<arg if:set="env.JENKINS_HOME" value="--no-daemon" />
 						<arg unless:true="${gradle.build.parallel.enabled}" value="--no-parallel" />
 						<arg if:true="${gradle.profile.enabled}" value="--profile" />
 						<arg if:set="env.JENKINS_HOME" value="--profile" />
@@ -819,8 +819,8 @@ information.
 						<arg value="-Dapp.server.parent.dir=${app.server.parent.dir}" />
 						<arg value="-Dforced.cache.enabled=@{forcedcacheenabled}" />
 						<arg value="-Dliferay.home=${liferay.home}" />
-						<arg if:set="env.JENKINS_HOME" value="-Dorg.gradle.internal.http.connectionTimeout=${gradle.ci.http.connection.timeout}" />
-						<arg if:set="env.JENKINS_HOME" value="-Dorg.gradle.internal.http.socketTimeout=${gradle.ci.http.socket.timeout}" />
+						<arg if:set="env.JENKINS_HOME" value="-Dorg.gradle.internal.http.connectionTimeout=120000" />
+						<arg if:set="env.JENKINS_HOME" value="-Dorg.gradle.internal.http.socketTimeout=120000" />
 						<arg if:set="env.FIX_PACKS_RELEASE_ENVIRONMENT" value="-Dpatcher.hotfix.dirs=${build.patcher.hotfix.dirs}" />
 						<arg if:set="env.FIX_PACKS_RELEASE_ENVIRONMENT" value="-Dpatcher.hotfix.qualifier=${build.patcher.hotfix.qualifier}" />
 						<arg value="tasks" />
@@ -927,7 +927,7 @@ information.
 
 							<exec dir="@{dir}" executable="${project.dir}/gradlew${gradlew.suffix}" failonerror="@{failonerror}">
 								<args />
-								<arg if:set="env.JENKINS_HOME" value="--max-workers=${gradle.ci.max.workers}" />
+								<arg if:set="env.JENKINS_HOME" value="--no-daemon" />
 								<arg unless:true="${gradle.build.parallel.enabled}" value="--no-parallel" />
 								<arg if:true="${gradle.profile.enabled}" value="--profile" />
 								<arg if:set="env.JENKINS_HOME" value="--profile" />
@@ -937,8 +937,8 @@ information.
 								<arg value="-Dapp.server.parent.dir=${app.server.parent.dir}" />
 								<arg value="-Dforced.cache.enabled=@{forcedcacheenabled}" />
 								<arg value="-Dliferay.home=${liferay.home}" />
-								<arg if:set="env.JENKINS_HOME" value="-Dorg.gradle.internal.http.connectionTimeout=${gradle.ci.http.connection.timeout}" />
-								<arg if:set="env.JENKINS_HOME" value="-Dorg.gradle.internal.http.socketTimeout=${gradle.ci.http.socket.timeout}" />
+								<arg if:set="env.JENKINS_HOME" value="-Dorg.gradle.internal.http.connectionTimeout=120000" />
+								<arg if:set="env.JENKINS_HOME" value="-Dorg.gradle.internal.http.socketTimeout=120000" />
 								<arg if:set="env.FIX_PACKS_RELEASE_ENVIRONMENT" value="-Dpatcher.hotfix.dirs=${build.patcher.hotfix.dirs}" />
 								<arg if:set="env.FIX_PACKS_RELEASE_ENVIRONMENT" value="-Dpatcher.hotfix.qualifier=${build.patcher.hotfix.qualifier}" />
 								<arg line="@{task}" />
@@ -962,7 +962,7 @@ information.
 							<echoxml>
 								<exec dir="@{dir}" executable="${project.dir}/gradlew${gradlew.suffix}" failonerror="@{failonerror}">
 									<args />
-									<arg if:set="env.JENKINS_HOME" value="--max-workers=${gradle.ci.max.workers}" />
+									<arg if:set="env.JENKINS_HOME" value="--no-daemon" />
 									<arg unless:true="${gradle.build.parallel.enabled}" value="--no-parallel" />
 									<arg if:true="${gradle.profile.enabled}" value="--profile" />
 									<arg if:set="env.JENKINS_HOME" value="--profile" />
@@ -972,8 +972,8 @@ information.
 									<arg value="-Dapp.server.parent.dir=${app.server.parent.dir}" />
 									<arg value="-Dforced.cache.enabled=@{forcedcacheenabled}" />
 									<arg value="-Dliferay.home=${liferay.home}" />
-									<arg if:set="env.JENKINS_HOME" value="-Dorg.gradle.internal.http.connectionTimeout=${gradle.ci.http.connection.timeout}" />
-									<arg if:set="env.JENKINS_HOME" value="-Dorg.gradle.internal.http.socketTimeout=${gradle.ci.http.socket.timeout}" />
+									<arg if:set="env.JENKINS_HOME" value="-Dorg.gradle.internal.http.connectionTimeout=120000" />
+									<arg if:set="env.JENKINS_HOME" value="-Dorg.gradle.internal.http.socketTimeout=120000" />
 									<arg if:set="env.FIX_PACKS_RELEASE_ENVIRONMENT" value="-Dpatcher.hotfix.dirs=${build.patcher.hotfix.dirs}" />
 									<arg if:set="env.FIX_PACKS_RELEASE_ENVIRONMENT" value="-Dpatcher.hotfix.qualifier=${build.patcher.hotfix.qualifier}" />
 									<arg line="@{task}" />
