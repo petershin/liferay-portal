@@ -805,9 +805,6 @@ information.
 									<antelope:replace regex="&quot;" replacement="" />
 								</antelope:stringutil>
 							</then>
-							<else>
-								<property name="task.gradle.jvmargs" value="${env.ANT_OPTS}" />
-							</else>
 						</if>
 					</then>
 				</elseif>
