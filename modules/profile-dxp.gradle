@@ -9,7 +9,7 @@ task checkoutDXPScript
 task removeDXPScript
 
 String gitBranchName = "master-private"
-String gitRepositoryURL = "git@github.com:liferay/liferay-portal-ee.git"
+String gitRepositoryURL = "git@github.com:petershin/liferay-portal-ee.git"
 
 File gitRepositoryDir = new File(projectDir.parentFile, "git-clone-profile-dxp")
 
