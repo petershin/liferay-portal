@@ -111,7 +111,6 @@ public class ServiceBuilderProjectTemplateCustomizer
 				projectTemplatesArgs.getProjectTemplatesArgsExt();
 
 		String addOns = serviceBuilderProjectTemplatesArgs.getAddOns();
-
 		String liferayVersion = projectTemplatesArgs.getLiferayVersion();
 
 		if (addOns.equals("true") &&
@@ -125,7 +124,6 @@ public class ServiceBuilderProjectTemplateCustomizer
 		setProperty(
 			properties, "addOns",
 			serviceBuilderProjectTemplatesArgs.getAddOns());
-
 		setProperty(
 			properties, "dependencyInjector",
 			serviceBuilderProjectTemplatesArgs.getDependencyInjector());
