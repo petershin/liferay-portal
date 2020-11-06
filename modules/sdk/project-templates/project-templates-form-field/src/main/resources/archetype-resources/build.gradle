@@ -10,14 +10,3 @@ dependencies {
 
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations"
 }
-
-#if (${liferayVersion.startsWith("7.0")})
-classes {
-	dependsOn buildSoy
-}
-
-wrapSoyAlloyTemplate {
-	enabled = true
-	moduleName = "${artifactId}-form-field-template"
-	namespace = "ddm"
-}#end

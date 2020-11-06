@@ -191,27 +191,6 @@
 					<baseDir>src/main/resources</baseDir>
 				</configuration>
 			</plugin>
-#if (${liferayVersion.startsWith("7.0")})
-			<plugin>
-				<groupId>com.liferay</groupId>
-				<artifactId>com.liferay.portal.tools.soy.builder</artifactId>
-				<version>@com.liferay.portal.tools.soy.builder.version@</version>
-				<executions>
-					<execution>
-						<phase>compile</phase>
-						<goals>
-							<goal>build</goal>
-							<goal>wrap-alloy-template</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<dir>${project.build.directory}/classes/META-INF/resources</dir>
-					<moduleName>${artifactId}-form-field-template</moduleName>
-					<namespace>ddm</namespace>
-				</configuration>
-			</plugin>
-#end
 		</plugins>
 	</build>
 </project>
