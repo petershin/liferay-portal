@@ -23,10 +23,12 @@ import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.Input;
 
 /**
- * @author David Truong
- * @author Andrea Di Giorgi
+ * @author     David Truong
+ * @author     Andrea Di Giorgi
+ * @deprecated As of Judson (7.1.x), with no direct replacement
  */
 @CacheableTask
+@Deprecated
 public class ExecuteGulpTask extends ExecuteNodeScriptTask {
 
 	public ExecuteGulpTask() {
