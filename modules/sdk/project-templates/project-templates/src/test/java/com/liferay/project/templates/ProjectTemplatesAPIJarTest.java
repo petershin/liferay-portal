@@ -98,7 +98,9 @@ public class ProjectTemplatesAPIJarTest
 			if (!classPath.contains("$") &&
 				!_ignoreClassPaths.contains(classPath)) {
 
-				Assert.assertTrue(javaPaths.contains(classPath));
+				Assert.assertTrue(
+					"Missing class " + classPath,
+					javaPaths.contains(classPath));
 			}
 		}
 
@@ -158,7 +160,9 @@ public class ProjectTemplatesAPIJarTest
 		for (String serviceClassName : serviceClassNames) {
 			String servicePath = serviceClassName.replace(".", "/");
 
-			Assert.assertTrue(javaPaths.contains(servicePath));
+			Assert.assertTrue(
+				"Missing service class " + servicePath,
+				javaPaths.contains(servicePath));
 		}
 	}
 
