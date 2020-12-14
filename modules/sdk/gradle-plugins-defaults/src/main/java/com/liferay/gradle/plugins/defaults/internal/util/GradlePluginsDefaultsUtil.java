@@ -31,6 +31,7 @@ import org.gradle.api.Project;
 import org.gradle.api.artifacts.dsl.RepositoryHandler;
 import org.gradle.api.artifacts.repositories.AuthenticationContainer;
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository;
+import org.gradle.api.artifacts.repositories.MavenArtifactRepository.MetadataSources;
 import org.gradle.api.artifacts.repositories.PasswordCredentials;
 import org.gradle.internal.authentication.DefaultBasicAuthentication;
 
@@ -72,9 +73,8 @@ public class GradlePluginsDefaultsUtil {
 					public void execute(
 						MavenArtifactRepository mavenArtifactRepository) {
 
-						MavenArtifactRepository.MetadataSources
-							metadataSources =
-								mavenArtifactRepository.getMetadataSources();
+						MetadataSources metadataSources =
+							mavenArtifactRepository.getMetadataSources();
 
 						metadataSources.mavenPom();
 
