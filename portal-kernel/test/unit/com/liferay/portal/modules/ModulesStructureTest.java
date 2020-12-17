@@ -229,7 +229,8 @@ public class ModulesStructureTest {
 
 						if (!ModulesStructureTestUtil.contains(
 								packageJSONPath, "\"liferay-theme-tasks\":") &&
-							!dirAbsolutePath.contains("/project-templates/")) {
+							!dirAbsolutePath.contains("/project-templates/") &&
+							!Files.exists(dirPath.resolve("Dockerfile"))) {
 
 							Path packageLockJSONPath = dirPath.resolve(
 								"package-lock.json");
