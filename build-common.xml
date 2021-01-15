@@ -1030,7 +1030,6 @@ information.
 										<elseif>
 											<and>
 												<equals arg1="${systemProp.gradle.build.scan.enabled}" arg2="true" />
-												<equals arg1="${systemProp.gradle.build.scan.server.url}" arg2="" />
 											</and>
 											<then>
 												<local name="task.output" />
