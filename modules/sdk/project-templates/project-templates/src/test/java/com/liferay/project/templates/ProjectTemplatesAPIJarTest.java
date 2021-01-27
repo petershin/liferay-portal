@@ -93,7 +93,7 @@ public class ProjectTemplatesAPIJarTest {
 		Assert.assertFalse(javaPaths.isEmpty());
 
 		for (String clazz : classes) {
-			if (!clazz.contains("$") && !_ignoreJavaPaths.contains(clazz)) {
+			if (!clazz.contains("$") || !_ignoreJavaPaths.contains(clazz)) {
 				Assert.assertTrue(
 					"Missing class " + clazz, javaPaths.contains(clazz));
 			}
