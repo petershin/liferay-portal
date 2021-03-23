@@ -46,6 +46,7 @@ import org.gradle.api.logging.Logger;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.MavenRepositoryHandlerConvention;
 import org.gradle.api.tasks.Upload;
+import org.gradle.process.internal.ExecException;
 import org.gradle.util.GUtil;
 import org.gradle.util.VersionNumber;
 
@@ -224,9 +225,22 @@ public class LiferayRelengUtil {
 			return false;
 		}
 
-		String result = GitUtil.getGitResult(
-			project, artifactProjectDir, "log", "--format=%s",
-			artifactGitId + "..HEAD", ".");
+		String result = null;
+
+		try {
+			result = GitUtil.getGitResult(
+				project, artifactProjectDir, "log", "--format=%s",
+				artifactGitId + "..HEAD", ".");
+		}
+		catch (ExecException execException) {
+			if (logger.isInfoEnabled()) {
+				logger.info(
+					"Git log returned an invalid result '{}'.",
+					execException.getMessage());
+			}
+
+			return true;
+		}
 
 		String[] lines = result.split("\\r?\\n");
 
