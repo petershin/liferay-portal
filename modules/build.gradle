@@ -290,6 +290,10 @@ gradle.beforeProject {
 
 					systemProperty "gradle.distribution", uri(gradleDistributionFile)
 					systemProperty "maven.distribution.file.name", configurations.mavenDistribution.singleFile
+
+					validateTLD {
+						enabled = false
+					}
 				}
 
 				jvmArgs "-XX:MaxMetaspaceSize=256m"
