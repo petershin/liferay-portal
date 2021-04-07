@@ -1,4 +1,3 @@
-import com.liferay.gradle.plugins.defaults.tasks.CopyIvyDependenciesTask
 import com.liferay.gradle.plugins.source.formatter.FormatSourceTask
 import com.liferay.gradle.plugins.util.PortalTools
 import com.liferay.gradle.util.FileUtil
@@ -22,7 +21,6 @@ task formatSourceLocalChanges(type: FormatSourceTask)
 task printDependencyPath
 task removeHotfixQualifier
 task setUpLibs
-task setUpPortalTools
 task setUpYarnOfflineCache
 task updateYarnBinariesCache
 task wrapperPortal(type: Wrapper)
@@ -256,7 +254,6 @@ tasks.withType(FormatSourceTask) {
 }
 
 _createSetUpLibTasks(libDependenciesMap)
-_createSetUpPortalToolTasks()
 _createYarnTasks()
 
 private String _camelCase(String dirName) {
@@ -300,47 +297,6 @@ private void _createSetUpLibTasks(Map<File, Properties> libDependenciesMap) {
 		}
 
 		setUpLibs.dependsOn libTask
-	}
-}
-
-private void _createSetUpPortalToolTasks() {
-	FileTree ivyXmlFileTree = fileTree(dir: "../tools/sdk", includes: ["ivy.xml", "dependencies/*/ivy.xml"])
-
-	ivyXmlFileTree.each {
-		File ivyXmlFile ->
-
-		File portalToolDir = ivyXmlFile.parentFile
-
-		CopyIvyDependenciesTask copyIvyDependenciesTask = tasks.create(name: "setUp" + _camelCase(portalToolDir.name), type: CopyIvyDependenciesTask) {
-			configuration.exclude group: "com.liferay.portal"
-
-			dependencyTransformClosure = {
-				Map<String, Object> dependencyNotation ->
-
-				String version = PortalTools.getVersion(project, dependencyNotation["name"])
-
-				if (version) {
-					dependencyNotation["version"] = version
-				}
-
-				dependencyNotation
-			}
-
-			if (ivyXmlFile.parentFile.name != "sdk") {
-				doFirst {
-					delete destinationDir
-				}
-			}
-
-			inputFile = ivyXmlFile
-			into new File(portalToolDir, "lib")
-
-			outputs.upToDateWhen {
-				false
-			}
-		}
-
-		setUpPortalTools.dependsOn copyIvyDependenciesTask
 	}
 }
 
