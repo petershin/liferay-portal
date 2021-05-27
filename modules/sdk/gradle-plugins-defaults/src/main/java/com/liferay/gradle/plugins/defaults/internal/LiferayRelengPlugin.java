@@ -772,6 +772,12 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 					return true;
 				}
 
+				File markerFile = LiferayRelengUtil.getStaleMarkerFile(task);
+
+				if (markerFile.exists()) {
+					return false;
+				}
+
 				if (liferayThemeProject &&
 					LiferayRelengUtil.hasStaleParentTheme(project)) {
 
@@ -836,6 +842,16 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 										"Unable to run " + task +
 											" in parallel");
 								}
+							}
+
+						});
+
+					writeArtifactPublishCommandsTask.doLast(
+						new Action<Task>() {
+
+							@Override
+							public void execute(Task task) {
+								LiferayRelengUtil.createStaleMarkerFile(task);
 							}
 
 						});

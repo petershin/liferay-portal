@@ -36,6 +36,7 @@ import java.util.Properties;
 
 import org.gradle.api.GradleException;
 import org.gradle.api.Project;
+import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.Dependency;
 import org.gradle.api.artifacts.ProjectDependency;
@@ -54,6 +55,10 @@ import org.gradle.util.VersionNumber;
  * @author Peter Shin
  */
 public class LiferayRelengUtil {
+
+	public static void createStaleMarkerFile(Task task) {
+		_createNewFile(getStaleMarkerFile(task));
+	}
 
 	public static String getArtifactRemoteURL(
 			Project project, PublishArtifact publishArtifact, boolean cdn)
@@ -99,6 +104,12 @@ public class LiferayRelengUtil {
 
 	public static File getRelengDir(Project project) {
 		return getRelengDir(project.getProjectDir());
+	}
+
+	public static File getStaleMarkerFile(Task task) {
+		Project project = task.getProject();
+
+		return new File(project.getBuildDir(), "releng/." + task.getName());
 	}
 
 	public static boolean hasStaleParentTheme(Project project) {
