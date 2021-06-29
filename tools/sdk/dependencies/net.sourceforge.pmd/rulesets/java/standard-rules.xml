@@ -48,8 +48,9 @@ public void test() {
 		</example>
 	</rule>
 	<rule
-		class="net.sourceforge.pmd.lang.java.rule.basic.BooleanInstantiationRule"
+		class="net.sourceforge.pmd.lang.java.rule.performance.BooleanInstantiationRule"
 		externalInfoUrl="https://pmd.github.io/pmd-6.8.0/pmd_rules_java_performance.html#booleaninstantiation"
+		language="java"
 		message="Avoid instantiating Boolean objects; reference Boolean.TRUE or Boolean.FALSE or call Boolean.valueOf() instead."
 		name="BooleanInstantiation"
 		since="1.2"
@@ -123,8 +124,9 @@ public class Foo {
 		</example>
 	</rule>
 	<rule
-		class="net.sourceforge.pmd.lang.java.rule.unnecessary.UnnecessaryReturnRule"
+		class="net.sourceforge.pmd.lang.java.rule.codestyle.UnnecessaryReturnRule"
 		externalInfoUrl="https://pmd.github.io/pmd-6.8.0/pmd_rules_java_codestyle.html#unnecessaryreturn"
+		language="java"
 		message="Avoid unnecessary return statements"
 		name="UnnecessaryReturn"
 		since="1.3"
@@ -148,8 +150,9 @@ public class Foo {
 		</example>
 	</rule>
 	<rule
-		class="net.sourceforge.pmd.lang.java.rule.unnecessary.UselessOperationOnImmutableRule"
+		class="net.sourceforge.pmd.lang.java.rule.errorprone.UselessOperationOnImmutableRule"
 		externalInfoUrl="https://pmd.github.io/pmd-6.8.0/pmd_rules_java_errorprone.html#uselessoperationonimmutable"
+		language="java"
 		message="An operation on an Immutable object (String, BigDecimal or BigInteger) won't change the object itself"
 		name="UselessOperationOnImmutable"
 		since="3.5"
@@ -174,7 +177,7 @@ bigDecimal = bigDecimal.add(new BigDecimal(5));
 		</example>
 	</rule>
 	<rule
-		class="net.sourceforge.pmd.lang.java.rule.unusedcode.UnusedLocalVariableRule"
+		class="net.sourceforge.pmd.lang.java.rule.bestpractices.UnusedLocalVariableRule"
 		externalInfoUrl="https://pmd.github.io/pmd-6.8.0/pmd_rules_java_bestpractices.html#unusedlocalvariable"
 		language="java"
 		message="Avoid unused local variables such as ''{0}''."
