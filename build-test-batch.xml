@@ -6126,6 +6126,8 @@ ${output.content}</echo>
 
 		<delete dir="pmd-reports" />
 
+		<antcall inheritAll="false" target="setup-sdk" />
+
 		<antcall inheritAll="false" target="compile" />
 
 		<antcall inheritAll="false" target="run-pmd">
