@@ -37,9 +37,9 @@ public class ReindexStatusResourceTest
 
 	@Override
 	@Test
-	public void testGetReindexStatusPage() throws Exception {
+	public void testGetIndexReindexStatusPage() throws Exception {
 		Page<ReindexStatus> reindexStatusPage =
-			reindexStatusResource.getReindexStatusPage();
+			reindexStatusResource.getIndexReindexStatusPage();
 
 		List<ReindexStatus> reindexStatuses =
 			(List<ReindexStatus>)reindexStatusPage.getItems();
