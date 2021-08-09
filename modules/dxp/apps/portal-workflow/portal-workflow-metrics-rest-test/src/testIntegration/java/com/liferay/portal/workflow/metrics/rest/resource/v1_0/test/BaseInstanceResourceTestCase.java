@@ -428,6 +428,44 @@ public abstract class BaseInstanceResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetProcessInstancesPage() throws Exception {
+		Long processId = testGetProcessInstancesPage_getProcessId();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"instances",
+			new HashMap<String, Object>() {
+				{
+					put("page", 1);
+					put("pageSize", 2);
+
+					put("processId", processId);
+				}
+			},
+			new GraphQLField("items", getGraphQLFields()),
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		JSONObject instancesJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/instances");
+
+		Assert.assertEquals(0, instancesJSONObject.get("totalCount"));
+
+		Instance instance1 = testGraphQLInstance_addInstance();
+		Instance instance2 = testGraphQLInstance_addInstance();
+
+		instancesJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/instances");
+
+		Assert.assertEquals(2, instancesJSONObject.get("totalCount"));
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(instance1, instance2),
+			Arrays.asList(
+				InstanceSerDes.toDTOs(instancesJSONObject.getString("items"))));
+	}
+
+	@Test
 	public void testPostProcessInstance() throws Exception {
 		Instance randomInstance = randomInstance();
 

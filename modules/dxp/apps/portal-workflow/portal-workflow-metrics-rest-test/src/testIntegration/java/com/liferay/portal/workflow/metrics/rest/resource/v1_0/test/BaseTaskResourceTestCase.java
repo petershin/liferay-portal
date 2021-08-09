@@ -256,6 +256,41 @@ public abstract class BaseTaskResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetProcessTasksPage() throws Exception {
+		Long processId = testGetProcessTasksPage_getProcessId();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"tasks",
+			new HashMap<String, Object>() {
+				{
+					put("processId", processId);
+				}
+			},
+			new GraphQLField("items", getGraphQLFields()),
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		JSONObject tasksJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/tasks");
+
+		Assert.assertEquals(0, tasksJSONObject.get("totalCount"));
+
+		Task task1 = testGraphQLTask_addTask();
+		Task task2 = testGraphQLTask_addTask();
+
+		tasksJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/tasks");
+
+		Assert.assertEquals(2, tasksJSONObject.get("totalCount"));
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(task1, task2),
+			Arrays.asList(
+				TaskSerDes.toDTOs(tasksJSONObject.getString("items"))));
+	}
+
+	@Test
 	public void testPostProcessTask() throws Exception {
 		Task randomTask = randomTask();
 

@@ -423,6 +423,11 @@ public abstract class BaseNodeMetricResourceTestCase {
 		return null;
 	}
 
+	@Test
+	public void testGraphQLGetProcessNodeMetricsPage() throws Exception {
+		Assert.assertTrue(false);
+	}
+
 	protected void assertHttpResponseStatusCode(
 		int expectedHttpResponseStatusCode,
 		HttpInvoker.HttpResponse actualHttpResponse) {
