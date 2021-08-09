@@ -16,6 +16,7 @@ package com.liferay.object.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.exception.DuplicateObjectFieldException;
+import com.liferay.object.exception.ObjectFieldLabelException;
 import com.liferay.object.exception.ObjectFieldNameException;
 import com.liferay.object.exception.ObjectFieldTypeException;
 import com.liferay.object.exception.ReservedObjectFieldException;
@@ -25,9 +26,11 @@ import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.object.service.ObjectFieldLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -50,10 +53,24 @@ public class ObjectFieldLocalServiceTest {
 	@Test
 	public void testAddSystemObjectField() throws Exception {
 
+		// Label is null
+
+		try {
+			_testAddSystemObjectField(_createObjectField("", "able", "String"));
+
+			Assert.fail();
+		}
+		catch (ObjectFieldLabelException objectFieldLabelException) {
+			Assert.assertEquals(
+				"Label is null for locale " + LocaleUtil.US.getDisplayName(),
+				objectFieldLabelException.getMessage());
+		}
+
 		// Name is null
 
 		try {
-			_testAddSystemObjectField(_createObjectField("", "String"));
+			_testAddSystemObjectField(
+				_createObjectField("Able", "", "String"));
 
 			Assert.fail();
 		}
@@ -159,8 +176,8 @@ public class ObjectFieldLocalServiceTest {
 
 		try {
 			_testAddSystemObjectField(
-				_createObjectField("able", "String"),
-				_createObjectField("able", "String"));
+				_createObjectField("Able", "able", "String"),
+				_createObjectField("Able", "able", "String"));
 
 			Assert.fail();
 		}
@@ -178,11 +195,12 @@ public class ObjectFieldLocalServiceTest {
 		};
 
 		for (String type : types) {
-			_testAddSystemObjectField(_createObjectField("able", type));
+			_testAddSystemObjectField(_createObjectField("Able", "able", type));
 		}
 
 		try {
-			_testAddSystemObjectField(_createObjectField("able", "STRING"));
+			_testAddSystemObjectField(
+				_createObjectField("Able", "able", "STRING"));
 
 			Assert.fail();
 		}
@@ -193,9 +211,16 @@ public class ObjectFieldLocalServiceTest {
 	}
 
 	private ObjectField _createObjectField(String name, String type) {
+		return _createObjectField(name, name, type);
+	}
+
+	private ObjectField _createObjectField(
+		String label, String name, String type) {
+
 		ObjectField objectField = ObjectFieldLocalServiceUtil.createObjectField(
 			0);
 
+		objectField.setLabelMap(Collections.singletonMap(LocaleUtil.US, label));
 		objectField.setName(name);
 		objectField.setType(type);
 
@@ -210,8 +235,9 @@ public class ObjectFieldLocalServiceTest {
 		try {
 			objectDefinition =
 				ObjectDefinitionLocalServiceUtil.addSystemObjectDefinition(
-					TestPropsValues.getUserId(), null, "Test", null, null, 1,
-					Arrays.asList(objectFields));
+					TestPropsValues.getUserId(), null,
+					Collections.singletonMap(LocaleUtil.US, "Test"), "Test",
+					null, null, 1, Arrays.asList(objectFields));
 		}
 		finally {
 			if (objectDefinition != null) {

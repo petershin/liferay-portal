@@ -78,7 +78,7 @@ public class ObjectDefinitionCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -98,12 +98,16 @@ public class ObjectDefinitionCacheModel
 		sb.append(modifiedDate);
 		sb.append(", dbTableName=");
 		sb.append(dbTableName);
+		sb.append(", label=");
+		sb.append(label);
 		sb.append(", name=");
 		sb.append(name);
 		sb.append(", pkObjectFieldDBColumnName=");
 		sb.append(pkObjectFieldDBColumnName);
 		sb.append(", pkObjectFieldName=");
 		sb.append(pkObjectFieldName);
+		sb.append(", pluralLabel=");
+		sb.append(pluralLabel);
 		sb.append(", scope=");
 		sb.append(scope);
 		sb.append(", system=");
@@ -162,6 +166,13 @@ public class ObjectDefinitionCacheModel
 			objectDefinitionImpl.setDBTableName(dbTableName);
 		}
 
+		if (label == null) {
+			objectDefinitionImpl.setLabel("");
+		}
+		else {
+			objectDefinitionImpl.setLabel(label);
+		}
+
 		if (name == null) {
 			objectDefinitionImpl.setName("");
 		}
@@ -182,6 +193,13 @@ public class ObjectDefinitionCacheModel
 		}
 		else {
 			objectDefinitionImpl.setPKObjectFieldName(pkObjectFieldName);
+		}
+
+		if (pluralLabel == null) {
+			objectDefinitionImpl.setPluralLabel("");
+		}
+		else {
+			objectDefinitionImpl.setPluralLabel(pluralLabel);
 		}
 
 		if (scope == null) {
@@ -214,9 +232,11 @@ public class ObjectDefinitionCacheModel
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 		dbTableName = objectInput.readUTF();
+		label = objectInput.readUTF();
 		name = objectInput.readUTF();
 		pkObjectFieldDBColumnName = objectInput.readUTF();
 		pkObjectFieldName = objectInput.readUTF();
+		pluralLabel = objectInput.readUTF();
 		scope = objectInput.readUTF();
 
 		system = objectInput.readBoolean();
@@ -260,6 +280,13 @@ public class ObjectDefinitionCacheModel
 			objectOutput.writeUTF(dbTableName);
 		}
 
+		if (label == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(label);
+		}
+
 		if (name == null) {
 			objectOutput.writeUTF("");
 		}
@@ -279,6 +306,13 @@ public class ObjectDefinitionCacheModel
 		}
 		else {
 			objectOutput.writeUTF(pkObjectFieldName);
+		}
+
+		if (pluralLabel == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(pluralLabel);
 		}
 
 		if (scope == null) {
@@ -304,9 +338,11 @@ public class ObjectDefinitionCacheModel
 	public long createDate;
 	public long modifiedDate;
 	public String dbTableName;
+	public String label;
 	public String name;
 	public String pkObjectFieldDBColumnName;
 	public String pkObjectFieldName;
+	public String pluralLabel;
 	public String scope;
 	public boolean system;
 	public int version;

@@ -17,6 +17,7 @@ package com.liferay.object.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.exception.DuplicateObjectDefinitionException;
 import com.liferay.object.exception.NoSuchObjectFieldException;
+import com.liferay.object.exception.ObjectDefinitionLabelException;
 import com.liferay.object.exception.ObjectDefinitionNameException;
 import com.liferay.object.exception.ObjectDefinitionStatusException;
 import com.liferay.object.exception.ObjectDefinitionVersionException;
@@ -32,6 +33,7 @@ import com.liferay.portal.kernel.service.ResourceActionLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -40,6 +42,8 @@ import java.sql.Connection;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -62,10 +66,23 @@ public class ObjectDefinitionLocalServiceTest {
 	@Test
 	public void testAddCustomObjectDefinition() throws Exception {
 
+		// Label is null
+
+		try {
+			_testAddCustomObjectDefinition("", "Test");
+
+			Assert.fail();
+		}
+		catch (ObjectDefinitionLabelException objectDefinitionLabelException) {
+			Assert.assertEquals(
+				"Label is null for locale " + LocaleUtil.US.getDisplayName(),
+				objectDefinitionLabelException.getMessage());
+		}
+
 		// Name is null
 
 		try {
-			_testAddCustomObjectDefinition("");
+			_testAddCustomObjectDefinition("Test", "");
 
 			Assert.fail();
 		}
@@ -144,7 +161,7 @@ public class ObjectDefinitionLocalServiceTest {
 
 		ObjectDefinition objectDefinition =
 			ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
-				TestPropsValues.getUserId(), "Test",
+				TestPropsValues.getUserId(), _labelMap, "Test",
 				Collections.<ObjectField>emptyList());
 
 		ObjectDefinitionLocalServiceUtil.publishCustomObjectDefinition(
@@ -169,10 +186,10 @@ public class ObjectDefinitionLocalServiceTest {
 
 		objectDefinition =
 			ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
-				TestPropsValues.getUserId(), "Test",
+				TestPropsValues.getUserId(), _labelMap, "Test",
 				Arrays.asList(
-					_createObjectField("able", "String"),
-					_createObjectField("baker", "String")));
+					_createObjectField("Able", "able", "String"),
+					_createObjectField("Baker", "baker", "String")));
 
 		// Before publish, database table
 
@@ -272,6 +289,12 @@ public class ObjectDefinitionLocalServiceTest {
 					}
 
 					@Override
+					public Map<Locale, String> getLabelMap() {
+						return Collections.singletonMap(
+							LocaleUtil.US, "User Notification Event");
+					}
+
+					@Override
 					public String getName() {
 						return "UserNotificationEvent";
 					}
@@ -280,9 +303,14 @@ public class ObjectDefinitionLocalServiceTest {
 					public List<ObjectField> getObjectFields() {
 						return Arrays.asList(
 							createObjectField(
-								"actionRequired", true, "Boolean"),
-							createObjectField("deliveryType", false, "Long"),
-							createObjectField("type_", "type", true, "String"));
+								"Action Required", "actionRequired", true,
+								"Boolean"),
+							createObjectField(
+								"Delivery Type", "deliveryType", false, "Long"),
+							createObjectField(
+								"type_",
+								Collections.singletonMap(LocaleUtil.US, "Type"),
+								"type", true, "String"));
 					}
 
 					@Override
@@ -330,6 +358,12 @@ public class ObjectDefinitionLocalServiceTest {
 					}
 
 					@Override
+					public Map<Locale, String> getLabelMap() {
+						return Collections.singletonMap(
+							LocaleUtil.US, "User Notification Event");
+					}
+
+					@Override
 					public String getName() {
 						return "UserNotificationEvent";
 					}
@@ -337,10 +371,14 @@ public class ObjectDefinitionLocalServiceTest {
 					@Override
 					public List<ObjectField> getObjectFields() {
 						return Arrays.asList(
-							createObjectField("archived", true, "Boolean"),
-							createObjectField("deliveryType", true, "Long"),
 							createObjectField(
-								"type_", "type", false, "String"));
+								"Archived", "archived", true, "Boolean"),
+							createObjectField(
+								"Delivery Type", "deliveryType", true, "Long"),
+							createObjectField(
+								"type_",
+								Collections.singletonMap(LocaleUtil.US, "Type"),
+								"type", false, "String"));
 					}
 
 					@Override
@@ -374,6 +412,19 @@ public class ObjectDefinitionLocalServiceTest {
 
 	@Test
 	public void testAddSystemObjectDefinition() throws Exception {
+
+		// Label is null
+
+		try {
+			_testAddSystemObjectDefinition("", "Test");
+
+			Assert.fail();
+		}
+		catch (ObjectDefinitionLabelException objectDefinitionLabelException) {
+			Assert.assertEquals(
+				"Label is null for locale " + LocaleUtil.US.getDisplayName(),
+				objectDefinitionLabelException.getMessage());
+		}
 
 		// Name is null
 
@@ -471,8 +522,8 @@ public class ObjectDefinitionLocalServiceTest {
 
 		ObjectDefinition objectDefinition =
 			ObjectDefinitionLocalServiceUtil.addSystemObjectDefinition(
-				TestPropsValues.getUserId(), null, "Test", null, null, 1,
-				Collections.<ObjectField>emptyList());
+				TestPropsValues.getUserId(), null, _labelMap, "Test", null,
+				null, 1, Collections.<ObjectField>emptyList());
 
 		try {
 			_testAddSystemObjectDefinition("Test");
@@ -492,8 +543,8 @@ public class ObjectDefinitionLocalServiceTest {
 
 		try {
 			ObjectDefinitionLocalServiceUtil.addSystemObjectDefinition(
-				TestPropsValues.getUserId(), null, "Test", null, null, -1,
-				Collections.<ObjectField>emptyList());
+				TestPropsValues.getUserId(), null, _labelMap, "Test", null,
+				null, -1, Collections.<ObjectField>emptyList());
 		}
 		catch (ObjectDefinitionVersionException
 					objectDefinitionVersionException) {
@@ -505,8 +556,8 @@ public class ObjectDefinitionLocalServiceTest {
 
 		try {
 			ObjectDefinitionLocalServiceUtil.addSystemObjectDefinition(
-				TestPropsValues.getUserId(), null, "Test", null, null, 0,
-				Collections.<ObjectField>emptyList());
+				TestPropsValues.getUserId(), null, _labelMap, "Test", null,
+				null, 0, Collections.<ObjectField>emptyList());
 		}
 		catch (ObjectDefinitionVersionException
 					objectDefinitionVersionException) {
@@ -520,8 +571,8 @@ public class ObjectDefinitionLocalServiceTest {
 
 		objectDefinition =
 			ObjectDefinitionLocalServiceUtil.addSystemObjectDefinition(
-				TestPropsValues.getUserId(), null, "Test", null, null, 1,
-				Collections.<ObjectField>emptyList());
+				TestPropsValues.getUserId(), null, _labelMap, "Test", null,
+				null, 1, Collections.<ObjectField>emptyList());
 
 		// Database table
 
@@ -598,7 +649,7 @@ public class ObjectDefinitionLocalServiceTest {
 	public void testDeleteObjectDefinition() throws Exception {
 		ObjectDefinition objectDefinition =
 			ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
-				TestPropsValues.getUserId(), "Test",
+				TestPropsValues.getUserId(), _labelMap, "Test",
 				Collections.<ObjectField>emptyList());
 
 		ObjectDefinitionLocalServiceUtil.publishCustomObjectDefinition(
@@ -654,10 +705,13 @@ public class ObjectDefinitionLocalServiceTest {
 		Assert.assertEquals(type, objectField.getType());
 	}
 
-	private ObjectField _createObjectField(String name, String type) {
+	private ObjectField _createObjectField(
+		String label, String name, String type) {
+
 		ObjectField objectField = ObjectFieldLocalServiceUtil.createObjectField(
 			0);
 
+		objectField.setLabelMap(Collections.singletonMap(LocaleUtil.US, label));
 		objectField.setName(name);
 		objectField.setType(type);
 
@@ -683,12 +737,19 @@ public class ObjectDefinitionLocalServiceTest {
 	}
 
 	private void _testAddCustomObjectDefinition(String name) throws Exception {
+		_testAddCustomObjectDefinition(name, name);
+	}
+
+	private void _testAddCustomObjectDefinition(String label, String name)
+		throws Exception {
+
 		ObjectDefinition objectDefinition = null;
 
 		try {
 			objectDefinition =
 				ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
-					TestPropsValues.getUserId(), name,
+					TestPropsValues.getUserId(),
+					Collections.singletonMap(LocaleUtil.US, label), name,
 					Collections.<ObjectField>emptyList());
 
 			objectDefinition =
@@ -705,13 +766,20 @@ public class ObjectDefinitionLocalServiceTest {
 	}
 
 	private void _testAddSystemObjectDefinition(String name) throws Exception {
+		_testAddSystemObjectDefinition("Test", name);
+	}
+
+	private void _testAddSystemObjectDefinition(String label, String name)
+		throws Exception {
+
 		ObjectDefinition objectDefinition = null;
 
 		try {
 			objectDefinition =
 				ObjectDefinitionLocalServiceUtil.addSystemObjectDefinition(
-					TestPropsValues.getUserId(), null, name, null, null, 1,
-					Collections.<ObjectField>emptyList());
+					TestPropsValues.getUserId(), null,
+					Collections.singletonMap(LocaleUtil.US, label), name, null,
+					null, 1, Collections.<ObjectField>emptyList());
 		}
 		finally {
 			if (objectDefinition != null) {
@@ -720,5 +788,8 @@ public class ObjectDefinitionLocalServiceTest {
 			}
 		}
 	}
+
+	private final Map<Locale, String> _labelMap = Collections.singletonMap(
+		LocaleUtil.US, "Test");
 
 }

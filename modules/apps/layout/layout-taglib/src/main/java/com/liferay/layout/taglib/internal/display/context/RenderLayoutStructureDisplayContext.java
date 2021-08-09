@@ -325,17 +325,6 @@ public class RenderLayoutStructureDisplayContext {
 	public String getContainerLinkHref(
 			ContainerStyledLayoutStructureItem
 				containerStyledLayoutStructureItem,
-			Object displayObject)
-		throws PortalException {
-
-		return getContainerLinkHref(
-			containerStyledLayoutStructureItem, displayObject,
-			LocaleUtil.getMostRelevantLocale());
-	}
-
-	public String getContainerLinkHref(
-			ContainerStyledLayoutStructureItem
-				containerStyledLayoutStructureItem,
 			Object displayObject, Locale locale)
 		throws PortalException {
 
@@ -476,21 +465,13 @@ public class RenderLayoutStructureDisplayContext {
 			return PortalUtil.getLayoutFullURL(layout, _themeDisplay);
 		}
 
-		String href = linkJSONObject.getString("href");
+		JSONObject hrefJSONObject = linkJSONObject.getJSONObject("href");
 
-		if (Validator.isNotNull(href)) {
-			return href;
+		if (hrefJSONObject != null) {
+			return hrefJSONObject.getString(LocaleUtil.toLanguageId(locale));
 		}
 
 		return StringPool.BLANK;
-	}
-
-	public String getContainerLinkTarget(
-		ContainerStyledLayoutStructureItem containerStyledLayoutStructureItem) {
-
-		return getContainerLinkTarget(
-			containerStyledLayoutStructureItem,
-			LocaleUtil.getMostRelevantLocale());
 	}
 
 	public String getContainerLinkTarget(

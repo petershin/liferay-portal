@@ -8,9 +8,11 @@ create table ObjectDefinition (
 	createDate DATE null,
 	modifiedDate DATE null,
 	dbTableName VARCHAR(75) null,
+	label STRING null,
 	name VARCHAR(75) null,
 	pkObjectFieldDBColumnName VARCHAR(75) null,
 	pkObjectFieldName VARCHAR(75) null,
+	pluralLabel STRING null,
 	scope VARCHAR(75) null,
 	system_ BOOLEAN,
 	version INTEGER,
@@ -51,7 +53,9 @@ create table ObjectField (
 	indexed BOOLEAN,
 	indexedAsKeyword BOOLEAN,
 	indexedLanguageId VARCHAR(75) null,
+	label STRING null,
 	name VARCHAR(75) null,
+	pluralLabel STRING null,
 	required BOOLEAN,
 	type_ VARCHAR(75) null
 );

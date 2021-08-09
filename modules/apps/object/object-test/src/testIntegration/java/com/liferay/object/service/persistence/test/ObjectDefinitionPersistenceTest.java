@@ -140,12 +140,16 @@ public class ObjectDefinitionPersistenceTest {
 
 		newObjectDefinition.setDBTableName(RandomTestUtil.randomString());
 
+		newObjectDefinition.setLabel(RandomTestUtil.randomString());
+
 		newObjectDefinition.setName(RandomTestUtil.randomString());
 
 		newObjectDefinition.setPKObjectFieldDBColumnName(
 			RandomTestUtil.randomString());
 
 		newObjectDefinition.setPKObjectFieldName(RandomTestUtil.randomString());
+
+		newObjectDefinition.setPluralLabel(RandomTestUtil.randomString());
 
 		newObjectDefinition.setScope(RandomTestUtil.randomString());
 
@@ -187,6 +191,9 @@ public class ObjectDefinitionPersistenceTest {
 			existingObjectDefinition.getDBTableName(),
 			newObjectDefinition.getDBTableName());
 		Assert.assertEquals(
+			existingObjectDefinition.getLabel(),
+			newObjectDefinition.getLabel());
+		Assert.assertEquals(
 			existingObjectDefinition.getName(), newObjectDefinition.getName());
 		Assert.assertEquals(
 			existingObjectDefinition.getPKObjectFieldDBColumnName(),
@@ -194,6 +201,9 @@ public class ObjectDefinitionPersistenceTest {
 		Assert.assertEquals(
 			existingObjectDefinition.getPKObjectFieldName(),
 			newObjectDefinition.getPKObjectFieldName());
+		Assert.assertEquals(
+			existingObjectDefinition.getPluralLabel(),
+			newObjectDefinition.getPluralLabel());
 		Assert.assertEquals(
 			existingObjectDefinition.getScope(),
 			newObjectDefinition.getScope());
@@ -285,9 +295,10 @@ public class ObjectDefinitionPersistenceTest {
 			"ObjectDefinition", "mvccVersion", true, "uuid", true,
 			"objectDefinitionId", true, "companyId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true,
-			"dbTableName", true, "name", true, "pkObjectFieldDBColumnName",
-			true, "pkObjectFieldName", true, "scope", true, "system", true,
-			"version", true, "status", true);
+			"dbTableName", true, "label", true, "name", true,
+			"pkObjectFieldDBColumnName", true, "pkObjectFieldName", true,
+			"pluralLabel", true, "scope", true, "system", true, "version", true,
+			"status", true);
 	}
 
 	@Test
@@ -592,12 +603,16 @@ public class ObjectDefinitionPersistenceTest {
 
 		objectDefinition.setDBTableName(RandomTestUtil.randomString());
 
+		objectDefinition.setLabel(RandomTestUtil.randomString());
+
 		objectDefinition.setName(RandomTestUtil.randomString());
 
 		objectDefinition.setPKObjectFieldDBColumnName(
 			RandomTestUtil.randomString());
 
 		objectDefinition.setPKObjectFieldName(RandomTestUtil.randomString());
+
+		objectDefinition.setPluralLabel(RandomTestUtil.randomString());
 
 		objectDefinition.setScope(RandomTestUtil.randomString());
 

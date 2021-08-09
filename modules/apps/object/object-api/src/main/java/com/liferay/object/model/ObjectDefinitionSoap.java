@@ -42,10 +42,12 @@ public class ObjectDefinitionSoap implements Serializable {
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setDBTableName(model.getDBTableName());
+		soapModel.setLabel(model.getLabel());
 		soapModel.setName(model.getName());
 		soapModel.setPKObjectFieldDBColumnName(
 			model.getPKObjectFieldDBColumnName());
 		soapModel.setPKObjectFieldName(model.getPKObjectFieldName());
+		soapModel.setPluralLabel(model.getPluralLabel());
 		soapModel.setScope(model.getScope());
 		soapModel.setSystem(model.isSystem());
 		soapModel.setVersion(model.getVersion());
@@ -183,6 +185,14 @@ public class ObjectDefinitionSoap implements Serializable {
 		_dbTableName = dbTableName;
 	}
 
+	public String getLabel() {
+		return _label;
+	}
+
+	public void setLabel(String label) {
+		_label = label;
+	}
+
 	public String getName() {
 		return _name;
 	}
@@ -205,6 +215,14 @@ public class ObjectDefinitionSoap implements Serializable {
 
 	public void setPKObjectFieldName(String pkObjectFieldName) {
 		_pkObjectFieldName = pkObjectFieldName;
+	}
+
+	public String getPluralLabel() {
+		return _pluralLabel;
+	}
+
+	public void setPluralLabel(String pluralLabel) {
+		_pluralLabel = pluralLabel;
 	}
 
 	public String getScope() {
@@ -252,9 +270,11 @@ public class ObjectDefinitionSoap implements Serializable {
 	private Date _createDate;
 	private Date _modifiedDate;
 	private String _dbTableName;
+	private String _label;
 	private String _name;
 	private String _pkObjectFieldDBColumnName;
 	private String _pkObjectFieldName;
+	private String _pluralLabel;
 	private String _scope;
 	private boolean _system;
 	private int _version;

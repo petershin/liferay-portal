@@ -17,6 +17,8 @@ package com.liferay.object.system;
 import com.liferay.object.model.ObjectField;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * @author Marco Leo
@@ -27,6 +29,8 @@ public interface SystemObjectDefinitionMetadata {
 	public default String getDBTableName() {
 		return null;
 	}
+
+	public Map<Locale, String> getLabelMap();
 
 	public String getName();
 
