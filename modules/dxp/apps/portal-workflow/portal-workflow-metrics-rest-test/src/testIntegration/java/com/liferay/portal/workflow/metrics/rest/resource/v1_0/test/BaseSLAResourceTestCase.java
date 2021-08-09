@@ -291,6 +291,43 @@ public abstract class BaseSLAResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetProcessSLAsPage() throws Exception {
+		Long processId = testGetProcessSLAsPage_getProcessId();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"slas",
+			new HashMap<String, Object>() {
+				{
+					put("page", 1);
+					put("pageSize", 2);
+
+					put("processId", processId);
+				}
+			},
+			new GraphQLField("items", getGraphQLFields()),
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		JSONObject slasJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/slas");
+
+		Assert.assertEquals(0, slasJSONObject.get("totalCount"));
+
+		SLA sla1 = testGraphQLSLA_addSLA();
+		SLA sla2 = testGraphQLSLA_addSLA();
+
+		slasJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/slas");
+
+		Assert.assertEquals(2, slasJSONObject.get("totalCount"));
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(sla1, sla2),
+			Arrays.asList(SLASerDes.toDTOs(slasJSONObject.getString("items"))));
+	}
+
+	@Test
 	public void testPostProcessSLA() throws Exception {
 		SLA randomSLA = randomSLA();
 

@@ -252,6 +252,41 @@ public abstract class BaseNodeResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetProcessNodesPage() throws Exception {
+		Long processId = testGetProcessNodesPage_getProcessId();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"nodes",
+			new HashMap<String, Object>() {
+				{
+					put("processId", processId);
+				}
+			},
+			new GraphQLField("items", getGraphQLFields()),
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		JSONObject nodesJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/nodes");
+
+		Assert.assertEquals(0, nodesJSONObject.get("totalCount"));
+
+		Node node1 = testGraphQLNode_addNode();
+		Node node2 = testGraphQLNode_addNode();
+
+		nodesJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/nodes");
+
+		Assert.assertEquals(2, nodesJSONObject.get("totalCount"));
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(node1, node2),
+			Arrays.asList(
+				NodeSerDes.toDTOs(nodesJSONObject.getString("items"))));
+	}
+
+	@Test
 	public void testPostProcessNode() throws Exception {
 		Node randomNode = randomNode();
 

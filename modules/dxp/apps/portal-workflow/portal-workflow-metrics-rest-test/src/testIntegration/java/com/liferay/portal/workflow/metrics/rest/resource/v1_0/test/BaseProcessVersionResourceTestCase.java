@@ -259,6 +259,11 @@ public abstract class BaseProcessVersionResourceTestCase {
 		return null;
 	}
 
+	@Test
+	public void testGraphQLGetProcessProcessVersionsPage() throws Exception {
+		Assert.assertTrue(false);
+	}
+
 	protected void assertHttpResponseStatusCode(
 		int expectedHttpResponseStatusCode,
 		HttpInvoker.HttpResponse actualHttpResponse) {
