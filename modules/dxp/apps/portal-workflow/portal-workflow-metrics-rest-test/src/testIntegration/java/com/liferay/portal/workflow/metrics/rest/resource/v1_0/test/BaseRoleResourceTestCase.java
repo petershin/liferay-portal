@@ -245,6 +245,41 @@ public abstract class BaseRoleResourceTestCase {
 		return null;
 	}
 
+	@Test
+	public void testGraphQLGetProcessRolesPage() throws Exception {
+		Long processId = testGetProcessRolesPage_getProcessId();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"roles",
+			new HashMap<String, Object>() {
+				{
+					put("processId", processId);
+				}
+			},
+			new GraphQLField("items", getGraphQLFields()),
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		JSONObject rolesJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/roles");
+
+		Assert.assertEquals(0, rolesJSONObject.get("totalCount"));
+
+		Role role1 = testGraphQLRole_addRole();
+		Role role2 = testGraphQLRole_addRole();
+
+		rolesJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/roles");
+
+		Assert.assertEquals(2, rolesJSONObject.get("totalCount"));
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(role1, role2),
+			Arrays.asList(
+				RoleSerDes.toDTOs(rolesJSONObject.getString("items"))));
+	}
+
 	protected Role testGraphQLRole_addRole() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");

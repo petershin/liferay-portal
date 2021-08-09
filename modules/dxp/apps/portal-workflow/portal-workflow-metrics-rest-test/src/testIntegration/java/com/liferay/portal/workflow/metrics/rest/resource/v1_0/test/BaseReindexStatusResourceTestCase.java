@@ -191,7 +191,7 @@ public abstract class BaseReindexStatusResourceTestCase {
 	}
 
 	@Test
-	public void testGetReindexStatusPage() throws Exception {
+	public void testGetIndexReindexStatusPage() throws Exception {
 		Assert.assertTrue(false);
 	}
 

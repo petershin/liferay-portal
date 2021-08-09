@@ -47,7 +47,7 @@ public interface ReindexStatusResource {
 		return FactoryHolder.factory.create();
 	}
 
-	public Page<ReindexStatus> getReindexStatusPage() throws Exception;
+	public Page<ReindexStatus> getIndexReindexStatusPage() throws Exception;
 
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {

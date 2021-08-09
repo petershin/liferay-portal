@@ -39,9 +39,9 @@ public interface ReindexStatusResource {
 		return new Builder();
 	}
 
-	public Page<ReindexStatus> getReindexStatusPage() throws Exception;
+	public Page<ReindexStatus> getIndexReindexStatusPage() throws Exception;
 
-	public HttpInvoker.HttpResponse getReindexStatusPageHttpResponse()
+	public HttpInvoker.HttpResponse getIndexReindexStatusPageHttpResponse()
 		throws Exception;
 
 	public static class Builder {
@@ -116,9 +116,11 @@ public interface ReindexStatusResource {
 	public static class ReindexStatusResourceImpl
 		implements ReindexStatusResource {
 
-		public Page<ReindexStatus> getReindexStatusPage() throws Exception {
+		public Page<ReindexStatus> getIndexReindexStatusPage()
+			throws Exception {
+
 			HttpInvoker.HttpResponse httpResponse =
-				getReindexStatusPageHttpResponse();
+				getIndexReindexStatusPageHttpResponse();
 
 			String content = httpResponse.getContent();
 
@@ -157,7 +159,7 @@ public interface ReindexStatusResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse getReindexStatusPageHttpResponse()
+		public HttpInvoker.HttpResponse getIndexReindexStatusPageHttpResponse()
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();

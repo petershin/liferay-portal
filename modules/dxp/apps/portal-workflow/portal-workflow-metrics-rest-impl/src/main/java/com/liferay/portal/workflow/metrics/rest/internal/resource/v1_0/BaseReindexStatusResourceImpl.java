@@ -78,7 +78,7 @@ public abstract class BaseReindexStatusResourceImpl
 	@Path("/indexes/reindex/status")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "ReindexStatus")})
-	public Page<ReindexStatus> getReindexStatusPage() throws Exception {
+	public Page<ReindexStatus> getIndexReindexStatusPage() throws Exception {
 		return Page.of(Collections.emptyList());
 	}
 
