@@ -186,7 +186,7 @@ public class ProcessMetricResourceTest
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/processMetrics");
 
-		Assert.assertEquals(0, processMetricsJSONObject.get("totalCount"));
+		Assert.assertEquals(1, processMetricsJSONObject.get("totalCount"));
 
 		ProcessMetric processMetric1 =
 			testGetProcessMetricsPage_addProcessMetric(randomProcessMetric());
