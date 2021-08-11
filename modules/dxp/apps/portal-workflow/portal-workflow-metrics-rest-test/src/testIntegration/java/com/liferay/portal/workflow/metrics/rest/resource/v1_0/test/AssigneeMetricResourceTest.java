@@ -57,6 +57,7 @@ import org.junit.runner.RunWith;
 
 /**
  * @author Rafael Praxedes
+ * @author Peter Shin
  */
 @DataGuard(scope = DataGuard.Scope.METHOD)
 @RunWith(Arquillian.class)
