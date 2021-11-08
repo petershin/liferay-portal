@@ -303,6 +303,7 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 					path + ":" + JavaPlugin.CLASSES_TASK_NAME);
 
 				writeDigestTask.source(
+					themeProject.file("package.json"),
 					themeProject.file("src/main/resources/META-INF/resources"));
 			}
 		}
