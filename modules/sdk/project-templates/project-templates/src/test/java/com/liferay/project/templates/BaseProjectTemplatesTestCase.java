@@ -156,6 +156,8 @@ public interface BaseProjectTemplatesTestCase {
 	public static final String MAVEN_GOAL_BUILD_SERVICE =
 		"service-builder:build";
 
+	public static final String MAVEN_GOAL_CLEAN = "clean";
+
 	public static final String MAVEN_GOAL_PACKAGE = "package";
 
 	public static final String[] MAVEN_WRAPPER_FILE_NAMES = {
@@ -410,7 +412,7 @@ public interface BaseProjectTemplatesTestCase {
 
 		String gradleOutputFileName = gradleOutputFile.getName();
 
-		executeMaven(mavenProjectDir, mavenExecutor, MAVEN_GOAL_PACKAGE);
+		executeMaven(mavenProjectDir, mavenExecutor, MAVEN_GOAL_CLEAN, MAVEN_GOAL_PACKAGE);
 
 		Path mavenOutputPath = FileTestUtil.getFile(
 			mavenOutputDir.toPath(), OUTPUT_FILE_NAME_GLOB_REGEX, 1);
