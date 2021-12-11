@@ -5,7 +5,7 @@ apply plugin: "com.liferay.js.transpiler.base"
 apply plugin: "java"
 
 node {
-	useNpm = true
+	useNpm = false
 }
 
 task runGradleTest

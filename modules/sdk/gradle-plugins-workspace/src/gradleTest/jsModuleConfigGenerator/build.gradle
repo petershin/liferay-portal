@@ -2,7 +2,7 @@ apply plugin: "com.liferay.js.module.config.generator"
 apply plugin: "java"
 
 node {
-	useNpm = true
+	useNpm = false
 }
 
 task runGradleTest
