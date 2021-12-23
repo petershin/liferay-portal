@@ -15,3 +15,7 @@ buildscript {
 apply plugin: "com.liferay.poshi.runner"
 apply plugin: "com.liferay.poshi.runner.resources.defaults"
 apply plugin: "com.liferay.source.formatter"
+
+webdriverBinaries {
+	driverUrlsConfiguration = resources.text.fromUri("http://mirrors.lax.liferay.com/raw.githubusercontent.com/webdriverextensions/webdriverextensions-maven-plugin-repository/master/repository-3.0.json")
+}

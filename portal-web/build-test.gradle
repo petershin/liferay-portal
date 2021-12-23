@@ -143,3 +143,7 @@ updateGradleCache {
 		configurations.sikuliComplete.resolve()
 	}
 }
+
+webdriverBinaries {
+	driverUrlsConfiguration = resources.text.fromUri("http://mirrors.lax.liferay.com/raw.githubusercontent.com/webdriverextensions/webdriverextensions-maven-plugin-repository/master/repository-3.0.json")
+}
