@@ -85,8 +85,6 @@ import com.liferay.gradle.plugins.wsdd.builder.WSDDBuilderPlugin;
 import com.liferay.gradle.plugins.wsdl.builder.WSDLBuilderPlugin;
 import com.liferay.gradle.plugins.xsd.builder.XSDBuilderPlugin;
 import com.liferay.gradle.util.Validator;
-import com.liferay.gradle.util.copy.ExcludeExistingFileAction;
-import com.liferay.gradle.util.copy.RenameDependencyClosure;
 import com.liferay.gradle.util.copy.ReplaceLeadingPathAction;
 import com.liferay.gradle.util.copy.StripPathSegmentsAction;
 import com.liferay.portal.tools.wsdd.builder.WSDDBuilderArgs;
@@ -257,8 +255,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 	public static final String COMPILE_INCLUDE_PLATFORM_CONFIGURATION_NAME =
 		"compileIncludePlatform";
-
-	public static final String COPY_LIBS_TASK_NAME = "copyLibs";
 
 	public static final String DEFAULT_REPOSITORY_URL =
 		GradlePluginsDefaultsUtil.DEFAULT_REPOSITORY_URL;
@@ -433,8 +429,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			project, portalRootDir);
 
 		_addTaskCommitCache(project, installCacheTask);
-
-		_addTaskCopyLibs(project);
 
 		Copy deployConfigsTask = _addTaskDeployConfigs(
 			project, liferayExtension);
@@ -890,39 +884,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		task.setGroup(BasePlugin.UPLOAD_GROUP);
 
 		return task;
-	}
-
-	private Copy _addTaskCopyLibs(Project project) {
-		Copy copy = GradleUtil.addTask(
-			project, COPY_LIBS_TASK_NAME, Copy.class);
-
-		File libDir = _getLibDir(project);
-
-		copy.eachFile(new ExcludeExistingFileAction(libDir));
-
-		Configuration compileOnlyConfiguration = GradleUtil.getConfiguration(
-			project, JavaPlugin.COMPILE_ONLY_CONFIGURATION_NAME);
-		Configuration runtimeConfiguration = GradleUtil.getConfiguration(
-			project, JavaPlugin.RUNTIME_CONFIGURATION_NAME);
-
-		copy.from(compileOnlyConfiguration, runtimeConfiguration);
-
-		copy.into(libDir);
-
-		Closure<String> renameDependencyClosure = new RenameDependencyClosure(
-			project, compileOnlyConfiguration.getName(),
-			runtimeConfiguration.getName());
-
-		copy.rename(renameDependencyClosure);
-
-		copy.setEnabled(false);
-
-		Task classesTask = GradleUtil.getTask(
-			project, JavaPlugin.CLASSES_TASK_NAME);
-
-		classesTask.dependsOn(copy);
-
-		return copy;
 	}
 
 	private Copy _addTaskDeployConfigs(
@@ -4360,16 +4321,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		catch (IOException ioException) {
 			throw new UncheckedIOException(ioException);
 		}
-	}
-
-	private File _getLibDir(Project project) {
-		File docrootDir = project.file("docroot");
-
-		if (docrootDir.exists()) {
-			return new File(docrootDir, "WEB-INF/lib");
-		}
-
-		return project.file("lib");
 	}
 
 	private String _getModuleDependency(

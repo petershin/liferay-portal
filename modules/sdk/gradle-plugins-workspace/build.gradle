@@ -30,10 +30,6 @@ tasks.eclipse {
 	ext.gradleVersion = gradleVersion
 }
 
-cleanCopyLibs {
-	enabled = false
-}
-
 copyBundle {
 	dependsOn downloadBundle
 	eachFile new StripPathSegmentsAction(1)
