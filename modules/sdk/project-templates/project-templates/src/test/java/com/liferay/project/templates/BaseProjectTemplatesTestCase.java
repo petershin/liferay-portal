@@ -1123,7 +1123,6 @@ public interface BaseProjectTemplatesTestCase {
 		return false;
 	}
 
-<<<<<<< HEAD
 	public default void modifyElementText(
 		Document document, String expression, String newText) {
 
@@ -1181,37 +1180,6 @@ public interface BaseProjectTemplatesTestCase {
 		}
 		catch (Exception exception) {
 		}
-=======
-	public default File removeGradlePropertiesInWorkspace(
-			File workspaceDir, String gradleProperties)
-		throws IOException {
-
-		File gradlePropertiesFile = new File(workspaceDir, "gradle.properties");
-
-		List<String> oldGradlePropertiesList = Files.readAllLines(
-			gradlePropertiesFile.toPath());
-
-		StringBuilder newGradlePropertiesBuilder = new StringBuilder();
-
-		for (String property : oldGradlePropertiesList) {
-			if (property.equals(gradleProperties)) {
-				continue;
-			}
-
-			newGradlePropertiesBuilder.append(property);
-			newGradlePropertiesBuilder.append(System.lineSeparator());
-		}
-
-		String newGradlePropertiesContenet =
-			newGradlePropertiesBuilder.toString();
-
-		Files.write(
-			gradlePropertiesFile.toPath(),
-			newGradlePropertiesContenet.getBytes(),
-			StandardOpenOption.TRUNCATE_EXISTING);
-
-		return gradlePropertiesFile;
->>>>>>> LPS-148033 form filed project should to update node_modules
 	}
 
 	public default List<String> sanitizeLines(List<String> lines) {
