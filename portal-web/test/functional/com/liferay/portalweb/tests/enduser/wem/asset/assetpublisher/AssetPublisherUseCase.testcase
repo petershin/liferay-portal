@@ -380,6 +380,7 @@ definition {
 	@description = "Configure the Asset Publisher as Site Administrator."
 	@priority = "4"
 	test ConfigureAssetPublisherAsSiteAdministrater {
+		property asset.publisher.selection.style = "asset-list";
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
 		task ("Add a new user") {
@@ -414,11 +415,22 @@ definition {
 				userLoginFullName = "userfn userln");
 		}
 
-		task ("View the Asset Publisher using Dynamic Selection") {
+		task ("View the Asset Publisher using Collection") {
 			Navigator.gotoSitePage(
 				pageName = "Asset Publisher Page",
 				siteName = "Test Site Name");
 
+			AssertVisible(
+				key_portletName = "Asset Publisher",
+				key_text = "Select a collection to make it visible.",
+				locator1 = "Portlet#PORTLET_SELECTOR");
+		}
+
+		task ("Configure the Asset Publisher to Manual Selection") {
+			AssetPublisherPortlet.configureDynamicAssetSelectionPG();
+		}
+
+		task ("View the Asset Publisher using Dynamic Selection") {
 			AssetPublisherPortlet.viewDynamicAssetSelectionConfigurationPG();
 		}
 
