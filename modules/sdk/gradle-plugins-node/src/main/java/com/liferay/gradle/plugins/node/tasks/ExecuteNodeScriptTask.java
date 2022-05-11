@@ -24,7 +24,6 @@ import java.util.List;
 
 import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.InputFile;
-import org.gradle.api.tasks.Internal;
 import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.PathSensitive;
 import org.gradle.api.tasks.PathSensitivity;
@@ -60,7 +59,6 @@ public class ExecuteNodeScriptTask extends ExecuteNodeTask {
 		_scriptFile = scriptFile;
 	}
 
-	@Internal
 	protected List<String> getCompleteArgs() {
 		File scriptFile = getScriptFile();
 
