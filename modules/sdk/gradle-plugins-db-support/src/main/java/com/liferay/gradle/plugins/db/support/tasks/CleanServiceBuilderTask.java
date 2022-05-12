@@ -21,16 +21,12 @@ import java.io.File;
 
 import java.util.List;
 
-import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputFile;
-import org.gradle.api.tasks.PathSensitive;
-import org.gradle.api.tasks.PathSensitivity;
 
 /**
  * @author Andrea Di Giorgi
  */
-@CacheableTask
 public class CleanServiceBuilderTask extends BaseDBSupportTask {
 
 	@Override
@@ -39,7 +35,6 @@ public class CleanServiceBuilderTask extends BaseDBSupportTask {
 	}
 
 	@InputFile
-	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getServiceXmlFile() {
 		return GradleUtil.toFile(getProject(), _serviceXmlFile);
 	}

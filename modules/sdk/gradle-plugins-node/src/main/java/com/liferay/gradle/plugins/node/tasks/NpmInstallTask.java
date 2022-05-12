@@ -40,18 +40,14 @@ import org.gradle.api.Task;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.plugins.PluginContainer;
 import org.gradle.api.specs.Spec;
-import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputFile;
 import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.OutputDirectory;
-import org.gradle.api.tasks.PathSensitive;
-import org.gradle.api.tasks.PathSensitivity;
 
 /**
  * @author Andrea Di Giorgi
  */
-@CacheableTask
 public class NpmInstallTask extends ExecutePackageManagerTask {
 
 	public NpmInstallTask() {
@@ -130,7 +126,6 @@ public class NpmInstallTask extends ExecutePackageManagerTask {
 	}
 
 	@InputFile
-	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getPackageJsonFile() {
 		Project project = getProject();
 
@@ -139,14 +134,12 @@ public class NpmInstallTask extends ExecutePackageManagerTask {
 
 	@InputFile
 	@Optional
-	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getPackageLockJsonFile() {
 		return _getExistentFile("package-lock.json");
 	}
 
 	@InputFile
 	@Optional
-	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getShrinkwrapJsonFile() {
 		return _getExistentFile("npm-shrinkwrap.json");
 	}

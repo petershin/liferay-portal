@@ -50,11 +50,8 @@ import org.gradle.api.Action;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.Project;
 import org.gradle.api.file.CopySpec;
-import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.Optional;
-import org.gradle.api.tasks.PathSensitive;
-import org.gradle.api.tasks.PathSensitivity;
 import org.gradle.api.tasks.TaskAction;
 import org.gradle.util.VersionNumber;
 
@@ -66,7 +63,6 @@ import org.w3c.dom.NodeList;
 /**
  * @author Andrea Di Giorgi
  */
-@CacheableTask
 public class SetUpTestableTomcatTask
 	extends DefaultTask implements ManagerSpec, ModuleFrameworkBaseDirSpec {
 
@@ -125,7 +121,6 @@ public class SetUpTestableTomcatTask
 	}
 
 	@Input
-	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getDir() {
 		return GradleUtil.toFile(getProject(), _dir);
 	}
@@ -138,7 +133,6 @@ public class SetUpTestableTomcatTask
 
 	@Input
 	@Optional
-	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getJaCoCoAgentFile() {
 		return GradleUtil.toFile(getProject(), _jaCoCoAgentFile);
 	}
@@ -157,7 +151,6 @@ public class SetUpTestableTomcatTask
 
 	@Input
 	@Override
-	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getModuleFrameworkBaseDir() {
 		return GradleUtil.toFile(getProject(), _moduleFrameworkBaseDir);
 	}

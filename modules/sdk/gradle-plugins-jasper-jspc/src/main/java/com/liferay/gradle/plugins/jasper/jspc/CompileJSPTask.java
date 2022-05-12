@@ -30,18 +30,14 @@ import org.gradle.api.DefaultTask;
 import org.gradle.api.GradleException;
 import org.gradle.api.Project;
 import org.gradle.api.file.FileCollection;
-import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.OutputDirectory;
-import org.gradle.api.tasks.PathSensitive;
-import org.gradle.api.tasks.PathSensitivity;
 import org.gradle.api.tasks.SkipWhenEmpty;
 import org.gradle.api.tasks.TaskAction;
 
 /**
  * @author Andrea Di Giorgi
  */
-@CacheableTask
 public class CompileJSPTask extends DefaultTask {
 
 	@TaskAction
@@ -67,13 +63,11 @@ public class CompileJSPTask extends DefaultTask {
 	}
 
 	@InputFiles
-	@PathSensitive(PathSensitivity.RELATIVE)
 	public FileCollection getJspCClasspath() {
 		return _jspCClasspath;
 	}
 
 	@InputFiles
-	@PathSensitive(PathSensitivity.RELATIVE)
 	@SkipWhenEmpty
 	public FileCollection getJSPFiles() {
 		Project project = getProject();

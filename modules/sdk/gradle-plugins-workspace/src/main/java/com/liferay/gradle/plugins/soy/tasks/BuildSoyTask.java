@@ -32,11 +32,8 @@ import java.util.List;
 import java.util.concurrent.Callable;
 
 import org.gradle.api.file.FileCollection;
-import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.OutputFiles;
-import org.gradle.api.tasks.PathSensitive;
-import org.gradle.api.tasks.PathSensitivity;
 import org.gradle.api.tasks.SourceTask;
 import org.gradle.api.tasks.TaskAction;
 
@@ -44,7 +41,6 @@ import org.gradle.api.tasks.TaskAction;
  * @author     Andrea Di Giorgi
  * @deprecated As of Judson (7.1.x), with no direct replacement
  */
-@CacheableTask
 @Deprecated
 public class BuildSoyTask extends SourceTask {
 
@@ -84,7 +80,6 @@ public class BuildSoyTask extends SourceTask {
 	}
 
 	@InputFiles
-	@PathSensitive(PathSensitivity.RELATIVE)
 	public FileCollection getClasspath() {
 		return _classpath;
 	}

@@ -23,14 +23,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.gradle.api.logging.Logger;
-import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.Exec;
 import org.gradle.util.CollectionUtils;
 
 /**
  * @author Peter Shin
  */
-@CacheableTask
 public class DockerCopyTask extends Exec {
 
 	public DockerCopyTask() {

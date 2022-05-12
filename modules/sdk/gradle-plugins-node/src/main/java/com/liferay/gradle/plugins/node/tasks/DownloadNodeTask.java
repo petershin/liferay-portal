@@ -36,7 +36,6 @@ import org.gradle.api.AntBuilder;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.Project;
 import org.gradle.api.file.CopySpec;
-import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.OutputDirectory;
@@ -45,7 +44,6 @@ import org.gradle.api.tasks.TaskAction;
 /**
  * @author Andrea Di Giorgi
  */
-@CacheableTask
 public class DownloadNodeTask extends DefaultTask {
 
 	public DownloadNodeTask() {

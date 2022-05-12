@@ -21,17 +21,13 @@ import groovy.lang.Closure;
 import java.io.File;
 
 import org.gradle.api.Project;
-import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.Nested;
-import org.gradle.api.tasks.PathSensitive;
-import org.gradle.api.tasks.PathSensitivity;
 import org.gradle.api.tasks.SourceTask;
 
 /**
  * @author Andrea Di Giorgi
  */
-@CacheableTask
 public class BuildWSDLTask extends SourceTask {
 
 	public void generateOptions(Closure<?> closure) {
@@ -46,7 +42,6 @@ public class BuildWSDLTask extends SourceTask {
 	}
 
 	@Input
-	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getDestinationDir() {
 		return GradleUtil.toFile(getProject(), _destinationDir);
 	}

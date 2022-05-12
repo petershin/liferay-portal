@@ -30,14 +30,11 @@ import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileTree;
 import org.gradle.api.file.FileTreeElement;
 import org.gradle.api.specs.Spec;
-import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.InputDirectory;
 import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.JavaExec;
 import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.OutputDirectory;
-import org.gradle.api.tasks.PathSensitive;
-import org.gradle.api.tasks.PathSensitivity;
 import org.gradle.api.tasks.SkipWhenEmpty;
 import org.gradle.api.tasks.util.PatternFilterable;
 import org.gradle.api.tasks.util.PatternSet;
@@ -45,7 +42,6 @@ import org.gradle.api.tasks.util.PatternSet;
 /**
  * @author Andrea Di Giorgi
  */
-@CacheableTask
 public class TLDDocTask extends JavaExec implements PatternFilterable {
 
 	public TLDDocTask() {
@@ -106,7 +102,6 @@ public class TLDDocTask extends JavaExec implements PatternFilterable {
 	}
 
 	@InputFiles
-	@PathSensitive(PathSensitivity.RELATIVE)
 	@SkipWhenEmpty
 	public FileTree getSource() {
 		Project project = getProject();
@@ -120,7 +115,6 @@ public class TLDDocTask extends JavaExec implements PatternFilterable {
 
 	@InputDirectory
 	@Optional
-	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getXsltDir() {
 		return GradleUtil.toFile(getProject(), _xsltDir);
 	}

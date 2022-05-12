@@ -37,12 +37,9 @@ import org.gradle.api.GradleException;
 import org.gradle.api.Project;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.invocation.Gradle;
-import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputDirectory;
 import org.gradle.api.tasks.OutputDirectory;
-import org.gradle.api.tasks.PathSensitive;
-import org.gradle.api.tasks.PathSensitivity;
 import org.gradle.api.tasks.TaskAction;
 import org.gradle.internal.hash.HashUtil;
 import org.gradle.internal.hash.HashValue;
@@ -50,7 +47,6 @@ import org.gradle.internal.hash.HashValue;
 /**
  * @author Andrea Di Giorgi
  */
-@CacheableTask
 public class InstallCacheTask extends DefaultTask {
 
 	public InstallCacheTask() {
@@ -108,13 +104,11 @@ public class InstallCacheTask extends DefaultTask {
 	}
 
 	@Input
-	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getCacheRootDir() {
 		return GradleUtil.toFile(getProject(), _cacheRootDir);
 	}
 
 	@InputDirectory
-	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getMavenInputDir() {
 		String artifactGroup = getArtifactGroup();
 
@@ -125,7 +119,6 @@ public class InstallCacheTask extends DefaultTask {
 	}
 
 	@Input
-	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getMavenRootDir() {
 		return GradleUtil.toFile(getProject(), _mavenRootDir);
 	}

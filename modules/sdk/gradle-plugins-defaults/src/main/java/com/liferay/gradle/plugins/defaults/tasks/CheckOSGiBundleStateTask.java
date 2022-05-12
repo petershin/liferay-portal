@@ -31,7 +31,6 @@ import javax.management.remote.JMXServiceURL;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.GradleException;
 import org.gradle.api.logging.Logger;
-import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.TaskAction;
@@ -42,7 +41,6 @@ import org.osgi.jmx.framework.BundleStateMBean;
 /**
  * @author Andrea Di Giorgi
  */
-@CacheableTask
 public class CheckOSGiBundleStateTask extends DefaultTask {
 
 	@TaskAction

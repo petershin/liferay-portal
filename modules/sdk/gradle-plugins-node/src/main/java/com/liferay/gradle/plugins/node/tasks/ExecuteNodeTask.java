@@ -26,13 +26,11 @@ import java.util.Map;
 
 import org.gradle.api.DefaultTask;
 import org.gradle.api.logging.Logger;
-import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.TaskAction;
 
 /**
  * @author Andrea Di Giorgi
  */
-@CacheableTask
 public class ExecuteNodeTask extends DefaultTask {
 
 	public ExecuteNodeTask() {

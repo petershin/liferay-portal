@@ -25,12 +25,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.gradle.api.artifacts.Configuration;
-import org.gradle.api.tasks.CacheableTask;
 
 /**
  * @author Andrea Di Giorgi
  */
-@CacheableTask
 public class DirectDeployTask extends BasePortalToolsTask {
 
 	public File getAppServerDeployDir() {

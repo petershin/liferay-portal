@@ -32,10 +32,7 @@ import java.util.concurrent.Callable;
 
 import org.gradle.api.DefaultTask;
 import org.gradle.api.GradleException;
-import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.Input;
-import org.gradle.api.tasks.PathSensitive;
-import org.gradle.api.tasks.PathSensitivity;
 
 import org.zeroturnaround.exec.ProcessExecutor;
 import org.zeroturnaround.exec.stream.slf4j.Slf4jStream;
@@ -43,7 +40,6 @@ import org.zeroturnaround.exec.stream.slf4j.Slf4jStream;
 /**
  * @author Andrea Di Giorgi
  */
-@CacheableTask
 public abstract class BaseAppServerTask extends DefaultTask {
 
 	public BaseAppServerTask environment(Map<String, String> environment) {
@@ -67,7 +63,6 @@ public abstract class BaseAppServerTask extends DefaultTask {
 	}
 
 	@Input
-	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getBinDir() {
 		return GradleUtil.toFile(getProject(), _binDir);
 	}

@@ -25,7 +25,6 @@ import java.nio.file.Files;
 
 import org.gradle.api.UncheckedIOException;
 import org.gradle.api.logging.Logger;
-import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.OutputFile;
 import org.gradle.api.tasks.SourceTask;
@@ -34,7 +33,6 @@ import org.gradle.api.tasks.TaskAction;
 /**
  * @author Andrea Di Giorgi
  */
-@CacheableTask
 public class WriteDigestTask extends SourceTask {
 
 	public String getDigest() {

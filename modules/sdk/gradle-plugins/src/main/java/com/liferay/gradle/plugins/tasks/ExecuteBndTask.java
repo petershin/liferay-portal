@@ -45,19 +45,15 @@ import org.gradle.api.GradleException;
 import org.gradle.api.Project;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.logging.Logger;
-import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.OutputFile;
-import org.gradle.api.tasks.PathSensitive;
-import org.gradle.api.tasks.PathSensitivity;
 import org.gradle.api.tasks.TaskAction;
 
 /**
  * @author Andrea Di Giorgi
  * @author Raymond Augé
  */
-@CacheableTask
 public class ExecuteBndTask extends DefaultTask {
 
 	public ExecuteBndTask() {
@@ -183,13 +179,11 @@ public class ExecuteBndTask extends DefaultTask {
 	}
 
 	@Input
-	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getBaseDir() {
 		return GradleUtil.toFile(getProject(), _baseDir);
 	}
 
 	@InputFiles
-	@PathSensitive(PathSensitivity.RELATIVE)
 	public FileCollection getClasspath() {
 		return _classpath;
 	}
@@ -212,13 +206,11 @@ public class ExecuteBndTask extends DefaultTask {
 	}
 
 	@InputFiles
-	@PathSensitive(PathSensitivity.RELATIVE)
 	public FileCollection getResourceDirs() {
 		return _resourceDirs;
 	}
 
 	@InputFiles
-	@PathSensitive(PathSensitivity.RELATIVE)
 	public FileCollection getSourceDirs() {
 		return _sourceDirs;
 	}

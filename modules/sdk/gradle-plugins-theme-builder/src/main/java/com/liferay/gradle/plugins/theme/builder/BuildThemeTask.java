@@ -22,20 +22,16 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputDirectory;
 import org.gradle.api.tasks.InputFile;
 import org.gradle.api.tasks.JavaExec;
 import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.OutputDirectory;
-import org.gradle.api.tasks.PathSensitive;
-import org.gradle.api.tasks.PathSensitivity;
 
 /**
  * @author Andrea Di Giorgi
  */
-@CacheableTask
 public class BuildThemeTask extends JavaExec {
 
 	public BuildThemeTask() {
@@ -51,7 +47,6 @@ public class BuildThemeTask extends JavaExec {
 
 	@InputDirectory
 	@Optional
-	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getDiffsDir() {
 		return GradleUtil.toFile(getProject(), _diffsDir);
 	}
@@ -63,14 +58,12 @@ public class BuildThemeTask extends JavaExec {
 
 	@InputDirectory
 	@Optional
-	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getParentDir() {
 		return GradleUtil.toFile(getProject(), _parentDir);
 	}
 
 	@InputFile
 	@Optional
-	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getParentFile() {
 		return GradleUtil.toFile(getProject(), _parentFile);
 	}
@@ -93,14 +86,12 @@ public class BuildThemeTask extends JavaExec {
 
 	@InputDirectory
 	@Optional
-	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getUnstyledDir() {
 		return GradleUtil.toFile(getProject(), _unstyledDir);
 	}
 
 	@InputFile
 	@Optional
-	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getUnstyledFile() {
 		return GradleUtil.toFile(getProject(), _unstyledFile);
 	}

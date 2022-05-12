@@ -31,17 +31,13 @@ import java.util.Set;
 
 import org.gradle.api.logging.Logger;
 import org.gradle.api.logging.Logging;
-import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.JavaExec;
 import org.gradle.api.tasks.Optional;
-import org.gradle.api.tasks.PathSensitive;
-import org.gradle.api.tasks.PathSensitivity;
 
 /**
  * @author Andrea Di Giorgi
  */
-@CacheableTask
 public class BuildLangTask extends JavaExec {
 
 	public BuildLangTask() {
@@ -72,7 +68,6 @@ public class BuildLangTask extends JavaExec {
 	}
 
 	@Input
-	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getLangDir() {
 		return GradleUtil.toFile(getProject(), _langDir);
 	}

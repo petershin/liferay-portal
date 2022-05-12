@@ -30,19 +30,15 @@ import org.gradle.api.Project;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileTree;
 import org.gradle.api.logging.Logger;
-import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.Optional;
-import org.gradle.api.tasks.PathSensitive;
-import org.gradle.api.tasks.PathSensitivity;
 import org.gradle.api.tasks.SourceTask;
 import org.gradle.api.tasks.TaskAction;
 
 /**
  * @author Andrea Di Giorgi
  */
-@CacheableTask
 public class ValidateSchemaTask extends SourceTask {
 
 	@Input
@@ -53,7 +49,6 @@ public class ValidateSchemaTask extends SourceTask {
 
 	@InputFiles
 	@Optional
-	@PathSensitive(PathSensitivity.RELATIVE)
 	public FileCollection getXMLParserClasspath() {
 		return _xmlParserClasspath;
 	}

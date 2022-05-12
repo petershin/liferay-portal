@@ -27,17 +27,13 @@ import java.util.List;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.Project;
 import org.gradle.api.file.FileCollection;
-import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.OutputFile;
-import org.gradle.api.tasks.PathSensitive;
-import org.gradle.api.tasks.PathSensitivity;
 import org.gradle.api.tasks.TaskAction;
 
 /**
  * @author Andrea Di Giorgi
  */
-@CacheableTask
 public class ConcatenateTask extends DefaultTask {
 
 	@TaskAction
@@ -51,7 +47,6 @@ public class ConcatenateTask extends DefaultTask {
 	}
 
 	@InputFiles
-	@PathSensitive(PathSensitivity.RELATIVE)
 	public FileCollection getSourceFiles() {
 		Project project = getProject();
 

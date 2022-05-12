@@ -19,7 +19,6 @@ import com.liferay.gradle.util.GradleUtil;
 
 import java.util.List;
 
-import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.Input;
 
 /**
@@ -27,7 +26,6 @@ import org.gradle.api.tasks.Input;
  * @author     Andrea Di Giorgi
  * @deprecated As of Judson (7.1.x), with no direct replacement
  */
-@CacheableTask
 @Deprecated
 public class ExecuteGulpTask extends ExecuteNodeScriptTask {
 

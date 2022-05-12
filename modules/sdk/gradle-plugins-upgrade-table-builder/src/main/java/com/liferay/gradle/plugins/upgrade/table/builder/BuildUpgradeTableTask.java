@@ -23,19 +23,15 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputDirectory;
 import org.gradle.api.tasks.InputFile;
 import org.gradle.api.tasks.JavaExec;
 import org.gradle.api.tasks.Optional;
-import org.gradle.api.tasks.PathSensitive;
-import org.gradle.api.tasks.PathSensitivity;
 
 /**
  * @author Andrea Di Giorgi
  */
-@CacheableTask
 public class BuildUpgradeTableTask extends JavaExec {
 
 	public BuildUpgradeTableTask() {
@@ -52,7 +48,6 @@ public class BuildUpgradeTableTask extends JavaExec {
 	}
 
 	@InputDirectory
-	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getBaseDir() {
 		return GradleUtil.toFile(getProject(), _baseDir);
 	}
@@ -64,7 +59,6 @@ public class BuildUpgradeTableTask extends JavaExec {
 	}
 
 	@InputDirectory
-	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getUpgradeTableDir() {
 		return GradleUtil.toFile(getProject(), _upgradeTableDir);
 	}
