@@ -131,7 +131,7 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 				@Override
 				public void execute(Project project) {
 					_configureTaskDownloadWebDriverBrowserBinary(
-						downloadWebDriverBrowserBinaryTask, poshiProperties);
+						downloadWebDriverBrowserBinaryTask);
 					_configureTaskExecutePQLQuery(
 						executePQLQueryTask, poshiProperties,
 						poshiRunnerExtension);
@@ -448,15 +448,13 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 		return javaExec;
 	}
 
-	private void _configureTaskDownloadWebDriverBrowserBinary(
-		Copy copy, Properties poshiProperties) {
-
+	private void _configureTaskDownloadWebDriverBrowserBinary(Copy copy) {
 		copy.onlyIf(
 			new Spec<Task>() {
 
 				@Override
 				public boolean isSatisfiedBy(Task task) {
-					return _isDownloadWebDriverBrowserBinary(poshiProperties);
+					return _downloadWebDriverBrowserBinary;
 				}
 
 			});
@@ -724,20 +722,6 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 		return new File(project.getBuildDir(), "webdriver");
 	}
 
-	private boolean _isDownloadWebDriverBrowserBinary(
-		Properties poshiProperties) {
-
-		String webDriverBrowserBinaryPropertyName =
-			_getWebDriverBrowserBinaryPropertyName(poshiProperties);
-
-		if (Validator.isNotNull(webDriverBrowserBinaryPropertyName)) {
-			return Validator.isNull(
-				System.getProperty(webDriverBrowserBinaryPropertyName));
-		}
-
-		return false;
-	}
-
 	private void _populateSystemProperties(
 		Map<String, Object> systemProperties, Properties poshiProperties,
 		Project project, PoshiRunnerExtension poshiRunnerExtension) {
@@ -805,12 +789,16 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 		String webDriverBrowserBinaryPropertyName =
 			_getWebDriverBrowserBinaryPropertyName(poshiProperties);
 
+		Map<String, Object> systemProperties = test.getSystemProperties();
+
+		if (systemProperties.containsKey(webDriverBrowserBinaryPropertyName)) {
+			return;
+		}
+
 		String webDriverBrowserBinaryPropertyValue = System.getProperty(
 			webDriverBrowserBinaryPropertyName);
 
-		if (Validator.isNull(webDriverBrowserBinaryPropertyValue) &&
-			_isDownloadWebDriverBrowserBinary(poshiProperties)) {
-
+		if (Validator.isNull(webDriverBrowserBinaryPropertyValue)) {
 			webDriverBrowserBinaryPropertyValue =
 				_getWebDriverDir(test.getProject()) + "/" +
 					_getWebDriverBrowserBinaryName(poshiProperties);
@@ -819,11 +807,11 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 				webDriverBrowserBinaryPropertyValue =
 					webDriverBrowserBinaryPropertyValue + ".exe";
 			}
+
+			_downloadWebDriverBrowserBinary = true;
 		}
 
 		if (Validator.isNotNull(webDriverBrowserBinaryPropertyValue)) {
-			Map<String, Object> systemProperties = test.getSystemProperties();
-
 			systemProperties.put(
 				webDriverBrowserBinaryPropertyName,
 				webDriverBrowserBinaryPropertyValue);
@@ -872,5 +860,7 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 				put("chrome", "webdriver.chrome.driver");
 			}
 		};
+
+	private boolean _downloadWebDriverBrowserBinary;
 
 }
