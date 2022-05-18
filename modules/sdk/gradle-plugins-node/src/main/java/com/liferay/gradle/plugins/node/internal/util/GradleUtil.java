@@ -105,7 +105,13 @@ public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 			return null;
 		}
 
-		return project.file(object);
+		File file = project.file(object);
+
+		if (!file.exists()) {
+			return null;
+		}
+
+		return file;
 	}
 
 }
