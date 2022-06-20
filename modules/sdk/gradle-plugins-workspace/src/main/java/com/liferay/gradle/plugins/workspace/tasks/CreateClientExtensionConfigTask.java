@@ -101,7 +101,9 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 
 		try {
 			String lcpJsonContent = _loadTemplate(
-				_CLIENT_EXTENSION_LCP_JSON + ".tpl", Collections.emptyMap());
+				_CLIENT_EXTENSION_LCP_JSON + ".tpl",
+				Collections.singletonMap(
+					"__CLIENT_EXTENSION_ID__", project.getName()));
 
 			if (inputLcpJsonFile.exists()) {
 				lcpJsonContent = new String(
