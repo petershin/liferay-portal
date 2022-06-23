@@ -59,7 +59,7 @@ public class ProjectTemplatesRESTBuilderWorkspaceTest
 				{"guestbook", "com.liferay.docs.guestbook", "7.1.3-1"},
 				{"guestbook", "com.liferay.docs.guestbook", "7.2.1-1"},
 				{"guestbook", "com.liferay.docs.guestbook", "7.3.7"},
-				{"guestbook", "com.liferay.docs.guestbook", "7.4.3.16"},
+				{"guestbook", "com.liferay.docs.guestbook", "7.4.3.28"},
 				{
 					"backend-integration", "com.liferay.docs.guestbook",
 					"7.1.3-1"
@@ -71,12 +71,12 @@ public class ProjectTemplatesRESTBuilderWorkspaceTest
 				{"backend-integration", "com.liferay.docs.guestbook", "7.3.7"},
 				{
 					"backend-integration", "com.liferay.docs.guestbook",
-					"7.4.3.16"
+					"7.4.3.28"
 				},
 				{"sample", "com.test.sample", "7.1.3-1"},
 				{"sample", "com.test.sample", "7.2.1-1"},
 				{"sample", "com.test.sample", "7.3.7"},
-				{"sample", "com.test.sample", "7.4.3.16"}
+				{"sample", "com.test.sample", "7.4.3.28"}
 			});
 	}
 
