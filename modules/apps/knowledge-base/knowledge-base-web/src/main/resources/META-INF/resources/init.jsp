@@ -27,6 +27,7 @@ taglib uri="http://liferay.com/tld/expando" prefix="liferay-expando" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/ratings" prefix="liferay-ratings" %><%@
+taglib uri="http://liferay.com/tld/react" prefix="react" %><%@
 taglib uri="http://liferay.com/tld/rss" prefix="liferay-rss" %><%@
 taglib uri="http://liferay.com/tld/security" prefix="liferay-security" %><%@
 taglib uri="http://liferay.com/tld/social-bookmarks" prefix="liferay-social-bookmarks" %><%@
@@ -166,6 +167,7 @@ page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %><%@
+page import="com.liferay.portal.util.PropsUtil" %><%@
 page import="com.liferay.ratings.kernel.RatingsType" %><%@
 page import="com.liferay.ratings.kernel.definition.PortletRatingsDefinitionUtil" %><%@
 page import="com.liferay.subscription.exception.NoSuchSubscriptionException" %><%@

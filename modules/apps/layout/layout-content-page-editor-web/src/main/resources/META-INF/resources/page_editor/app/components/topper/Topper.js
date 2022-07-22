@@ -45,6 +45,7 @@ import {
 	useDragItem,
 	useDropContainerId,
 	useDropTarget,
+	useIsDroppable,
 } from '../../utils/drag-and-drop/useDragAndDrop';
 import {useId} from '../../utils/useId';
 import TopperItemActions from './TopperItemActions';
@@ -95,13 +96,34 @@ function TopperContent({
 	const topperLabelId = useId();
 
 	const dropContainerId = useDropContainerId();
+	const isDroppable = useIsDroppable();
 
-	const isHighlighted = dropContainerId === item.itemId;
+	const isDropContainer = dropContainerId === item.itemId;
+
+	const isHighlighted =
+		(item.type === LAYOUT_DATA_ITEM_TYPES.row ||
+		item.type === LAYOUT_DATA_ITEM_TYPES.collection
+			? item.children.includes(dropContainerId)
+			: isDropContainer) && isDroppable;
 
 	const canBeDragged = canUpdatePageStructure && !editableProcessorUniqueId;
 
 	const name = useSelectorCallback(
 		(state) => selectLayoutDataItemLabel(state, item),
+		[item]
+	);
+
+	const fragmentEntryType = useSelectorCallback(
+		(state) => {
+			if (!item.type === LAYOUT_DATA_ITEM_TYPES.fragment) {
+				return null;
+			}
+
+			const fragmentEntryLink =
+				state.fragmentEntryLinks[item.config?.fragmentEntryLinkId];
+
+			return fragmentEntryLink?.fragmentEntryType ?? null;
+		},
 		[item]
 	);
 
@@ -119,7 +141,7 @@ function TopperContent({
 	const {
 		handlerRef: itemHandlerRef,
 		isDraggingSource: itemIsDraggingSource,
-	} = useDragItem({...item, name}, onDragEnd, () => {
+	} = useDragItem({...item, fragmentEntryType, name}, onDragEnd, () => {
 		if (!isActive) {
 			selectItem(item.itemId);
 		}
@@ -128,7 +150,7 @@ function TopperContent({
 	const {
 		handlerRef: topperHandlerRef,
 		isDraggingSource: topperIsDraggingSource,
-	} = useDragItem({...item, name}, onDragEnd, () => {
+	} = useDragItem({...item, fragmentEntryType, name}, onDragEnd, () => {
 		if (!isActive) {
 			selectItem(item.itemId);
 		}
@@ -153,8 +175,10 @@ function TopperContent({
 				'drag-over-top':
 					isOverTarget && targetPosition === TARGET_POSITIONS.TOP,
 				'dragged': isDraggingSource,
+				'drop-container': isDropContainer,
 				'highlighted': isHighlighted,
 				'hovered': isHovered,
+				'not-droppable': !isDroppable,
 			})}
 			onClick={(event) => {
 				event.stopPropagation();

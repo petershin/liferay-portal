@@ -14,6 +14,7 @@
 
 import {CONTAINER_DISPLAY_OPTIONS} from '../../config/constants/containerDisplayOptions';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
+import {formIsMapped} from '../formIsMapped';
 import isItemEmpty from '../isItemEmpty';
 import checkAllowedChild from './checkAllowedChild';
 import {DRAG_DROP_TARGET_TYPE} from './constants/dragDropTargetType';
@@ -76,17 +77,19 @@ export default function defaultComputeHover({
 		const targetIsContainerFlex = itemIsContainerFlex(targetItem);
 		const targetIsFragment =
 			targetItem.type === LAYOUT_DATA_ITEM_TYPES.fragment;
+		const targetIsFormNotMapped =
+			targetItem.type === LAYOUT_DATA_ITEM_TYPES.form &&
+			!formIsMapped(targetItem);
 		const targetIsEmpty = isItemEmpty(
 			layoutDataRef.current.items[targetItem.itemId],
 			layoutDataRef.current
 		);
-		const allowedChild = checkAllowedChild(sourceItem, targetItem);
 
 		return (
 			targetPositionWithMiddle === TARGET_POSITIONS.MIDDLE &&
 			(targetIsEmpty || targetIsColumn || targetIsContainerFlex) &&
 			!targetIsFragment &&
-			allowedChild
+			!targetIsFormNotMapped
 		);
 	})();
 
@@ -103,7 +106,7 @@ export default function defaultComputeHover({
 			),
 			dropItem: sourceItem,
 			dropTargetItem: targetItem,
-			droppable: checkAllowedChild(sourceItem, targetItem),
+			droppable: checkAllowedChild(sourceItem, targetItem, layoutDataRef),
 			elevate: null,
 			targetPositionWithMiddle,
 			targetPositionWithoutMiddle,
@@ -120,7 +123,7 @@ export default function defaultComputeHover({
 
 	if (
 		siblingItem &&
-		checkAllowedChild(sourceItem, targetItem) &&
+		!shouldBeIgnoredInElevation(parent) &&
 		validElevation(siblingItem, orientation, layoutDataRef) &&
 		!itemIsAncestor(sourceItem, siblingItem, layoutDataRef)
 	) {
@@ -132,7 +135,7 @@ export default function defaultComputeHover({
 			),
 			dropItem: sourceItem,
 			dropTargetItem: siblingItem,
-			droppable: true,
+			droppable: checkAllowedChild(sourceItem, targetItem, layoutDataRef),
 			elevate: true,
 			targetPositionWithMiddle,
 			targetPositionWithoutMiddle,
@@ -180,7 +183,7 @@ export default function defaultComputeHover({
 					(siblingPositionWithMiddle === targetPositionWithMiddle ||
 						parentPositionWithMiddle ===
 							targetPositionWithMiddle) &&
-					checkAllowedChild(sourceItem, parent)
+					!shouldBeIgnoredInElevation(parent)
 				) {
 					if (maximumDepth > 1) {
 						const [
@@ -298,6 +301,19 @@ function getItemPosition(item, monitor, targetRefs, orientation) {
 		targetPositionWithoutMiddle,
 		elevationDepth,
 	];
+}
+
+function shouldBeIgnoredInElevation(item) {
+
+	// Dropping inside a collection or inside a row is illegal
+	// but in those cases we don't want to inform the user about it,
+	// we just want to ignore those cases and try to elevate in the direct parent.
+	// This is why this case is handled separately in the checkAllowedChild function
+
+	return (
+		item.type === LAYOUT_DATA_ITEM_TYPES.collection ||
+		item.type === LAYOUT_DATA_ITEM_TYPES.row
+	);
 }
 
 function itemIsContainerFlex(item) {
