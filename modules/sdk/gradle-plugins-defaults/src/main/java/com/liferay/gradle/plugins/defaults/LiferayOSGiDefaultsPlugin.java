@@ -715,7 +715,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		if (PortalTools.PORTAL_VERSION_7_0_X.equals(portalVersion) ||
 			PortalTools.PORTAL_VERSION_7_1_X.equals(portalVersion) ||
 			PortalTools.PORTAL_VERSION_7_2_X.equals(portalVersion) ||
-			PortalTools.PORTAL_VERSION_7_3_X.equals(portalVersion)) {
+			PortalTools.PORTAL_VERSION_7_3_X.equals(portalVersion) ||
+			GradlePluginsDefaultsUtil.isSubrepository(project)) {
 
 			GradleUtil.addDependency(
 				project, JavaPlugin.TEST_COMPILE_CONFIGURATION_NAME,
