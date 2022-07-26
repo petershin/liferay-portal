@@ -1655,6 +1655,7 @@ artifact.url=${remote.repository.cdn.url}/com/liferay/portal/com.liferay.${proce
 						</not>
 						<then>
 							<copy
+								failonerror="false"
 								file="${project.dir}/${build.binaries.cache.dir}/${build.binaries.gradle.file}"
 								todir="${project.dir}/tools"
 							/>
