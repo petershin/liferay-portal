@@ -701,6 +701,9 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 				public void execute(Upload uploadArchivesUpload) {
 					uploadArchivesUpload.dependsOn(recordArtifactTaskProvider);
 
+					uploadArchivesUpload.setActions(
+						java.util.Collections.emptyList());
+
 					_configureTaskEnabledIfRelease(
 						recordArtifactTaskProvider.get());
 				}
