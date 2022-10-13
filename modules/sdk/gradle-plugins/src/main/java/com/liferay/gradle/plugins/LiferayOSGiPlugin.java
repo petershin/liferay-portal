@@ -71,6 +71,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -277,7 +278,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 			classesTaskProvider, compileJSPTaskProvider, deployFastTaskProvider,
 			processResourcesTaskProvider);
 		_configureTaskJarProvider(
-			project, bundleExtension, jarTaskProvider,
+			project, bundleExtension, javaMainSourceSet, jarTaskProvider,
 			zipZippableResourcesTaskProvider);
 		_configureTaskJavadocProvider(bundleExtension, javadocTaskProvider);
 		_configureTaskTestProvider(testTaskProvider);
@@ -1412,7 +1413,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 	private void _configureTaskJarProvider(
 		final Project project, final BundleExtension bundleExtension,
-		TaskProvider<Jar> jarTaskProvider,
+		final SourceSet javaMainSourceSet, TaskProvider<Jar> jarTaskProvider,
 		final TaskProvider<Task> zipZippableResourcesTaskProvider) {
 
 		jarTaskProvider.configure(
@@ -1426,7 +1427,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 					Map<String, Object> plugins = convention.getPlugins();
 
-					final BundleTaskConvention bundleTaskConvention =
+					BundleTaskConvention bundleTaskConvention =
 						new BundleTaskConvention(jar);
 
 					plugins.put("bundle", bundleTaskConvention);
@@ -1434,49 +1435,184 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 					jar.setDescription(
 						"Assembles a bundle containing the main classes.");
 
-					jar.doFirst(
-						new Action<Task>() {
-
-							@Override
-							public void execute(Task task) {
-								for (Map.Entry<String, Object> entry :
-										bundleExtension.entrySet()) {
-
-									bundleExtension.instruction(
-										entry.getKey(),
-										GradleUtil.toString(entry.getValue()));
-								}
-
-								Map<String, ?> projectProperties =
-									project.getProperties();
-
-								for (Map.Entry<String, ?> entry :
-										projectProperties.entrySet()) {
-
-									String key = entry.getKey();
-									Object value = entry.getValue();
-
-									Matcher matcher = _keyPattern.matcher(key);
-
-									if (matcher.matches() &&
-										(value instanceof String)) {
-
-										bundleExtension.instruction(
-											key, entry.getValue());
-									}
-								}
-
-								bundleTaskConvention.setBnd(bundleExtension);
-							}
-
-						});
-
 					jar.doLast(
 						new Action<Task>() {
 
 							@Override
 							public void execute(Task task) {
-								bundleTaskConvention.buildBundle();
+								Logger logger = project.getLogger();
+
+								Properties gradleProperties =
+									new PropertiesWrapper();
+
+								gradleProperties.put("project", project);
+								gradleProperties.put("task", task);
+
+								try (Builder builder = new Builder(
+										new Processor(
+											gradleProperties, false))) {
+
+									Map<String, String> properties =
+										new HashMap<>();
+
+									for (Map.Entry<String, Object> entry :
+											bundleExtension.entrySet()) {
+
+										properties.put(
+											entry.getKey(),
+											GradleUtil.toString(
+												entry.getValue()));
+									}
+
+									Map<String, ?> projectProperties =
+										project.getProperties();
+
+									for (Map.Entry<String, ?> entry :
+											projectProperties.entrySet()) {
+
+										String key = entry.getKey();
+										Object value = entry.getValue();
+
+										Matcher matcher = _keyPattern.matcher(
+											key);
+
+										if (matcher.matches() &&
+											(value instanceof String)) {
+
+											properties.put(
+												key, (String)entry.getValue());
+										}
+									}
+
+									File buildFile = project.getBuildFile();
+
+									builder.setBase(buildFile.getParentFile());
+
+									builder.putAll(properties, true);
+
+									SourceDirectorySet sourceDirectorySet =
+										javaMainSourceSet.getJava();
+
+									SourceSetOutput sourceSetOutput =
+										javaMainSourceSet.getOutput();
+
+									FileCollection buildDirs = project.files(
+										sourceDirectorySet.getOutputDir(),
+										sourceSetOutput.getResourcesDir());
+
+									Set<File> buildDirsFiles =
+										buildDirs.getFiles();
+
+									builder.setClasspath(
+										buildDirsFiles.toArray(new File[0]));
+
+									builder.setProperty(
+										"project.buildpath",
+										buildDirs.getAsPath());
+
+									if (logger.isDebugEnabled()) {
+										logger.debug(
+											"Builder Classpath: {}",
+											buildDirs.getAsPath());
+									}
+
+									SourceDirectorySet allSource =
+										javaMainSourceSet.getAllSource();
+
+									Set<File> srcDirs = allSource.getSrcDirs();
+
+									Stream<File> stream = srcDirs.stream();
+
+									FileCollection sourceDirs = project.files(
+										stream.filter(
+											File::exists
+										).collect(
+											Collectors.toList()
+										));
+
+									builder.setProperty(
+										"project.sourcepath",
+										sourceDirs.getAsPath());
+
+									Set<File> sourceDirsFiles =
+										sourceDirs.getFiles();
+
+									builder.setSourcepath(
+										sourceDirsFiles.toArray(new File[0]));
+
+									if (logger.isDebugEnabled()) {
+										logger.debug(
+											"Builder Sourcepath: {}",
+											builder.getSourcePath());
+									}
+
+									String bundleSymbolicName =
+										builder.getProperty(
+											Constants.BUNDLE_SYMBOLICNAME);
+
+									if (Validator.isNull(bundleSymbolicName) ||
+										Constants.EMPTY_HEADER.equals(
+											bundleSymbolicName)) {
+
+										builder.setProperty(
+											Constants.BUNDLE_SYMBOLICNAME,
+											project.getName());
+									}
+
+									String bundleVersion = builder.getProperty(
+										Constants.BUNDLE_VERSION);
+
+									if ((Validator.isNull(bundleVersion) ||
+										 Constants.EMPTY_HEADER.equals(
+											 bundleVersion)) &&
+										(project.getVersion() != null)) {
+
+										Object version = project.getVersion();
+
+										MavenVersion mavenVersion =
+											MavenVersion.parseString(
+												version.toString());
+
+										Version osgiVersion =
+											mavenVersion.getOSGiVersion();
+
+										builder.setProperty(
+											Constants.BUNDLE_VERSION,
+											osgiVersion.toString());
+									}
+
+									if (logger.isDebugEnabled()) {
+										logger.debug(
+											"Builder Properties: {}",
+											properties);
+									}
+
+									aQute.bnd.osgi.Jar bndJar = builder.build();
+
+									if (!builder.isOk()) {
+										BndUtils.logReport(builder, logger);
+
+										new GradleException(jar + " failed");
+									}
+
+									TaskOutputs taskOutputs = task.getOutputs();
+
+									FileCollection fileCollection =
+										taskOutputs.getFiles();
+
+									bndJar.write(
+										fileCollection.getSingleFile());
+
+									BndUtils.logReport(builder, logger);
+
+									if (!builder.isOk()) {
+										new GradleException(jar + " failed");
+									}
+								}
+								catch (Exception exception) {
+									throw new GradleException(
+										jar + " failed", exception);
+								}
 							}
 
 						});
