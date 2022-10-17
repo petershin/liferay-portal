@@ -14,19 +14,28 @@
 
 package com.liferay.language.security.scan;
 
+import com.liferay.language.security.scan.util.AntiSamyUtil;
+import com.liferay.language.security.scan.util.StringEscapeUtils;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.tools.ArgumentsUtil;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
+import java.util.Properties;
+import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -34,14 +43,6 @@ import java.util.concurrent.Future;
 
 import org.owasp.validator.html.PolicyException;
 import org.owasp.validator.html.ScanException;
-
-import java.util.Properties;
-import java.util.Set;
-
-import com.liferay.language.security.scan.util.AntiSamyUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.tools.ArgumentsUtil;
 
 /**
  * @author Seiphon Wang
@@ -67,15 +68,10 @@ public class LanguageSecurityScan {
 
 		try {
 			fileList = _getAllLanguageProperties(baseDirName);
-		} catch (Exception exception) {
+		}
+		catch (Exception exception) {
 			exception.printStackTrace();
 		}
-
-		long middleTime = System.currentTimeMillis();
-
-		System.out.println(
-			"walkfiletree time： " + (middleTime - startTime) / 1000 +
-			" m, total count: " + fileList.size());
 
 		ExecutorService executorService = Executors.newFixedThreadPool(12);
 
@@ -92,11 +88,14 @@ public class LanguageSecurityScan {
 						}
 						catch (Exception exception) {
 							exception.printStackTrace();
+
 							// add log here
+
 						}
 
 						return null;
 					}
+
 				});
 
 			futures.add(future);
@@ -105,8 +104,9 @@ public class LanguageSecurityScan {
 		for (Future<Void> future : futures) {
 			try {
 				future.get();
-			} catch (Exception e) {
-				e.printStackTrace();
+			}
+			catch (Exception exception) {
+				exception.printStackTrace();
 			}
 		}
 
@@ -114,31 +114,12 @@ public class LanguageSecurityScan {
 
 		long endTime = System.currentTimeMillis();
 
-		System.out.println("walkfiletree time： " + (middleTime - startTime) / 1000 + " m");
-		System.out.println("total using time： " + (endTime - startTime) / 1000 + " m");
+		System.out.println(
+			"total using time： " + ((endTime - startTime) / 1000) + " m");
 	}
 
-	private static void _sanitizeProperites(File file)
-		throws IOException, PolicyException, ScanException {
-
-		Properties properties = _readProperties(file);
-
-		Set<Entry<Object, Object>> entrySet = properties.entrySet();
-
-		for (Entry<Object, Object> entry : entrySet) {
-			String value = (String)entry.getValue();
-
-			String sanitizedValue = AntiSamyUtil.scan(value);
-
-			if (!value.equals(sanitizedValue)) {
-				System.out.println(value);
-				System.out.println(sanitizedValue);
-			}
-		}
-	}
-
-	private static List<File> _getAllLanguageProperties(
-		String baseDirName) throws Exception {
+	private static List<File> _getAllLanguageProperties(String baseDirName)
+		throws Exception {
 
 		List<File> fileList = new ArrayList<>();
 
@@ -148,10 +129,11 @@ public class LanguageSecurityScan {
 
 				@Override
 				public FileVisitResult preVisitDirectory(
-					Path dirPath,
-					BasicFileAttributes attrs) throws IOException {
+						Path dirPath, BasicFileAttributes basicFileAttributes)
+					throws IOException {
 
 					String dirName = String.valueOf(dirPath.getFileName());
+
 					if (dirName.startsWith(".") ||
 						ArrayUtil.contains(_SKIP_DIR_NAMES, dirName)) {
 
@@ -176,6 +158,7 @@ public class LanguageSecurityScan {
 
 					return FileVisitResult.CONTINUE;
 				}
+
 			});
 
 		return fileList;
@@ -191,6 +174,29 @@ public class LanguageSecurityScan {
 		}
 
 		return properties;
+	}
+
+	private static void _sanitizeProperites(File file)
+		throws IOException, PolicyException, ScanException {
+
+		Properties properties = _readProperties(file);
+
+		Set<Map.Entry<Object, Object>> entrySet = properties.entrySet();
+
+		for (Map.Entry<Object, Object> entry : entrySet) {
+			String value = (String)entry.getValue();
+
+			String sanitizedValue = AntiSamyUtil.scan(value);
+
+			sanitizedValue = StringEscapeUtils.unEscapeSpecialCharactors(
+				sanitizedValue);
+
+			if (!value.equals(sanitizedValue)) {
+				System.out.println(value);
+				System.out.println(sanitizedValue);
+				System.out.println(file.toString());
+			}
+		}
 	}
 
 	private static final String[] _SKIP_DIR_NAMES = {
