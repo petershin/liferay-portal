@@ -12,22 +12,22 @@
  * details.
  */
 
-package com.liferay.language.security.scan.ant;
-
-import org.apache.tools.ant.BuildException;
-import org.apache.tools.ant.Task;
+package com.liferay.language.security.scan.util;
 
 /**
  * @author Seiphon Wang
  */
-public class LanguageSecurityScanTask extends Task {
+public class StringEscapeUtils {
 
-	@Override
-	public void execute() throws BuildException {
+	public static String unEscapeSpecialCharactors(String content) {
+		content = content.replaceAll("&quot;", "\"");
 
-		// TODO Auto-generated method stub
+		content = content.replaceAll("&gt;", ">");
+		content = content.replaceAll("&amp;", "&");
+		content = content.replaceAll("•", "&#149;");
+		content = content.replaceAll("&raquo;", "»");
 
-		super.execute();
+		return content;
 	}
 
 }
