@@ -27,18 +27,24 @@ import aQute.lib.utf8properties.UTF8Properties;
 import aQute.service.reporter.Report;
 
 import com.liferay.gradle.plugins.internal.util.GradleUtil;
+import com.liferay.gradle.util.StringUtil;
 import com.liferay.gradle.util.Validator;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.jar.Manifest;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 import org.gradle.api.Action;
 import org.gradle.api.DefaultTask;
@@ -120,6 +126,33 @@ public class ExecuteBndTask extends DefaultTask {
 				logger.lifecycle(
 					"BND Builder Classpath {}: {}", project.getName(),
 					buildDirs.getAsPath());
+
+				List<String> fileNames = new ArrayList<>();
+
+				for (File file : buildDirs.getFiles()) {
+					try (ZipInputStream zipInputStream = new ZipInputStream(
+							new FileInputStream(file))) {
+
+						ZipEntry nextZipEntry = zipInputStream.getNextEntry();
+
+						while (nextZipEntry != null) {
+							if (!nextZipEntry.isDirectory()) {
+								fileNames.add(nextZipEntry.getName());
+							}
+
+							nextZipEntry = zipInputStream.getNextEntry();
+						}
+					}
+					catch (Exception exception) {
+						throw new GradleException(
+							"Could not read " + file, exception);
+					}
+				}
+
+				logger.lifecycle(
+					"BND Builder Classpath File Names {}: {}",
+					project.getName(),
+					StringUtil.merge(fileNames.toArray(new String[0]), ", "));
 			}
 
 			FileCollection sourceDirs = project.files(getSourceDirs());

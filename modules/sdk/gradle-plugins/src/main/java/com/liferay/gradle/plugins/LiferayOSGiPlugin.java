@@ -65,6 +65,7 @@ import com.liferay.gradle.util.Validator;
 import groovy.lang.Closure;
 
 import java.io.File;
+import java.io.FileInputStream;
 
 import java.nio.charset.StandardCharsets;
 
@@ -82,6 +83,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 import org.gradle.api.Action;
 import org.gradle.api.GradleException;
@@ -879,6 +882,49 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 											"BND Builder Classpath {}: {}",
 											project.getName(),
 											buildDirs.getAsPath());
+
+										List<String> fileNames =
+											new ArrayList<>();
+
+										for (File file : buildDirs.getFiles()) {
+											try (ZipInputStream zipInputStream =
+													new ZipInputStream(
+														new FileInputStream(
+															file))) {
+
+												ZipEntry nextZipEntry =
+													zipInputStream.
+														getNextEntry();
+
+												while (nextZipEntry != null) {
+													if (!nextZipEntry.
+															isDirectory()) {
+
+														fileNames.add(
+															nextZipEntry.
+																getName());
+													}
+
+													nextZipEntry =
+														zipInputStream.
+															getNextEntry();
+												}
+											}
+											catch (Exception exception) {
+												throw new GradleException(
+													"Could not read " + file,
+													exception);
+											}
+										}
+
+										logger.lifecycle(
+											"BND Builder Classpath File " +
+												"Names {}: {}",
+											project.getName(),
+											StringUtil.merge(
+												fileNames.toArray(
+													new String[0]),
+												", "));
 									}
 
 									SourceDirectorySet allSource =
@@ -1539,6 +1585,47 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 										"BND Builder Classpath {}: {}",
 										project.getName(),
 										builderClasspath.getAsPath());
+
+									List<String> fileNames = new ArrayList<>();
+
+									for (File file :
+											builderClasspath.getFiles()) {
+
+										try (ZipInputStream zipInputStream =
+												new ZipInputStream(
+													new FileInputStream(
+														file))) {
+
+											ZipEntry nextZipEntry =
+												zipInputStream.getNextEntry();
+
+											while (nextZipEntry != null) {
+												if (!nextZipEntry.
+														isDirectory()) {
+
+													fileNames.add(
+														nextZipEntry.getName());
+												}
+
+												nextZipEntry =
+													zipInputStream.
+														getNextEntry();
+											}
+										}
+										catch (Exception exception) {
+											throw new GradleException(
+												"Could not read " + file,
+												exception);
+										}
+									}
+
+									logger.lifecycle(
+										"BND Builder Classpath File Names " +
+											"{}: {}",
+										project.getName(),
+										StringUtil.merge(
+											fileNames.toArray(new String[0]),
+											", "));
 								}
 							}
 
