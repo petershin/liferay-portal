@@ -15,13 +15,13 @@
 package com.liferay.language.security.scanner;
 
 import com.liferay.language.security.scanner.util.AntiSamyUtil;
+import com.liferay.language.security.scanner.util.PropertiesUtil;
 import com.liferay.language.security.scanner.util.StringEscapeUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.tools.ArgumentsUtil;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -111,9 +111,9 @@ public class LanguageSecurityScanner {
 			long endTime = System.currentTimeMillis();
 
 			printWriter.println(
-				"total using time： " + ((endTime - startTime) / 1000) + " m");
+				"Total time： " + ((endTime - startTime) / 1000) + " m");
 			printWriter.println(
-				"total " + ((endTime - startTime) / 1000) + " items");
+				"Total items: " + ((endTime - startTime) / 1000));
 
 			printWriter.flush();
 			fileWriter.flush();
@@ -264,25 +264,13 @@ public class LanguageSecurityScanner {
 		return fileList;
 	}
 
-	private Properties _readProperties(File file) throws IOException {
-		Properties properties = new Properties();
-
-		if (file.exists()) {
-			try (FileInputStream fileInputStream = new FileInputStream(file)) {
-				properties.load(fileInputStream);
-			}
-		}
-
-		return properties;
-	}
-
 	private List<LanguageSecurityMessage> _sanitizeProperites(File file)
 		throws IOException {
 
 		List<LanguageSecurityMessage> languageSecurityMessages =
 			new CopyOnWriteArrayList<>();
 
-		Properties properties = _readProperties(file);
+		Properties properties = PropertiesUtil.readProperties(file);
 
 		Set<Map.Entry<Object, Object>> entrySet = properties.entrySet();
 
