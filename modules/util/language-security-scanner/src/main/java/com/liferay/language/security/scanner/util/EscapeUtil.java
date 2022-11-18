@@ -14,13 +14,18 @@
 
 package com.liferay.language.security.scanner.util;
 
+import com.liferay.portal.kernel.util.HashMapBuilder;
+
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
  * @author Seiphon Wang
  */
-public class StringEscapeUtil {
+public class EscapeUtil {
 
 	public static String escapeTag(String content) {
 		Matcher matcher = _tagPattern.matcher(content);
@@ -41,19 +46,66 @@ public class StringEscapeUtil {
 		return stringBuffer.toString();
 	}
 
+	public static String formatTagForm(String content) {
+		Matcher matcher = _tagPattern.matcher(content);
+
+		Set<String> matchedTags = new HashSet<>();
+
+		while (matcher.find()) {
+			matchedTags.add(matcher.group());
+		}
+
+		if (!matchedTags.isEmpty()) {
+			if (matchedTags.contains("<br />")) {
+				content = content.replaceAll("<br />", "<br>");
+			}
+
+			if (matchedTags.contains("<a {0}>")) {
+				content = content.replaceAll("<a \\{0\\}>", "<a>");
+			}
+		}
+
+		return content;
+	}
+
+	public static Map<String, String> getEscapedCharacterMap() {
+		return HashMapBuilder.put(
+			"&#039;", "'"
+		).put(
+			"&#39;", "'"
+		).put(
+			"&#149;", "•"
+		).put(
+			"&amp;", "&"
+		).put(
+			"&gt;", ">"
+		).put(
+			"&hellip;", "…"
+		).put(
+			"&laquo;", "«"
+		).put(
+			"&lt;", "<"
+		).put(
+			"&quot;", "\""
+		).put(
+			"&raquo;", "»"
+		).put(
+			"&reg;", "®"
+		).put(
+			"&trade;", "™"
+		).build();
+	}
+
 	public static String unEscape(String content) {
-		content = content.replaceAll("&#39;", "'");
-		content = content.replaceAll("&#039;", "'");
-		content = content.replaceAll("&#149;", "•");
-		content = content.replaceAll("&amp;", "&");
-		content = content.replaceAll("&hellip;", "…");
-		content = content.replaceAll("&laquo;", "«");
-		content = content.replaceAll("&raquo;", "»");
-		content = content.replaceAll("&quot;", "\"");
-		content = content.replaceAll("&gt;", ">");
-		content = content.replaceAll("&lt;", "<");
-		content = content.replaceAll("&trade;", "™");
-		content = content.replaceAll("&reg;", "®");
+		Map<String, String> escapedCharacterMap = getEscapedCharacterMap();
+
+		Set<String> keys = escapedCharacterMap.keySet();
+
+		for (String key : keys) {
+			if (content.contains(key)) {
+				content = content.replaceAll(key, escapedCharacterMap.get(key));
+			}
+		}
 
 		return content;
 	}

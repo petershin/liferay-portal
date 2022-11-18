@@ -15,6 +15,7 @@
 package com.liferay.language.security.scanner;
 
 import com.liferay.language.security.scanner.util.AntiSamyUtil;
+import com.liferay.language.security.scanner.util.EscapeUtil;
 import com.liferay.language.security.scanner.util.PropertiesUtil;
 
 import java.io.File;
@@ -70,10 +71,13 @@ public class LanguageSecurityScannerTest {
 		for (Map.Entry<Object, Object> entry : entrySet) {
 			String originalString = (String)entry.getValue();
 
-			String sanitizedString = AntiSamyUtil.sanitize(
-				_policy, (String)entry.getValue());
+			String sanitizedString = EscapeUtil.unEscape(
+				AntiSamyUtil.sanitize(_policy, (String)entry.getValue()));
 
-			Assert.assertEquals(originalString, sanitizedString);
+			String value = EscapeUtil.unEscape(
+				EscapeUtil.formatTagForm(originalString));
+
+			Assert.assertEquals(value, sanitizedString);
 		}
 	}
 
@@ -98,10 +102,13 @@ public class LanguageSecurityScannerTest {
 		for (Map.Entry<Object, Object> entry : entrySet) {
 			String originalString = (String)entry.getValue();
 
-			String sanitizedString = AntiSamyUtil.sanitize(
-				_policy, (String)entry.getValue());
+			String sanitizedString = EscapeUtil.unEscape(
+				AntiSamyUtil.sanitize(_policy, (String)entry.getValue()));
 
-			Assert.assertNotEquals(originalString, sanitizedString);
+			String value = EscapeUtil.unEscape(
+				EscapeUtil.formatTagForm(originalString));
+
+			Assert.assertNotEquals(value, sanitizedString);
 		}
 	}
 
@@ -109,11 +116,11 @@ public class LanguageSecurityScannerTest {
 		LanguageSecurityScannerTest.class.getClassLoader();
 
 	private static final String _CORRECT_PROPERTIES_FILE_NAME =
-		"Language_test_correct.properties";
+		"Correct_Language_test.properties";
 
 	private static final String _INCORRECT_PROPERTIES_FILE_NAME =
-		"Language_test_incorrect.properties";
+		"Incorrect_Language_test.properties";
 
-	private static Policy _policy;
+	private Policy _policy;
 
 }
