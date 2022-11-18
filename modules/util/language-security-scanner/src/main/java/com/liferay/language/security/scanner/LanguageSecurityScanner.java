@@ -15,8 +15,8 @@
 package com.liferay.language.security.scanner;
 
 import com.liferay.language.security.scanner.util.AntiSamyUtil;
+import com.liferay.language.security.scanner.util.EscapeUtil;
 import com.liferay.language.security.scanner.util.PropertiesUtil;
-import com.liferay.language.security.scanner.util.StringEscapeUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.tools.ArgumentsUtil;
@@ -36,7 +36,6 @@ import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -46,8 +45,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.owasp.validator.html.Policy;
 import org.owasp.validator.html.PolicyException;
@@ -64,10 +61,11 @@ public class LanguageSecurityScanner {
 		LanguageSecurityScannerArges languageSecurityScanArges =
 			new LanguageSecurityScannerArges();
 
-		languageSecurityScanArges.setBaseDirName(
-			GetterUtil.getString(
-				arguments.get("scan.base.dir"),
-				LanguageSecurityScannerArges.BASE_DIR_NAME));
+		String baseDir = GetterUtil.getString(
+			arguments.get("scan.base.dir"),
+			LanguageSecurityScannerArges.BASE_DIR_NAME);
+
+		languageSecurityScanArges.setBaseDirName(baseDir);
 
 		languageSecurityScanArges.setScanAll(
 			GetterUtil.getBoolean(
@@ -82,43 +80,9 @@ public class LanguageSecurityScanner {
 
 			languageSecurityScanner.scan();
 
-			String baseDirString = GetterUtil.getString(
-				arguments.get("scan.base.dir"),
-				LanguageSecurityScannerArges.BASE_DIR_NAME);
-
-			File baseDir = new File(baseDirString);
-
-			File resultFile = new File(
-				baseDir.getParent(), "language-security-scan-result.log");
-
-			FileWriter fileWriter = new FileWriter(resultFile);
-
-			PrintWriter printWriter = new PrintWriter(resultFile);
-
-			for (int i = 0; i < _languageSecurityMessages.size(); i++) {
-				LanguageSecurityMessage languageSecurityMessage =
-					_languageSecurityMessages.get(i);
-
-				printWriter.println(
-					(i + 1) + ": " + languageSecurityMessage.toString());
-				System.out.println(
-					(i + 1) + ": " + languageSecurityMessage.toString());
-
-				printWriter.flush();
-				fileWriter.flush();
-			}
-
 			long endTime = System.currentTimeMillis();
 
-			printWriter.println(
-				"Total time： " + ((endTime - startTime) / 1000) + " m");
-			printWriter.println(
-				"Total items: " + ((endTime - startTime) / 1000));
-
-			printWriter.flush();
-			fileWriter.flush();
-			printWriter.close();
-			fileWriter.close();
+			_generateScanResult(baseDir, startTime, endTime);
 		}
 		catch (IOException ioException) {
 			ioException.printStackTrace();
@@ -152,6 +116,43 @@ public class LanguageSecurityScanner {
 		return _sanitizedFiles;
 	}
 
+	public LanguageSecurityMessage sanitizeContent(
+		File file, String key, String originalValue) {
+
+		if (key.equals("form-navigator-entry-keys-help")) {
+			return null;
+		}
+
+		String sanitizedValue = originalValue;
+		String value = originalValue;
+
+		try {
+			sanitizedValue = EscapeUtil.unEscape(
+				AntiSamyUtil.sanitize(_policy, originalValue));
+
+			value = EscapeUtil.unEscape(originalValue);
+		}
+		catch (ScanException scanException) {
+		}
+		catch (PolicyException policyException) {
+			policyException.printStackTrace();
+		}
+
+		if (!sanitizedValue.equals(value)) {
+			value = EscapeUtil.formatTagForm(value);
+
+			if (sanitizedValue.equals(value)) {
+				return null;
+			}
+
+			return new LanguageSecurityMessage(
+				key, file, originalValue,
+				EscapeUtil.unEscapeTag(sanitizedValue));
+		}
+
+		return null;
+	}
+
 	public void scan() {
 		List<File> fileList = new ArrayList<>();
 
@@ -163,7 +164,7 @@ public class LanguageSecurityScanner {
 			exception.printStackTrace();
 		}
 
-		ExecutorService executorService = Executors.newFixedThreadPool(12);
+		ExecutorService executorService = Executors.newFixedThreadPool(10);
 
 		List<Future<List<LanguageSecurityMessage>>> futures =
 			new CopyOnWriteArrayList<>();
@@ -214,6 +215,45 @@ public class LanguageSecurityScanner {
 				interruptedException.printStackTrace();
 			}
 		}
+	}
+
+	private static void _generateScanResult(
+			String baseDirString, long startTime, long endTime)
+		throws IOException {
+
+		File baseDir = new File(baseDirString);
+
+		File resultFile = new File(
+			baseDir.getParent(), "language-security-scan-result.log");
+
+		FileWriter fileWriter = new FileWriter(resultFile);
+
+		PrintWriter printWriter = new PrintWriter(resultFile);
+
+		for (int i = 0; i < _languageSecurityMessages.size(); i++) {
+			LanguageSecurityMessage languageSecurityMessage =
+				_languageSecurityMessages.get(i);
+
+			printWriter.println(
+				(i + 1) + ": " + languageSecurityMessage.toString());
+			System.out.println(
+				(i + 1) + ": " + languageSecurityMessage.toString());
+
+			printWriter.flush();
+			fileWriter.flush();
+		}
+
+		printWriter.println(
+			"Total time： " + ((endTime - startTime) / 1000) + " m");
+		printWriter.println("Total items: " + _languageSecurityMessages.size());
+		System.out.println(
+			"Total time： " + ((endTime - startTime) / 1000) + " m");
+		System.out.println("Total items: " + _languageSecurityMessages.size());
+
+		printWriter.flush();
+		fileWriter.flush();
+		printWriter.close();
+		fileWriter.close();
 	}
 
 	private List<File> _getAllLanguageProperties(String baseDirName)
@@ -275,95 +315,20 @@ public class LanguageSecurityScanner {
 		Set<Map.Entry<Object, Object>> entrySet = properties.entrySet();
 
 		for (Map.Entry<Object, Object> entry : entrySet) {
-			String originalValue = (String)entry.getValue();
+			LanguageSecurityMessage languageSecurityMessage = sanitizeContent(
+				file, (String)entry.getKey(), (String)entry.getValue());
 
-			String sanitizedValue = originalValue;
-			String value = originalValue;
-
-			try {
-				sanitizedValue = StringEscapeUtil.unEscape(
-					AntiSamyUtil.sanitize(_policy, originalValue));
-
-				value = StringEscapeUtil.unEscape(originalValue);
-			}
-			catch (ScanException scanException) {
-			}
-			catch (PolicyException policyException) {
-				policyException.printStackTrace();
-			}
-
-			if (!sanitizedValue.equals(value)) {
-				Matcher matcher = _tagPattern.matcher(value);
-
-				Set<String> matchedTags = new HashSet<>();
-
-				while (matcher.find()) {
-					matchedTags.add(matcher.group());
-				}
-
-				if (!matchedTags.isEmpty()) {
-					if (matchedTags.contains("<br />")) {
-						value = value.replaceAll("<br />", "<br>");
-					}
-
-					if (matchedTags.contains("<a {0}>")) {
-						value = value.replaceAll("<a \\{0\\}>", "<a>");
-					}
-
-					if (sanitizedValue.equals(value)) {
-						continue;
-					}
-
-					boolean existUnknowTag = false;
-
-					for (String tag : matchedTags) {
-						if (!ArrayUtil.contains(_ALLOWED_TAGS, tag)) {
-							existUnknowTag = true;
-
-							break;
-						}
-					}
-
-					if (existUnknowTag) {
-						value = StringEscapeUtil.escapeTag(value);
-
-						try {
-							sanitizedValue = AntiSamyUtil.sanitize(
-								_policy, value);
-						}
-						catch (PolicyException policyException) {
-							policyException.printStackTrace();
-						}
-						catch (ScanException scanException) {
-						}
-
-						sanitizedValue = StringEscapeUtil.unEscapeQuot(
-							sanitizedValue);
-
-						if (sanitizedValue.equals(value)) {
-							continue;
-						}
-					}
-				}
-
-				LanguageSecurityMessage languageSecurityMessage =
-					new LanguageSecurityMessage(
-						(String)entry.getKey(), file, originalValue,
-						StringEscapeUtil.unEscapeTag(sanitizedValue));
-
+			if (languageSecurityMessage != null) {
 				languageSecurityMessages.add(languageSecurityMessage);
-
-				_sanitizedFiles.add(file);
 			}
+		}
+
+		if (!languageSecurityMessages.isEmpty()) {
+			_sanitizedFiles.add(file);
 		}
 
 		return languageSecurityMessages;
 	}
-
-	private static final String[] _ALLOWED_TAGS = {
-		"<code>", "</code>", "<em>", "</em>", "<strong>", "</strong>", "<a>",
-		"</a>", "<br>", "</br>"
-	};
 
 	private static final String[] _SKIP_DIR_NAMES = {
 		".git", ".github", ".gradle", ".idea", ".m2", ".settings", "bin",
@@ -376,7 +341,6 @@ public class LanguageSecurityScanner {
 		_languageSecurityMessages = new CopyOnWriteArrayList<>();
 	private static final List<File> _sanitizedFiles =
 		new CopyOnWriteArrayList<>();
-	private static final Pattern _tagPattern = Pattern.compile("<.+?>");
 
 	private final LanguageSecurityScannerArges _languageSecurityScannerArges;
 	private final Policy _policy;
