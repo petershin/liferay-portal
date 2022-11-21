@@ -20,6 +20,7 @@ import com.liferay.language.security.scanner.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.tools.ArgumentsUtil;
+import com.liferay.portal.tools.GitUtil;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -157,8 +158,29 @@ public class LanguageSecurityScanner {
 		List<File> fileList = new ArrayList<>();
 
 		try {
-			fileList = _getAllLanguageProperties(
-				_languageSecurityScannerArges.getBaseDirName());
+			String baseDirName = _languageSecurityScannerArges.getBaseDirName();
+
+			if (_languageSecurityScannerArges.isScanAll()) {
+				fileList = _getAllLanguageProperties(baseDirName);
+			}
+			else {
+				List<String> filePaths = GitUtil.getLocalChangesFileNames(
+					baseDirName);
+
+				for (String filePath : filePaths) {
+					File file = new File(baseDirName, filePath);
+
+					String fileName = file.getName();
+
+					if ((fileName.endsWith(".properties") &&
+						 fileName.startsWith("Language")) ||
+						(fileName.endsWith(".properties") &&
+						 fileName.startsWith("bundle"))) {
+
+						fileList.add(file);
+					}
+				}
+			}
 		}
 		catch (Exception exception) {
 			exception.printStackTrace();
