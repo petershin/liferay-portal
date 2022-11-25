@@ -100,11 +100,8 @@ public class LangSanitizer {
 	}
 
 	public void sanitize() throws Exception {
-		List<File> fileList = new ArrayList<>();
-
-		String baseDirName = _langSanitizerArges.getBaseDirName();
-
-		fileList = _getAllLanguageProperties(baseDirName);
+		List<File> fileList = _getAllLanguageProperties(
+			_langSanitizerArges.getBaseDirName());
 
 		ExecutorService executorService = Executors.newFixedThreadPool(10);
 
@@ -117,12 +114,7 @@ public class LangSanitizer {
 
 					@Override
 					public List<LangSanitizerMessage> call() throws Exception {
-						List<LangSanitizerMessage> langSanitizerMessages =
-							new CopyOnWriteArrayList<>();
-
-						langSanitizerMessages = _sanitizeProperites(file);
-
-						return langSanitizerMessages;
+						return _sanitizeProperites(file);
 					}
 
 				});
@@ -142,7 +134,8 @@ public class LangSanitizer {
 	}
 
 	public LangSanitizerMessage sanitizeContent(
-		File file, String key, String originalValue) throws PolicyException {
+			File file, String key, String originalValue)
+		throws PolicyException {
 
 		if (key.equals("form-navigator-entry-keys-help")) {
 			return null;
@@ -159,8 +152,7 @@ public class LangSanitizer {
 		}
 		catch (ScanException scanException) {
 			return new LangSanitizerMessage(
-				key, file, originalValue,
-				EscapeUtil.escapeTag(originalValue));
+				key, file, originalValue, EscapeUtil.escapeTag(originalValue));
 		}
 
 		if (!sanitizedValue.equals(value)) {
@@ -179,7 +171,7 @@ public class LangSanitizer {
 	}
 
 	private static void _printScanResult(long startTime, long endTime)
-		throws IOException {
+		throws Exception {
 
 		for (int i = 0; i < _langSanitizerMessages.size(); i++) {
 			LangSanitizerMessage langSanitizerMessage =
