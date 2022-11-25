@@ -20,7 +20,6 @@ import com.liferay.lang.sanitizer.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.tools.ArgumentsUtil;
-import com.liferay.portal.tools.GitUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -54,7 +53,7 @@ import org.owasp.validator.html.ScanException;
  */
 public class LangSanitizer {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		Map<String, String> arguments = ArgumentsUtil.parseArguments(args);
 
 		LangSanitizerArges langSanitizerArges = new LangSanitizerArges();
@@ -64,25 +63,15 @@ public class LangSanitizer {
 
 		langSanitizerArges.setBaseDirName(baseDir);
 
-		langSanitizerArges.setSanitizeLocalChanges(
-			GetterUtil.getBoolean(
-				arguments.get("sanitize.local.changes"),
-				LangSanitizerArges.SANITIZE_LOCAL_CHANGES));
-
 		LangSanitizer langSanitizer = new LangSanitizer(langSanitizerArges);
 
-		try {
-			long startTime = System.currentTimeMillis();
+		long startTime = System.currentTimeMillis();
 
-			langSanitizer.sanitize();
+		langSanitizer.sanitize();
 
-			long endTime = System.currentTimeMillis();
+		long endTime = System.currentTimeMillis();
 
-			_printScanResult(startTime, endTime);
-		}
-		catch (IOException ioException) {
-			ioException.printStackTrace();
-		}
+		_printScanResult(startTime, endTime);
 	}
 
 	public LangSanitizer(LangSanitizerArges langSanitizerArges) {
@@ -110,37 +99,12 @@ public class LangSanitizer {
 		return _sanitizedFiles;
 	}
 
-	public void sanitize() {
+	public void sanitize() throws Exception {
 		List<File> fileList = new ArrayList<>();
 
-		try {
-			String baseDirName = _langSanitizerArges.getBaseDirName();
+		String baseDirName = _langSanitizerArges.getBaseDirName();
 
-			if (_langSanitizerArges.isSanitizeLocalChanges()) {
-				List<String> filePaths = GitUtil.getLocalChangesFileNames(
-					baseDirName);
-
-				for (String filePath : filePaths) {
-					File file = new File(baseDirName, filePath);
-
-					String fileName = file.getName();
-
-					if ((fileName.endsWith(".properties") &&
-						 fileName.startsWith("Language")) ||
-						(fileName.endsWith(".properties") &&
-						 fileName.startsWith("bundle"))) {
-
-						fileList.add(file);
-					}
-				}
-			}
-			else {
-				fileList = _getAllLanguageProperties(baseDirName);
-			}
-		}
-		catch (Exception exception) {
-			exception.printStackTrace();
-		}
+		fileList = _getAllLanguageProperties(baseDirName);
 
 		ExecutorService executorService = Executors.newFixedThreadPool(10);
 
@@ -152,16 +116,11 @@ public class LangSanitizer {
 				new Callable<List<LangSanitizerMessage>>() {
 
 					@Override
-					public List<LangSanitizerMessage> call() {
+					public List<LangSanitizerMessage> call() throws Exception {
 						List<LangSanitizerMessage> langSanitizerMessages =
 							new CopyOnWriteArrayList<>();
 
-						try {
-							langSanitizerMessages = _sanitizeProperites(file);
-						}
-						catch (Exception exception) {
-							exception.printStackTrace();
-						}
+						langSanitizerMessages = _sanitizeProperites(file);
 
 						return langSanitizerMessages;
 					}
@@ -172,28 +131,18 @@ public class LangSanitizer {
 		}
 
 		for (Future<List<LangSanitizerMessage>> future : futures) {
-			try {
-				_langSanitizerMessages.addAll(future.get());
-			}
-			catch (Exception exception) {
-				exception.printStackTrace();
-			}
+			_langSanitizerMessages.addAll(future.get());
 		}
 
 		executorService.shutdown();
 
 		while (!executorService.isTerminated()) {
-			try {
-				Thread.sleep(20);
-			}
-			catch (InterruptedException interruptedException) {
-				interruptedException.printStackTrace();
-			}
+			Thread.sleep(20);
 		}
 	}
 
 	public LangSanitizerMessage sanitizeContent(
-		File file, String key, String originalValue) {
+		File file, String key, String originalValue) throws PolicyException {
 
 		if (key.equals("form-navigator-entry-keys-help")) {
 			return null;
@@ -209,9 +158,9 @@ public class LangSanitizer {
 			value = EscapeUtil.unEscape(originalValue);
 		}
 		catch (ScanException scanException) {
-		}
-		catch (PolicyException policyException) {
-			policyException.printStackTrace();
+			return new LangSanitizerMessage(
+				key, file, originalValue,
+				EscapeUtil.escapeTag(originalValue));
 		}
 
 		if (!sanitizedValue.equals(value)) {
@@ -294,7 +243,7 @@ public class LangSanitizer {
 	}
 
 	private List<LangSanitizerMessage> _sanitizeProperites(File file)
-		throws IOException {
+		throws Exception {
 
 		List<LangSanitizerMessage> langSanitizerMessages =
 			new CopyOnWriteArrayList<>();

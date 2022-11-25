@@ -30,19 +30,9 @@ public class LangSanitizerArges {
 		return _baseDirName;
 	}
 
-	public boolean isSanitizeLocalChanges() {
-		return _sanitizeLocalChanges;
-	}
-
 	public void setBaseDirName(String baseDirName) {
 		_baseDirName = baseDirName;
 	}
 
-	public void setSanitizeLocalChanges(boolean sanitizeLocalChanges) {
-		_sanitizeLocalChanges = sanitizeLocalChanges;
-	}
-
 	private String _baseDirName = BASE_DIR_NAME;
-	private boolean _sanitizeLocalChanges = SANITIZE_LOCAL_CHANGES;
-
 }
