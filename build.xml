@@ -922,6 +922,49 @@ This target has been renamed to "snapshot-bundle". Please call "snapshot-bundle"
 		<ant dir="util-taglib" inheritAll="false" target="publish-portal-release" />
 	</target>
 
+	<target name="publish-workspaces">
+		<tstamp>
+			<format pattern="yyyyMMdd.kkmm" property="tstamp.value" />
+		</tstamp>
+
+		<delete dir="${user.home}/.m2/repository/com/liferay/sample.workspace" />
+		<delete file="${project.dir}/dist/sample.workspace.pom" />
+		<delete file="${project.dir}/dist/sample.workspace.zip" />
+
+		<execute dir="${project.dir}/workspaces">
+			<![CDATA[
+				git clean -dfqx .
+			]]>
+		</execute>
+
+		<mkdir dir="${project.dir}/dist" />
+
+		<zip
+			destfile="${project.dir}/dist/sample.workspace.zip"
+			duplicate="preserve"
+		>
+			<zipfileset
+				dir="${project.dir}/workspaces/sample-default-workspace"
+				prefix="sample-default-workspace"
+			/>
+			<zipfileset
+				dir="${project.dir}/workspaces/sample-minimal-workspace"
+				prefix="sample-minimal-workspace"
+			/>
+		</zip>
+
+		<artifact:pom artifactId="sample.workspace" groupId="com.liferay" id="sample.workspace.pom" packaging="zip" version="${tstamp.value}" />
+
+		<artifact:writepom file="dist/sample.workspace.pom" pomRefId="sample.workspace.pom" />
+
+		<artifact:deploy file="dist/sample.workspace.zip">
+			<pom file="dist/sample.workspace.pom" />
+			<remoteRepository url="https://repository-cdn.liferay.com/nexus/content/repositories/liferay-public-releases">
+				<authentication password="${sonatype.release.password}" username="${sonatype.release.username}" />
+			</remoteRepository>
+		</artifact:deploy>
+	</target>
+
 	<target name="restore-latest-artifact-version">
 		<ant dir="portal-impl" inheritAll="false" target="restore-latest-artifact-version" />
 		<ant dir="portal-kernel" inheritAll="false" target="restore-latest-artifact-version" />
