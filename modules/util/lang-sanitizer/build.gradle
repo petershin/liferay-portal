@@ -19,7 +19,7 @@ processSanitizerConfiguration {
 		}
 
 		zipTree(antiSamyJarFile)
-	}{
+	} {
 		include "antisamy-ebay.xml"
 	}
 
