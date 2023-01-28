@@ -170,13 +170,13 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 	private void _addDependenciesTestModules(Project project) {
 		GradleUtil.addDependency(
 			project, TEST_MODULES_CONFIGURATION_NAME, "com.liferay",
-			"com.liferay.arquillian.extension.junit.bridge.connector", "1.0.0");
+			"com.liferay.arquillian.extension.junit.bridge.connector", "latest.release");
 		GradleUtil.addDependency(
 			project, TEST_MODULES_CONFIGURATION_NAME, "com.liferay.portal",
-			"com.liferay.portal.test", "3.0.0");
+			"com.liferay.portal.test", "latest.release");
 		GradleUtil.addDependency(
 			project, TEST_MODULES_CONFIGURATION_NAME, "org.apache.aries.jmx",
-			"org.apache.aries.jmx.core", "1.1.7");
+			"org.apache.aries.jmx.core", "latest.release");
 	}
 
 	private Copy _addTaskCopyTestModules(
