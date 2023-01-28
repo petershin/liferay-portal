@@ -170,7 +170,8 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 	private void _addDependenciesTestModules(Project project) {
 		GradleUtil.addDependency(
 			project, TEST_MODULES_CONFIGURATION_NAME, "com.liferay",
-			"com.liferay.arquillian.extension.junit.bridge.connector", "latest.release");
+			"com.liferay.arquillian.extension.junit.bridge.connector",
+			"latest.release");
 		GradleUtil.addDependency(
 			project, TEST_MODULES_CONFIGURATION_NAME, "com.liferay.portal",
 			"com.liferay.portal.test", "latest.release");
