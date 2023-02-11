@@ -12,11 +12,24 @@
  * details.
  */
 
+import {RendererFields} from '../components/Form/Renderer';
+import {FilterVariables} from '../schema/filter';
+
 type Filter = {
 	[key: string]: string | number | string[] | number[];
 };
 type Key = string;
 type Value = string | number | boolean;
+
+export type Operators =
+	| 'contains'
+	| 'eq'
+	| 'ge'
+	| 'gt'
+	| 'le'
+	| 'lt'
+	| 'ne'
+	| 'startsWith';
 
 export interface SearchBuilderConstructor {
 	useURIEncode?: boolean;
@@ -45,8 +58,12 @@ export class SearchBuilder {
 		return `contains(${key}, '${value}')`;
 	}
 
-	static eq(key: Key, value: Value) {
-		return `${key} eq ${typeof value === 'boolean' ? value : `'${value}'`}`;
+	static eq(key: Key, value: Value, withoutQuotingMark = false) {
+		return `${key} eq ${
+			typeof value === 'boolean' || withoutQuotingMark
+				? value
+				: `'${value}'`
+		}`;
 	}
 
 	/**
@@ -74,6 +91,26 @@ export class SearchBuilder {
 	 */
 	static ne(key: Key, value: Value) {
 		return `${key} ne '${value}'`;
+	}
+
+	static gt(key: Key, value: Value) {
+		return `${key} gt ${value}`;
+	}
+
+	static ge(key: Key, value: Value) {
+		return `${key} ge ${value}`;
+	}
+
+	static lt(key: Key, value: Value) {
+		return `${key} lt ${value}`;
+	}
+
+	static le(key: Key, value: Value) {
+		return `${key} le ${value}`;
+	}
+
+	static startsWith(key: Key, value: Value) {
+		return `${key} startsWith '${value}'`;
 	}
 
 	public and() {
@@ -108,21 +145,51 @@ export class SearchBuilder {
 		return _filter;
 	}
 
-	static createFilter(filter: Filter, baseFilters: string = '') {
-		const _filter = [baseFilters];
+	static createFilter({
+		appliedFilter,
+		defaultFilter,
+		filterSchema,
+	}: FilterVariables) {
+		const _filter = [defaultFilter];
 
-		for (const key in filter) {
-			const value = filter[key];
+		for (const key in appliedFilter) {
+			let searchCondition = '';
+			let value = appliedFilter[key];
 
 			if (!value) {
 				continue;
 			}
+			const schema = filterSchema.fields.find(
+				({name}) => key === name
+			) as RendererFields;
 
-			const _value = Array.isArray(value)
-				? SearchBuilder.in(key, value)
-				: SearchBuilder.eq(key, value);
+			const customOperator = schema?.operator;
 
-			_filter.push(_value);
+			if (customOperator && SearchBuilder[customOperator]) {
+				if (schema.type === 'date') {
+					value = new Date(value).toISOString();
+				}
+
+				searchCondition = SearchBuilder[customOperator](
+					key.replace('$', ''),
+					value,
+					schema.type === 'number'
+				);
+			}
+			else {
+				searchCondition = Array.isArray(value)
+					? SearchBuilder.in(
+							key,
+							value.map((_value) =>
+								typeof _value === 'object'
+									? _value.value
+									: _value
+							)
+					  )
+					: SearchBuilder.eq(key, value, schema.type === 'number');
+			}
+
+			_filter.push(searchCondition);
 		}
 
 		return _filter.join(' and ');

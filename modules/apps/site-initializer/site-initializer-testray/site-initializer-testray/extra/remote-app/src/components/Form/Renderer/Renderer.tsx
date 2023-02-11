@@ -13,11 +13,12 @@
  */
 
 import Form from '..';
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {useParams} from 'react-router-dom';
 
 import i18n from '../../../i18n';
 import fetcher from '../../../services/fetcher';
+import {Operators} from '../../../util/search';
 import {AutoCompleteProps} from '../AutoComplete';
 
 type RenderedFieldOptions = string[] | {label: string; value: string}[];
@@ -26,14 +27,17 @@ export type RendererFields = {
 	disabled?: boolean;
 	label: string;
 	name: string;
+	operator?: Operators;
 	options?: RenderedFieldOptions;
 	type:
 		| 'autocomplete'
 		| 'checkbox'
-		| 'text'
-		| 'textarea'
+		| 'date'
+		| 'multiselect'
+		| 'number'
 		| 'select'
-		| 'multiselect';
+		| 'text'
+		| 'textarea';
 } & Partial<AutoCompleteProps>;
 
 type RendererProps = {
@@ -57,31 +61,40 @@ const Renderer: React.FC<RendererProps> = ({
 		filter ? label.toLowerCase().includes(filter.toLowerCase()) : true
 	);
 
-	const fetchQueries = (
-		gqlQueries: (RendererFields | (() => Promise<any>))[][]
-	) => {
-		Promise.allSettled(
-			gqlQueries.map(([, query]) => (query as any)())
-		).then((results) => {
+	const fetchQueries = useCallback(
+		async (gqlQueries: (RendererFields | (() => Promise<any>))[][]) => {
+			const results = await Promise.allSettled(
+				gqlQueries.map(([, query]) => (query as any)())
+			);
+
 			let i = 0;
 			const _gqlOptions: any = {};
+
 			for (const result of results) {
 				if (result.status === 'fulfilled') {
 					const queries: any[][] = [...(gqlQueries as any)];
 					const field: RendererFields = queries[i][0];
+					const fieldIndex = fields.findIndex(
+						(value) => value.name === field.name
+					);
 
 					if (field.transformData) {
-						_gqlOptions[field.name] = field.transformData(
-							result.value
-						);
+						const parsedValue = field.transformData(result.value);
+
+						if (fields[fieldIndex]) {
+							fields[fieldIndex].options = parsedValue;
+						}
+
+						_gqlOptions[field.name] = parsedValue;
 					}
 				}
 				i++;
 			}
 
 			setGqlOptions(_gqlOptions);
-		});
-	};
+		},
+		[fields]
+	);
 
 	useEffect(() => {
 		const gqlQueries = fields
@@ -97,7 +110,7 @@ const Renderer: React.FC<RendererProps> = ({
 			]);
 
 		fetchQueries(gqlQueries as any);
-	}, [fields, params]);
+	}, [fetchQueries, fields, params]);
 
 	return (
 		<div className="form-renderer">
@@ -128,7 +141,7 @@ const Renderer: React.FC<RendererProps> = ({
 					return _options;
 				};
 
-				if (['text', 'textarea'].includes(type)) {
+				if (['date', 'number', 'text', 'textarea'].includes(type)) {
 					return (
 						<div key={index}>
 							<Form.Input

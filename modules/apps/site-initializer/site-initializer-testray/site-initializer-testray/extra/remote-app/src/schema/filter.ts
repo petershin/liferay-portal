@@ -18,6 +18,7 @@ import {
 	TestrayCaseType,
 	TestrayComponent,
 	TestrayProductVersion,
+	TestrayRoutine,
 	TestrayRun,
 	TestrayTeam,
 	UserAccount,
@@ -32,15 +33,18 @@ type Filter = {
 	[key: string]: RendererFields;
 };
 
+export type FilterVariables = {
+	appliedFilter: {
+		[key: string]: string;
+	};
+	defaultFilter: string | SearchBuilder;
+	filterSchema: FilterSchema;
+};
+
 export type FilterSchema = {
 	fields: RendererFields[];
 	name?: string;
-	onApply?: (data: {
-		appliedFilter: {
-			[key: string]: string;
-		};
-		defaultFilter: any;
-	}) => string;
+	onApply?: (filterVariables: FilterVariables) => string;
 };
 
 export type FilterSchemas = {
@@ -67,7 +71,7 @@ const baseFilters: Filter = {
 	assignee: {
 		label: i18n.translate('assignee'),
 		name: 'assignee',
-		resource: '/headless-admin-user/v1.0/user-accounts',
+		resource: '/user-accounts',
 		transformData(item) {
 			return dataToOptions(
 				transformData<UserAccount>(item),
@@ -116,6 +120,19 @@ const baseFilters: Filter = {
 		},
 		type: 'select',
 	},
+	routine: {
+		label: i18n.translate('routines'),
+		name: 'routines',
+		resource: ({projectId}) =>
+			`/routines?fields=id,name&pageSize=100&filter=${SearchBuilder.eq(
+				'projectId',
+				projectId as string
+			)}`,
+		transformData(item) {
+			return dataToOptions(transformData<TestrayRoutine>(item));
+		},
+		type: 'select',
+	},
 	run: {
 		label: i18n.translate('run'),
 		name: 'run',
@@ -141,6 +158,14 @@ const baseFilters: Filter = {
 	},
 };
 
+const overrides = (
+	object: RendererFields,
+	newObject: Partial<RendererFields>
+) => ({
+	...object,
+	...newObject,
+});
+
 const filterSchema = {
 	buildCaseTypes: {
 		fields: [baseFilters.priority, baseFilters.team] as RendererFields[],
@@ -148,7 +173,7 @@ const filterSchema = {
 	buildComponents: {
 		fields: [
 			baseFilters.priority,
-			baseFilters.caseType,
+			overrides(baseFilters.caseType, {disabled: false}),
 			baseFilters.team,
 			baseFilters.run,
 		] as RendererFields[],
@@ -199,6 +224,74 @@ const filterSchema = {
 				name: 'comments',
 				type: 'textarea',
 			},
+		] as RendererFields[],
+	},
+	buildResultsHistory: {
+		fields: [
+			{
+				disabled: 'false',
+				label: i18n.translate('product-version-name'),
+				name:
+					'buildToCaseResult/r_productVersionToBuilds_c_productVersion',
+				type: 'text',
+			},
+			{
+				label: i18n.translate('environment'),
+				name: 'runToCaseResult/name',
+				operator: 'contains',
+				type: 'text',
+			},
+			overrides(baseFilters.routine, {
+				name: 'buildToCaseResult/routineId',
+			}),
+			overrides(baseFilters.assignee, {
+				name: 'userId',
+			}),
+			{
+				label: i18n.translate('status'),
+				name: 'dueStatus',
+				options: [
+					'Blocked',
+					'Failed',
+					'In Progress',
+					'Passed',
+					'Test Fix',
+					'Untested',
+				],
+				type: 'checkbox',
+			},
+			{
+				label: i18n.translate('issues'),
+				name: 'issues',
+				operator: 'contains',
+				type: 'textarea',
+			},
+			{
+				label: i18n.translate('errors'),
+				name: 'errors',
+				operator: 'contains',
+				type: 'textarea',
+			},
+			{
+				label: i18n.translate('case-result-warning'),
+				name: 'warnings',
+				type: 'number',
+			},
+			{
+				label: i18n.sub('x-create-date', 'min'),
+				name: 'dateCreated',
+				operator: 'gt',
+				type: 'date',
+			},
+			{
+				label: i18n.sub('x-create-date', 'max'),
+				name: 'dateCreated$',
+				operator: 'lt',
+				type: 'date',
+			},
+			overrides(baseFilters.team, {
+				name: 'componentToCaseResult/r_teamToComponents_c_teamId',
+			}),
 		] as RendererFields[],
 	},
 	buildRuns: {
@@ -252,25 +345,18 @@ const filterSchema = {
 	cases: {
 		fields: [
 			baseFilters.priority,
-			baseFilters.caseType,
+			overrides(baseFilters.caseType, {
+				name: 'r_caseTypeToCases_c_caseTypeId',
+			}),
 			{
-				disabled: true,
 				label: i18n.translate('case-name'),
 				name: 'name',
+				operator: 'contains',
 				type: 'text',
 			},
 			{...baseFilters.team},
-			baseFilters.component,
+			overrides(baseFilters.component, {name: 'componentId'}),
 		] as RendererFields[],
-		onApply({appliedFilter, defaultFilter}: any) {
-			const filter: string = '';
-
-			if (defaultFilter instanceof SearchBuilder) {
-				console.warn(appliedFilter, defaultFilter, this.fields);
-			}
-
-			return filter;
-		},
 	},
 	requirementCases: {
 		fields: [

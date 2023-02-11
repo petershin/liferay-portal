@@ -1,0 +1,197 @@
+@component-name = "portal-publications"
+definition {
+
+	property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver";
+	property osgi.module.configuration.file.names = "com.liferay.change.tracking.configuration.CTSettingsConfiguration.config";
+	property osgi.module.configurations = "enabled=B\"true\"";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Publications";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Publications.disablePublications();
+		}
+	}
+
+	@description = "Assert that is possible to add a Wiki Page within a publication and then publish it"
+	@priority = 3
+	test CanAddWikiPageWithinPublications {
+		JSONPublications.addPublication(publicationName = "Publication Name");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Wiki");
+
+		WikiNode.addCP(wikiNodeName = "Wiki Node Name");
+
+		WikiPage.addCP(
+			contentImageName = "Document_2.jpg",
+			groupName = "Guest",
+			imageSourceURL = "http://localhost:8080/webdav/guest/document_library/Document_2.jpg",
+			siteURLKey = "guest",
+			wikiAdmin = "true",
+			wikiNodeName = "Wiki Node Name",
+			wikiPageContent = "Wiki Page Content",
+			wikiPageTitle = "Wiki Page Title");
+
+		PublicationsNavigator.gotoReviewChanges(
+			gotoPublicationsAdmin = "true",
+			publicationName = "Publication Name");
+
+		PublicationsChanges.viewChanges(
+			changeCategory = "Wiki Node",
+			changeOrder = 1,
+			changeSite = "Guest",
+			changeTitle = "Wiki Node Name",
+			changeType = "Added",
+			changeUser = "Test Test");
+
+		PublicationsChanges.viewChanges(
+			changeCategory = "Wiki Page",
+			changeOrder = 2,
+			changeSite = "Guest",
+			changeTitle = "Wiki Page Title",
+			changeType = "Added",
+			changeUser = "Test Test");
+
+		Button.clickPublish();
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#SUCCESS",
+			value1 = "No unresolved conflicts, ready to publish.");
+
+		Publications.publishPublication(publicationName = "Publication Name");
+	}
+
+	@description = "This is a use case for LPS-173707. Multiple 'Your request repeated successfully' messages appear when switching between publications on a page with many Asset Publishers"
+	@priority = 3
+	test DoesNotDisplaySuccessMessageWhenSwitchingToProduction {
+		Navigator.openURL();
+
+		ContentPages.addPage(pageName = "Test Page");
+
+		PageEditor.addWidget(portletName = "Asset Publisher");
+
+		var count = 0;
+
+		while (${count} != 3) {
+			PageEditor.addWidget(
+				portletName = "Asset Publisher",
+				targetFragmentName = "Asset Publisher");
+
+			var count = ${count} + 1;
+		}
+
+		PageEditor.publish();
+
+		JSONPublications.addPublication(publicationName = "Test Publication");
+
+		JSONPublications.selectPublication(publicationName = "Test Publication");
+
+		ContentPagesNavigator.openViewContentPage(
+			pageName = "Test Page",
+			siteName = "Guest");
+
+		Publications.workOnProduction();
+
+		Alert.viewWarningSpecificNotPresent(warningMessage = "Your request repeated successfully");
+	}
+
+	@description = "Assert that the search results shows only wiki pages from the active publication"
+	@priority = 3
+	test ViewSearchResultsFromActivePublication {
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Wiki");
+
+		WikiNode.addCP(wikiNodeName = "Wiki Node");
+
+		WikiNavigator.gotoNode(wikiNodeName = "Wiki Node");
+
+		WikiPage.addCP(
+			wikiPageContent = "Original content",
+			wikiPageTitle = "Wiki Page Production");
+
+		JSONPublications.addPublication(publicationName = "Publication 1");
+
+		JSONPublications.selectPublication(publicationName = "Publication 1");
+
+		WikiNavigator.openWikiAdmin(siteURLKey = "guest");
+
+		WikiNavigator.gotoNode(wikiNodeName = "Wiki Node");
+
+		WikiPage.addCP(
+			wikiPageContent = "Publication 1",
+			wikiPageTitle = "Wiki Page Publication 1");
+
+		Publications.workOnProduction();
+
+		JSONPublications.addPublication(publicationName = "Publication 2");
+
+		JSONPublications.selectPublication(publicationName = "Publication 2");
+
+		WikiNavigator.openWikiAdmin(siteURLKey = "guest");
+
+		WikiNavigator.gotoNode(wikiNodeName = "Wiki Node");
+
+		WikiPage.addCP(
+			wikiPageContent = "Publication 2",
+			wikiPageTitle = "Wiki Page Publication 2");
+
+		WikiPage.editPageCP(
+			wikiPageContentEdit = "Wiki Page Content Edit",
+			wikiPageTitle = "Wiki Page Production");
+
+		Navigator.openURL();
+
+		SearchPortlets.searchEmbedded(searchTerm = "Wiki");
+
+		SearchResultPortlet.viewMultipleSearchResults(
+			resultsList = "Wiki Page Production/Wiki Page,Wiki Page Content Edit/Wiki Page,Wiki Page Publication 2/Wiki Page",
+			searchTerm = "Wiki");
+
+		JSONPublications.selectPublication(publicationName = "Publication 1");
+
+		Navigator.openURL();
+
+		SearchPortlets.searchEmbedded(searchTerm = "Wiki");
+
+		SearchResultPortlet.viewMultipleSearchResults(
+			resultsList = "Wiki Page Production/Wiki Page,Original content/Wiki Page,Wiki Page Publication 1/Wiki Page",
+			searchTerm = "Wiki");
+
+		Publications.workOnProduction();
+
+		Navigator.openURL();
+
+		SearchPortlets.searchEmbedded(searchTerm = "Wiki");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetSummary = "Original content",
+			searchAssetTitle = "Wiki Page Production",
+			searchAssetType = "Wiki Page");
+
+		SearchResultPortlet.viewSearchResultNotPresent(
+			searchAssetTitle = "Wiki Page Publication 1",
+			searchAssetType = "Wiki Page");
+
+		SearchResultPortlet.viewSearchResultNotPresent(
+			searchAssetTitle = "Wiki Page Publication 2",
+			searchAssetType = "Wiki Page");
+	}
+
+}

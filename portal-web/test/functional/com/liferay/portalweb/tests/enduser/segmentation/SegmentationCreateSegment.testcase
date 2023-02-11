@@ -3026,6 +3026,80 @@ definition {
 		}
 	}
 
+	@description = "LPS-167023 Given the Segments page
+	When the user adds a new segment
+	Then the segment is created in the Global Site"
+	@priority = "4"
+	test SegmentInGlobalSiteByDefault {
+		property custom.properties = "feature.flag.LPS-166954=true";
+		property portal.acceptance = "true";
+
+		task ("Add segment with site scope selected") {
+			LexiconEntry.gotoAdd();
+
+			Segmentation.fillTitle(titleField = "SegmentInGlobalSiteByDefault Test");
+		}
+
+		task ("Assert the segment is created in the Global Site") {
+			AssertTextEquals(
+				locator1 = "Segmentation#SCOPE_CARD_SITE",
+				siteName = "Global",
+				value1 = "Global");
+		}
+	}
+
+	@description = "LPS-167023 Given the Product Menu
+	When the user clicks on People
+	Then the Segments portlet is not present"
+	@priority = "4"
+	test SegmentPortletNotPresentInProductMenu {
+		property custom.properties = "feature.flag.LPS-166954=true";
+		property portal.acceptance = "true";
+
+		Navigator.openURL();
+
+		ProductMenuHelper.expandCategory(category = "People");
+
+		AssertElementNotPresent(
+			key_portlet = "Segments",
+			locator1 = "ProductMenu#PORTLET");
+	}
+
+	@description = "LPS-167023 Given the Segments page
+	When there is a segment belonging to a site
+	Then the scope column in the Segments table will display the name of the site is scoped to"
+	@priority = "3"
+	test SiteNameInScopeColumn {
+		property custom.properties = "feature.flag.LPS-166954=true";
+
+		task ("Add a segment scoped by Test Site Name") {
+			LexiconEntry.gotoAdd();
+
+			Segmentation.addProperties(propertyOption = "First Name");
+
+			Segmentation.fillProperty(criterionValue = "Test");
+
+			Segmentation.fillTitle(titleField = "SiteNameInScopeColumn Test");
+
+			Segmentation.configureScope(site = "Test Site Name");
+
+			Button.clickSave();
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Go to Segment Admin on Test Site Name") {
+			Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
+		}
+
+		task ("Assert the scope column in the Segments table will display the name of the site is scoped to") {
+			AssertElementPresent(
+				locator1 = "Segmentation#SCOPE_TABLE_SITE",
+				segmentName = "SiteNameInScopeColumn Test",
+				siteScope = "Test Site Name");
+		}
+	}
+
 	@description = "LPS-136086 Validate if, in the segments page, the default segment doesn't appear, with the page without records."
 	@priority = 4
 	test ValidateDefaultSegmentNotDisplayed {

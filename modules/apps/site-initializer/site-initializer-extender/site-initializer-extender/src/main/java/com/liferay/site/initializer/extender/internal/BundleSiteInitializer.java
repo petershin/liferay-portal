@@ -2789,23 +2789,38 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			JSONObject jsonObject = _jsonFactory.createJSONObject(json);
 
-			long objectDefinitionId = GetterUtil.getLong(
-				(String)jsonObject.remove("objectDefinitionId"));
+			JSONArray jsonArray = jsonObject.getJSONArray("object-fields");
 
-			ObjectField objectField = ObjectField.toDTO(
-				JSONUtil.toString(jsonObject));
-
-			com.liferay.object.model.ObjectField existingObjectField =
-				_objectFieldLocalService.fetchObjectField(
-					objectDefinitionId, objectField.getName());
-
-			if (existingObjectField == null) {
-				objectFieldResource.postObjectDefinitionObjectField(
-					objectDefinitionId, objectField);
+			if (JSONUtil.isEmpty(jsonArray)) {
+				continue;
 			}
-			else {
-				objectFieldResource.putObjectField(
-					existingObjectField.getObjectFieldId(), objectField);
+
+			for (int i = 0; i < jsonArray.length(); i++) {
+				JSONObject objectFieldJSONObject = jsonArray.getJSONObject(i);
+
+				ObjectField objectField = ObjectField.toDTO(
+					JSONUtil.toString(objectFieldJSONObject));
+
+				if (objectField == null) {
+					_log.error(
+						"Unable to transform object field from JSON: " + json);
+
+					continue;
+				}
+
+				com.liferay.object.model.ObjectField existingObjectField =
+					_objectFieldLocalService.fetchObjectField(
+						jsonObject.getLong("objectDefinitionId"),
+						objectField.getName());
+
+				if (existingObjectField == null) {
+					objectFieldResource.postObjectDefinitionObjectField(
+						jsonObject.getLong("objectDefinitionId"), objectField);
+				}
+				else {
+					objectFieldResource.putObjectField(
+						existingObjectField.getObjectFieldId(), objectField);
+				}
 			}
 		}
 	}
