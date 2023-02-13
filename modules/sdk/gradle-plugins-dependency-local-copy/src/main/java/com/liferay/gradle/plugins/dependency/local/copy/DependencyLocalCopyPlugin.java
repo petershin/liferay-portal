@@ -38,6 +38,7 @@ import org.gradle.api.artifacts.component.ComponentSelector;
 import org.gradle.api.artifacts.component.ModuleComponentSelector;
 import org.gradle.api.artifacts.dsl.DependencyHandler;
 import org.gradle.api.file.FileTree;
+import org.gradle.api.plugins.JavaLibraryPlugin;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.tasks.Sync;
 
@@ -52,6 +53,7 @@ public class DependencyLocalCopyPlugin implements Plugin<Project> {
 
 	@Override
 	public void apply(Project project) {
+		GradleUtil.applyPlugin(project, JavaLibraryPlugin.class);
 		GradleUtil.applyPlugin(project, JavaPlugin.class);
 
 		Task syncLocalCopyTask = _addTaskSyncLocalCopy(project);

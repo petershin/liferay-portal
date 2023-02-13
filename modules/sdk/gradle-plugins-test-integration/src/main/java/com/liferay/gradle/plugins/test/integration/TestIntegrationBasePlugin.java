@@ -40,6 +40,7 @@ import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.internal.ConventionMapping;
 import org.gradle.api.invocation.Gradle;
 import org.gradle.api.plugins.JavaBasePlugin;
+import org.gradle.api.plugins.JavaLibraryPlugin;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.PluginContainer;
 import org.gradle.api.tasks.SourceSet;
@@ -66,6 +67,7 @@ public class TestIntegrationBasePlugin implements Plugin<Project> {
 
 	@Override
 	public void apply(Project project) {
+		GradleUtil.applyPlugin(project, JavaLibraryPlugin.class);
 		GradleUtil.applyPlugin(project, JavaPlugin.class);
 
 		SourceSet testIntegrationSourceSet = _addSourceSetTestIntegration(

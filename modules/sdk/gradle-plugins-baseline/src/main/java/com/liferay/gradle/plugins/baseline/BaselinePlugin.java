@@ -42,6 +42,7 @@ import org.gradle.api.artifacts.component.ModuleComponentIdentifier;
 import org.gradle.api.artifacts.dsl.DependencyHandler;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.plugins.JavaBasePlugin;
+import org.gradle.api.plugins.JavaLibraryPlugin;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.ReportingBasePlugin;
 import org.gradle.api.specs.Spec;
@@ -65,6 +66,7 @@ public class BaselinePlugin implements Plugin<Project> {
 
 	@Override
 	public void apply(Project project) {
+		GradleUtil.applyPlugin(project, JavaLibraryPlugin.class);
 		GradleUtil.applyPlugin(project, JavaPlugin.class);
 		GradleUtil.applyPlugin(project, ReportingBasePlugin.class);
 
