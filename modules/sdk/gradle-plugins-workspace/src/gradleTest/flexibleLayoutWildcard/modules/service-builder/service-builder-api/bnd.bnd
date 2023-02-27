@@ -2,9 +2,9 @@ Bundle-Name: service-builder-api
 Bundle-SymbolicName: service.builder.api
 Bundle-Version: 1.0.0
 Export-Package:\
-	service.builder.exception,\
-	service.builder.model,\
-	service.builder.service,\
-	service.builder.service.persistence
+	com.example.sample.exception,\
+	com.example.sample.model,\
+	com.example.sample.service,\
+	com.example.sample.service.persistence
 -check: EXPORTS
 -includeresource: META-INF/service.xml=../service-builder-service/service.xml
