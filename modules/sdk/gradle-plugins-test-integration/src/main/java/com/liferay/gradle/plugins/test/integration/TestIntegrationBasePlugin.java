@@ -40,6 +40,7 @@ import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.internal.ConventionMapping;
 import org.gradle.api.invocation.Gradle;
 import org.gradle.api.plugins.JavaBasePlugin;
+import org.gradle.api.plugins.JavaLibraryPlugin;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.PluginContainer;
 import org.gradle.api.tasks.SourceSet;
@@ -66,7 +67,7 @@ public class TestIntegrationBasePlugin implements Plugin<Project> {
 
 	@Override
 	public void apply(Project project) {
-		GradleUtil.applyPlugin(project, JavaPlugin.class);
+		GradleUtil.applyPlugin(project, JavaLibraryPlugin.class);
 
 		SourceSet testIntegrationSourceSet = _addSourceSetTestIntegration(
 			project);
@@ -84,27 +85,30 @@ public class TestIntegrationBasePlugin implements Plugin<Project> {
 		SourceSet testIntegrationSourceSet = GradleUtil.addSourceSet(
 			project, TEST_INTEGRATION_SOURCE_SET_NAME);
 
-		Configuration testIntegrationCompileConfiguration =
+		Configuration testIntegrationImplementationConfiguration =
 			GradleUtil.getConfiguration(
 				project,
-				testIntegrationSourceSet.getCompileConfigurationName());
+				testIntegrationSourceSet.getImplementationConfigurationName());
 
-		Configuration testCompileConfiguration = GradleUtil.getConfiguration(
-			project, JavaPlugin.TEST_COMPILE_CONFIGURATION_NAME);
+		Configuration testImplementationConfiguration =
+			GradleUtil.getConfiguration(
+				project, JavaPlugin.TEST_IMPLEMENTATION_CONFIGURATION_NAME);
 
-		testIntegrationCompileConfiguration.extendsFrom(
-			testCompileConfiguration);
+		testIntegrationImplementationConfiguration.extendsFrom(
+			testImplementationConfiguration);
 
-		Configuration testIntegrationRuntimeConfiguration =
+		Configuration testIntegrationRuntimeOnlyConfiguration =
 			GradleUtil.getConfiguration(
 				project,
-				testIntegrationSourceSet.getRuntimeConfigurationName());
+				testIntegrationSourceSet.getRuntimeOnlyConfigurationName());
 
-		Configuration testRuntimeConfiguration = GradleUtil.getConfiguration(
-			project, JavaPlugin.TEST_RUNTIME_CONFIGURATION_NAME);
+		Configuration testRuntimeOnlyConfiguration =
+			GradleUtil.getConfiguration(
+				project, JavaPlugin.TEST_RUNTIME_ONLY_CONFIGURATION_NAME);
 
-		testIntegrationRuntimeConfiguration.extendsFrom(
-			testRuntimeConfiguration, testIntegrationCompileConfiguration);
+		testIntegrationRuntimeOnlyConfiguration.extendsFrom(
+			testRuntimeOnlyConfiguration,
+			testIntegrationImplementationConfiguration);
 
 		SourceSet mainSourceSet = GradleUtil.getSourceSet(
 			project, SourceSet.MAIN_SOURCE_SET_NAME);
@@ -261,7 +265,7 @@ public class TestIntegrationBasePlugin implements Plugin<Project> {
 		plusConfigurations.add(
 			GradleUtil.getConfiguration(
 				project,
-				testIntegrationSourceSet.getRuntimeConfigurationName()));
+				testIntegrationSourceSet.getRuntimeOnlyConfigurationName()));
 	}
 
 	private void _configureIdea(
@@ -298,7 +302,7 @@ public class TestIntegrationBasePlugin implements Plugin<Project> {
 		plusConfigurations.add(
 			GradleUtil.getConfiguration(
 				project,
-				testIntegrationSourceSet.getRuntimeConfigurationName()));
+				testIntegrationSourceSet.getRuntimeOnlyConfigurationName()));
 
 		project.afterEvaluate(
 			new Action<Project>() {
