@@ -50,7 +50,7 @@ dependencies {
 }
 
 deployDependencies {
-	from (configurations.compile) {
+	from (configurations.api) {
 		include "checkstyle-*.jar"
 	}
 

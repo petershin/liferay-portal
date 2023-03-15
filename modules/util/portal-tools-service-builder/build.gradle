@@ -46,7 +46,7 @@ dependencies {
 }
 
 deployDependencies {
-	from (configurations.compile) {
+	from (configurations.api) {
 		include "checkstyle-*.jar"
 	}
 
@@ -82,7 +82,7 @@ needed by Service Builder to generate model services.
 	}
 
 	from {
-		File portalImplJarFile = configurations.compileOnly.find {
+		File portalImplJarFile = configurations.apiOnly.find {
 			it.name.startsWith "com.liferay.portal.impl-"
 		}
 

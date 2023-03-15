@@ -10,7 +10,7 @@ tasks.eclipse {
 }
 
 copyGradleTestDependencies {
-	from configurations.compile
+	from configurations.api
 	into jar.destinationDir
 }
 
