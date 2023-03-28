@@ -1,6 +1,8 @@
 import com.liferay.gradle.plugins.gulp.ExecuteGulpTask
 
-apply plugin: "com.liferay.gulp"
+plugins {
+	id "com.liferay.gulp"
+}
 
 node {
 	useNpm = true

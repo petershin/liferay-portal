@@ -1,5 +1,7 @@
-apply plugin: "com.liferay.soy"
-apply plugin: "java-library"
+plugins {
+	id "com.liferay.soy"
+	id "java-library"
+}
 
 task runGradleTest
 
