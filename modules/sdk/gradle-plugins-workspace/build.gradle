@@ -10,6 +10,7 @@ apply plugin: "org.ysb33r.gradletest"
 task copyBundle(type: Copy)
 task copyDistBundleZipPluginsSdk(type: Copy)
 task copyGradleTestDependencies(type: Copy)
+task copyGradleTestPortalToolsDependencies
 task copyHotFixZip(type: Copy)
 task copyRepo(type: Copy)
 task copyWorkspacesSamples
@@ -83,6 +84,21 @@ copyGradleTestDependencies {
 	from configurations.compileClasspath
 	from jar
 	into gradleTestDependenciesDir
+}
+
+copyGradleTestPortalToolsDependencies {
+	doLast {
+		configurations.compileClasspath.forEach {
+			File compileClasspathFile ->
+
+			if (compileClasspathFile.name.startsWith("com.liferay.portal.tools.")) {
+				copy {
+					from compileClasspathFile
+					into jar.destinationDir
+				}
+			}
+		}
+	}
 }
 
 copyRepo {
@@ -192,6 +208,7 @@ gradleTest {
 	dependsOn copyBundle
 	dependsOn copyDistBundleZipPluginsSdk
 	dependsOn copyGradleTestDependencies
+	dependsOn copyGradleTestPortalToolsDependencies
 	dependsOn copyHotFixZip
 	dependsOn copyRepo
 	dependsOn copyWorkspacesSamples
