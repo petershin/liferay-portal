@@ -1,6 +1,3 @@
-apply plugin: "com.liferay.soy"
-apply plugin: "java-library"
-
 task runGradleTest
 
 processResources {
