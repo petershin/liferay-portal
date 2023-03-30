@@ -14,30 +14,29 @@
 
 package com.liferay.gradle.plugins.workspace.task;
 
-import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
-import com.liferay.gradle.util.FileUtil;
-import com.liferay.portal.tools.bundle.support.constants.BundleSupportConstants;
-
 import java.io.File;
-
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
-
 import java.nio.file.Path;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.gradle.api.GradleException;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.tasks.Input;
+import org.gradle.api.tasks.InputDirectory;
 import org.gradle.api.tasks.InputFile;
 import org.gradle.api.tasks.JavaExec;
 import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.OutputDirectory;
+
+import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
+import com.liferay.gradle.util.FileUtil;
+import com.liferay.portal.tools.bundle.support.constants.BundleSupportConstants;
 
 /**
  * @author David Truong
@@ -69,6 +68,7 @@ public class InitBundleTask extends JavaExec {
 	}
 
 	@Optional
+	@InputDirectory
 	public File getConfigsDir() {
 		return GradleUtil.toFile(getProject(), _configsDir);
 	}
@@ -83,15 +83,15 @@ public class InitBundleTask extends JavaExec {
 		return GradleUtil.toFile(getProject(), _file);
 	}
 
-	@Input
 	@Optional
-	public FileCollection getProvidedModules() {
-		return _providedModules;
+	@InputFile
+	public Set<File> getProvidedModules() {
+		return _providedModules.getFiles();
 	}
 
 	@Input
 	@Optional
-	public int getStripComponents() {
+	public Integer getStripComponents() {
 		return GradleUtil.toInteger(_stripComponents);
 	}
 
@@ -137,7 +137,7 @@ public class InitBundleTask extends JavaExec {
 		args.add("--liferay");
 		args.add(FileUtil.getAbsolutePath(getDestinationDir()));
 
-		FileCollection providedModules = getProvidedModules();
+		Set<File> providedModules = getProvidedModules();
 
 		if (!providedModules.isEmpty()) {
 			StringBuilder sb = new StringBuilder();
