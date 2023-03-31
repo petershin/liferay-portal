@@ -1,7 +1,7 @@
 buildscript {
 	dependencies {
 		classpath group: "com.github.jengelman.gradle.plugins", name: "shadow", version: "5.1.0"
-		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.defaults", version: "latest.release"
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.defaults", version: "8.0.129"
 	}
 
 	repositories {
@@ -16,7 +16,7 @@ buildscript {
 apply plugin: "application"
 apply plugin: "com.github.johnrengelman.shadow"
 apply plugin: "com.liferay.source.formatter"
-apply plugin: "java-library"
+apply plugin: "java"
 
 dependencies {
 	compile group: "com.liferay", name: "com.liferay.data.engine.rest.client", version: "latest.release"
