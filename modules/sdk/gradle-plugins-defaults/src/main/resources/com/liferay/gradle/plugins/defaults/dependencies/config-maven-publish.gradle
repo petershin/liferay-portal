@@ -68,23 +68,6 @@ tasks.withType(PublishToMavenRepository) {
 
 				url = repositoryURL
 			}
-
-			maven {
-				credentials {
-					password = project.properties["sonatype.snapshot.password"]
-					username = project.properties["sonatype.snapshot.username"]
-				}
-
-				name = "snapshots"
-
-				String snapshotRepositoryURL = project.properties["sonatype.snapshot.url"] ?: "https://repository-cdn.liferay.com/nexus/content/repositories/liferay-public-snapshots"
-
-				if (project.path.startsWith(":dxp:") && !project.path.endsWith("-api") && !project.path.endsWith("-spi") && !project.path.contains("-demo-") && !project.path.contains("-demo-data-") && (snapshotRepositoryURL.equals("https://repository-cdn.liferay.com/nexus/content/repositories/liferay-public-snapshots") || snapshotRepositoryURL.equals("https://repository-cdn.liferay.com/nexus/content/repositories/liferay-public-snapshots"))) {
-					snapshotRepositoryURL = "https://repository-cdn.liferay.com/nexus/content/repositories/liferay-private-snapshots"
-				}
-
-				url = snapshotRepositoryURL
-			}
 		}
 	}
 }
