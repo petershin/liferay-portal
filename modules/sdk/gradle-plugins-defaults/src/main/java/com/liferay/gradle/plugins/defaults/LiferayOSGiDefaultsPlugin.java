@@ -491,14 +491,14 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		_addTaskUpdateFileSnapshotVersions(project);
 
 		if (publishing) {
-			GenerateMavenPom generatePomFileForMavenJavaPublicationTask =
+			GenerateMavenPom generatePomFileForMavenPublicationTask =
 				(GenerateMavenPom)GradleUtil.getTask(
-					project, "generatePomFileForMavenJavaPublication");
+					project, "generatePomFileForMavenPublication");
 
-			_configureTaskGeneratePomFileForMavenJavaPublication(
-				project, generatePomFileForMavenJavaPublicationTask);
+			_configureTaskGeneratePomFileForMavenPublication(
+				project, generatePomFileForMavenPublicationTask);
 
-			jar.dependsOn(generatePomFileForMavenJavaPublicationTask);
+			jar.dependsOn(generatePomFileForMavenPublicationTask);
 
 			_configureTasksEnabledIfStaleSnapshot(
 				project, testProject,
@@ -1094,7 +1094,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		return copy;
 	}
 
-	private void _configureTaskGeneratePomFileForMavenJavaPublication(
+	private void _configureTaskGeneratePomFileForMavenPublication(
 		Project project, GenerateMavenPom generateMavenPom) {
 
 		StringBuilder sb = new StringBuilder();
@@ -1864,8 +1864,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 				@Override
 				public void execute(PublicationContainer publicationContainer) {
 					MavenPublication mavenPublication =
-						publicationContainer.create(
-							"mavenJava", MavenPublication.class);
+						publicationContainer.maybeCreate(
+							"maven", MavenPublication.class);
 
 					SoftwareComponentContainer softwareComponentContainer =
 						project.getComponents();

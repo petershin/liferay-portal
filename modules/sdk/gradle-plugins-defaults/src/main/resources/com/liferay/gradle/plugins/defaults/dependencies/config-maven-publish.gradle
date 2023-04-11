@@ -14,10 +14,8 @@
 
 tasks.withType(AbstractPublishToMaven) {
 	publishing {
-		publications.forEach {
-			Publication publication ->
-
-			publication {
+		publications {
+			maven(MavenPublication) {
 				pom {
 					if ((it.name == "publish") || (it.name == "publishToMavenLocal")) {
 						description = project.description
