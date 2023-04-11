@@ -93,7 +93,7 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 
 	public BuildPluginDescriptorTask() {
 		_configurationScopeMappings.put(
-			JavaPlugin.API_CONFIGURATION_NAME,
+			JavaPlugin.COMPILE_CLASSPATH_CONFIGURATION_NAME,
 			Conf2ScopeMappingContainer.COMPILE);
 		_configurationScopeMappings.put(
 			"provided", Conf2ScopeMappingContainer.PROVIDED);
