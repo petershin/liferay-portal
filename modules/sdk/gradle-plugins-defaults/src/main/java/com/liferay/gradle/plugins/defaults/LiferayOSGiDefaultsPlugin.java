@@ -925,16 +925,16 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		Configuration compileOnlyConfiguration = GradleUtil.getConfiguration(
 			project, JavaPlugin.COMPILE_ONLY_CONFIGURATION_NAME);
-		Configuration runtimeConfiguration = GradleUtil.getConfiguration(
-			project, JavaPlugin.RUNTIME_CONFIGURATION_NAME);
+		Configuration runtimeOnlyConfiguration = GradleUtil.getConfiguration(
+			project, JavaPlugin.RUNTIME_ONLY_CONFIGURATION_NAME);
 
-		copy.from(compileOnlyConfiguration, runtimeConfiguration);
+		copy.from(compileOnlyConfiguration, runtimeOnlyConfiguration);
 
 		copy.into(libDir);
 
 		Closure<String> renameDependencyClosure = new RenameDependencyClosure(
 			project, compileOnlyConfiguration.getName(),
-			runtimeConfiguration.getName());
+			runtimeOnlyConfiguration.getName());
 
 		copy.rename(renameDependencyClosure);
 
