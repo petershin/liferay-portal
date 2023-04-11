@@ -395,7 +395,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			_configureConfigurationTest(
 				project, JavaPlugin.TEST_COMPILE_CLASSPATH_CONFIGURATION_NAME);
 			_configureConfigurationTest(
-				project, JavaPlugin.TEST_RUNTIME_CONFIGURATION_NAME);
+				project, JavaPlugin.TEST_RUNTIME_ONLY_CONFIGURATION_NAME);
 			_configureEclipse(
 				project, portalConfiguration, portalTestConfiguration);
 			_configureIdea(
@@ -2982,7 +2982,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 				project, JavaPlugin.TEST_COMPILE_CONFIGURATION_NAME));
 		mappings.remove(
 			GradleUtil.getConfiguration(
-				project, JavaPlugin.TEST_RUNTIME_CONFIGURATION_NAME));
+				project, JavaPlugin.TEST_RUNTIME_ONLY_CONFIGURATION_NAME));
 	}
 
 	private void _configurePmd(Project project) {
