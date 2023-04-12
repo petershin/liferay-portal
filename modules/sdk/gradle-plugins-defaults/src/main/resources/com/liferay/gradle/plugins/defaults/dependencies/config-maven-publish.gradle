@@ -12,79 +12,54 @@
  * details.
  */
 
-tasks.withType(AbstractPublishToMaven) {
-	publishing {
-		publications.forEach {
-			Publication publication ->
+publishing {
+	publications {
+		maven(MavenPublication) {
+			pom {
+				if ((it.name == "publish") || (it.name == "publishToMavenLocal")) {
+					description = project.description
+				}
 
-			publication {
-				pom {
-					if ((it.name == "publish") || (it.name == "publishToMavenLocal")) {
-						description = project.description
+				developers {
+					developer {
+						name = project.properties["pom.developer.name"] ?: "Brian Wing Shun Chan"
+						organization = project.properties["pom.developer.organization"] ?: "Liferay, Inc."
+						organizationUrl = project.properties["pom.developer.organizationUrl"] ?: "http://www.liferay.com"
 					}
+				}
 
-					developers {
-						developer {
-							name = project.properties["pom.developer.name"] ?: "Brian Wing Shun Chan"
-							organization = project.properties["pom.developer.organization"] ?: "Liferay, Inc."
-							organizationUrl = project.properties["pom.developer.organizationUrl"] ?: "http://www.liferay.com"
-						}
+				licenses {
+					license {
+						name = project.properties["pom.license.name"] ?: "LGPL 2.1"
+						url = project.properties["pom.license.url"] ?: "http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt"
 					}
+				}
 
-					licenses {
-						license {
-							name = project.properties["pom.license.name"] ?: "LGPL 2.1"
-							url = project.properties["pom.license.url"] ?: "http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt"
-						}
-					}
-
-					scm {
-						connection = project.properties["pom.scm.connection"] ?: "scm:git:git@github.com:liferay/liferay-portal.git"
-						developerConnection = project.properties["pom.scm.developerConnection"] ?: "scm:git:git@github.com:liferay/liferay-portal.git"
-						url = project.properties["pom.scm.url"] ?: "http://github.com/liferay/liferay-portal"
-					}
+				scm {
+					connection = project.properties["pom.scm.connection"] ?: "scm:git:git@github.com:liferay/liferay-portal.git"
+					developerConnection = project.properties["pom.scm.developerConnection"] ?: "scm:git:git@github.com:liferay/liferay-portal.git"
+					url = project.properties["pom.scm.url"] ?: "http://github.com/liferay/liferay-portal"
 				}
 			}
 		}
 	}
-}
 
-tasks.withType(PublishToMavenRepository) {
-	publishing {
-		repositories {
-			maven {
-				credentials {
-					password = project.properties["sonatype.release.password"]
-					username = project.properties["sonatype.release.username"]
-				}
-
-				name = "releases"
-
-				String repositoryURL = project.properties["sonatype.release.url"] ?: "https://repository-cdn.liferay.com/nexus/content/repositories/liferay-public-releases"
-
-				if (project.path.startsWith(":dxp:") && !project.path.endsWith("-api") && !project.path.endsWith("-spi") && !project.path.contains("-demo-") && !project.path.contains("-demo-data-") && (repositoryURL.equals("https://repository-cdn.liferay.com/nexus/content/repositories/liferay-public-releases") || repositoryURL.equals("https://repository-cdn.liferay.com/nexus/content/repositories/liferay-public-releases"))) {
-					repositoryURL = "https://repository-cdn.liferay.com/nexus/content/repositories/liferay-private-releases"
-				}
-
-				url = repositoryURL
+	repositories {
+		maven {
+			credentials {
+				password = project.properties["sonatype.release.password"]
+				username = project.properties["sonatype.release.username"]
 			}
 
-			maven {
-				credentials {
-					password = project.properties["sonatype.snapshot.password"]
-					username = project.properties["sonatype.snapshot.username"]
-				}
+			name = "releases"
 
-				name = "snapshots"
+			String repositoryURL = project.properties["sonatype.release.url"] ?: "https://repository-cdn.liferay.com/nexus/content/repositories/liferay-public-releases"
 
-				String snapshotRepositoryURL = project.properties["sonatype.snapshot.url"] ?: "https://repository-cdn.liferay.com/nexus/content/repositories/liferay-public-snapshots"
-
-				if (project.path.startsWith(":dxp:") && !project.path.endsWith("-api") && !project.path.endsWith("-spi") && !project.path.contains("-demo-") && !project.path.contains("-demo-data-") && (snapshotRepositoryURL.equals("https://repository-cdn.liferay.com/nexus/content/repositories/liferay-public-snapshots") || snapshotRepositoryURL.equals("https://repository-cdn.liferay.com/nexus/content/repositories/liferay-public-snapshots"))) {
-					snapshotRepositoryURL = "https://repository-cdn.liferay.com/nexus/content/repositories/liferay-private-snapshots"
-				}
-
-				url = snapshotRepositoryURL
+			if (project.path.startsWith(":dxp:") && !project.path.endsWith("-api") && !project.path.endsWith("-spi") && !project.path.contains("-demo-") && !project.path.contains("-demo-data-") && (repositoryURL.equals("https://repository-cdn.liferay.com/nexus/content/repositories/liferay-public-releases") || repositoryURL.equals("https://repository-cdn.liferay.com/nexus/content/repositories/liferay-public-releases"))) {
+				repositoryURL = "https://repository-cdn.liferay.com/nexus/content/repositories/liferay-private-releases"
 			}
+
+			url = repositoryURL
 		}
 	}
 }
