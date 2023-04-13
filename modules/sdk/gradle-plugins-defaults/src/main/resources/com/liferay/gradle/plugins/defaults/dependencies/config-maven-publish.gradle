@@ -16,9 +16,7 @@ publishing {
 	publications {
 		maven(MavenPublication) {
 			pom {
-				if ((it.name == "publish") || (it.name == "publishToMavenLocal")) {
-					description = project.description
-				}
+				description = project.description
 
 				developers {
 					developer {

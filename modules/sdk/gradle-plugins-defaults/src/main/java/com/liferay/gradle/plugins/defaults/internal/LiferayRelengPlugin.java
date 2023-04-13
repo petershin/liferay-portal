@@ -116,7 +116,7 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 		ConfigurationContainer configurationContainer =
 			project.getConfigurations();
 
-		Configuration archivesConfiguration = configurationContainer.getByName(
+		Configuration archivesConfiguration = configurationContainer.maybeCreate(
 			Dependency.ARCHIVES_CONFIGURATION);
 
 		// Tasks
