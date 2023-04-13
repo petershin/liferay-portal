@@ -62,7 +62,7 @@ liferayOSGi {
 }
 
 test {
-	dependsOn install
+	dependsOn publishToMavenLocal
 	dependsOn writeParentThemeDependencies
 	dependsOn writeTestThemeDependencies
 
