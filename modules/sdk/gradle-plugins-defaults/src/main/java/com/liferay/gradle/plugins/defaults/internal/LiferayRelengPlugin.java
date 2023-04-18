@@ -44,6 +44,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.UncheckedIOException;
 
+import java.util.Collections;
 import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.regex.Matcher;
@@ -700,6 +701,8 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 				@Override
 				public void execute(Upload uploadArchivesUpload) {
 					uploadArchivesUpload.dependsOn(recordArtifactTaskProvider);
+
+					uploadArchivesUpload.setActions(Collections.emptyList());
 
 					_configureTaskEnabledIfRelease(
 						recordArtifactTaskProvider.get());
