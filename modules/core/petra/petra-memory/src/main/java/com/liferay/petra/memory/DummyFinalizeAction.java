@@ -21,6 +21,8 @@ import java.lang.ref.Reference;
  */
 public class DummyFinalizeAction implements FinalizeAction {
 
+	public static final String TEST = "test";
+
 	@Override
 	public void doFinalize(Reference<?> reference) {
 	}
