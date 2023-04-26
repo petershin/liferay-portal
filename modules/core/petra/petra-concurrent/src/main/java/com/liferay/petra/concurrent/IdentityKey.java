@@ -21,6 +21,8 @@ import java.io.Serializable;
  */
 public class IdentityKey<K> implements Serializable {
 
+	public static final String TEST = "test";
+
 	public IdentityKey(K key) {
 		_key = key;
 	}
