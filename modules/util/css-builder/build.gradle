@@ -73,7 +73,7 @@ liferayOSGi {
 
 test {
 	dependsOn copyPortalCommonCSSJar
-	dependsOn install
+	dependsOn publishToMavenLocal
 	dependsOn unzipPortalCommonCSS
 
 	doFirst {
