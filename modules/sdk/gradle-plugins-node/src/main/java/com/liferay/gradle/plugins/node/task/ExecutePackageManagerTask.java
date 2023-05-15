@@ -47,8 +47,8 @@ public class ExecutePackageManagerTask extends ExecuteNodeScriptTask {
 			new Callable<String>() {
 
 				@Override
-				public String call() throws Exception {
-					if (getNodeDir() == null) {
+				public String call() {
+					if (isUseNpm()) {
 						return "npm";
 					}
 

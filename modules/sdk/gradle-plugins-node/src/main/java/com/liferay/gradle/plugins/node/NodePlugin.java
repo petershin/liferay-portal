@@ -128,7 +128,8 @@ public class NodePlugin implements Plugin<Project> {
 
 		_configureTasksExecuteNode(
 			project, nodeExtension, GradleUtil.isRunningInsideDaemon());
-		_configureTasksExecutePackageManager(project, nodeExtension);
+		_configureTasksExecutePackageManager(
+			project, downloadNodeTask, nodeExtension);
 
 		_configureTasksPublishNodeModule(project);
 
@@ -570,6 +571,7 @@ public class NodePlugin implements Plugin<Project> {
 
 	private void _configureTaskExecutePackageManager(
 		final ExecutePackageManagerTask executePackageManagerTask,
+		final DownloadNodeTask downloadNodeTask,
 		final NodeExtension nodeExtension) {
 
 		final Callable<Boolean> useGlobalConcurrentCacheCallable =
@@ -603,7 +605,7 @@ public class NodePlugin implements Plugin<Project> {
 						return null;
 					}
 
-					File nodeDir = executePackageManagerTask.getNodeDir();
+					File nodeDir = downloadNodeTask.getNodeDir();
 
 					if (nodeDir == null) {
 						return null;
@@ -903,7 +905,8 @@ public class NodePlugin implements Plugin<Project> {
 	}
 
 	private void _configureTasksExecutePackageManager(
-		Project project, final NodeExtension nodeExtension) {
+		Project project, final DownloadNodeTask downloadNodeTask,
+		final NodeExtension nodeExtension) {
 
 		TaskContainer taskContainer = project.getTasks();
 
@@ -916,7 +919,8 @@ public class NodePlugin implements Plugin<Project> {
 					ExecutePackageManagerTask executePackageManagerTask) {
 
 					_configureTaskExecutePackageManager(
-						executePackageManagerTask, nodeExtension);
+						executePackageManagerTask, downloadNodeTask,
+						nodeExtension);
 				}
 
 			});
