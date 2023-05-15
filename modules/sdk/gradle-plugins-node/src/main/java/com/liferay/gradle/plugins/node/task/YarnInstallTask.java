@@ -22,6 +22,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.gradle.api.tasks.Input;
+
 /**
  * @author Peter Shin
  * @author David Truong
@@ -39,6 +41,7 @@ public class YarnInstallTask extends ExecutePackageManagerTask {
 		super.executeNode();
 	}
 
+	@Input
 	public boolean isFrozenLockFile() {
 		return GradleUtil.toBoolean(_frozenLockFile);
 	}
