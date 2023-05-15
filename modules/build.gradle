@@ -44,6 +44,10 @@ task portalYarnInstall
 
 Set<File> bndPrintJarFiles = null
 
+Set<Project> implicitDependencyProjects = allprojects.findAll {
+	it.file(".lfrbuild-app-server-lib").exists() || it.file(".lfrbuild-portal-pre").exists()
+}
+
 if (Boolean.getBoolean("build.bnd.print.enabled")) {
 	configurations {
 		bnd
@@ -417,6 +421,48 @@ gradle.beforeProject {
 			}
 		}
 
+		pluginManager.withPlugin("com.liferay.jasper.jspc") {
+			compileJSP {
+				mustRunAfter {
+					configurations.compileOnly.allDependencies.withType(ProjectDependency).collect {
+						"${it.dependencyProject.path}:deploy"
+						"${it.dependencyProject.path}:deployDependencies"
+					}
+
+					if (!implicitDependencyProjects.contains(project)) {
+						implicitDependencyProjects.forEach {
+							"${it.path}:deploy"
+							"${it.path}:deployDependencies"
+
+							if (it.name.equals("portal-osgi-web-jasper-plugins-taglib")) {
+								"${it.path}:deployAppServerPortalFile"
+							}
+						}
+					}
+				}
+			}
+
+			generateJSPJava {
+				mustRunAfter {
+					configurations.compileOnly.allDependencies.withType(ProjectDependency).collect {
+						"${it.dependencyProject.path}:deploy"
+						"${it.dependencyProject.path}:deployDependencies"
+					}
+
+					if (!implicitDependencyProjects.contains(project)) {
+						implicitDependencyProjects.forEach {
+							"${it.path}:deploy"
+							"${it.path}:deployDependencies"
+
+							if (it.name.equals("portal-osgi-web-jasper-plugins-taglib")) {
+								"${it.path}:deployAppServerPortalFile"
+							}
+						}
+					}
+				}
+			}
+		}
+
 		pluginManager.withPlugin("com.liferay.osgi.plugin") {
 			configurations {
 				xmltask
@@ -544,8 +590,22 @@ gradle.beforeProject {
 
 		pluginManager.withPlugin("java") {
 			compileJava {
+				mustRunAfter {
+					configurations.compileOnly.allDependencies.withType(ProjectDependency).collect {
+						"${it.dependencyProject.path}:processResources"
+					}
+				}
+
 				outputs.cacheIf {
 					false
+				}
+			}
+
+			compileTestJava {
+				mustRunAfter {
+					configurations.compileOnly.allDependencies.withType(ProjectDependency).collect {
+						"${it.dependencyProject.path}:processResources"
+					}
 				}
 			}
 		}
