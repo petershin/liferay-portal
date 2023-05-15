@@ -13,7 +13,6 @@ buildscript {
 }
 
 apply plugin: "com.liferay.patcher"
-apply plugin: "nebula.optional-base"
 
 task runGradleTest(type: PatchTask)
 
