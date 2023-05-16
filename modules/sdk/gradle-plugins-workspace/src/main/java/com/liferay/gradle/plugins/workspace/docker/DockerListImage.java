@@ -80,13 +80,10 @@ public class DockerListImage extends AbstractDockerRemoteApiTask {
 		}
 	}
 
-	@Input
 	private Property<String> _imageIdProperty;
 
-	@Input
 	private ListProperty<Image> _imagesProperty;
 
-	@Input
 	private Property<Boolean> _withDanglingFilter;
 
 }
