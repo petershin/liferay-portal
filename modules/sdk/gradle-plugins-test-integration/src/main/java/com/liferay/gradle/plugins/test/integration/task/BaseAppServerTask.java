@@ -32,8 +32,9 @@ import java.util.concurrent.Callable;
 
 import org.gradle.api.DefaultTask;
 import org.gradle.api.GradleException;
-import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.Input;
+import org.gradle.api.tasks.InputDirectory;
+import org.gradle.api.tasks.Internal;
 import org.gradle.api.tasks.PathSensitive;
 import org.gradle.api.tasks.PathSensitivity;
 
@@ -43,7 +44,6 @@ import org.zeroturnaround.exec.stream.slf4j.Slf4jStream;
 /**
  * @author Andrea Di Giorgi
  */
-@CacheableTask
 public abstract class BaseAppServerTask extends DefaultTask {
 
 	public BaseAppServerTask environment(Map<String, String> environment) {
@@ -66,7 +66,7 @@ public abstract class BaseAppServerTask extends DefaultTask {
 		executableArgs(Arrays.asList(executableArgs));
 	}
 
-	@Input
+	@InputDirectory
 	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getBinDir() {
 		return GradleUtil.toFile(getProject(), _binDir);
@@ -120,6 +120,7 @@ public abstract class BaseAppServerTask extends DefaultTask {
 		return GradleUtil.toInteger(_portNumber);
 	}
 
+	@Input
 	public boolean isReachable() {
 		try {
 			URL url = new URL(
@@ -186,6 +187,7 @@ public abstract class BaseAppServerTask extends DefaultTask {
 		_portNumber = portNumber;
 	}
 
+	@Internal
 	protected ProcessExecutor getProcessExecutor() {
 		List<String> commands = new ArrayList<>();
 
