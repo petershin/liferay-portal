@@ -47,7 +47,8 @@ import org.gradle.api.tasks.OutputDirectory;
 public class InitBundleTask extends JavaExec {
 
 	public InitBundleTask() {
-		setMain("com.liferay.portal.tools.bundle.support.BundleSupport");
+		getMainClass().set(
+			"com.liferay.portal.tools.bundle.support.BundleSupport");
 	}
 
 	@Override
