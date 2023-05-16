@@ -46,8 +46,10 @@ import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.publish.plugins.PublishingPlugin;
-import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.Input;
+import org.gradle.api.tasks.InputFile;
+import org.gradle.api.tasks.InputFiles;
+import org.gradle.api.tasks.Internal;
 import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.PathSensitive;
 import org.gradle.api.tasks.PathSensitivity;
@@ -58,7 +60,6 @@ import org.gradle.util.VersionNumber;
 /**
  * @author Andrea Di Giorgi
  */
-@CacheableTask
 public class WriteArtifactPublishCommandsTask extends DefaultTask {
 
 	public static final String IGNORED_MESSAGE_PATTERN = "artifact:ignore";
@@ -85,7 +86,7 @@ public class WriteArtifactPublishCommandsTask extends DefaultTask {
 		_gradleDir = GradleUtil.getRootDir(project.getRootProject(), "gradlew");
 	}
 
-	@Input
+	@InputFile
 	@Optional
 	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getArtifactPropertiesFile() {
@@ -98,8 +99,7 @@ public class WriteArtifactPublishCommandsTask extends DefaultTask {
 		return GradleUtil.toString(_firstPublishExcludedTaskName);
 	}
 
-	@Input
-	@PathSensitive(PathSensitivity.RELATIVE)
+	@Internal
 	public File getGradleDir() {
 		return GradleUtil.toFile(getProject(), _gradleDir);
 	}
@@ -109,8 +109,7 @@ public class WriteArtifactPublishCommandsTask extends DefaultTask {
 		return GradleUtil.toString(_lowestPublishedVersion);
 	}
 
-	@Input
-	@PathSensitive(PathSensitivity.RELATIVE)
+	@Internal
 	public File getOutputDir() {
 		return GradleUtil.toFile(getProject(), _outputDir);
 	}
@@ -132,7 +131,7 @@ public class WriteArtifactPublishCommandsTask extends DefaultTask {
 		return prepNextCommitFileCollections;
 	}
 
-	@Input
+	@InputFiles
 	@PathSensitive(PathSensitivity.RELATIVE)
 	public FileCollection getPrepNextFiles() {
 		Project project = getProject();
@@ -140,6 +139,7 @@ public class WriteArtifactPublishCommandsTask extends DefaultTask {
 		return project.files(_prepNextFiles);
 	}
 
+	@Input
 	public boolean isFirstOnly() {
 		return _firstOnly;
 	}
