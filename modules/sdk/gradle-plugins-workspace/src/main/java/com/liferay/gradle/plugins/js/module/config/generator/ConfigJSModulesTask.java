@@ -14,15 +14,7 @@
 
 package com.liferay.gradle.plugins.js.module.config.generator;
 
-import com.liferay.gradle.plugins.node.task.ExecuteNodeScriptTask;
-import com.liferay.gradle.util.FileUtil;
-import com.liferay.gradle.util.GradleUtil;
-import com.liferay.gradle.util.Validator;
-
-import groovy.lang.Closure;
-
 import java.io.File;
-
 import java.util.List;
 import java.util.Set;
 
@@ -38,11 +30,19 @@ import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputFile;
 import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.Optional;
+import org.gradle.api.tasks.OutputFile;
 import org.gradle.api.tasks.PathSensitive;
 import org.gradle.api.tasks.PathSensitivity;
 import org.gradle.api.tasks.SkipWhenEmpty;
 import org.gradle.api.tasks.util.PatternFilterable;
 import org.gradle.api.tasks.util.PatternSet;
+
+import com.liferay.gradle.plugins.node.task.ExecuteNodeScriptTask;
+import com.liferay.gradle.util.FileUtil;
+import com.liferay.gradle.util.GradleUtil;
+import com.liferay.gradle.util.Validator;
+
+import groovy.lang.Closure;
 
 /**
  * @author     Andrea Di Giorgi
@@ -132,11 +132,13 @@ public class ConfigJSModulesTask
 		return GradleUtil.toString(_customDefine);
 	}
 
+	@Input
 	@Override
 	public Set<String> getExcludes() {
 		return _patternFilterable.getExcludes();
 	}
 
+	@Input
 	@Override
 	public Set<String> getIncludes() {
 		return _patternFilterable.getIncludes();
@@ -161,10 +163,12 @@ public class ConfigJSModulesTask
 		return GradleUtil.toString(_moduleFormat);
 	}
 
+	@OutputFile
 	public File getOutputDir() {
 		return new File(getTemporaryDir(), "files");
 	}
 
+	@OutputFile
 	public File getOutputFile() {
 		return GradleUtil.toFile(getProject(), _outputFile);
 	}

@@ -80,10 +80,6 @@ public class DockerListImage extends AbstractDockerRemoteApiTask {
 		}
 	}
 
-	public boolean withDanglingFilter() {
-		return _withDanglingFilter.get();
-	}
-
 	@Input
 	private Property<String> _imageIdProperty;
 
