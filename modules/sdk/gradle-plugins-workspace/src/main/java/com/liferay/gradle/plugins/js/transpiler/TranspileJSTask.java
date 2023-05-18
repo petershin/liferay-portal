@@ -14,7 +14,13 @@
 
 package com.liferay.gradle.plugins.js.transpiler;
 
+import com.liferay.gradle.plugins.node.task.ExecuteNodeScriptTask;
+import com.liferay.gradle.util.FileUtil;
+import com.liferay.gradle.util.GUtil;
+import com.liferay.gradle.util.GradleUtil;
+
 import java.io.File;
+
 import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -33,11 +39,6 @@ import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.OutputDirectory;
 import org.gradle.api.tasks.PathSensitive;
 import org.gradle.api.tasks.PathSensitivity;
-
-import com.liferay.gradle.plugins.node.task.ExecuteNodeScriptTask;
-import com.liferay.gradle.util.FileUtil;
-import com.liferay.gradle.util.GUtil;
-import com.liferay.gradle.util.GradleUtil;
 
 /**
  * @author     Andrea Di Giorgi
