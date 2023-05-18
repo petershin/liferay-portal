@@ -660,6 +660,10 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 								<gradle-execute dir="${project.dir}/modules" task=":portalYarnFormat">
 									<env key="LIFERAY_NPM_SCRIPTS_WORKING_BRANCH_NAME" value="${git.working.branch.name}" />
 								</gradle-execute>
+
+								<gradle-execute dir="${project.dir}/modules" task=":portalWorkspacesFormat">
+									<env key="LIFERAY_NPM_SCRIPTS_WORKING_BRANCH_NAME" value="${git.working.branch.name}" />
+								</gradle-execute>
 							</else>
 						</if>
 					</then>

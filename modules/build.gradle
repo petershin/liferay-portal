@@ -38,6 +38,15 @@ ext {
 	]
 }
 
+import com.liferay.gradle.plugins.node.task.ExecutePackageManagerTask
+
+task portalWorkspacesFormat(type: ExecutePackageManagerTask) {
+	args "@liferay/npm-scripts", "format", "--experimental-standalone"
+	command = "npx"
+	scriptFile = new File(rootDir.parentFile, "build/node/lib/node_modules/npm/bin/npx-cli.js")
+	workingDir = new File(rootDir.parentFile, "workspaces/liferay-sample-workspace/client-extensions")
+}
+
 task portalYarnCheckFormat
 task portalYarnFormat
 task portalYarnInstall
