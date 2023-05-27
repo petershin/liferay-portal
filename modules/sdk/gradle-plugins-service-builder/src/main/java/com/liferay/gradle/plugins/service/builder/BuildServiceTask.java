@@ -72,7 +72,7 @@ public class BuildServiceTask extends JavaExec {
 		super.exec();
 	}
 
-	@InputDirectory
+	@InputFile
 	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getApiDir() {
 		File file = GradleUtil.toFile(getProject(), _apiDir);
@@ -267,9 +267,8 @@ public class BuildServiceTask extends JavaExec {
 		return file;
 	}
 
-	@InputDirectory
+	@InputFile
 	@Optional
-	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getUADDir() {
 		if (_uadDir == null) {
 			return null;
@@ -284,9 +283,8 @@ public class BuildServiceTask extends JavaExec {
 		return file;
 	}
 
-	@InputDirectory
+	@InputFile
 	@Optional
-	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getUADTestIntegrationDir() {
 		if (_uadTestIntegrationDir == null) {
 			return null;
