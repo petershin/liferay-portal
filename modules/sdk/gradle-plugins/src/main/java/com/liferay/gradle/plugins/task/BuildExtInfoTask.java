@@ -60,6 +60,7 @@ public class BuildExtInfoTask extends JavaExec {
 	}
 
 	@InputDirectory
+	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getOutputDir() {
 		return GradleUtil.toFile(getProject(), _outputDir);
 	}

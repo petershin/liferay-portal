@@ -25,6 +25,7 @@ import org.gradle.api.DefaultTask;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputFile;
+import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.TaskAction;
 
@@ -64,7 +65,7 @@ public class CreateTokenTask extends DefaultTask {
 		return GradleUtil.toFile(getProject(), _passwordFile);
 	}
 
-	@InputFile
+	@InputFiles
 	public File getTokenFile() {
 		return GradleUtil.toFile(getProject(), _tokenFile);
 	}

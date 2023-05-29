@@ -72,8 +72,7 @@ public class InitBundleTask extends JavaExec {
 		return GradleUtil.toString(_configEnvironment);
 	}
 
-	@Input
-	@Optional
+	@InputFiles
 	public File getConfigsDir() {
 		return GradleUtil.toFile(getProject(), _configsDir);
 	}
