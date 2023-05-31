@@ -64,6 +64,8 @@ copyDistBundleZipPluginsSdk {
 
 	includeEmptyDirs = false
 	into "src/gradleTest/distBundleZip/plugins-sdk"
+
+	finalizedBy gradleTestGenerator
 }
 
 copyHotFixZip {
@@ -78,6 +80,8 @@ copyHotFixZip {
 	}
 
 	into "src/gradleTest/startDockerContainerWithPatch/configs/common/patching"
+
+	finalizedBy gradleTestGenerator
 }
 
 copyGradleTestDependencies {
@@ -113,10 +117,14 @@ copyGradleTestProjects {
 	}
 
 	into "src/gradleTest/excludePatterns"
+
+	finalizedBy gradleTestGenerator
 }
 
 copyRepo {
-	from "src/gradleTest/repo"
+	dependsOn copyGradleTestDependencies
+
+	from gradleTestDependenciesDir
 	into new File(buildDir, "gradleTest/repo")
 }
 
@@ -154,7 +162,7 @@ dependencies {
 		exclude group: "biz.aQute.bnd", module: "biz.aQute.bnd"
 	}
 	api group: "com.liferay", name: "com.liferay.gradle.plugins.source.formatter", version: "5.2.22"
-	api group: "com.liferay", name: "com.liferay.gradle.plugins.target.platform", version: "3.0.10"
+	api group: "com.liferay", name: "com.liferay.gradle.plugins.target.platform", version: "3.0.11"
 	api(group: "com.liferay", name: "com.liferay.gradle.plugins.theme.builder", version: "2.0.24") {
 		exclude group: "biz.aQute.bnd", module: "biz.aQute.bnd"
 	}

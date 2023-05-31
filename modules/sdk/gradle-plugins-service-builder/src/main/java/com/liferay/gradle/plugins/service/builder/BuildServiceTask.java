@@ -267,7 +267,7 @@ public class BuildServiceTask extends JavaExec {
 		return file;
 	}
 
-	@InputDirectory
+	@InputFile
 	@Optional
 	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getUADDir() {
@@ -284,7 +284,7 @@ public class BuildServiceTask extends JavaExec {
 		return file;
 	}
 
-	@InputDirectory
+	@InputFile
 	@Optional
 	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getUADTestIntegrationDir() {

@@ -117,7 +117,7 @@ public abstract class BaseProjectConfigurator implements ProjectConfigurator {
 				"container.");
 		copy.setGroup(RootProjectConfigurator.DOCKER_GROUP);
 
-		copy.setDuplicatesStrategy(DuplicatesStrategy.EXCLUDE);
+		copy.setDuplicatesStrategy(DuplicatesStrategy.INCLUDE);
 
 		copy.from(sourcePath);
 
@@ -140,7 +140,7 @@ public abstract class BaseProjectConfigurator implements ProjectConfigurator {
 			project.getRootProject(),
 			RootProjectConfigurator.BUILD_DOCKER_IMAGE_TASK_NAME);
 
-		buildDockerImageTask.dependsOn(deployTask);
+		buildDockerImageTask.dependsOn(copy);
 
 		return copy;
 	}
