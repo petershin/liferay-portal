@@ -8,9 +8,7 @@ buildscript {
 	}
 
 	repositories {
-		maven {
-			url new File(rootProject.projectDir, "../../.m2-tmp")
-		}
+		mavenLocal()
 
 		maven {
 			url "https://repository-cdn.liferay.com/nexus/content/groups/public"

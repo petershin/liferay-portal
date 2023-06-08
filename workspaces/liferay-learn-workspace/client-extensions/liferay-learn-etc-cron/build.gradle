@@ -14,7 +14,7 @@ buildscript {
 
 apply plugin: "application"
 apply plugin: "com.liferay.source.formatter"
-apply plugin: "java-library"
+apply plugin: "java"
 
 dependencies {
 	compile group: "com.liferay", name: "com.liferay.data.engine.rest.client", version: "latest.release"
