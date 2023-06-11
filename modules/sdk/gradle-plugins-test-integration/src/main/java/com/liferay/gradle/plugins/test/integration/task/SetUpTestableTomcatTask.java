@@ -281,7 +281,7 @@ public class SetUpTestableTomcatTask
 				}
 
 				printWriter.println("\"");
-				printWriter.println("\n\tshift");
+				printWriter.println("\tshift");
 				printWriter.println("fi");
 			}
 		}
