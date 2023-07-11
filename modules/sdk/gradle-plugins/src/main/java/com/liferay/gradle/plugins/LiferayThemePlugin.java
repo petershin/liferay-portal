@@ -100,8 +100,9 @@ public class LiferayThemePlugin implements Plugin<Project> {
 		ConfigurationContainer configurationContainer =
 			project.getConfigurations();
 
-		Configuration archivesConfiguration = configurationContainer.maybeCreate(
-			Dependency.ARCHIVES_CONFIGURATION);
+		Configuration archivesConfiguration =
+			configurationContainer.maybeCreate(
+				Dependency.ARCHIVES_CONFIGURATION);
 		Configuration defaultConfiguration = configurationContainer.getByName(
 			Dependency.DEFAULT_CONFIGURATION);
 
