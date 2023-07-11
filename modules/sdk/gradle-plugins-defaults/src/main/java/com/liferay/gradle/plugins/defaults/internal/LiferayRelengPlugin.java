@@ -117,8 +117,9 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 		ConfigurationContainer configurationContainer =
 			project.getConfigurations();
 
-		Configuration archivesConfiguration = configurationContainer.maybeCreate(
-			Dependency.ARCHIVES_CONFIGURATION);
+		Configuration archivesConfiguration =
+			configurationContainer.maybeCreate(
+				Dependency.ARCHIVES_CONFIGURATION);
 
 		// Tasks
 
@@ -610,6 +611,24 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 			});
 	}
 
+	private void _configureTaskPublishProvider(
+		final TaskProvider<WritePropertiesTask> recordArtifactTaskProvider,
+		TaskProvider<Task> publishTaskProvider) {
+
+		publishTaskProvider.configure(
+			new Action<Task>() {
+
+				@Override
+				public void execute(Task publishTask) {
+					publishTask.dependsOn(recordArtifactTaskProvider);
+
+					_configureTaskEnabledIfRelease(
+						recordArtifactTaskProvider.get());
+				}
+
+			});
+	}
+
 	private void _configureTaskRecordArtifactProvider(
 		final Project project,
 		TaskProvider<WritePropertiesTask> recordArtifactTaskProvider,
@@ -687,24 +706,6 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 				public String call() throws Exception {
 					return LiferayRelengUtil.getArtifactRemoteURL(
 						project, publishArtifact, true);
-				}
-
-			});
-	}
-
-	private void _configureTaskPublishProvider(
-		final TaskProvider<WritePropertiesTask> recordArtifactTaskProvider,
-		TaskProvider<Task> publishTaskProvider) {
-
-		publishTaskProvider.configure(
-			new Action<Task>() {
-
-				@Override
-				public void execute(Task publishTask) {
-					publishTask.dependsOn(recordArtifactTaskProvider);
-
-					_configureTaskEnabledIfRelease(
-						recordArtifactTaskProvider.get());
 				}
 
 			});
