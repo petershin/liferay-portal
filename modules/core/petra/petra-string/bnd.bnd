@@ -2,3 +2,5 @@ Bundle-Name: Liferay Petra String
 Bundle-SymbolicName: com.liferay.petra.string
 Bundle-Version: 5.3.3
 Export-Package: com.liferay.petra.string
+-includeresource:\
+	@com.liferay.petra.lang-*.jar!/com/liferay/petra/lang/CentralizedThreadLocal.class
