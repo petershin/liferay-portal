@@ -73,8 +73,6 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 		_lcpJsonFile = _addTaskOutputFile("LCP.json");
 		_pluginPackagePropertiesFile = _addTaskOutputFile(
 			_PLUGIN_PACKAGE_PROPERTIES_PATH);
-		_siteInitializerJsonFile = _addTaskOutputFile(
-			_SITE_INITIALIZER_JSON_PATH);
 	}
 
 	public void addClientExtension(ClientExtension clientExtension) {
@@ -232,6 +230,11 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 
 	public void setLcpJsonFile(Object lcpJsonFile) {
 		_lcpJsonFile = lcpJsonFile;
+	}
+
+	public void setSiteInitializerJsonFile() {
+		_siteInitializerJsonFile = _addTaskOutputFile(
+			_SITE_INITIALIZER_JSON_PATH);
 	}
 
 	public void setType(String type) {
@@ -624,7 +627,7 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 	private final ObjectMapper _objectMapper = new ObjectMapper();
 	private final Object _pluginPackagePropertiesFile;
 	private final Project _project = getProject();
-	private final Object _siteInitializerJsonFile;
+	private Object _siteInitializerJsonFile;
 	private String _type = "frontend";
 
 }
