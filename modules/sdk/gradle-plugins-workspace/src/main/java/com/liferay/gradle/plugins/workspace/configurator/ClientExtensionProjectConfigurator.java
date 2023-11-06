@@ -277,8 +277,11 @@ public class ClientExtensionProjectConfigurator
 									zip.into("site-initializer");
 								});
 							createClientExtensionConfigTaskProvider.configure(
-								task -> task.dependsOn(
-									BUILD_SITE_INITIALIZER_ZIP_TASK_NAME));
+								task -> {
+									task.dependsOn(
+										BUILD_SITE_INITIALIZER_ZIP_TASK_NAME);
+									task.setSiteInitializerJsonFile();
+								});
 						}
 					}
 					catch (JsonProcessingException jsonProcessingException) {
