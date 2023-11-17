@@ -14,6 +14,8 @@ import com.liferay.headless.commerce.admin.catalog.dto.v1_0.LinkedProduct;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Product;
 import com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter.LinkedProductDTOConverterContext;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.LinkedProductResource;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
@@ -56,32 +58,58 @@ public class LinkedProductResourceImpl extends BaseLinkedProductResourceImpl {
 						getEntryCProductCPDefinitionGroupedEntries(
 							productId, pagination.getStartPosition(),
 							pagination.getEndPosition(), null),
-					cpDefinitionGroupedEntry ->
-						_linkedProductDTOConverter.toDTO(
-							new LinkedProductDTOConverterContext(
-								contextAcceptLanguage.isAcceptAllLanguages(),
-								null, _dtoConverterRegistry,
-								cpDefinitionGroupedEntry.
-									getCPDefinitionGroupedEntryId(),
-								contextAcceptLanguage.getPreferredLocale(),
-								GroupedCPTypeConstants.NAME, contextUriInfo,
-								contextUser))),
+					cpDefinitionGroupedEntry -> {
+						try {
+							return _linkedProductDTOConverter.toDTO(
+								new LinkedProductDTOConverterContext(
+									contextAcceptLanguage.
+										isAcceptAllLanguages(),
+									null, _dtoConverterRegistry,
+									cpDefinitionGroupedEntry.
+										getCPDefinitionGroupedEntryId(),
+									contextAcceptLanguage.getPreferredLocale(),
+									GroupedCPTypeConstants.NAME, contextUriInfo,
+									contextUser));
+						}
+						catch (Exception exception) {
+							if (_log.isWarnEnabled()) {
+								_log.warn(exception);
+							}
+
+							return null;
+						}
+					}),
 				transform(
 					_csDiagramEntryService.getCProductCSDiagramEntries(
 						productId, pagination.getStartPosition(),
 						pagination.getEndPosition(), null),
-					csDiagramEntry -> _linkedProductDTOConverter.toDTO(
-						new LinkedProductDTOConverterContext(
-							contextAcceptLanguage.isAcceptAllLanguages(), null,
-							_dtoConverterRegistry,
-							csDiagramEntry.getCSDiagramEntryId(),
-							contextAcceptLanguage.getPreferredLocale(),
-							CSDiagramCPTypeConstants.NAME, contextUriInfo,
-							contextUser)))),
+					csDiagramEntry -> {
+						try {
+							return _linkedProductDTOConverter.toDTO(
+								new LinkedProductDTOConverterContext(
+									contextAcceptLanguage.
+										isAcceptAllLanguages(),
+									null, _dtoConverterRegistry,
+									csDiagramEntry.getCSDiagramEntryId(),
+									contextAcceptLanguage.getPreferredLocale(),
+									CSDiagramCPTypeConstants.NAME,
+									contextUriInfo, contextUser));
+						}
+						catch (Exception exception) {
+							if (_log.isWarnEnabled()) {
+								_log.warn(exception);
+							}
+
+							return null;
+						}
+					})),
 			pagination,
 			entryCProductCPDefinitionGroupedEntriesCount +
 				cProductCSDiagramEntriesCount);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		LinkedProductResourceImpl.class);
 
 	@Reference
 	private CPDefinitionGroupedEntryService _cpDefinitionGroupedEntryService;
