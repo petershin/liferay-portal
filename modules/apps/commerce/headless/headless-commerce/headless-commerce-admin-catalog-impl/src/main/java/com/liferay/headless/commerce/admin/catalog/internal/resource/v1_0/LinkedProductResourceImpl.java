@@ -53,56 +53,36 @@ public class LinkedProductResourceImpl extends BaseLinkedProductResourceImpl {
 
 		return Page.of(
 			ListUtil.concat(
-				transform(
+				unsafeTransform(
 					_cpDefinitionGroupedEntryService.
 						getEntryCProductCPDefinitionGroupedEntries(
 							productId, pagination.getStartPosition(),
 							pagination.getEndPosition(), null),
-					cpDefinitionGroupedEntry -> {
-						try {
-							return _linkedProductDTOConverter.toDTO(
-								new LinkedProductDTOConverterContext(
-									contextAcceptLanguage.
-										isAcceptAllLanguages(),
-									null, _dtoConverterRegistry,
-									cpDefinitionGroupedEntry.
-										getCPDefinitionGroupedEntryId(),
-									contextAcceptLanguage.getPreferredLocale(),
-									GroupedCPTypeConstants.NAME, contextUriInfo,
-									contextUser));
-						}
-						catch (Exception exception) {
-							if (_log.isWarnEnabled()) {
-								_log.warn(exception);
-							}
-
-							return null;
-						}
-					}),
-				transform(
+					cpDefinitionGroupedEntry -> _linkedProductDTOConverter.toDTO(
+						new LinkedProductDTOConverterContext(
+							contextAcceptLanguage.
+								isAcceptAllLanguages(),
+							null, _dtoConverterRegistry,
+							cpDefinitionGroupedEntry.
+								getCPDefinitionGroupedEntryId(),
+							contextAcceptLanguage.getPreferredLocale(),
+							GroupedCPTypeConstants.NAME, contextUriInfo,
+							contextUser))
+					),
+				unsafeTransform(
 					_csDiagramEntryService.getCProductCSDiagramEntries(
 						productId, pagination.getStartPosition(),
 						pagination.getEndPosition(), null),
-					csDiagramEntry -> {
-						try {
-							return _linkedProductDTOConverter.toDTO(
-								new LinkedProductDTOConverterContext(
-									contextAcceptLanguage.
-										isAcceptAllLanguages(),
-									null, _dtoConverterRegistry,
-									csDiagramEntry.getCSDiagramEntryId(),
-									contextAcceptLanguage.getPreferredLocale(),
-									CSDiagramCPTypeConstants.NAME,
-									contextUriInfo, contextUser));
-						}
-						catch (Exception exception) {
-							if (_log.isWarnEnabled()) {
-								_log.warn(exception);
-							}
-
-							return null;
-						}
-					})),
+					csDiagramEntry -> _linkedProductDTOConverter.toDTO(
+						new LinkedProductDTOConverterContext(
+							contextAcceptLanguage.
+								isAcceptAllLanguages(),
+							null, _dtoConverterRegistry,
+							csDiagramEntry.getCSDiagramEntryId(),
+							contextAcceptLanguage.getPreferredLocale(),
+							CSDiagramCPTypeConstants.NAME,
+							contextUriInfo, contextUser))
+				)),
 			pagination,
 			entryCProductCPDefinitionGroupedEntriesCount +
 				cProductCSDiagramEntriesCount);
