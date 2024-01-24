@@ -10,7 +10,7 @@ task copyGradleTestDependencies(type: Copy)
 task downloadBundle(type: Download)
 
 String bundleUrl = "https://releases-cdn.liferay.com/portal/7.1.2-ga3/liferay-ce-portal-tomcat-7.1.2-ga3-20190107144105508.tar.gz"
-String gradleVersion = "7.3.3"
+String gradleVersion = "8.5"
 
 if (Boolean.getBoolean("gradle.test.enabled")) {
 	apply plugin: "org.ysb33r.gradletest"

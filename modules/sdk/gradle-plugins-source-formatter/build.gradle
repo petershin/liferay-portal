@@ -5,7 +5,7 @@ apply plugin: "com.gradle.plugin-publish"
 task copyGradleTestDependencies(type: Copy)
 task updateReadme(type: ReplaceRegexTask)
 
-String gradleVersion = "7.3.3"
+String gradleVersion = "8.5"
 
 if (Boolean.getBoolean("gradle.test.enabled")) {
 	apply plugin: "org.ysb33r.gradletest"
