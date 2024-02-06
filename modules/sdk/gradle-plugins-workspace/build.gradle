@@ -5,7 +5,6 @@ import com.liferay.gradle.util.copy.StripPathSegmentsAction
 import de.undercouch.gradle.tasks.download.Download
 
 apply plugin: "de.undercouch.download"
-apply plugin: "org.ysb33r.gradletest"
 
 task copyBundle(type: Copy)
 task copyDistBundleZipPluginsSdk(type: Copy)
@@ -29,6 +28,37 @@ String pluginsSdkUrl = "https://repository-cdn.liferay.com/nexus/service/local/r
 if (System.properties["http.proxyHost"] == "squid.lax.liferay.com") {
 	bundleUrl = "http://mirrors.liferay.com/releases.liferay.com/portal/7.1.2-ga3/liferay-ce-portal-tomcat-7.1.2-ga3-20190107144105508.tar.gz"
 	pluginsSdkUrl = "https://repository-cdn.liferay.com/nexus/service/local/repositories/liferay-public-releases/content/com/liferay/portal/com.liferay.portal.plugins.sdk/1.0.22/com.liferay.portal.plugins.sdk-1.0.22-withdependencies.zip"
+}
+
+if (Boolean.getBoolean("gradle.test.enabled")) {
+	apply plugin: "org.ysb33r.gradletest"
+
+	gradleTest {
+		dependsOn copyGradleTestDependencies
+		dependsOn copyGradleTestProjects
+		dependsOn copyRepo
+		dependsOn copyWorkspacesSamples
+		dependsOn jar
+
+		if (!project.hasProperty("testLightExecution")) {
+			dependsOn copyBundle
+			dependsOn copyDistBundleZipPluginsSdk
+			dependsOn copyHotFixZip
+		}
+
+		deprecationMessagesAreFailures = false
+
+		exclude "**/*_base*"
+
+		gradleArguments "--project-prop", "app.server.parent.dir=" + FileUtil.getAbsolutePath(copyBundle.destinationDir)
+		gradleArguments "--project-prop", "pluginClasspathDir=${uri(gradleTestDependenciesDir)}"
+
+		versions gradleVersion
+
+		beforeTest {
+			println "  ${it.name}"
+		}
+	}
 }
 
 tasks.eclipse {
@@ -218,33 +248,6 @@ eclipse.classpath.file {
 		classpath.entries.removeAll {
 			entry -> (entry.kind == "src") && (entry.path == "build/gradleTest/src/groovy")
 		}
-	}
-}
-
-gradleTest {
-	dependsOn copyGradleTestDependencies
-	dependsOn copyGradleTestProjects
-	dependsOn copyRepo
-	dependsOn copyWorkspacesSamples
-	dependsOn jar
-
-	if (!project.hasProperty("testLightExecution")) {
-		dependsOn copyBundle
-		dependsOn copyDistBundleZipPluginsSdk
-		dependsOn copyHotFixZip
-	}
-
-	deprecationMessagesAreFailures = false
-
-	exclude "**/*_base*"
-
-	gradleArguments "--project-prop", "app.server.parent.dir=" + FileUtil.getAbsolutePath(copyBundle.destinationDir)
-	gradleArguments "--project-prop", "pluginClasspathDir=${uri(gradleTestDependenciesDir)}"
-
-	versions gradleVersion
-
-	beforeTest {
-		println "  ${it.name}"
 	}
 }
 

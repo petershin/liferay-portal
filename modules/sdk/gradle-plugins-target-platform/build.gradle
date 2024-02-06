@@ -1,9 +1,21 @@
-apply plugin: "org.ysb33r.gradletest"
-
 task copyGradleTestDependencies(type: Copy)
 task copyRepo(type: Copy)
 
 String gradleVersion = "7.3.3"
+
+if (Boolean.getBoolean("gradle.test.enabled")) {
+	apply plugin: "org.ysb33r.gradletest"
+
+	gradleTest {
+		dependsOn copyGradleTestDependencies
+		dependsOn copyRepo
+		dependsOn jar
+
+		deprecationMessagesAreFailures = false
+
+		versions gradleVersion
+	}
+}
 
 tasks.eclipse {
 	ext.gradleVersion = gradleVersion
@@ -30,14 +42,4 @@ dependencies {
 	api group: "org.json", name: "json", version: "20231013"
 
 	compileOnly fileTree(builtBy: [rootProject.tasks.getByName("extractGradleApi" + gradleVersion.replace(".", ""))], dir: new File(rootProject.buildDir, "gradle-${gradleVersion}"), exclude: "lib/plugins/bndlib-*.jar")
-}
-
-gradleTest {
-	dependsOn copyGradleTestDependencies
-	dependsOn copyRepo
-	dependsOn jar
-
-	deprecationMessagesAreFailures = false
-
-	versions gradleVersion
 }
