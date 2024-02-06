@@ -38,3 +38,7 @@ dependencies {
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-string")
 }
+
+generateJSPJava {
+	mustRunAfter copyPackageJson
+}
