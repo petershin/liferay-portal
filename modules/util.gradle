@@ -169,11 +169,11 @@ wrapperPortal {
 		ant.replace(
 			failOnNoReplacements: true,
 			file: gradlewFile,
-			token: '# Use the maximum available, or set MAX_FD != -1 to use that value.',
+			token: '# Collect all arguments for the java command:',
 			value: '''\
 DEFAULT_JVM_OPTS="$DEFAULT_JVM_OPTS \\\"-Dgradle.user.home=$APP_HOME/.gradle\\\""
 
-# Use the maximum available, or set MAX_FD != -1 to use that value.'''
+# Collect all arguments for the java command:'''
 		)
 
 		ant.replace(
@@ -228,11 +228,11 @@ wrapperSubrepo {
 		ant.replace(
 			failOnNoReplacements: true,
 			file: gradlewFile,
-			token: '# Use the maximum available, or set MAX_FD != -1 to use that value.',
+			token: '# Collect all arguments for the java command:',
 			value: '''\
 DEFAULT_JVM_OPTS="$DEFAULT_JVM_OPTS \\\"-Dgradle.user.home=$APP_HOME/.gradle\\\""
 
-# Use the maximum available, or set MAX_FD != -1 to use that value.'''
+# Collect all arguments for the java command:'''
 		)
 
 		File gradlewBatFile = new File(wrapperDir, "gradlew.bat")
