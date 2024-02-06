@@ -107,11 +107,17 @@ public class JspCPlugin implements Plugin<Project> {
 
 		dependencyHandler.add(CONFIGURATION_NAME, configurableFileCollection);
 
+		Configuration configuration = GradleUtil.getConfiguration(
+			project, CONFIGURATION_NAME);
+
 		SourceSet sourceSet = GradleUtil.getSourceSet(
 			project, SourceSet.MAIN_SOURCE_SET_NAME);
 
-		dependencyHandler.add(
-			CONFIGURATION_NAME, sourceSet.getCompileClasspath());
+		Configuration compileClasspathConfiguration =
+			GradleUtil.getConfiguration(
+				project, sourceSet.getCompileClasspathConfigurationName());
+
+		configuration.extendsFrom(compileClasspathConfiguration);
 	}
 
 	private JavaCompile _addTaskCompileJSP(
