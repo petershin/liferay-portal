@@ -60,7 +60,6 @@ public abstract class BasePortalToolsTask extends JavaExec {
 		return GradleUtil.getConfiguration(project, getConfigurationName());
 	}
 
-	@Override
 	public abstract String getMain();
 
 	@Override

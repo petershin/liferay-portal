@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.gradle.api.artifacts.Configuration;
+import org.gradle.api.provider.Property;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.Internal;
 
@@ -129,6 +130,7 @@ public class DirectDeployTask extends BasePortalToolsTask {
 		return jvmArgs;
 	}
 
+	@Input
 	@Override
 	public String getMain() {
 		String webAppType = getWebAppType();
@@ -137,8 +139,13 @@ public class DirectDeployTask extends BasePortalToolsTask {
 			webAppType = "layout";
 		}
 
-		return "com.liferay.portal.tools.deploy." +
-			StringUtil.capitalize(webAppType) + "Deployer";
+		Property<String> property = getMainClass();
+
+		property.set(
+			"com.liferay.portal.tools.deploy." +
+				StringUtil.capitalize(webAppType) + "Deployer");
+
+		return property.get();
 	}
 
 	@Internal
