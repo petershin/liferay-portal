@@ -495,8 +495,8 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 
 								@Override
 								public File call() throws Exception {
-									return javaSourceDirectorySet.
-										getOutputDir();
+									return FileUtil.getJavaClassesDir(
+										mainSourceSet);
 								}
 
 							}));
