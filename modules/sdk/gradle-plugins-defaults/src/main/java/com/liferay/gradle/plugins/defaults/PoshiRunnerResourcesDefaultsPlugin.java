@@ -23,6 +23,7 @@ import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.PublishArtifactSet;
 import org.gradle.api.internal.artifacts.publish.ArchivePublishArtifact;
 import org.gradle.api.invocation.Gradle;
+import org.gradle.api.provider.Property;
 import org.gradle.api.publish.PublicationContainer;
 import org.gradle.api.publish.PublishingExtension;
 import org.gradle.api.publish.maven.MavenPublication;
@@ -180,10 +181,15 @@ public class PoshiRunnerResourcesDefaultsPlugin implements Plugin<Project> {
 
 								mavenPublication.artifact(abstractArchiveTask);
 
+								Property<String> archiveAppendixProperty =
+									abstractArchiveTask.getArchiveAppendix();
+								Property<String> archiveBaseNameProperty =
+									abstractArchiveTask.getArchiveBaseName();
+
 								String appendix =
-									abstractArchiveTask.getAppendix();
+									archiveAppendixProperty.get();
 								String artifactId =
-									abstractArchiveTask.getBaseName();
+									archiveBaseNameProperty.get();
 
 								if (Validator.isNotNull(appendix)) {
 									artifactId += '-' + appendix;
@@ -191,8 +197,11 @@ public class PoshiRunnerResourcesDefaultsPlugin implements Plugin<Project> {
 
 								mavenPublication.setArtifactId(artifactId);
 								mavenPublication.setGroupId(_GROUP_ID);
-								mavenPublication.setVersion(
-									abstractArchiveTask.getVersion());
+
+								Property<String> property =
+									abstractArchiveTask.getArchiveVersion();
+
+								mavenPublication.setVersion(property.get());
 							}
 
 						});

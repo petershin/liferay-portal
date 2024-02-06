@@ -35,10 +35,12 @@ import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.DependencySet;
+import org.gradle.api.file.DirectoryProperty;
 import org.gradle.api.file.FileTree;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
+import org.gradle.api.provider.Property;
 import org.gradle.api.publish.PublicationContainer;
 import org.gradle.api.publish.PublishingExtension;
 import org.gradle.api.publish.maven.MavenPublication;
@@ -345,13 +347,19 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 		Zip zip = GradleUtil.addTask(project, taskName, Zip.class);
 
 		zip.from(dir);
-		zip.setArchiveName(dir.getName() + "." + extension);
-		zip.setDestinationDir(destinationDir);
 
 		zip.setDescription(
 			"Assembles " + project.relativePath(zip.getArchivePath()) +
 				" with the contents of the " + project.relativePath(dir) +
 					" directory.");
+
+		Property<String> property = zip.getArchiveFileName();
+
+		property.set(dir.getName() + "." + extension);
+
+		DirectoryProperty directoryProperty = zip.getDestinationDirectory();
+
+		directoryProperty.set(destinationDir);
 
 		return zip;
 	}

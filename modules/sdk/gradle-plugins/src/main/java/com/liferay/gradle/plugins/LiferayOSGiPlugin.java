@@ -82,9 +82,11 @@ import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.file.CopySpec;
+import org.gradle.api.file.DirectoryProperty;
 import org.gradle.api.file.DuplicatesStrategy;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileCopyDetails;
+import org.gradle.api.file.RegularFile;
 import org.gradle.api.file.RelativePath;
 import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.logging.Logger;
@@ -99,6 +101,8 @@ import org.gradle.api.plugins.JavaLibraryPlugin;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.JavaPluginConvention;
 import org.gradle.api.plugins.PluginContainer;
+import org.gradle.api.provider.Property;
+import org.gradle.api.provider.Provider;
 import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.Delete;
@@ -445,7 +449,10 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 		SourceDirectorySet javaSourceDirectorySet = javaMainSourceSet.getJava();
 
-		javaSourceDirectorySet.setOutputDir(javaClassesDir);
+		DirectoryProperty directoryProperty =
+			javaSourceDirectorySet.getDestinationDirectory();
+
+		directoryProperty.set(javaClassesDir);
 
 		SourceSetOutput sourceSetOutput = javaMainSourceSet.getOutput();
 
@@ -679,9 +686,11 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 							@Override
 							public void execute(Task task) {
+								Property<String> property =
+									jar.getArchiveFileName();
+
 								String deployedPluginDirName =
-									FileUtil.stripExtension(
-										jar.getArchiveName());
+									FileUtil.stripExtension(property.get());
 
 								File deployedPluginDir = new File(
 									directDeployTask.getAppServerDeployDir(),
@@ -827,7 +836,8 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 										javaMainSourceSet.getOutput();
 
 									FileCollection buildDirs = project.files(
-										sourceDirectorySet.getOutputDir(),
+										sourceDirectorySet.
+											getClassesDirectory(),
 										sourceSetOutput.getResourcesDir());
 
 									Set<File> buildDirsFiles =
@@ -957,13 +967,16 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 					String taskName = buildWSDDTask.getName();
 
+					Property<String> property =
+						buildWSDDJar.getArchiveAppendix();
+
 					if (taskName.equals(
 							WSDDBuilderPlugin.BUILD_WSDD_TASK_NAME)) {
 
-						buildWSDDJar.setAppendix("wsdd");
+						property.set("wsdd");
 					}
 					else {
-						buildWSDDJar.setAppendix("wsdd-" + taskName);
+						property.set("wsdd-" + taskName);
 					}
 
 					buildWSDDTask.finalizedBy(buildWSDDJar);
@@ -1579,8 +1592,12 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(Zip zippableResourcesZip) {
-					File zippableResourcesFile =
-						zippableResourcesZip.getArchivePath();
+					Provider<RegularFile> provider =
+						zippableResourcesZip.getArchiveFile();
+
+					RegularFile regularFile = provider.get();
+
+					File zippableResourcesFile = regularFile.getAsFile();
 
 					StringBuilder sb = new StringBuilder();
 
@@ -1593,10 +1610,16 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 					zippableResourcesZip.setDescription(sb.toString());
 
 					zippableResourcesZip.from(zippableResourcesDir);
-					zippableResourcesZip.setArchiveName(
-						zippableResourcesDir.getName() + ".zip");
-					zippableResourcesZip.setDestinationDir(
-						project.file("classes"));
+
+					Property<String> property =
+						zippableResourcesZip.getArchiveFileName();
+
+					property.set(zippableResourcesDir.getName() + ".zip");
+
+					DirectoryProperty directoryProperty =
+						zippableResourcesZip.getDestinationDirectory();
+
+					directoryProperty.set(project.file("classes"));
 				}
 
 			});

@@ -1005,8 +1005,13 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 						start = artifactJspcURL.indexOf('-', start) + 1;
 
-						String classifier = jarJSPsTask.getClassifier();
-						String extension = jarJSPsTask.getExtension();
+						Provider<String> archiveClassifierProvider =
+							jarJSPsTask.getArchiveClassifier();
+						Provider<String> archiveExtensionProvider =
+							jarJSPsTask.getArchiveExtension();
+
+						String classifier = archiveClassifierProvider.get();
+						String extension = archiveExtensionProvider.get();
 
 						int end =
 							artifactJspcURL.length() - classifier.length() -
@@ -2973,7 +2978,10 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 			SourceDirectorySet javaSourceDirectorySet = sourceSet.getJava();
 
-			javaSourceDirectorySet.setOutputDir(javaClassesDir);
+			DirectoryProperty directoryProperty =
+				javaSourceDirectorySet.getDestinationDirectory();
+
+			directoryProperty.set(javaClassesDir);
 
 			SourceSetOutput sourceSetOutput = sourceSet.getOutput();
 
@@ -4055,7 +4063,9 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		File resultsDir = project.file("test-results/integration");
 
-		test.setBinResultsDir(new File(resultsDir, "binary/testIntegration"));
+		DirectoryProperty directoryProperty = test.getBinaryResultsDirectory();
+
+		directoryProperty.set(new File(resultsDir, "binary/testIntegration"));
 
 		TestTaskReports testTaskReports = test.getReports();
 

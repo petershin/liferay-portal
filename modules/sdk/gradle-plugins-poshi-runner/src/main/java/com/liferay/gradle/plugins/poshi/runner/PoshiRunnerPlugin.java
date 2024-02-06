@@ -49,6 +49,7 @@ import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.file.CopySpec;
+import org.gradle.api.file.DirectoryProperty;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileTree;
 import org.gradle.api.logging.Logger;
@@ -649,7 +650,9 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 
 		Project project = test.getProject();
 
-		test.setBinResultsDir(
+		DirectoryProperty directoryProperty = test.getBinaryResultsDirectory();
+
+		directoryProperty.set(
 			project.file("test-results/binary/" + RUN_POSHI_TASK_NAME));
 	}
 
