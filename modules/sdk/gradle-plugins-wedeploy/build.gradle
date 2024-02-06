@@ -22,7 +22,7 @@ copyGradleTestDependencies {
 	duplicatesStrategy = DuplicatesStrategy.INCLUDE
 
 	from configurations.compileClasspath
-	into jar.destinationDir
+	into jar.destinationDirectory
 }
 
 dependencies {

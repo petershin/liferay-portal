@@ -111,7 +111,7 @@ copyGradleTestDependencies {
 			if (compileClasspathFile.name.startsWith("com.liferay.portal.tools.soy.builder") || compileClasspathFile.name.startsWith("jackson-dataformat-yaml")) {
 				copy {
 					from compileClasspathFile
-					into jar.destinationDir
+					into jar.destinationDirectory
 				}
 			}
 		}
