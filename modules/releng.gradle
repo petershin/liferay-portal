@@ -214,11 +214,11 @@ portalArtifactsJar {
 		relengProjectDirs = null
 	}
 
-	baseName = "portal"
-	classifier = null
+	archiveBaseName = "portal"
+	archiveClassifier = null
+	archiveVersion = _getReleaseInfoVersion()
 	duplicatesStrategy = "exclude"
 	includeEmptyDirs = false
-	version = _getReleaseInfoVersion()
 	zip64 = true
 
 	doFirst {
@@ -297,11 +297,11 @@ portalJavadoc {
 portalJavadocJar {
 	dependsOn portalJavadoc
 
-	baseName = "portal"
-	classifier = "javadoc"
+	archiveBaseName = "portal"
+	archiveClassifier = "javadoc"
+	archiveVersion = _getReleaseInfoVersion()
 	from portalJavadoc
 	includeEmptyDirs = false
-	version = _getReleaseInfoVersion()
 
 	doLast {
 		println "Created jar " + archivePath
@@ -319,11 +319,11 @@ portalJavadocJar {
 portalSourcesJar {
 	dependsOn portalArtifactsJar
 
-	baseName = "portal"
-	classifier = "sources"
+	archiveBaseName = "portal"
+	archiveClassifier = "sources"
+	archiveVersion = _getReleaseInfoVersion()
 	duplicatesStrategy = "exclude"
 	includeEmptyDirs = false
-	version = _getReleaseInfoVersion()
 
 	doFirst {
 		ConfigurationContainer configurationContainer = project.getConfigurations()
