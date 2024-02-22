@@ -40,6 +40,12 @@ dependencies {
 	compileOnly project(":core:petra:petra-string")
 }
 
+jarSources {
+	mustRunAfter processBlogsSanitizerConfiguration
+	mustRunAfter processDefaultSanitizerConfiguration
+	mustRunAfter processKnowledgeBaseSanitizerConfiguration
+}
+
 processDefaultSanitizerConfiguration {
 	ext {
 		autoClean = false

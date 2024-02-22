@@ -200,6 +200,15 @@ set DEFAULT_JVM_OPTS=%DEFAULT_JVM_OPTS% "-Dgradle.user.home=%APP_HOME%\\.gradle"
 			token: 'org.gradle.wrapper.GradleWrapperMain %*',
 			value: 'org.gradle.wrapper.GradleWrapperMain "--init-script=%APP_HOME%\\modules\\init.gradle" %*'
 		)
+
+		File gradleWrapperPropertiesFile = new File(wrapperDir, "gradle/wrapper/gradle-wrapper.properties")
+
+		ant.replace(
+			failOnNoReplacements: true,
+			file: gradleWrapperPropertiesFile,
+			token: 'validateDistributionUrl=true',
+			value: 'validateDistributionUrl=false'
+		)
 	}
 
 	jarFile = new File(wrapperDir, "gradle/wrapper/gradle-wrapper.jar")
@@ -244,6 +253,15 @@ DEFAULT_JVM_OPTS="$DEFAULT_JVM_OPTS \\\"-Dgradle.user.home=$APP_HOME/.gradle\\\"
 			value: '''\
 @rem Setup the command line
 set DEFAULT_JVM_OPTS=%DEFAULT_JVM_OPTS% "-Dgradle.user.home=%APP_HOME%\\.gradle"'''
+		)
+
+		File gradleWrapperPropertiesFile = new File(wrapperDir, "gradle/wrapper/gradle-wrapper.properties")
+
+		ant.replace(
+			failOnNoReplacements: true,
+			file: gradleWrapperPropertiesFile,
+			token: 'validateDistributionUrl=true',
+			value: 'validateDistributionUrl=false'
 		)
 	}
 
