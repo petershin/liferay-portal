@@ -59,6 +59,10 @@ appDocker {
 	}
 }
 
+buildAppDockerImage {
+	mustRunAfter copyDockerResources
+}
+
 checkDocker {
 	targetContainerId {
 		dockerContainerId
