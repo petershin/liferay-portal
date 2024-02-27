@@ -2958,7 +2958,10 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 			SourceDirectorySet javaSourceDirectorySet = sourceSet.getJava();
 
-			javaSourceDirectorySet.setOutputDir(javaClassesDir);
+			DirectoryProperty directoryProperty =
+				javaSourceDirectorySet.getDestinationDirectory();
+
+			directoryProperty.set(javaClassesDir);
 
 			SourceSetOutput sourceSetOutput = sourceSet.getOutput();
 
@@ -4040,7 +4043,9 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		File resultsDir = project.file("test-results/integration");
 
-		test.setBinResultsDir(new File(resultsDir, "binary/testIntegration"));
+		DirectoryProperty directoryProperty = test.getBinaryResultsDirectory();
+
+		directoryProperty.set(new File(resultsDir, "binary/testIntegration"));
 
 		TestTaskReports testTaskReports = test.getReports();
 
