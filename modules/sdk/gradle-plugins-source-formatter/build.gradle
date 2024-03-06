@@ -6,7 +6,7 @@ task updateReadme(type: ReplaceRegexTask)
 
 String gradleVersion = "8.5"
 
-if (Boolean.getBoolean("gradle.test.enabled")) {
+if (gradle.startParameter.taskNames.contains("gradleTest")) {
 	apply from: "test.gradle"
 }
 

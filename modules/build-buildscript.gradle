@@ -7,7 +7,7 @@ dependencies {
 		classpath group: "com.gradle", name: "gradle-enterprise-gradle-plugin", version: "3.1.1"
 	}
 
-	if (Boolean.getBoolean("gradle.test.enabled")) {
+	if (gradle.startParameter.taskNames.contains("gradleTest")) {
 		classpath group: "org.ysb33r.gradle", name: "gradletest", version: "3.0.0-alpha.4"
 	}
 }
