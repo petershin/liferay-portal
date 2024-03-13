@@ -4155,7 +4155,9 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		args.put(
 			"excludes",
 			Arrays.asList(
-				"**/bin/", "**/build/", "**/classes/", "**/node_modules/",
+				"**/bin/", "**/build/", "**/classes/",
+				"**/gradle-plugins-target-platform/",
+				"**/gradle-plugins-workspace/", "**/node_modules/",
 				"**/node_modules_cache/", "**/test-classes/", "**/tmp/"));
 		args.put(
 			"includes",
