@@ -43,16 +43,16 @@
       <scope>compile</scope>
       <exclusions>
         <exclusion>
-          <artifactId>jsp-api</artifactId>
           <groupId>javax.servlet.jsp</groupId>
+          <artifactId>jsp-api</artifactId>
         </exclusion>
         <exclusion>
-          <artifactId>*</artifactId>
           <groupId>javax.servlet</groupId>
+          <artifactId>*</artifactId>
         </exclusion>
         <exclusion>
-          <artifactId>*</artifactId>
           <groupId>com.liferay.portal</groupId>
+          <artifactId>*</artifactId>
         </exclusion>
       </exclusions>
     </dependency>

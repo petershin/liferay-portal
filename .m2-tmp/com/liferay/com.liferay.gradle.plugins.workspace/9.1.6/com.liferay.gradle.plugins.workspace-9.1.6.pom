@@ -67,8 +67,8 @@
       <scope>compile</scope>
       <exclusions>
         <exclusion>
-          <artifactId>biz.aQute.bnd</artifactId>
           <groupId>biz.aQute.bnd</groupId>
+          <artifactId>biz.aQute.bnd</artifactId>
         </exclusion>
       </exclusions>
     </dependency>
@@ -79,8 +79,8 @@
       <scope>compile</scope>
       <exclusions>
         <exclusion>
-          <artifactId>biz.aQute.bnd</artifactId>
           <groupId>biz.aQute.bnd</groupId>
+          <artifactId>biz.aQute.bnd</artifactId>
         </exclusion>
       </exclusions>
     </dependency>
@@ -91,8 +91,8 @@
       <scope>compile</scope>
       <exclusions>
         <exclusion>
-          <artifactId>biz.aQute.bnd</artifactId>
           <groupId>biz.aQute.bnd</groupId>
+          <artifactId>biz.aQute.bnd</artifactId>
         </exclusion>
       </exclusions>
     </dependency>
@@ -115,8 +115,8 @@
       <scope>compile</scope>
       <exclusions>
         <exclusion>
-          <artifactId>biz.aQute.bnd</artifactId>
           <groupId>biz.aQute.bnd</groupId>
+          <artifactId>biz.aQute.bnd</artifactId>
         </exclusion>
       </exclusions>
     </dependency>
@@ -139,8 +139,8 @@
       <scope>compile</scope>
       <exclusions>
         <exclusion>
-          <artifactId>biz.aQute.bnd</artifactId>
           <groupId>biz.aQute.bnd</groupId>
+          <artifactId>biz.aQute.bnd</artifactId>
         </exclusion>
       </exclusions>
     </dependency>
@@ -151,16 +151,16 @@
       <scope>compile</scope>
       <exclusions>
         <exclusion>
-          <artifactId>*</artifactId>
           <groupId>org.sonatype.plexus</groupId>
-        </exclusion>
-        <exclusion>
           <artifactId>*</artifactId>
-          <groupId>org.codehaus.plexus</groupId>
         </exclusion>
         <exclusion>
-          <artifactId>soy</artifactId>
+          <groupId>org.codehaus.plexus</groupId>
+          <artifactId>*</artifactId>
+        </exclusion>
+        <exclusion>
           <groupId>com.google.template</groupId>
+          <artifactId>soy</artifactId>
         </exclusion>
       </exclusions>
     </dependency>
