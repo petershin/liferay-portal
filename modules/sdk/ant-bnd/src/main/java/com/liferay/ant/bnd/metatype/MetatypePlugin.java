@@ -37,7 +37,7 @@ public class MetatypePlugin implements AnalyzerPlugin {
 	@Override
 	public boolean analyzeJar(Analyzer analyzer) throws Exception {
 		Parameters parameters = analyzer.parseHeader(
-			analyzer.getProperty(Constants.METATYPE));
+			analyzer.getProperty(Constants.METATYPE_ANNOTATIONS));
 
 		Jar jar = analyzer.getJar();
 

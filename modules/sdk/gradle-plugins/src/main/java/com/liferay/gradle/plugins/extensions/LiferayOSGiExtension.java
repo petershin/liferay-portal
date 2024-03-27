@@ -69,7 +69,7 @@ public class LiferayOSGiExtension {
 		_bundleDefaultInstructions.put(
 			Constants.FIXUPMESSAGES + ".unicode.string",
 			"Invalid unicode string");
-		_bundleDefaultInstructions.put(Constants.METATYPE, "*");
+		_bundleDefaultInstructions.put(Constants.METATYPE_ANNOTATIONS, "*");
 		_bundleDefaultInstructions.put(Constants.NOCLASSFORNAME, Boolean.TRUE);
 		_bundleDefaultInstructions.put(
 			Constants.PLUGIN + ".liferay",
