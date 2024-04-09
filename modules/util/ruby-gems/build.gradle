@@ -6,8 +6,9 @@ task downloadGems
 sourceCompatibility = "1.8"
 targetCompatibility = "1.8"
 
-String compassUrl = "https://rubygems.org/gems/sass-${sassVersion}.gem"
 String sassVersion = "3.5.5"
+
+String compassUrl = "https://rubygems.org/gems/sass-${sassVersion}.gem"
 
 classes {
 	dependsOn downloadGems
