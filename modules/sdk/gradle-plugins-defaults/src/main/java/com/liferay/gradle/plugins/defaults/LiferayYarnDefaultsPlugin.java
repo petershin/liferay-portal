@@ -15,7 +15,6 @@ import com.liferay.gradle.plugins.node.task.YarnInstallTask;
 import com.liferay.gradle.util.Validator;
 
 import org.gradle.StartParameter;
-import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.invocation.Gradle;
@@ -52,27 +51,22 @@ public class LiferayYarnDefaultsPlugin implements Plugin<Project> {
 	}
 
 	private void _configureTaskYarnInstallProvider(
-		final Project project,
+		Project project,
 		TaskProvider<YarnInstallTask> yarnInstallTaskProvider) {
 
 		yarnInstallTaskProvider.configure(
-			new Action<YarnInstallTask>() {
+			yarnInstallTask -> {
+				Gradle gradle = project.getGradle();
 
-				@Override
-				public void execute(YarnInstallTask yarnInstallTask) {
-					Gradle gradle = project.getGradle();
+				StartParameter startParameter = gradle.getStartParameter();
 
-					StartParameter startParameter = gradle.getStartParameter();
+				String buildProfile = System.getProperty("build.profile");
 
-					String buildProfile = System.getProperty("build.profile");
+				if (startParameter.isParallelProjectExecutionEnabled() ||
+					Validator.isNotNull(buildProfile)) {
 
-					if (startParameter.isParallelProjectExecutionEnabled() ||
-						Validator.isNotNull(buildProfile)) {
-
-						yarnInstallTask.setEnabled(false);
-					}
+					yarnInstallTask.setEnabled(false);
 				}
-
 			});
 	}
 
