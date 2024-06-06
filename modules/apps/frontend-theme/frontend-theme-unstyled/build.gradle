@@ -47,10 +47,6 @@ buildAlloyUITheme {
 	into alloyThemeDestinationDir
 }
 
-buildCSS {
-	dependsOn buildTheme
-}
-
 buildClay {
 	File clayDestinationDir = new File(themeDestinationDir, "css/clay")
 
