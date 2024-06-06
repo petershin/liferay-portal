@@ -376,8 +376,6 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 		GradleUtil.applyPlugin(project, JavaLibraryPlugin.class);
 
-		GradleUtil.applyPlugin(project, CSSBuilderPlugin.class);
-
 		GradleUtil.applyPlugin(project, NodePlugin.class);
 
 		GradleUtil.applyPlugin(project, EclipsePlugin.class);
