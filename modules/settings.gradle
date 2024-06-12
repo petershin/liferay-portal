@@ -32,6 +32,10 @@ if (Boolean.getBoolean("gradle.develocity.enabled")) {
 				tag System.getProperty("gradle.develocity.tag")
 			}
 
+			if (System.getenv("GITHUB_PULL_REQUEST_NUMBER")) {
+				tag System.getenv("GITHUB_RECEIVER_USERNAME") + "-" + System.getenv("GITHUB_PULL_REQUEST_NUMBER")
+			}
+
 			termsOfUseAgree = "yes"
 			termsOfUseUrl = "https://gradle.com/terms-of-service"
 
