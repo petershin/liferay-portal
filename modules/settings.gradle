@@ -38,6 +38,10 @@ if (Boolean.getBoolean("gradle.develocity.enabled")) {
 			if (System.getenv("JENKINS_URL") == null) {
 				uploadInBackground = true
 			}
+
+			if (System.getenv("PULL_REQUEST_URL")) {
+				value "CI Pull Request URL", System.getenv("PULL_REQUEST_URL")
+			}
 		}
 	}
 }
