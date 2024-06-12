@@ -458,7 +458,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		_configurePmd(project);
 		_configureProject(project);
 		GradlePluginsDefaultsUtil.configureRepositories(project, portalRootDir);
-		_configureSourceSetMain(project);
 		_configureTaskDeploy(project, deployConfigsTask);
 		_configureTaskJar(jar, testProject);
 		_configureTaskJavadoc(project, bundleExtension, portalRootDir);
@@ -3019,13 +3018,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 			sourceSetOutput.setResourcesDir(javaClassesDir);
 		}
-	}
-
-	private void _configureSourceSetMain(Project project) {
-		SourceSet sourceSet = GradleUtil.getSourceSet(
-			project, SourceSet.MAIN_SOURCE_SET_NAME);
-
-		_configureSourceSetClassesDir(project, sourceSet, "classes");
 	}
 
 	private void _configureSourceSetTest(
