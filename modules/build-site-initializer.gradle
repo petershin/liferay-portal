@@ -173,6 +173,8 @@ processResources {
 	}
 }
 
+sourceSets.main.output.resourcesDir = "classes"
+
 zipExtraRemoteApp {
 	if (!System.getenv("JENKINS_HOME")) {
 		dependsOn buildExtraRemoteApp
