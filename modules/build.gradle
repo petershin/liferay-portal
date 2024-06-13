@@ -410,8 +410,6 @@ gradle.beforeProject {
 			bundle {
 				instruction "-includeresource.thirdparty", "-classes"
 			}
-
-			sourceSets.main.output.resourceDir = "classes"
 		}
 
 		pluginManager.withPlugin("com.liferay.ant.plugin") {
