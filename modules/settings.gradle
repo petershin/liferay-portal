@@ -48,7 +48,7 @@ if (Boolean.getBoolean("gradle.develocity.enabled")) {
 
 buildCache {
 	local {
-		directory = new File(rootDir.parentFile, ".gradle/caches/build-cache-liferay")
+		directory = new File(rootDir, ".gradle/caches/build-cache-liferay")
 	}
 }
 
