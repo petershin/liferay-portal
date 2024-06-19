@@ -459,7 +459,7 @@ gradle.beforeProject {
 					}
 				}
 
-				if (packageJSONFile.text.contains("liferay-npm-scripts build") || liferayESModule || project.name.endsWith("-api") || project.name.endsWith("-impl")) {
+				if (packageJSONFile.text.contains("liferay-npm-scripts build") || liferayESModule || project.path.startsWith(":core:petra:") || project.name.endsWith("-api") || project.name.endsWith("-impl")) {
 					buildCSS {
 						enabled = false
 					}
