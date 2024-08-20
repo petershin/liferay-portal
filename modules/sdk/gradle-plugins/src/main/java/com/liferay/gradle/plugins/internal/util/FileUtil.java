@@ -32,6 +32,7 @@ import org.gradle.api.logging.Logging;
 
 /**
  * @author Andrea Di Giorgi
+ * @author Peter Shin
  */
 public class FileUtil extends com.liferay.gradle.util.FileUtil {
 
