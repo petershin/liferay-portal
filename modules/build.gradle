@@ -743,7 +743,7 @@ gradle.beforeProject {
 				}
 
 				tasks.withType(JavaCompile) {
-					classpath = files(jakartaTransformerDir)
+					classpath = files(fileTree(dir: jakartaTransformerDir))
 				}
 
 				compileJava {
