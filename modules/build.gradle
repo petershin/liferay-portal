@@ -777,6 +777,20 @@ gradle.beforeProject {
 
 		if (Boolean.getBoolean("build.jakarta.transformer.enabled") && (javaVersion.compareTo(JavaVersion.VERSION_17) >= 0) && _containsProject(project, System.getProperty("build.jakarta.transformer.include.dirs"), rootDir.parentFile)) {
 			pluginManager.withPlugin("com.liferay.jasper.jspc") {
+				tasks.named("generateJSPJava") {
+					configurations.compileOnly.allDependencies.withType(ProjectDependency) {
+						compileJSP.dependsOn "${it.dependencyProject.path}:jar"
+					}
+
+					doFirst {
+						FileCollection jarFiles = files(configurations.jspC.files.findAll { it.name.endsWith(".jar") })
+
+						_transformToJakarta(jarFiles, file("$buildDir/jakarta-transformer/${it.name}"), it)
+
+						jspCClasspath = files(configurations.jspC.files - jarFiles) + files(fileTree(dir: file("$buildDir/jakarta-transformer/${it.name}")))
+					}
+				}
+
 				tasks.named("compileJSP") {
 					configurations.compileOnly.allDependencies.withType(ProjectDependency) {
 						compileJSP.dependsOn "${it.dependencyProject.path}:jar"
