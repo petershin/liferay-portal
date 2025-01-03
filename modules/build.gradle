@@ -964,13 +964,19 @@ private void _transformToJakarta(FileCollection jarFiles, File outputDir, Task t
 
 		task.project.delete(file)
 
-		org.eclipse.transformer.Transformer.ResultCode resultCode = new org.eclipse.transformer.cli.JakartaTransformerCLI(System.out, System.out, new String[] {jarFile.getAbsolutePath(), file.getAbsolutePath()}).run()
+		OutputStream errStream = new ByteArrayOutputStream()
+		OutputStream outStream = new ByteArrayOutputStream()
+
+		PrintStream err = new PrintStream(errStream)
+		PrintStream out = new PrintStream(outStream)
+
+		org.eclipse.transformer.Transformer.ResultCode resultCode = new org.eclipse.transformer.cli.JakartaTransformerCLI(out, err, new String[] {jarFile.getAbsolutePath(), file.getAbsolutePath()}).run()
 
 		if (resultCode == org.eclipse.transformer.Transformer.ResultCode.SUCCESS_RC) {
 			task.logger.lifecycle "Jakarta: ${task.project.name}:${task.name} ${FileUtil.relativize(jarFile, task.project.rootProject.projectDir.parentFile.parentFile)} -> ${FileUtil.relativize(file, task.project.projectDir.parentFile)}"
 		}
 		else {
-			throw new GradleException("Jakarta Transformer ERROR: ${resultCode}")
+			throw new GradleException("Jakarta Transformer ERROR: ${resultCode}\n${errStream}")
 		}
 	}
 }
