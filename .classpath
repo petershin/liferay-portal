@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
+	<classpathentry kind="lib" path="/home/me/.m2/repository/biz/aQute/bnd/biz.aQute.bnd.util/7.0.0/biz.aQute.bnd.util-7.0.0.jar" sourcepath="/home/me/.m2/repository/biz/aQute/bnd/biz.aQute.bnd.util/7.0.0/biz.aQute.bnd.util-7.0.0-sources.jar"/>
+	<classpathentry kind="lib" path="/home/me/.m2/repository/biz/aQute/bnd/biz.aQute.bndlib/7.0.0/biz.aQute.bndlib-7.0.0.jar" sourcepath="/home/me/.m2/repository/biz/aQute/bnd/biz.aQute.bndlib/7.0.0/biz.aQute.bndlib-7.0.0-sources.jar"/>
 	<classpathentry excluding="**/.svn/**|.svn/" kind="src" path="definitions"/>
 	<classpathentry excluding="**/.svn/**|.svn/" kind="src" path="modules/core/osgi-service-tracker-collections/src/main/java"/>
 	<classpathentry excluding="**/.svn/**|.svn/" kind="src" path="modules/core/petra/petra-concurrent/src/main/java"/>
@@ -163,5 +165,8 @@
 	<classpathentry kind="lib" path="lib/portal/transaction.jar"/>
 	<classpathentry kind="lib" path="lib/portal/xercesImpl.jar"/>
 	<classpathentry kind="lib" path="lib/portal/xml-apis.jar"/>
+	<classpathentry kind="lib" path="/home/me/.m2/repository/org/eclipse/transformer/org.eclipse.transformer.cli/1.0.0/org.eclipse.transformer.cli-1.0.0.jar" sourcepath="/home/me/.m2/repository/org/eclipse/transformer/org.eclipse.transformer.cli/1.0.0/org.eclipse.transformer.cli-1.0.0-sources.jar"/>
+	<classpathentry kind="lib" path="/home/me/.m2/repository/org/eclipse/transformer/org.eclipse.transformer/1.0.0/org.eclipse.transformer-1.0.0.jar" sourcepath="/home/me/.m2/repository/org/eclipse/transformer/org.eclipse.transformer/1.0.0/org.eclipse.transformer-1.0.0-sources.jar"/>
+	<classpathentry kind="lib" path="/home/me/.m2/repository/org/eclipse/transformer/org.eclipse.transformer.jakarta/1.0.0/org.eclipse.transformer.jakarta-1.0.0.jar" sourcepath="/home/me/.m2/repository/org/eclipse/transformer/org.eclipse.transformer.jakarta/1.0.0/org.eclipse.transformer.jakarta-1.0.0-sources.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

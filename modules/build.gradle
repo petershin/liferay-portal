@@ -969,9 +969,20 @@ private void _transformToJakarta(FileCollection jarFiles, File outputDir, Task t
 
 		File file = new File(outputDir, fileName)
 
-		org.eclipse.transformer.cli.JakartaTransformerCLI.runWith(new org.eclipse.transformer.cli.JakartaTransformerCLI(System.out, System.out, new String[] {jarFile.getAbsolutePath(), file.getAbsolutePath()}))
+		if (file.exists()) {
+			file.delete()
+		}
 
-		task.logger.lifecycle "Jakarta: ${task.project.name}:${task.name} ${FileUtil.relativize(jarFile, task.project.rootProject.projectDir.parentFile.parentFile)} -> ${FileUtil.relativize(file, task.project.projectDir.parentFile)}"
+		OutputStream errStream = new ByteArrayOutputStream()
+		PrintStream sysErr = new PrintStream(errStream)
+		org.eclipse.transformer.Transformer.ResultCode resultCode = new org.eclipse.transformer.cli.JakartaTransformerCLI(System.out, sysErr, new String[] {jarFile.getAbsolutePath(), file.getAbsolutePath()}).run()
+
+		if (resultCode == org.eclipse.transformer.Transformer.ResultCode.SUCCESS_RC) {
+			task.logger.lifecycle "Jakarta: ${task.project.name}:${task.name} ${FileUtil.relativize(jarFile, task.project.rootProject.projectDir.parentFile.parentFile)} -> ${FileUtil.relativize(file, task.project.projectDir.parentFile)}"
+		}
+		else {
+			task.logger.lifecycle "Jakarta Transformer ERROR: {}\n{}", resultCode, errStream.toString()
+		}
 	}
 }
 
