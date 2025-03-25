@@ -33,7 +33,7 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given a bean portlet is deployed") {
-			AntCommands.runCommand("build-test.xml", "deploy-maven-module -Dmodule.base.dir=modules/apps/bean-portlet/bean-portlet-cdi-extension-sample-test");
+			AntCommands.runCommand("build-test.xml", "deploy-osgi-module -Dmodule.base.dir=modules/apps/bean-portlet/bean-portlet-cdi-extension-sample-test");
 
 			WaitForConsoleTextPresent(value1 = "Registered 1 bean portlets and 0 bean filters for sample.bean.portlet");
 		}
